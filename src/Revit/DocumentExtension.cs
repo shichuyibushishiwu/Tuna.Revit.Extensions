@@ -15,10 +15,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Revit
+namespace Tuna.Revit.Extension
 {
     public static class DocumentExtension
     {
+        /// <summary>
+        /// Create A Document Transaction
+        /// example:
+        /// doc.TransactionRaise(()=>{ do sometion},"name")
+        /// </summary>
+        /// <param name="document">active document</param>
+        /// <param name="action"></param>
+        /// <param name="name"></param>
         public static void TransactionRaise(this Document document, Action action, string name)
         {
             using (Transaction ts = new Transaction(document))
@@ -29,6 +37,13 @@ namespace Tuna.Revit.Extension.Revit
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="document"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
         public static List<T> GetElements<T>(this Document document, Func<T, bool> func = null) where T : Element
         {
             FilteredElementCollector elements = new FilteredElementCollector(document);
@@ -40,13 +55,25 @@ namespace Tuna.Revit.Extension.Revit
             return elems;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="document"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
         public static bool Exist<T>(this Document document, Func<Element, bool> func) where T : Element
         {
             return document.GetElements<T>(func).Count > 0;
         }
 
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="document"></param>
+        /// <param name="basicName"></param>
+        /// <returns></returns>
         public static string GetUniqueName<T>(this Document document, string basicName) where T : Element
         {
             int number = 0;

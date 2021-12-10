@@ -6,3 +6,10 @@ H:\Github\Tuna.Revit.Extension\src\obj\Debug\Tuna.Revit.Extension.csproj.CoreCom
 H:\Github\Tuna.Revit.Extension\src\obj\Debug\Tuna.Revit.Extension.csproj.CopyComplete
 H:\Github\Tuna.Revit.Extension\src\obj\Debug\Tuna.Revit.Extension.dll
 H:\Github\Tuna.Revit.Extension\src\obj\Debug\Tuna.Revit.Extension.pdb
+E:\03-Github\Tuna.Revit.Extension\src\bin\Debug\Tuna.Revit.Extension.dll
+E:\03-Github\Tuna.Revit.Extension\src\bin\Debug\Tuna.Revit.Extension.pdb
+E:\03-Github\Tuna.Revit.Extension\src\bin\Debug\RevitAPI.dll
+E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\Tuna.Revit.Extension.csproj.CoreCompileInputs.cache
+E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\Tuna.Revit.Extension.csproj.CopyComplete
+E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\Tuna.Revit.Extension.dll
+E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\Tuna.Revit.Extension.pdb
