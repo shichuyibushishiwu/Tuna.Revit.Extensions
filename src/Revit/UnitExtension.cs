@@ -27,8 +27,7 @@ namespace Tuna.Revit.Extension
 
         public static double ConvertToMillimeters(this double value)
         {
-            double result = UnitUtils.Convert(value, UnitTypeId.Feet, UnitTypeId.Millimeters);
-            return result;
+            return UnitUtils.Convert(value, UnitTypeId.Feet, UnitTypeId.Millimeters);
         }
     }
 }
