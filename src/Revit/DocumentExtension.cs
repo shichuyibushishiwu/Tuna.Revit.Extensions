@@ -19,34 +19,42 @@ namespace Tuna.Revit.Extension
 {
     public static class DocumentExtension
     {
-        /// <summary>
-        /// Create A Document Transaction
-        /// example:
-        /// doc.TransactionRaise(()=>{ do sometion},"name")
-        /// </summary>
-        /// <param name="document">active document</param>
-        /// <param name="action"></param>
-        /// <param name="name"></param>
-        public static void TransactionRaise(this Document document, Action action, string name)
+        public static void NewTransaction(this Document document, Action action, string name = "Default Transaction Name")
         {
-            using (Transaction ts = new Transaction(document))
+            using (Transaction transaction = new Transaction(document, name))
             {
-                ts.Start(name);
-                action.Invoke();
-                ts.Commit();
+                transaction.Start();
+                action?.Invoke();
+                transaction.Commit();
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="document"></param>
-        /// <param name="func"></param>
-        /// <returns></returns>
+        public static void NewSubTransaction(this Document document, Action action)
+        {
+            using (SubTransaction transaction = new SubTransaction(document))
+            {
+                transaction.Start();
+                action?.Invoke();
+                transaction.Commit();
+            }
+        }
+
+        public static TransactionStatus NewTransactionGroup(this Document document, string name, Func<bool> func)
+        {
+            TransactionStatus status = TransactionStatus.Uninitialized;
+            using (TransactionGroup ts = new TransactionGroup(document, name))
+            {
+                ts.Start();
+                bool result = func.Invoke();
+                status = result ? ts.Assimilate() : ts.RollBack();
+            }
+            return status;
+        }
+
+
         public static List<T> GetElements<T>(this Document document, Func<T, bool> func = null) where T : Element
         {
-            FilteredElementCollector elements = new FilteredElementCollector(document);
+            FilteredElementCollector elements = new FilteredElementCollector(document).WhereElementIsNotElementType();
             List<T> elems = elements.OfClass(typeof(T)).ToElements().ToList().ConvertAll(x => x as T);
             if (func != null)
             {
@@ -55,35 +63,15 @@ namespace Tuna.Revit.Extension
             return elems;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="document"></param>
-        /// <param name="func"></param>
-        /// <returns></returns>
-        public static bool Exist<T>(this Document document, Func<Element, bool> func) where T : Element
+        public static List<T> GetElementTypes<T>(this Document document, Func<T, bool> func = null) where T : ElementType
         {
-            return document.GetElements<T>(func).Count > 0;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="document"></param>
-        /// <param name="basicName"></param>
-        /// <returns></returns>
-        public static string GetUniqueName<T>(this Document document, string basicName) where T : Element
-        {
-            int number = 0;
-            string name = basicName;
-            while (document.Exist<T>(e => e.Name == name))
+            FilteredElementCollector elements = new FilteredElementCollector(document).WhereElementIsElementType();
+            List<T> elems = elements.OfClass(typeof(T)).ToElements().ToList().ConvertAll(x => x as T);
+            if (func != null)
             {
-                number++;
-                name = $"{basicName}({number})";
+                elems = elems.Where(func).ToList();
             }
-            return name;
+            return elems;
         }
     }
 }
