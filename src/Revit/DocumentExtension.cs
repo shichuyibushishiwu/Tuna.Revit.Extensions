@@ -55,10 +55,10 @@ namespace Tuna.Revit.Extension
         public static IEnumerable<T> GetElements<T>(this Document document, Func<T, bool> func = null) where T : Element
         {
             FilteredElementCollector elements = new FilteredElementCollector(document).WhereElementIsNotElementType();
-            var elems = elements.OfClass(typeof(T)).ToElements().ToList().Cast<T>();
+            var elems = elements.OfClass(typeof(T)).ToElements().Cast<T>();
             if (func != null)
             {
-                elems = elems.Where(func).ToList();
+                elems = elems.Where(func);
             }
             return elems;
         }
@@ -66,10 +66,10 @@ namespace Tuna.Revit.Extension
         public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> func = null) where T : ElementType
         {
             FilteredElementCollector elements = new FilteredElementCollector(document).WhereElementIsElementType();
-            var elems = elements.OfClass(typeof(T)).ToElements().ToList().Cast<T>();
+            var elems = elements.OfClass(typeof(T)).ToElements().Cast<T>();
             if (func != null)
             {
-                elems = elems.Where(func).ToList();
+                elems = elems.Where(func);
             }
             return elems;
         }
