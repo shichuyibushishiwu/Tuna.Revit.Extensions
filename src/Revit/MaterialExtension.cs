@@ -1,12 +1,12 @@
-﻿/**********************************************************
-
- Author: 十五
- CreateTime: 2022/4/28 11:29:31
- 
- Copyright(c): FUJIAN PROVINCIAL INSTITUTE OF ARCHITECTURAL DESIGN AND RESEARCH CO.,LTD.
- Description: 
- 
-*******************************************************/
+﻿///************************************************************************************
+///   Author:十五
+///   CretaeTime:2022/4/28 12:29:31
+///   Mail:1012201478@qq.com
+///   Github:https://github.com/shichuyibushishiwu
+///
+///   Description:
+///
+///************************************************************************************
 
 
 using Autodesk.Revit.DB;
