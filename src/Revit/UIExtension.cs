@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace Tuna.Revit.Extension.Revit
+namespace Tuna.Revit.Extension
 {
     public static class UIExtension
     {

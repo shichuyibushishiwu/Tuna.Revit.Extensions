@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "Ev3QiOALju4dEK7C7/N7J61j4KNed+B8mN2aycw51uxZyDI21rz2MRkcut3JVELRuxRYt2iiPrPB4zktuMrmEA==",
+  "success": true,
+  "projectFilePath": "E:\\03-Github\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\revit.revitapi.x64\\2021.0.0\\revit.revitapi.x64.2021.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\revit.revitapiui.x64\\2021.0.0\\revit.revitapiui.x64.2021.0.0.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.data.datasetextensions\\4.5.0\\system.data.datasetextensions.4.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}

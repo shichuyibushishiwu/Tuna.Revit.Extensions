@@ -1,0 +1,10 @@
+E:\03-Github\Tuna.Revit.Extension\src\bin\Debug\net48\Tuna.Revit.Extension.dll
+E:\03-Github\Tuna.Revit.Extension\src\bin\Debug\net48\Tuna.Revit.Extension.pdb
+E:\03-Github\Tuna.Revit.Extension\src\bin\Debug\net48\RevitAPI.dll
+E:\03-Github\Tuna.Revit.Extension\src\bin\Debug\net48\RevitAPIUI.dll
+E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\net48\Tuna.Revit.Extension.csproj.AssemblyReference.cache
+E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\net48\Tuna.Revit.Extension.GeneratedMSBuildEditorConfig.editorconfig
+E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\net48\Tuna.Revit.Extension.csproj.CoreCompileInputs.cache
+E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\net48\Tuna.Revit.Extension.csproj.CopyComplete
+E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\net48\Tuna.Revit.Extension.dll
+E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\net48\Tuna.Revit.Extension.pdb
