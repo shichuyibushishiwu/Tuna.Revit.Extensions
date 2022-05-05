@@ -50,11 +50,11 @@
             },
             "Revit.RevitApi.x64": {
               "target": "Package",
-              "version": "[2021.0.0, )"
+              "version": "[2020.0.0, )"
             },
             "Revit.RevitApiUI.x64": {
               "target": "Package",
-              "version": "[2021.0.0, )"
+              "version": "[2020.0.0, )"
             },
             "System.Data.DataSetExtensions": {
               "target": "Package",
