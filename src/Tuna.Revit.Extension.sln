@@ -9,7 +9,9 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Rvt_20_Debug|Any CPU = Rvt_20_Debug|Any CPU
 		Rvt_20_Release|Any CPU = Rvt_20_Release|Any CPU
+		Rvt_21_Debug|Any CPU = Rvt_21_Debug|Any CPU
 		Rvt_21_Release|Any CPU = Rvt_21_Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -17,8 +19,12 @@ Global
 		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Rvt_20_Debug|Any CPU.ActiveCfg = Rvt_20_Debug|Any CPU
+		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Rvt_20_Debug|Any CPU.Build.0 = Rvt_20_Debug|Any CPU
 		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Rvt_20_Release|Any CPU.ActiveCfg = Rvt_20_Release|Any CPU
 		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Rvt_20_Release|Any CPU.Build.0 = Rvt_20_Release|Any CPU
+		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Rvt_21_Debug|Any CPU.ActiveCfg = Rvt_21_Debug|Any CPU
+		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Rvt_21_Debug|Any CPU.Build.0 = Rvt_21_Debug|Any CPU
 		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Rvt_21_Release|Any CPU.ActiveCfg = Rvt_21_Release|Any CPU
 		{B40CB28E-8890-4294-936E-FD22E4FCE7F2}.Rvt_21_Release|Any CPU.Build.0 = Rvt_21_Release|Any CPU
 	EndGlobalSection

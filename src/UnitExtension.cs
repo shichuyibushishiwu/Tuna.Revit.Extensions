@@ -27,11 +27,11 @@ namespace Tuna.Revit.Extension
 
         public static double ConvertToMillimeters(this double value)
         {
-#if RVT_21_RELEASE
+#if Rvt_21
             return UnitUtils.Convert(value, UnitTypeId.Feet, UnitTypeId.Millimeters);
 #endif
 
-#if RVT_20_RELEASE
+#if Rvt_20
             return UnitUtils.Convert(value, DisplayUnitType.DUT_DECIMAL_FEET, DisplayUnitType.DUT_MILLIMETERS);
 #endif
         }
