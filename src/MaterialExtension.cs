@@ -23,8 +23,13 @@ namespace Tuna.Revit.Extension
     {
         public static Color GetAppearanceColor(this Material material)
         {
+            if (material == null || !material.IsValidObject)
+            {
+                throw new ArgumentNullException("material is null or invalid material");
+            }
+
             ElementId appearanceAssetId = material.AppearanceAssetId;
-            if (appearanceAssetId?.IntegerValue != -1)
+            if (appearanceAssetId != ElementId.InvalidElementId)
             {
                 AppearanceAssetElement appearanceAssetElement = material.Document.GetElement(appearanceAssetId) as AppearanceAssetElement;
                 Asset asset = appearanceAssetElement.GetRenderingAsset();
@@ -37,8 +42,13 @@ namespace Tuna.Revit.Extension
 
         public static void SetAppearanceColor(this Material material, Color color)
         {
+            if (material == null || !material.IsValidObject)
+            {
+                throw new ArgumentNullException("material is null or invalid material");
+            }
+
             ElementId appearanceAssetId = material.AppearanceAssetId;
-            if (appearanceAssetId?.IntegerValue != -1)
+            if (appearanceAssetId != ElementId.InvalidElementId)
             {
                 using (AppearanceAssetEditScope scope = new AppearanceAssetEditScope(material.Document))
                 {

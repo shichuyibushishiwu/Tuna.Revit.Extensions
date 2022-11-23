@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -50,18 +51,18 @@
             },
             "Revit.RevitApi.x64": {
               "target": "Package",
-              "version": "[2020.0.0, )"
+              "version": "[2021.0.0, )"
             },
             "Revit.RevitApiUI.x64": {
               "target": "Package",
-              "version": "[2020.0.0, )"
+              "version": "[2021.0.0, )"
             },
             "System.Data.DataSetExtensions": {
               "target": "Package",
               "version": "[4.5.0, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400-preview.22330.6\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -12,6 +12,7 @@ using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,59 +20,33 @@ namespace Tuna.Revit.Extension
 {
     public static class DocumentExtension
     {
-        public static void NewTransaction(this Document document, Action action, string name = "Default Transaction Name")
+        private static FilteredElementCollector GetElements(this Document document)
         {
-            using (Transaction transaction = new Transaction(document, name))
+            if (document == null || !document.IsValidObject)
             {
-                transaction.Start();
-                action?.Invoke();
-                transaction.Commit();
+                throw new ArgumentNullException("document is null or invalid object");
             }
+            return new FilteredElementCollector(document);
         }
 
-        public static void NewSubTransaction(this Document document, Action action)
+        public static FilteredElementCollector GetElements(this Document document, ElementFilter filter)
         {
-            using (SubTransaction transaction = new SubTransaction(document))
-            {
-                transaction.Start();
-                action?.Invoke();
-                transaction.Commit();
-            }
+            return document.GetElements().WherePasses(filter);
         }
 
-        public static TransactionStatus NewTransactionGroup(this Document document, string name, Func<bool> func)
+        private static FilteredElementCollector GetElements(this Document document, Type type)
         {
-            TransactionStatus status = TransactionStatus.Uninitialized;
-            using (TransactionGroup ts = new TransactionGroup(document, name))
-            {
-                ts.Start();
-                bool result = func.Invoke();
-                status = result ? ts.Assimilate() : ts.RollBack();
-            }
-            return status;
+            return document.GetElements(new ElementClassFilter(type));
         }
 
-
-        public static IEnumerable<T> GetElements<T>(this Document document, Func<T, bool> func = null) where T : Element
+        private static IEnumerable<T> GetElements<T>(this Document document, Func<T, bool> predicate = null) where T : Element
         {
-            FilteredElementCollector elements = new FilteredElementCollector(document).WhereElementIsNotElementType();
-            var elems = elements.OfClass(typeof(T)).ToElements().Cast<T>();
-            if (func != null)
+            IEnumerable<T> elements = document.GetElements(typeof(T)).Cast<T>();
+            if (predicate != null)
             {
-                elems = elems.Where(func);
+                elements = elements.Where(predicate);
             }
-            return elems;
-        }
-
-        public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> func = null) where T : ElementType
-        {
-            FilteredElementCollector elements = new FilteredElementCollector(document).WhereElementIsElementType();
-            var elems = elements.OfClass(typeof(T)).ToElements().Cast<T>();
-            if (func != null)
-            {
-                elems = elems.Where(func);
-            }
-            return elems;
+            return elements;
         }
     }
 }

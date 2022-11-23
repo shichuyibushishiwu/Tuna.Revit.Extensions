@@ -22,18 +22,26 @@ namespace Tuna.Revit.Extension
     public static class ElementExtension
     {
         /// <summary>
-        /// 
+        /// Get Element Parameter
         /// </summary>
         /// <param name="element"></param>
         /// <param name="parameterId"></param>
         /// <returns></returns>
         public static Parameter GetParameter(this Element element, ElementId parameterId)
         {
-            foreach (Parameter item in element.Parameters)
+            if (element == null)
             {
-                if (item.Id == parameterId)
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            if (parameterId != ElementId.InvalidElementId)
+            {
+                foreach (Parameter item in element.Parameters)
                 {
-                    return item;
+                    if (item.Id == parameterId)
+                    {
+                        return item;
+                    }
                 }
             }
             return default;

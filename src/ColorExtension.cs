@@ -23,6 +23,10 @@ namespace Tuna.Revit.Extension
     {
         public static string ConvertToHTML(this Autodesk.Revit.DB.Color color)
         {
+            if (color == null || !color.IsValid)
+            {
+                color = new Autodesk.Revit.DB.Color(80, 80, 80);
+            }
             return ColorTranslator.ToHtml(Color.FromArgb(color.Red, color.Green, color.Blue));
         }
 

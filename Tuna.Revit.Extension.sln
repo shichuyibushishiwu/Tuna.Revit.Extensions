@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Revit.Extension", "src\Tuna.Revit.Extension.csproj", "{34174205-057F-4D7E-AF0A-27B3EE17552A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0CD53AF8-74E4-4F2A-BA04-DC7B0AA1CEC1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{34275DF4-26BE-4772-A596-EF731C0A66A2}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Rvt_20_Debug|Any CPU = Rvt_20_Debug|Any CPU
+		Rvt_20_Release|Any CPU = Rvt_20_Release|Any CPU
+		Rvt_21_Debug|Any CPU = Rvt_21_Debug|Any CPU
+		Rvt_21_Release|Any CPU = Rvt_21_Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_20_Debug|Any CPU.ActiveCfg = Rvt_20_Debug|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_20_Debug|Any CPU.Build.0 = Rvt_20_Debug|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_20_Release|Any CPU.ActiveCfg = Rvt_20_Release|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_20_Release|Any CPU.Build.0 = Rvt_20_Release|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_21_Debug|Any CPU.ActiveCfg = Rvt_21_Debug|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_21_Debug|Any CPU.Build.0 = Rvt_21_Debug|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_21_Release|Any CPU.ActiveCfg = Rvt_21_Release|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_21_Release|Any CPU.Build.0 = Rvt_21_Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{34174205-057F-4D7E-AF0A-27B3EE17552A} = {0CD53AF8-74E4-4F2A-BA04-DC7B0AA1CEC1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F3E44F7-9014-4012-85FD-37E211988994}
+	EndGlobalSection
+EndGlobal
