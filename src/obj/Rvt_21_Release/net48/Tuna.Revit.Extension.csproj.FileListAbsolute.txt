@@ -8,3 +8,13 @@ E:\03-Github\Tuna.Revit.Extension\src\obj\Rvt_21_Release\net48\Tuna.Revit.Extens
 E:\03-Github\Tuna.Revit.Extension\src\obj\Rvt_21_Release\net48\Tuna.Revit.Extension.csproj.CopyComplete
 E:\03-Github\Tuna.Revit.Extension\src\obj\Rvt_21_Release\net48\Tuna.Revit.Extension.dll
 E:\03-Github\Tuna.Revit.Extension\src\obj\Rvt_21_Release\net48\Tuna.Revit.Extension.pdb
+E:\03-Github\01-Shichuyibushishiwu\Tuna.Revit.Extension\src\bin\Rvt_21_Release\net48\Tuna.Revit.Extension.dll
+E:\03-Github\01-Shichuyibushishiwu\Tuna.Revit.Extension\src\bin\Rvt_21_Release\net48\Tuna.Revit.Extension.pdb
+E:\03-Github\01-Shichuyibushishiwu\Tuna.Revit.Extension\src\bin\Rvt_21_Release\net48\RevitAPI.dll
+E:\03-Github\01-Shichuyibushishiwu\Tuna.Revit.Extension\src\bin\Rvt_21_Release\net48\RevitAPIUI.dll
+E:\03-Github\01-Shichuyibushishiwu\Tuna.Revit.Extension\src\obj\Rvt_21_Release\net48\Tuna.Revit.Extension.csproj.AssemblyReference.cache
+E:\03-Github\01-Shichuyibushishiwu\Tuna.Revit.Extension\src\obj\Rvt_21_Release\net48\Tuna.Revit.Extension.GeneratedMSBuildEditorConfig.editorconfig
+E:\03-Github\01-Shichuyibushishiwu\Tuna.Revit.Extension\src\obj\Rvt_21_Release\net48\Tuna.Revit.Extension.csproj.CoreCompileInputs.cache
+E:\03-Github\01-Shichuyibushishiwu\Tuna.Revit.Extension\src\obj\Rvt_21_Release\net48\Tuna.Revit.Extension.csproj.CopyComplete
+E:\03-Github\01-Shichuyibushishiwu\Tuna.Revit.Extension\src\obj\Rvt_21_Release\net48\Tuna.Revit.Extension.dll
+E:\03-Github\01-Shichuyibushishiwu\Tuna.Revit.Extension\src\obj\Rvt_21_Release\net48\Tuna.Revit.Extension.pdb

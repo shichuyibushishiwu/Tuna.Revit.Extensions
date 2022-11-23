@@ -21,6 +21,11 @@ namespace Tuna.Revit.Extension
 {
     public static class ColorExtension
     {
+        /// <summary>
+        /// Convert To HTML
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public static string ConvertToHTML(this Autodesk.Revit.DB.Color color)
         {
             if (color == null || !color.IsValid)
@@ -30,9 +35,15 @@ namespace Tuna.Revit.Extension
             return ColorTranslator.ToHtml(Color.FromArgb(color.Red, color.Green, color.Blue));
         }
 
+
+        /// <summary>
+        /// Convert To <see cref="Autodesk.Revit.DB.Color"/>
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns><see cref="Autodesk.Revit.DB.Color"/></returns>
         public static Autodesk.Revit.DB.Color ConvertToRevitColor(this System.Drawing.Color color)
         {
-            return new Autodesk.Revit.DB.Color(color.R, color.G, color.B);
+            return new Autodesk.Revit.DB.Color(color.R, color.G, color.B); 
         }
     }
 }

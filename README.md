@@ -3,6 +3,7 @@
 # Introductions
 > This is a extension package for revit api.
 
+
 # Samples
 
 ## Document
@@ -14,19 +15,22 @@ document.NewTransaction(()=>
 ```
 ## RibbonUI
 ```C#
-
-
-
+panel.CreateButton<CreateWallCommand>((b)=>
+{
+    //do someting...
+})
 ```
 
 
-# Version
+# Support Version
 
+* Revit 2020
+* Revit 2021
 
 # Install
 
 ```
- -package 
+ > dotnet add package Tuna.Revit.Extension --version 2021.0.0
 ```
 
 

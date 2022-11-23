@@ -5,7 +5,7 @@
   },
   "projects": {
     "E:\\03-Github\\01-Shichuyibushishiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj": {
-      "version": "1.0.0",
+      "version": "2020.0.0",
       "restore": {
         "projectUniqueName": "E:\\03-Github\\01-Shichuyibushishiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
         "projectName": "Tuna.Revit.Extension",
@@ -45,21 +45,13 @@
         "net48": {
           "targetAlias": "net48",
           "dependencies": {
-            "Microsoft.CSharp": {
-              "target": "Package",
-              "version": "[4.7.0, )"
-            },
             "Revit.RevitApi.x64": {
               "target": "Package",
-              "version": "[2021.0.0, )"
+              "version": "[2020.0.0, )"
             },
             "Revit.RevitApiUI.x64": {
               "target": "Package",
-              "version": "[2021.0.0, )"
-            },
-            "System.Data.DataSetExtensions": {
-              "target": "Package",
-              "version": "[4.5.0, )"
+              "version": "[2020.0.0, )"
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400-preview.22330.6\\RuntimeIdentifierGraph.json"

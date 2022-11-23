@@ -20,11 +20,21 @@ namespace Tuna.Revit.Extension
 {
     public static class UnitExtension
     {
+        /// <summary>
+        /// Convert To Millimeters
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static double ConvertToMillimeters(this int value)
         {
             return ((double)value).ConvertToMillimeters();
         }
 
+        /// <summary>
+        /// Convert To Millimeters
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static double ConvertToMillimeters(this double value)
         {
 #if Rvt_21

@@ -9,6 +9,13 @@ namespace Tuna.Revit.Extension
 {
     public static class TransactionExtension
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="func"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static TransactionStatus NewTransaction(this Document document, Func<bool> func, string name = "Default Transaction Name")
         {
             TransactionStatus status = TransactionStatus.Uninitialized;
@@ -21,6 +28,12 @@ namespace Tuna.Revit.Extension
             return status;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
         public static TransactionStatus NewSubTransaction(this Document document, Action action)
         {
             TransactionStatus status = TransactionStatus.Uninitialized;
@@ -33,6 +46,13 @@ namespace Tuna.Revit.Extension
             return status;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="func"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static TransactionStatus NewTransactionGroup(this Document document, Func<bool> func, string name = "Default Transaction Group Name")
         {
             TransactionStatus status = TransactionStatus.Uninitialized;
