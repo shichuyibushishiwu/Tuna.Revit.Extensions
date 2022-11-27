@@ -46,11 +46,11 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <None Include="..\..\Tuna\images\Tuna.png">
+	  <None Include="..\README.md">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>
-	  <None Include="..\README.md">
+	  <None Include="..\Tuna.png">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>

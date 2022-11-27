@@ -22,9 +22,8 @@ namespace Tuna.Revit.Extension
 {
     public static class UIExtension
     {
-
         /// <summary>
-        /// CreateButton
+        /// Create Button
         /// </summary>
         /// <typeparam name="T">IExternalCommand</typeparam>
         /// <param name="panel"></param>
@@ -33,10 +32,10 @@ namespace Tuna.Revit.Extension
         public static RibbonPanel CreateButton<T>(this RibbonPanel panel, Action<PushButtonData> action) where T : IExternalCommand
         {
             Type type = typeof(T);
-            string name = $"btn_{type.Name}";
-            PushButtonData pushButtonData = new PushButtonData(name, name, type.Assembly.Location, type.FullName);
-            action.Invoke(pushButtonData);
-            panel.AddItem(pushButtonData);panel.CreateButton<T>(action);
+            string name = type.Name;
+            PushButtonData pushButtonData = new PushButtonData($"btn_{name}", name, type.Assembly.Location, type.FullName);
+            action?.Invoke(pushButtonData);
+            panel.AddItem(pushButtonData);
             return panel;
         }
 

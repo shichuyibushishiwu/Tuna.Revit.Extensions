@@ -20,58 +20,6 @@ namespace Tuna.Revit.Extension
 {
     public static class DocumentExtension
     {
-        /// <summary>
-        /// Get Elements
-        /// </summary>
-        /// <param name="document"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        private static FilteredElementCollector GetElements(this Document document)
-        {
-            if (document == null || !document.IsValidObject)
-            {
-                throw new ArgumentNullException("document is null or invalid object");
-            }
-            return new FilteredElementCollector(document);
-        }
 
-        /// <summary>
-        /// Get Elements
-        /// </summary>
-        /// <param name="document"></param>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        public static FilteredElementCollector GetElements(this Document document, ElementFilter filter)
-        {
-            return document.GetElements().WherePasses(filter);
-        }
-
-        /// <summary>
-        /// Get Elements
-        /// </summary>
-        /// <param name="document"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        private static FilteredElementCollector GetElements(this Document document, Type type)
-        {
-            return document.GetElements(new ElementClassFilter(type));
-        }
-
-        /// <summary>
-        /// Get Elements
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="document"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        private static IEnumerable<T> GetElements<T>(this Document document, Func<T, bool> predicate = null) where T : Element
-        {
-            IEnumerable<T> elements = document.GetElements(typeof(T)).Cast<T>();
-            if (predicate != null)
-            {
-                elements = elements.Where(predicate);
-            }
-            return elements;
-        }
     }
 }
