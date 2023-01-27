@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "1wB+5MO+8kWmPkMpZ38l8ZbZMP6W/EvNPthI/Kv3Ug5OrwFQe9gwYffRissTHEOBEKbQUZMPqWv8mKX4uAnpTQ==",
+  "dgSpecHash": "1yuv3YJTVUG+4l83ABAh32eAEGOSOHHWIttE2GITl9QoKPtiod9axclp+kwGuqY4htTPfmsjW6IpirVkppm8xg==",
   "success": true,
   "projectFilePath": "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\29135\\.nuget\\packages\\revit.revitapi.x64\\2020.0.0\\revit.revitapi.x64.2020.0.0.nupkg.sha512",
-    "C:\\Users\\29135\\.nuget\\packages\\revit.revitapiui.x64\\2020.0.0\\revit.revitapiui.x64.2020.0.0.nupkg.sha512"
+    "C:\\Users\\29135\\.nuget\\packages\\revit_all_main_versions_api_x64\\2021.0.0\\revit_all_main_versions_api_x64.2021.0.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -7,7 +7,7 @@
 		<LangVersion>10</LangVersion>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 		<PlatformTarget>x64</PlatformTarget>
-		<Configurations>Debug;Release;Rvt_20_Release;Rvt_21_Release;Rvt_20_Debug;Rvt_21_Debug</Configurations>
+		<Configurations>Debug;Release;Rvt_20_Release;Rvt_21_Release;Rvt_20_Debug;Rvt_21_Debug;Rvt_22_Debug;Rvt_22_Release;Rvt_23_Debug;Rvt_23_Release;Rvt_19_Debug;Rvt_19_Release;Rvt_18_Debug;Rvt_18_Release</Configurations>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Company>Tuna</Company>
 		<Authors>Shiwu</Authors>
@@ -15,6 +15,20 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Description>This is a extension package for revit api.</Description>
 		<PackageProjectUrl>https://shichuyibushishiwu.top</PackageProjectUrl>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_18))'">
+		<RvtVersion>2018</RvtVersion>
+		<DefineConstants>Rvt_18</DefineConstants>
+		<TargetFramework>net48</TargetFramework>
+		<Version>2018.0.0</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_19))'">
+		<RvtVersion>2019</RvtVersion>
+		<DefineConstants>Rvt_19</DefineConstants>
+		<TargetFramework>net48</TargetFramework>
+		<Version>2019.0.0</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_20))'">
@@ -31,28 +45,58 @@
 		<Version>2021.0.0</Version>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_22))'">
+		<RvtVersion>2022</RvtVersion>
+		<DefineConstants>Rvt_22</DefineConstants>
+		<TargetFramework>net48</TargetFramework>
+		<Version>2022.0.0</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_23))'">
+		<RvtVersion>2023</RvtVersion>
+		<DefineConstants>Rvt_23</DefineConstants>
+		<TargetFramework>net48</TargetFramework>
+		<Version>2023.0.0</Version>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_18))'">
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2018.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_19))'">
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2019.0.0" />
+	</ItemGroup>
+
 	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_20))'">
-		<PackageReference Include="Revit.RevitApi.x64" Version="2020.0.0" />
-		<PackageReference Include="Revit.RevitApiUI.x64" Version="2020.0.0" />
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2020.0.0" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_21))'">
-		<PackageReference Include="Revit.RevitApi.x64" Version="2021.0.0" />
-		<PackageReference Include="Revit.RevitApiUI.x64" Version="2021.0.0" />
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2021.0.0" />
 	</ItemGroup>
-	
+
+	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_22))'">
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2022.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_23))'">
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2023.0.0" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<Folder Include="Properties\" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-	  <None Include="..\README.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
-	  <None Include="..\Tuna.png">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\Tuna.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 	</ItemGroup>
+
+
 </Project>

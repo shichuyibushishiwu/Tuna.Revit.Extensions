@@ -2,56 +2,50 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.8": {
-      "Revit.RevitApi.x64/2020.0.0": {
+      "Revit_All_Main_Versions_API_x64/2021.0.0": {
         "type": "package",
         "compile": {
-          "lib/net472/RevitAPI.dll": {}
+          "lib/net48/AdWindows.dll": {},
+          "lib/net48/RevitAPI.dll": {},
+          "lib/net48/RevitAPIUI.dll": {},
+          "lib/net48/UIFramework.dll": {}
         },
         "runtime": {
-          "lib/net472/RevitAPI.dll": {}
-        }
-      },
-      "Revit.RevitApiUI.x64/2020.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/net472/RevitAPIUI.dll": {}
-        },
-        "runtime": {
-          "lib/net472/RevitAPIUI.dll": {}
+          "lib/net48/AdWindows.dll": {},
+          "lib/net48/RevitAPI.dll": {},
+          "lib/net48/RevitAPIUI.dll": {},
+          "lib/net48/UIFramework.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "Revit.RevitApi.x64/2020.0.0": {
-      "sha512": "KWFUJU0PIepxQ0Ysnztl2qHsHcGvCS/WK4gcjDB6+p0AF1uMZKuMt0DcRURRATMTeC5wVqvkSwcy5lUxfdXqxg==",
+    "Revit_All_Main_Versions_API_x64/2021.0.0": {
+      "sha512": "eP2HySoRPFMEMrfeKsIoFSXFzh8DTxhkq9WBR+BvTV3hVHJCULayhcbxtLLBX0npvIn3APrStlWl9G7hDqwbFA==",
       "type": "package",
-      "path": "revit.revitapi.x64/2020.0.0",
+      "path": "revit_all_main_versions_api_x64/2021.0.0",
+      "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "lib/net472/RevitAPI.dll",
-        "revit.revitapi.x64.2020.0.0.nupkg.sha512",
-        "revit.revitapi.x64.nuspec"
-      ]
-    },
-    "Revit.RevitApiUI.x64/2020.0.0": {
-      "sha512": "QeS6VrK1BqrSOpK9y/SXrsuKaQB3agH3/71OqPUN99OxmzuKpbO91BF88Ngn1g/G87A83HNXujWdb4nj7QJZaA==",
-      "type": "package",
-      "path": "revit.revitapiui.x64/2020.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net472/RevitAPIUI.dll",
-        "revit.revitapiui.x64.2020.0.0.nupkg.sha512",
-        "revit.revitapiui.x64.nuspec"
+        "License.txt",
+        "ReadMe.txt",
+        "Revit.png",
+        "lib/net48/AdWindows.dll",
+        "lib/net48/RevitAPI.dll",
+        "lib/net48/RevitAPI.xml",
+        "lib/net48/RevitAPIUI.dll",
+        "lib/net48/RevitAPIUI.xml",
+        "lib/net48/UIFramework.dll",
+        "revit_all_main_versions_api_x64.2021.0.0.nupkg.sha512",
+        "revit_all_main_versions_api_x64.nuspec",
+        "tools/install.ps1"
       ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.8": [
-      "Revit.RevitApi.x64 >= 2020.0.0",
-      "Revit.RevitApiUI.x64 >= 2020.0.0"
+      "Revit_All_Main_Versions_API_x64 >= 2021.0.0"
     ]
   },
   "packageFolders": {
@@ -59,7 +53,7 @@
     "D:\\Microsoft\\VisualStudio2019\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "2020.0.0",
+    "version": "2021.0.0",
     "restore": {
       "projectUniqueName": "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
       "projectName": "Tuna.Revit.Extension",
@@ -98,13 +92,9 @@
       "net48": {
         "targetAlias": "net48",
         "dependencies": {
-          "Revit.RevitApi.x64": {
+          "Revit_All_Main_Versions_API_x64": {
             "target": "Package",
-            "version": "[2020.0.0, )"
-          },
-          "Revit.RevitApiUI.x64": {
-            "target": "Package",
-            "version": "[2020.0.0, )"
+            "version": "[2021.0.0, )"
           }
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
