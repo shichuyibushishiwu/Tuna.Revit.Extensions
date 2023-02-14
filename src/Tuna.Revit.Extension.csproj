@@ -7,7 +7,7 @@
 		<LangVersion>10</LangVersion>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 		<PlatformTarget>x64</PlatformTarget>
-		<Configurations>Debug;Release;Rvt_20_Release;Rvt_21_Release;Rvt_20_Debug;Rvt_21_Debug;Rvt_22_Debug;Rvt_22_Release;Rvt_23_Debug;Rvt_23_Release;Rvt_19_Debug;Rvt_19_Release;Rvt_18_Debug;Rvt_18_Release</Configurations>
+		<Configurations>Debug;Release;Rvt_20_Release;Rvt_21_Release;Rvt_20_Debug;Rvt_21_Debug;Rvt_22_Debug;Rvt_22_Release;Rvt_23_Debug;Rvt_23_Release;Rvt_19_Debug;Rvt_19_Release;Rvt_18_Debug;Rvt_18_Release;Rvt_16_Debug;Rvt_17_Debug</Configurations>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Company>Tuna</Company>
 		<Authors>Shiwu</Authors>
@@ -15,34 +15,49 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Description>This is a extension package for revit api.</Description>
 		<PackageProjectUrl>https://shichuyibushishiwu.top</PackageProjectUrl>
+
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
+		<RvtVersion>2016</RvtVersion>
+		<DefineConstants>Rvt_16</DefineConstants>
+		<TargetFramework>net452</TargetFramework>
+		<Version>2016.0.1</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_17))'">
+		<RvtVersion>2017</RvtVersion>
+		<DefineConstants>Rvt_17</DefineConstants>
+		<TargetFramework>net46</TargetFramework>
+		<Version>2017.0.1</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_18))'">
 		<RvtVersion>2018</RvtVersion>
 		<DefineConstants>Rvt_18</DefineConstants>
-		<TargetFramework>net48</TargetFramework>
-		<Version>2018.0.0</Version>
+		<TargetFramework>net46</TargetFramework>
+		<Version>2018.0.2</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_19))'">
 		<RvtVersion>2019</RvtVersion>
 		<DefineConstants>Rvt_19</DefineConstants>
-		<TargetFramework>net48</TargetFramework>
-		<Version>2019.0.0</Version>
+		<TargetFramework>net47</TargetFramework>
+		<Version>2019.0.1</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_20))'">
 		<RvtVersion>2020</RvtVersion>
 		<DefineConstants>Rvt_20</DefineConstants>
-		<TargetFramework>net48</TargetFramework>
-		<Version>2020.0.0</Version>
+		<TargetFramework>net47</TargetFramework>
+		<Version>2020.0.2</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_21))'">
 		<RvtVersion>2021</RvtVersion>
 		<DefineConstants>Rvt_21</DefineConstants>
 		<TargetFramework>net48</TargetFramework>
-		<Version>2021.0.0</Version>
+		<Version>2021.0.1</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_22))'">
@@ -59,8 +74,16 @@
 		<Version>2023.0.0</Version>
 	</PropertyGroup>
 
+	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2016.0.2" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_17))'">
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2017.0.2" />
+	</ItemGroup>
+
 	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_18))'">
-		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2018.0.0" />
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2018.0.2" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_19))'">
@@ -85,6 +108,7 @@
 
 	<ItemGroup>
 		<Folder Include="Properties\" />
+		<Folder Include="Data\" />
 	</ItemGroup>
 
 	<ItemGroup>

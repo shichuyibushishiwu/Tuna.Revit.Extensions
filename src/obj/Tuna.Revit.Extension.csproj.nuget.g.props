@@ -14,6 +14,6 @@
     <SourceRoot Include="D:\Microsoft\VisualStudio2019\Shared\NuGetPackages\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgRevit_All_Main_Versions_API_x64 Condition=" '$(PkgRevit_All_Main_Versions_API_x64)' == '' ">C:\Users\29135\.nuget\packages\revit_all_main_versions_api_x64\2021.0.0</PkgRevit_All_Main_Versions_API_x64>
+    <PkgRevit_All_Main_Versions_API_x64 Condition=" '$(PkgRevit_All_Main_Versions_API_x64)' == '' ">C:\Users\29135\.nuget\packages\revit_all_main_versions_api_x64\2023.0.0</PkgRevit_All_Main_Versions_API_x64>
   </PropertyGroup>
 </Project>

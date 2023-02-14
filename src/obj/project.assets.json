@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.8": {
-      "Revit_All_Main_Versions_API_x64/2021.0.0": {
+      "Revit_All_Main_Versions_API_x64/2023.0.0": {
         "type": "package",
         "compile": {
           "lib/net48/AdWindows.dll": {},
@@ -20,10 +20,10 @@
     }
   },
   "libraries": {
-    "Revit_All_Main_Versions_API_x64/2021.0.0": {
-      "sha512": "eP2HySoRPFMEMrfeKsIoFSXFzh8DTxhkq9WBR+BvTV3hVHJCULayhcbxtLLBX0npvIn3APrStlWl9G7hDqwbFA==",
+    "Revit_All_Main_Versions_API_x64/2023.0.0": {
+      "sha512": "1NYjzn6uI3LZm23e4JUlCaWWSepNY977U+4qnFuG0J+nqqfuOxC41Yxtb91WLIH7yG8cAdGIEaoTn33qbCpRwg==",
       "type": "package",
-      "path": "revit_all_main_versions_api_x64/2021.0.0",
+      "path": "revit_all_main_versions_api_x64/2023.0.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -37,7 +37,7 @@
         "lib/net48/RevitAPIUI.dll",
         "lib/net48/RevitAPIUI.xml",
         "lib/net48/UIFramework.dll",
-        "revit_all_main_versions_api_x64.2021.0.0.nupkg.sha512",
+        "revit_all_main_versions_api_x64.2023.0.0.nupkg.sha512",
         "revit_all_main_versions_api_x64.nuspec",
         "tools/install.ps1"
       ]
@@ -45,7 +45,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.8": [
-      "Revit_All_Main_Versions_API_x64 >= 2021.0.0"
+      "Revit_All_Main_Versions_API_x64 >= 2023.0.0"
     ]
   },
   "packageFolders": {
@@ -53,7 +53,7 @@
     "D:\\Microsoft\\VisualStudio2019\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "2021.0.0",
+    "version": "2023.0.0",
     "restore": {
       "projectUniqueName": "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
       "projectName": "Tuna.Revit.Extension",
@@ -94,7 +94,7 @@
         "dependencies": {
           "Revit_All_Main_Versions_API_x64": {
             "target": "Package",
-            "version": "[2021.0.0, )"
+            "version": "[2023.0.0, )"
           }
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"

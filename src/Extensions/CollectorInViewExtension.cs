@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
-    public static partial class CollectorInViewExtension
+    public static partial class CollectorExtension
     {
         /// <summary>
         /// Get Elements InView

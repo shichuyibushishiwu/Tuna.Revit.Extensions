@@ -13,6 +13,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ using Tuna.Revit.Extension;
 namespace Tuna.Sample.Commands
 {
     [Transaction(TransactionMode.Manual)]
-    internal class GeometryTransientDisplayCommand : IExternalCommand
+    public class GeometryTransientDisplayCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -29,15 +30,31 @@ namespace Tuna.Sample.Commands
 
             Document document = uiDocument.Document;
 
-            var ma = document.GetElements<Material>().FirstOrDefault(m => m.Name == "Test");
+
+
+            document.TransientDisplay(new List<GeometryObject>()
+            {
+                Line.CreateBound(XYZ.Zero, XYZ.Zero + new XYZ(20, 20, 20))
+            });
+
+            var gs = document.GetElements<GraphicsStyle>().FirstOrDefault(g => g.Name == "Test");
+            document.TransientDisplay(new List<GeometryObject>()
+            {
+                Line.CreateBound(XYZ.Zero, XYZ.Zero + new XYZ(20, 20, 20))
+            }, gs.Id);
 
 
 
-            document.TransientDisplay(ma.Id, Point.Create(XYZ.Zero + new XYZ(5, 10, 10)));
+
+
+
 
             return Result.Succeeded;
         }
 
-
+        private void Application_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
+        {
+            Debug.WriteLine("asd");
+        }
     }
 }

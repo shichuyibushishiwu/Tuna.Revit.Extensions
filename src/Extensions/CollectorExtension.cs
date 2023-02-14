@@ -53,8 +53,36 @@ namespace Tuna.Revit.Extension
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, Type type)
         {
+            if (!type.IsSubclassOf(typeof(Element)))
+            {
+                throw new ArgumentException("type is not a subclass of element");
+            }
             return document.GetElements(new ElementClassFilter(type));
         }
+
+        /// <summary>
+        /// This is a function which used to get elements 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="document"></param>
+        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        public static FilteredElementCollector GetElements<T>(this Document document) where T : Element
+        {
+            return document.GetElements(typeof(T));
+        }
+
+        /// <summary>
+        /// This is a function which used to get elements 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="category"></param>
+        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        public static FilteredElementCollector GetElements(this Document document, BuiltInCategory category)
+        {
+            return document.GetElements(new ElementCategoryFilter(category));
+        }
+
+
 
         /// <summary>
         /// This is a function which used to get elements 
@@ -80,14 +108,16 @@ namespace Tuna.Revit.Extension
         /// <param name="document"></param>
         /// <param name="func"></param>
         /// <returns></returns>
-        public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> func = null) where T : ElementType
+        public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> predicate = null) where T : ElementType
         {
             IEnumerable<T> elementTypes = document.GetElements(typeof(T)).Cast<T>();
-            if (func != null)
+            if (predicate != null)
             {
-                elementTypes = elementTypes.Where(func); 
+                elementTypes = elementTypes.Where(predicate);
             }
             return elementTypes;
+
+            //return document.GetElements<T>(predicate);
         }
     }
 }

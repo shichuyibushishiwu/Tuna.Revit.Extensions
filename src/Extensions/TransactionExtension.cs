@@ -10,22 +10,36 @@ namespace Tuna.Revit.Extension
     public static class TransactionExtension
     {
         /// <summary>
-        /// 
+        /// This is a function which used to start a document transaction
         /// </summary>
         /// <param name="document"></param>
         /// <param name="func"></param>
         /// <param name="name"></param>
-        /// <returns></returns>
-        public static TransactionStatus NewTransaction(this Document document, Func<bool> func, string name = "Default Transaction Name")
+        /// <returns>If document is read only,return <see cref="Autodesk.Revit.DB.TransactionStatus.Error"/></returns>
+        public static TransactionStatus NewTransaction(this Document document, Action action, bool rollback = false, string name = "Default Transaction Name")
         {
-            TransactionStatus status = TransactionStatus.Uninitialized;
+            if (document == null)
+            {
+                throw new ArgumentNullException(nameof(document));
+            }
+
+            if (document.IsReadOnly)
+            {
+                return TransactionStatus.Error;
+            }
+
             using (Transaction transaction = new Transaction(document, name))
             {
-                transaction.Start();
-                var result = func.Invoke();
-                status = result ? transaction.Commit() : transaction.RollBack();
+                if (transaction.Start() == TransactionStatus.Started)
+                {
+                    action.Invoke();
+                    if (!rollback)
+                    {
+                        return transaction.Commit();
+                    }
+                }
+                return transaction.RollBack();
             }
-            return status;
         }
 
         /// <summary>
