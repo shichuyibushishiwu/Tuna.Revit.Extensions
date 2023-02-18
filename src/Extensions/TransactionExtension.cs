@@ -18,9 +18,9 @@ namespace Tuna.Revit.Extension
         /// <returns>If document is read only,return <see cref="Autodesk.Revit.DB.TransactionStatus.Error"/></returns>
         public static TransactionStatus NewTransaction(this Document document, Action action, bool rollback = false, string name = "Default Transaction Name")
         {
-            if (document == null)
+            if (!document!.IsValidObject)
             {
-                throw new ArgumentNullException(nameof(document));
+                throw new ArgumentNullException("document is null or invalid object");
             }
 
             if (document.IsReadOnly)
@@ -43,13 +43,18 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// 
+        /// This is a function which used to start a document SubTransaction 
         /// </summary>
         /// <param name="document"></param>
         /// <param name="action"></param>
         /// <returns></returns>
         public static TransactionStatus NewSubTransaction(this Document document, Action action)
         {
+            if (!document!.IsValidObject)
+            {
+                throw new ArgumentNullException("document is null or invalid object");
+            }
+
             TransactionStatus status = TransactionStatus.Uninitialized;
             using (SubTransaction transaction = new SubTransaction(document))
             {
@@ -61,23 +66,34 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// 
+        /// This is a function which used to start a document Transaction Group
         /// </summary>
         /// <param name="document"></param>
         /// <param name="func"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static TransactionStatus NewTransactionGroup(this Document document, Func<bool> func, string name = "Default Transaction Group Name")
+        public static TransactionStatus NewTransactionGroup(this Document document, Action action, bool rollback = false, bool assimilate = true, string name = "Default Transaction Group Name")
         {
+            if (!document!.IsValidObject)
+            {
+                throw new ArgumentNullException("document is null or invalid object");
+            }
+
             TransactionStatus status = TransactionStatus.Uninitialized;
             using (TransactionGroup ts = new TransactionGroup(document, name))
             {
                 ts.Start();
-                bool result = func.Invoke();
-                status = result ? ts.Assimilate() : ts.RollBack();
+                action.Invoke();
+                if (rollback)
+                {
+                    status = ts.RollBack();
+                }
+                else
+                {
+                    status = assimilate ? ts.Assimilate() : ts.Commit();
+                }
             }
             return status;
         }
-
     }
 }
