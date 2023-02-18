@@ -21,7 +21,7 @@ namespace Tuna.Revit.Extension
     public static class SelectionExtension
     {
         /// <summary>
-        /// if the user cancels the operation (for example, through ESC), the method will return null. 
+        /// Prompts the user to select one element , if the user cancels the operation (for example, through ESC), the method will return null. 
         /// </summary>
         /// <param name="uiDocument"></param>
         /// <returns></returns>
@@ -36,6 +36,31 @@ namespace Tuna.Revit.Extension
             return uiDocument.Document.GetElement(elementRef);
         }
 
+        /// <summary>
+        /// Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return null. 
+        /// </summary>
+        /// <param name="uiDocument"></param>
+        /// <param name="objectType"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public static Reference SelectObject(this UIDocument uiDocument, Autodesk.Revit.UI.Selection.ObjectType objectType)
+        {
+            if (uiDocument == null)
+            {
+                throw new ArgumentNullException("UIDocument can not be null");
+            }
 
+            Reference reference = null;
+            try
+            {
+                reference = uiDocument.Selection.PickObject(objectType);
+            }
+            catch (Autodesk.Revit.Exceptions.OperationCanceledException exception)
+            {
+                string logInfo = exception.Message;
+            }
+
+            return reference;
+        }
     }
 }
