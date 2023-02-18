@@ -38,10 +38,7 @@ namespace Tuna.Sample.Commands
             });
 
             var gs = document.GetElements<GraphicsStyle>().FirstOrDefault(g => g.Name == "Test");
-            document.TransientDisplay(new List<GeometryObject>()
-            {
-                Line.CreateBound(XYZ.Zero, XYZ.Zero + new XYZ(20, 20, 20))
-            }, gs.Id);
+            document.TransientDisplay(Line.CreateBound(XYZ.Zero, XYZ.Zero + new XYZ(20, 20, 20)), gs.Id);
 
 
 

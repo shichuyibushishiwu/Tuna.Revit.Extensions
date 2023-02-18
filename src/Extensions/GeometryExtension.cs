@@ -51,6 +51,18 @@ namespace Tuna.Revit.Extension
             });
         }
 
+        /// <summary>
+        /// Creates geometry of transient (temporary) element for application display which will not be saved with the model.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="obj"></param>
+        /// <param name="graphicsStyleId"></param>
+        /// <returns>The element id of the created element</returns>
+        public static ElementId TransientDisplay(this Document document, GeometryObject obj, ElementId graphicsStyleId = null)
+        {
+            return document.TransientDisplay(new List<GeometryObject>() { obj }, graphicsStyleId);
+        }
+
         private static MethodInfo GetTransientDisplayMethod()
         {
             return typeof(GeometryElement)

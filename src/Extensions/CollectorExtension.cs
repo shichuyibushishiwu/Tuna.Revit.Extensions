@@ -42,6 +42,10 @@ namespace Tuna.Revit.Extension
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, ElementFilter filter)
         {
+            if (filter == null)
+            {
+                throw new ArgumentNullException("filter can not be null");
+            }
             return document.GetElements().WherePasses(filter);
         }
 
