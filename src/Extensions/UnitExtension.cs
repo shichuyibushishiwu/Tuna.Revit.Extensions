@@ -39,11 +39,7 @@ namespace Tuna.Revit.Extension
         {
 #if Rvt_21 || Rvt_22 || Rvt_23
             return UnitUtils.Convert(value, UnitTypeId.Feet, UnitTypeId.Millimeters);
-            
-     
-#endif
-
-#if Rvt_20 || Rvt_19 || Rvt_18|| Rvt_17|| Rvt_16
+#else 
             return UnitUtils.Convert(value, DisplayUnitType.DUT_DECIMAL_FEET, DisplayUnitType.DUT_MILLIMETERS);
 #endif
         }

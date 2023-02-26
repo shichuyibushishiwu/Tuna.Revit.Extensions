@@ -31,9 +31,9 @@ namespace Tuna.Revit.Extension
         {
             if (element == null)
             {
-                throw new ArgumentNullException(nameof(element));
+                throw new ArgumentNullException(nameof(element), "element can not be null");
             }
-            
+
             if (parameterId != ElementId.InvalidElementId)
             {
                 foreach (Parameter item in element.Parameters)

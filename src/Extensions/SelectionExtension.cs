@@ -47,7 +47,7 @@ namespace Tuna.Revit.Extension
         {
             if (uiDocument == null)
             {
-                throw new ArgumentNullException("UIDocument can not be null");
+                throw new ArgumentNullException(nameof(uiDocument), "UIDocument can not be null");
             }
 
             Reference reference = null;

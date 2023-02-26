@@ -27,11 +27,17 @@ namespace Tuna.Revit.Extension
 {
     public static class MaterialExtension
     {
+        /// <summary>
+        /// Get generic material appearance color
+        /// </summary>
+        /// <param name="material"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static Color GetAppearanceColor(this Material material)
         {
             if (material == null || !material.IsValidObject)
             {
-                throw new ArgumentNullException("material is null or invalid material");
+                throw new ArgumentNullException(nameof(material), "material is null or invalid material");
             }
 
             ElementId appearanceAssetId = material.AppearanceAssetId;
@@ -45,22 +51,33 @@ namespace Tuna.Revit.Extension
 #else
                 var assetProperty = asset?.FindByName("generic_diffuse");
 #endif
-                AssetPropertyDoubleArray4d genericDiffuseColor = (AssetPropertyDoubleArray4d)assetProperty;
+                if (assetProperty != null)
+                {
+                    AssetPropertyDoubleArray4d genericDiffuseColor = (AssetPropertyDoubleArray4d)assetProperty;
 
 #if Rvt_16 || Rvt_17
-                DoubleArray array = genericDiffuseColor.Value;
-                byte r = (byte)(array.get_Item(0) * 255);
-                byte g = (byte)(array.get_Item(1) * 255);
-                byte b = (byte)(array.get_Item(2) * 255);
-                return new Color(r, g, b);
+                    DoubleArray array = genericDiffuseColor.Value;
+                    byte r = (byte)(array.get_Item(0) * 255);
+                    byte g = (byte)(array.get_Item(1) * 255);
+                    byte b = (byte)(array.get_Item(2) * 255);
+                    return new Color(r, g, b);
 #else
-                return genericDiffuseColor?.GetValueAsColor();
+                    return genericDiffuseColor?.GetValueAsColor();
 #endif
+                }
+
             }
             return null;
         }
 
-#if Rvt_18||Rvt_19||Rvt_20||Rvt_21||Rvt_22||Rvt_23
+
+#if !Rvt_16 && !Rvt_17
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="material"></param>
+        /// <param name="color"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public static void SetAppearanceColor(this Material material, Color color)
         {
             if (material == null || !material.IsValidObject)

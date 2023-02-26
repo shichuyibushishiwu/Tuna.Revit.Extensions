@@ -20,7 +20,12 @@ namespace Tuna.Revit.Extension
         {
             if (!document!.IsValidObject)
             {
-                throw new ArgumentNullException("document is null or invalid object");
+                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action), "action can not be null");
             }
 
             if (document.IsReadOnly)
@@ -38,7 +43,7 @@ namespace Tuna.Revit.Extension
                         return transaction.Commit();
                     }
                 }
-                return transaction.RollBack();
+                return transaction.RollBack(transaction.GetFailureHandlingOptions().SetClearAfterRollback(true));
             }
         }
 
@@ -48,21 +53,30 @@ namespace Tuna.Revit.Extension
         /// <param name="document"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static TransactionStatus NewSubTransaction(this Document document, Action action)
+        public static TransactionStatus NewSubTransaction(this Document document, Action action, bool rollback = false)
         {
             if (!document!.IsValidObject)
             {
-                throw new ArgumentNullException("document is null or invalid object");
+                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
             }
 
-            TransactionStatus status = TransactionStatus.Uninitialized;
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action), "action can not be null");
+            }
+
             using (SubTransaction transaction = new SubTransaction(document))
             {
-                transaction.Start();
-                action?.Invoke();
-                transaction.Commit();
+                if (transaction.Start() == TransactionStatus.Started)
+                {
+                    action.Invoke();
+                    if (!rollback)
+                    {
+                        return transaction.Commit();
+                    }
+                }
+                return transaction.RollBack();
             }
-            return status;
         }
 
         /// <summary>
@@ -72,28 +86,30 @@ namespace Tuna.Revit.Extension
         /// <param name="func"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static TransactionStatus NewTransactionGroup(this Document document, Action action, bool rollback = false, bool assimilate = true, string name = "Default Transaction Group Name")
+        public static TransactionStatus NewTransactionGroup(this Document document, Action action, string name = "Default Transaction Group Name", bool rollback = false, bool assimilate = true)
         {
             if (!document!.IsValidObject)
             {
-                throw new ArgumentNullException("document is null or invalid object");
+                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
             }
 
-            TransactionStatus status = TransactionStatus.Uninitialized;
-            using (TransactionGroup ts = new TransactionGroup(document, name))
+            if (action == null)
             {
-                ts.Start();
-                action.Invoke();
-                if (rollback)
-                {
-                    status = ts.RollBack();
-                }
-                else
-                {
-                    status = assimilate ? ts.Assimilate() : ts.Commit();
-                }
+                throw new ArgumentNullException(nameof(action), "action can not be null");
             }
-            return status;
+
+            using (TransactionGroup tsg = new TransactionGroup(document, name))
+            {
+                if (tsg.Start() == TransactionStatus.Started)
+                {
+                    action.Invoke();
+                    if (!rollback)
+                    {
+                        return assimilate ? tsg.Assimilate() : tsg.Commit();
+                    }
+                }
+                return tsg.RollBack();
+            }
         }
     }
 }

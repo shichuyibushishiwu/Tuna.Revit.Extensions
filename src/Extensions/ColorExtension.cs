@@ -47,5 +47,19 @@ namespace Tuna.Revit.Extension
         }
 
 
+        public static bool EqualTo(this Autodesk.Revit.DB.Color color, Autodesk.Revit.DB.Color otherColor)
+        {
+            if (color == null || !color.IsValid)
+            {
+                return false;
+            }
+
+            if (otherColor == null && !otherColor.IsValid)
+            {
+                return false;
+            }
+
+            return color.Red == otherColor.Red && color.Green == otherColor.Green && color.Blue == color.Blue;
+        }
     }
 }

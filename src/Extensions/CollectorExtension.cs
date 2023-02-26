@@ -29,7 +29,7 @@ namespace Tuna.Revit.Extension
         {
             if (!document!.IsValidObject)
             {
-                throw new ArgumentNullException("document is null or invalid object");
+                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
             }
             return new FilteredElementCollector(document);
         }
@@ -62,17 +62,6 @@ namespace Tuna.Revit.Extension
                 throw new ArgumentException("type is not a subclass of element");
             }
             return document.GetElements(new ElementClassFilter(type));
-        }
-
-        /// <summary>
-        /// This is a function which used to get elements 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="document"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
-        public static FilteredElementCollector GetElements<T>(this Document document) where T : Element
-        {
-            return document.GetElements(typeof(T));
         }
 
         /// <summary>
