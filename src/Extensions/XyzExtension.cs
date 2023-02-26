@@ -35,13 +35,16 @@ namespace Tuna.Revit.Extension
             return new XYZ(point.X, point.Y, newz);
         }
 
-        public static Line NewLineExt(this XYZ firstPoint,XYZ secondPoint ) 
+        /// <summary>
+        /// 创建直线
+        /// </summary>
+        /// <param name="firstPoint"></param>
+        /// <param name="secondPoint"></param>
+        /// <param name="isBound">是否为线段</param>
+        /// <returns></returns>
+        public static Line NewLineExt(this XYZ firstPoint,XYZ secondPoint ,bool isBound = true) 
         {
-            if (firstPoint.IsEqualExt(secondPoint,GlobalData.GlobalTolerance))
-            {
-                throw new Exception("The first point is equal to the second point");
-            }
-            return Line.CreateBound(firstPoint, secondPoint);
+            return isBound ?firstPoint.CreateBoundExt(secondPoint): firstPoint.CreateUnBoundExt(secondPoint);
         }
 
     }

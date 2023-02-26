@@ -24,5 +24,12 @@ namespace Tuna.Revit.Extension
 				throw new Exception("The first point is equal to the second point");
 			return Line.CreateBound(firstPoint, secondPoint);
 		}
+
+		public static Line CreateUnBoundExt(this XYZ firstPoint, XYZ secondPoint)
+		{
+			if (!firstPoint.IsEqualExt(secondPoint, GlobalData.GlobalTolerance))
+				throw new Exception("The first point is equal to the second point");
+			return Line.CreateUnbound(firstPoint, secondPoint);
+		}
 	}
 }
