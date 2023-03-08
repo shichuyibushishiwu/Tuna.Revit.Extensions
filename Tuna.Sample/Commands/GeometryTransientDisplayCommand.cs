@@ -18,10 +18,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tuna.Revit.Extension;
+using Tuna.Revit.Extension.Attributes;
 
 namespace Tuna.Sample.Commands
 {
     [Transaction(TransactionMode.Manual)]
+    [Availability(Revit.Extension.Data.AvailabilityMode.OnlyDocument | Revit.Extension.Data.AvailabilityMode.OnlyPlanView)]
     public class GeometryTransientDisplayCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)

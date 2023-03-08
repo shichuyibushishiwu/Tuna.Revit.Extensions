@@ -22,21 +22,21 @@
 		<RvtVersion>2016</RvtVersion>
 		<DefineConstants>Rvt_16</DefineConstants>
 		<TargetFramework>net452</TargetFramework>
-		<Version>2016.0.1</Version>
+		<Version>2016.2.1</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_17))'">
 		<RvtVersion>2017</RvtVersion>
 		<DefineConstants>Rvt_17</DefineConstants>
 		<TargetFramework>net46</TargetFramework>
-		<Version>2017.0.1</Version>
+		<Version>2017.2.1</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_18))'">
 		<RvtVersion>2018</RvtVersion>
 		<DefineConstants>Rvt_18</DefineConstants>
 		<TargetFramework>net46</TargetFramework>
-		<Version>2018.0.2</Version>
+		<Version>2018.2.2</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_19))'">
@@ -108,7 +108,6 @@
 
 	<ItemGroup>
 		<Folder Include="Properties\" />
-		<Folder Include="Data\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -13,10 +13,27 @@ namespace Tuna.Revit.Extension
         /// This is a function which used to start a document transaction
         /// </summary>
         /// <param name="document"></param>
-        /// <param name="func"></param>
+        /// <param name="action"></param>
         /// <param name="name"></param>
         /// <returns>If document is read only,return <see cref="Autodesk.Revit.DB.TransactionStatus.Error"/></returns>
         public static TransactionStatus NewTransaction(this Document document, Action action, bool rollback = false, string name = "Default Transaction Name")
+        {
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action), "action can not be null");
+            }
+
+            return NewTransaction(document, (d) => action.Invoke(), rollback, name);
+        }
+
+        /// <summary>
+        /// This is a function which used to start a document transaction
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="action"></param>
+        /// <param name="name"></param>
+        /// <returns>If document is read only,return <see cref="Autodesk.Revit.DB.TransactionStatus.Error"/></returns>
+        public static TransactionStatus NewTransaction(this Document document, Action<Document> action, bool rollback = false, string name = "Default Transaction Name")
         {
             if (!document!.IsValidObject)
             {
@@ -37,7 +54,7 @@ namespace Tuna.Revit.Extension
             {
                 if (transaction.Start() == TransactionStatus.Started)
                 {
-                    action.Invoke();
+                    action.Invoke(document);
                     if (!rollback)
                     {
                         return transaction.Commit();
@@ -53,7 +70,7 @@ namespace Tuna.Revit.Extension
         /// <param name="document"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static TransactionStatus NewSubTransaction(this Document document, Action action, bool rollback = false)
+        public static TransactionStatus NewSubtransaction(this Document document, Action action, bool rollback = false)
         {
             if (!document!.IsValidObject)
             {
@@ -109,6 +126,28 @@ namespace Tuna.Revit.Extension
                     }
                 }
                 return tsg.RollBack();
+            }
+        }
+
+
+        public static void NewTransactionGroup(this Document document, Action<TransactionGroup> action, string name = "Default Transaction Group Name")
+        {
+            if (!document!.IsValidObject)
+            {
+                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action), "action can not be null");
+            }
+
+            using (TransactionGroup tsg = new TransactionGroup(document, name))
+            {
+                if (tsg.Start() == TransactionStatus.Started)
+                {
+                     action.Invoke(tsg);
+                }
             }
         }
     }

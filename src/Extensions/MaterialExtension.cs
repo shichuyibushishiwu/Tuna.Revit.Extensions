@@ -73,7 +73,7 @@ namespace Tuna.Revit.Extension
 
 #if !Rvt_16 && !Rvt_17
         /// <summary>
-        /// 
+        /// Set material appearance color
         /// </summary>
         /// <param name="material"></param>
         /// <param name="color"></param>
@@ -82,7 +82,12 @@ namespace Tuna.Revit.Extension
         {
             if (material == null || !material.IsValidObject)
             {
-                throw new ArgumentNullException("material is null or invalid material");
+                throw new ArgumentNullException(nameof(material), "material is null or invalid material");
+            }
+
+            if (color == null || !color.IsValid)
+            {
+                throw new ArgumentNullException(nameof(color), "color can not be null or color is invalid");
             }
 
             ElementId appearanceAssetId = material.AppearanceAssetId;

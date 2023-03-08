@@ -17,40 +17,83 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Tuna.Revit.Extension.Extensions;
+using Tuna.Revit.Extension.Interfaces;
 
 namespace Tuna.Revit.Extension
 {
     public static class UIExtension
     {
         /// <summary>
-        /// Create Button
+        /// Create ribbon push button
         /// </summary>
         /// <typeparam name="T">IExternalCommand</typeparam>
         /// <param name="panel"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        public static RibbonPanel CreateButton<T>(this RibbonPanel panel, Action<PushButtonData> action) where T : IExternalCommand
+        public static RibbonPanel CreatePushButton<T>(this RibbonPanel panel, Action<PushButtonData> action) where T : class, IExternalCommand, new()
         {
-            Type type = typeof(T);
-            string name = type.Name;
-            PushButtonData pushButtonData = new PushButtonData($"btn_{name}", name, type.Assembly.Location, type.FullName);
-            action?.Invoke(pushButtonData);
+            if (panel == null)
+            {
+                throw new ArgumentNullException(nameof(panel), "panel can not be null");
+            }
+
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action), "action can not be null");
+            }
+
+            Type commandType = typeof(T);
+            string name = commandType.Name;
+            PushButtonData pushButtonData = new PushButtonData($"btn_{name}", name, commandType.Assembly.Location, commandType.FullName);
+            action.Invoke(pushButtonData);
             panel.AddItem(pushButtonData);
             return panel;
         }
 
-        /// <summary>
-        /// Convert To BitmapSource
-        /// </summary>
-        /// <param name="bitmap"></param>
-        /// <returns></returns>
-        public static BitmapSource ConvertToBitmapSource(this System.Drawing.Bitmap bitmap)
+
+        private static PushButtonData CreatePushButton<TCommand>() where TCommand : class, IExternalCommand, IRibbonButton, new()
         {
-            return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                bitmap.GetHbitmap(),
-                IntPtr.Zero,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromEmptyOptions());
+            IRibbonButton button = Activator.CreateInstance<TCommand>();
+            Type commandType = typeof(TCommand);
+            PushButtonData pushButtonData = new PushButtonData($"btn_{commandType.Name}", button.Text, commandType.Assembly.Location, commandType.FullName)
+            {
+                Image = button.Image.ConvertToBitmapSource(),
+                LargeImage = button.LargeImage.ConvertToBitmapSource(),
+                ToolTipImage = button.ToolTipImage.ConvertToBitmapSource(),
+                ToolTip = button.ToolTip,
+                LongDescription = button.LongDescription,
+            };
+            pushButtonData.SetContextualHelp(button.ContextualHelp);
+            pushButtonData.SetAvailability(commandType);
+            return pushButtonData;
+        }
+
+        public static PushButton CreatePushButton<TCommand>(this RibbonPanel panel) where TCommand : class, IExternalCommand, IRibbonButton, new()
+        {
+            if (panel == null)
+            {
+                throw new ArgumentNullException(nameof(panel), "panel can not be null");
+            }
+            return panel.AddItem(CreatePushButton<TCommand>()) as PushButton;
+        }
+
+        public static PushButton CreatePushButton<TCommand>(this PulldownButton pulldownButton) where TCommand : class, IExternalCommand, IRibbonButton, new()
+        {
+            if (pulldownButton == null)
+            {
+                throw new ArgumentNullException(nameof(pulldownButton), "pull down button can not be null");
+            }
+            return pulldownButton.AddPushButton(CreatePushButton<TCommand>());
+        }
+
+        public static PushButton CreatePushButton<TCommand>(this SplitButton splitButton) where TCommand : class, IExternalCommand, IExternalCommandAvailability, IRibbonButton, new()
+        {
+            if (splitButton == null)
+            {
+                throw new ArgumentNullException(nameof(splitButton), "split button can not be null");
+            }
+            return splitButton.AddPushButton(CreatePushButton<TCommand>());
         }
     }
 }
