@@ -17,7 +17,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Tuna.Revit.Extension.Extensions;
 using Tuna.Revit.Extension.Interfaces;
 
 namespace Tuna.Revit.Extension

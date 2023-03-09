@@ -31,8 +31,36 @@ namespace Tuna.Revit.Extension.Constants
 
             public static ElementId Scale => new ElementId(BuiltInParameter.VIEW_SCALE);
 
+        }
 
+        public class Sheet
+        {
+            public static ElementId Name => new ElementId(BuiltInParameter.SHEET_NAME);
 
+            public static ElementId Number => new ElementId(BuiltInParameter.SHEET_NUMBER);
+
+            public static ElementId Scale => new ElementId(BuiltInParameter.SHEET_SCALE);
+
+            public static ElementId Date => new ElementId(BuiltInParameter.SHEET_DATE);
+        }
+
+        public class Level
+        {
+            public static ElementId Name => new ElementId(BuiltInParameter.LEVEL_NAME);
+        }
+
+        public class Symbol
+        {
+            public static ElementId Name => new ElementId(BuiltInParameter.SYMBOL_NAME_PARAM);
+        }
+
+        public class Room
+        {
+            public static ElementId Name => new ElementId(BuiltInParameter.ROOM_NAME);
+
+            public static ElementId Number => new ElementId(BuiltInParameter.ROOM_NUMBER);
+
+            public static ElementId Area => new ElementId(BuiltInParameter.ROOM_AREA);
         }
     }
 }

@@ -4,7 +4,7 @@
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<UseWPF>true</UseWPF>
-		<LangVersion>10</LangVersion>
+		<LangVersion>preview</LangVersion>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 		<PlatformTarget>x64</PlatformTarget>
 		<Configurations>Debug;Release;Rvt_20_Release;Rvt_21_Release;Rvt_20_Debug;Rvt_21_Debug;Rvt_22_Debug;Rvt_22_Release;Rvt_23_Debug;Rvt_23_Release;Rvt_19_Debug;Rvt_19_Release;Rvt_18_Debug;Rvt_18_Release;Rvt_16_Debug;Rvt_17_Debug</Configurations>
@@ -119,6 +119,10 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.Runtime" Version="4.3.1" />
 	</ItemGroup>
 
 
