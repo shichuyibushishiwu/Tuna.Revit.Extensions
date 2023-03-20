@@ -25,6 +25,15 @@ namespace Tuna.Revit.Extension
     {
         public static AppearanceAssetElement CreateAppearanceElement(this Document document, string name)
         {
+            if (document == null || !document.IsValidObject)
+            {
+                throw new ArgumentNullException(nameof(document), "document can not be null");
+            }
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentNullException(nameof(name), "name can not be null");
+            }
+
             AppearanceAssetElement newAppearance = null;
 
             Asset genericAsset = document.Application.GetAssets(AssetType.Appearance)

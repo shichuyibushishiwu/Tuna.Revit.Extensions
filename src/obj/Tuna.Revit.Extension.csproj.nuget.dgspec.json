@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\03-Github\\01-Shichuyibushishiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj": {}
+    "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj": {}
   },
   "projects": {
-    "E:\\03-Github\\01-Shichuyibushishiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj": {
+    "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj": {
       "version": "2020.0.2",
       "restore": {
-        "projectUniqueName": "E:\\03-Github\\01-Shichuyibushishiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
+        "projectUniqueName": "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
         "projectName": "Tuna.Revit.Extension",
-        "projectPath": "E:\\03-Github\\01-Shichuyibushishiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
-        "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-        "outputPath": "E:\\03-Github\\01-Shichuyibushishiwu\\Tuna.Revit.Extension\\src\\obj\\",
+        "projectPath": "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
+        "packagesPath": "C:\\Users\\29135\\.nuget\\packages\\",
+        "outputPath": "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "D:\\Microsoft\\VisualStudio2019\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Administrator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\29135\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -54,7 +53,7 @@
               "version": "[4.3.1, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400-preview.22330.6\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

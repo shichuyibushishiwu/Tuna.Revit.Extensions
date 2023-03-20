@@ -8,6 +8,7 @@
 ///
 ///************************************************************************************
 
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using Tuna.Revit.Extension.Attributes;
+using Tuna.Revit.Extension.Core;
 
 namespace Tuna.Revit.Extension
 {
@@ -34,29 +36,13 @@ namespace Tuna.Revit.Extension
             Type availabilityType = null;
             if (attribute != null)
             {
-                switch (attribute.Availability)
-                {
-                    case Data.AvailabilityMode.Always:
-                        availabilityType = typeof(Data.ButtonOptions.AlwaysAvailabilityCommand);
-                        break;
-                    case Data.AvailabilityMode.OnlyDocument:
-                        break;
-                    case Data.AvailabilityMode.OnlyFamily:
-                        break;
-                    case Data.AvailabilityMode.OnlyProject:
-                        break;
-                    case Data.AvailabilityMode.OnlyThreeDView:
-                        break;
-                    case Data.AvailabilityMode.OnlyPlanView:
-                        break;
-                    default:
-                        break;
-                }
-
-                //AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(""), AssemblyBuilderAccess.RunAndCollect);
+                //attribute
+                availabilityType = AvailabilityOptionsFactory.CreateAvailabilityOptions(type);
+                Assembly.Load(availabilityType.Assembly.GetName());
             }
             else if (typeof(IExternalCommandAvailability).IsAssignableFrom(type))
             {
+                //custom
                 availabilityType = type;
             }
 
