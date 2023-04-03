@@ -25,38 +25,42 @@ namespace Tuna.Revit.Extension.Core
     {
         private static void CreateIL(AvailabilityAttribute attribute, ILGenerator generator)
         {
+            generator.Emit(OpCodes.Nop);
             if (attribute.Availability.HasFlag(Data.AvailabilityMode.Always))
             {
-                generator.Emit(OpCodes.Nop);
                 generator.Emit(OpCodes.Ldc_I4_1);
                 return;
             }
 
-            //switch (availabilityAttribute.Availability)
-            //{
-            //    case Data.AvailabilityMode.Always:
-            //        //availabilityType = typeof(Data.ButtonOptions.AlwaysAvailabilityCommand);
-            //        break;
-            //    case Data.AvailabilityMode.OnlyDocument:
-            //        break;
-            //    case Data.AvailabilityMode.OnlyFamily:
-            //        break;
-            //    case Data.AvailabilityMode.OnlyProject:
-            //        break;
-            //    case Data.AvailabilityMode.OnlyThreeDView:
-            //        break;
-            //    case Data.AvailabilityMode.OnlyPlanView:
-            //        break;
-            //    default:
-            //        break;
-            //}
+            if (attribute.Availability.HasFlag(Data.AvailabilityMode.OnlyDocument))
+            {
+
+            }
+
+            if (attribute.Availability.HasFlag(Data.AvailabilityMode.OnlyFamily))
+            {
+
+            }
+
+            if (attribute.Availability.HasFlag(Data.AvailabilityMode.OnlyProject))
+            {
+
+            }
+
+            if (attribute.Availability.HasFlag(Data.AvailabilityMode.OnlyThreeDView))
+            {
+
+            }
+
+            if (attribute.Availability.HasFlag(Data.AvailabilityMode.OnlyPlanView))
+            {
+
+            }
         }
 
         public static Type CreateAvailabilityOptions(Type type)
         {
-            TypeBuilder typeBuilder = AvailabilityOptionsAssemblyProvider.Current.ModuleBuilder.DefineType(
-                $"{type.Name}Availability",
-                TypeAttributes.Public | TypeAttributes.Class);
+            TypeBuilder typeBuilder = AvailabilityOptionsAssemblyProvider.Current.DefineType($"{type.Name}Availability");
 
             typeBuilder.AddInterfaceImplementation(typeof(IExternalCommandAvailability));
 

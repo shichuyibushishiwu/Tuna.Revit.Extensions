@@ -5,7 +5,7 @@
   },
   "projects": {
     "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj": {
-      "version": "2020.0.2",
+      "version": "2019.0.1",
       "restore": {
         "projectUniqueName": "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
         "projectName": "Tuna.Revit.Extension",
@@ -46,7 +46,7 @@
           "dependencies": {
             "Revit_All_Main_Versions_API_x64": {
               "target": "Package",
-              "version": "[2020.0.0, )"
+              "version": "[2019.0.0, )"
             },
             "System.Runtime": {
               "target": "Package",

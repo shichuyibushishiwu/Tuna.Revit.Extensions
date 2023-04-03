@@ -38,7 +38,6 @@ namespace Tuna.Revit.Extension
             {
                 //attribute
                 availabilityType = AvailabilityOptionsFactory.CreateAvailabilityOptions(type);
-                Assembly.Load(availabilityType.Assembly.GetName());
             }
             else if (typeof(IExternalCommandAvailability).IsAssignableFrom(type))
             {

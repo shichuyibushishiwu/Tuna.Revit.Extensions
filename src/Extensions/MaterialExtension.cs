@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tuna.Revit.Extension.Extensions;
 
 namespace Tuna.Revit.Extension
 {
@@ -40,34 +41,15 @@ namespace Tuna.Revit.Extension
                 throw new ArgumentNullException(nameof(material), "material is null or invalid material");
             }
 
+            Color color = Color.InvalidColorValue;
             ElementId appearanceAssetId = material.AppearanceAssetId;
             if (appearanceAssetId != ElementId.InvalidElementId)
             {
                 AppearanceAssetElement appearanceAssetElement = material.Document.GetElement(appearanceAssetId) as AppearanceAssetElement;
                 Asset asset = appearanceAssetElement.GetRenderingAsset();
-
-#if Rvt_16 || Rvt_17
-                var assetProperty = asset["generic_diffuse"];
-#else
-                var assetProperty = asset?.FindByName("generic_diffuse");
-#endif
-                if (assetProperty != null)
-                {
-                    AssetPropertyDoubleArray4d genericDiffuseColor = (AssetPropertyDoubleArray4d)assetProperty;
-
-#if Rvt_16 || Rvt_17
-                    DoubleArray array = genericDiffuseColor.Value;
-                    byte r = (byte)(array.get_Item(0) * 255);
-                    byte g = (byte)(array.get_Item(1) * 255);
-                    byte b = (byte)(array.get_Item(2) * 255);
-                    return new Color(r, g, b);
-#else
-                    return genericDiffuseColor?.GetValueAsColor();
-#endif
-                }
-
+                color = asset.GetColor();
             }
-            return null;
+            return color;
         }
 
 

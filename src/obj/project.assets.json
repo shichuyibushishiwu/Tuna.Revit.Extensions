@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.7": {
-      "Revit_All_Main_Versions_API_x64/2020.0.0": {
+      "Revit_All_Main_Versions_API_x64/2019.0.0": {
         "type": "package",
         "compile": {
           "lib/net47/AdWindows.dll": {},
@@ -35,21 +35,20 @@
     }
   },
   "libraries": {
-    "Revit_All_Main_Versions_API_x64/2020.0.0": {
-      "sha512": "6VEX9zYjESl3tkANJblj7X1IzkAsk/M5cuIhP3rrTQ2OQ6mIOmOavHwbfJyZRU/kvw2BCOW61/vjLcBy5IS/VQ==",
+    "Revit_All_Main_Versions_API_x64/2019.0.0": {
+      "sha512": "Pg9PP3/uIupL4OXbSFHbam2vLZ1oDOUw5hesJYzGK/3gkOE/wycvQnWQKSBTGzuEW0lADUcIyK/Tm3glvLqZnA==",
       "type": "package",
-      "path": "revit_all_main_versions_api_x64/2020.0.0",
+      "path": "revit_all_main_versions_api_x64/2019.0.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "License.txt",
         "ReadMe.txt",
         "lib/net47/AdWindows.dll",
         "lib/net47/RevitAPI.dll",
         "lib/net47/RevitAPIUI.dll",
         "lib/net47/UIFramework.dll",
-        "revit_all_main_versions_api_x64.2020.0.0.nupkg.sha512",
+        "revit_all_main_versions_api_x64.2019.0.0.nupkg.sha512",
         "revit_all_main_versions_api_x64.nuspec",
         "tools/install.ps1"
       ]
@@ -149,7 +148,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7": [
-      "Revit_All_Main_Versions_API_x64 >= 2020.0.0",
+      "Revit_All_Main_Versions_API_x64 >= 2019.0.0",
       "System.Runtime >= 4.3.1"
     ]
   },
@@ -158,7 +157,7 @@
     "D:\\Microsoft\\VisualStudio2019\\Shared\\NuGetPackages": {}
   },
   "project": {
-    "version": "2020.0.2",
+    "version": "2019.0.1",
     "restore": {
       "projectUniqueName": "H:\\Github\\Shiwu\\Tuna.Revit.Extension\\src\\Tuna.Revit.Extension.csproj",
       "projectName": "Tuna.Revit.Extension",
@@ -199,7 +198,7 @@
         "dependencies": {
           "Revit_All_Main_Versions_API_x64": {
             "target": "Package",
-            "version": "[2020.0.0, )"
+            "version": "[2019.0.0, )"
           },
           "System.Runtime": {
             "target": "Package",

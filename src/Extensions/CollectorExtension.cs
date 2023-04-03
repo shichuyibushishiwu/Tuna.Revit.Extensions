@@ -109,8 +109,6 @@ namespace Tuna.Revit.Extension
                 elementTypes = elementTypes.Where(predicate);
             }
             return elementTypes;
-
-            //return document.GetElements<T>(predicate);
         }
     }
 }

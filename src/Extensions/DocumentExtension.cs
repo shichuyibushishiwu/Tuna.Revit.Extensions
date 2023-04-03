@@ -29,6 +29,7 @@ namespace Tuna.Revit.Extension
             {
                 throw new ArgumentNullException(nameof(document), "document can not be null");
             }
+
             if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentNullException(nameof(name), "name can not be null");
@@ -53,6 +54,35 @@ namespace Tuna.Revit.Extension
                 }
             }
             return newAppearance;
+        }
+
+        public static bool ElementExist<T>(this Document document, Func<T, bool> func) where T : Element
+        {
+            return document.GetElements<T>().Any(func);
+        }
+
+
+        public static string GetUniqueName<T>(this Document document, string basicName) where T : Element
+        {
+            int number = 0;
+            string name = basicName;
+            while (document.ElementExist<T>(e => string.Equals(e.Name, name, StringComparison.OrdinalIgnoreCase)))
+            {
+                number++;
+                name = $"{basicName}({number})";
+            }
+            return name;
+        }
+
+        public static ParameterFilterElement CreateParameterFilterElement(this Document document, string name, ICollection<ElementId> ids, FilterRule filterRule)
+        {
+#if !Rvt_18
+            ElementParameterFilter elementParameterFilter = new ElementParameterFilter(filterRule);
+            return ParameterFilterElement.Create(document, name, ids, elementParameterFilter);
+
+#else
+            return ParameterFilterElement.Create(document, name, ids, new List<FilterRule>() { filterRule });
+#endif
         }
     }
 }

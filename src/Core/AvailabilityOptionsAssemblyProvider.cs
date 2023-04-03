@@ -27,6 +27,7 @@ namespace Tuna.Revit.Extension.Core
         private AvailabilityOptionsAssemblyProvider()
         {
             AssemblyName name = new AssemblyName(_name);
+
             AssemblyBuilder assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.RunAndCollect);
 
             ModuleBuilder = assemblyBuilder.DefineDynamicModule(_name, $"{_name}.dll");
@@ -37,5 +38,10 @@ namespace Tuna.Revit.Extension.Core
         public static AvailabilityOptionsAssemblyProvider Current = _instance ??= new AvailabilityOptionsAssemblyProvider();
 
         public ModuleBuilder ModuleBuilder;
+
+        public TypeBuilder DefineType(string typeFullname)
+        {
+            return ModuleBuilder.DefineType($"{_name}.{typeFullname}", TypeAttributes.Public | TypeAttributes.Class);
+        }
     }
 }

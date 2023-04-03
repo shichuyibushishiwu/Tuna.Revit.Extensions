@@ -62,5 +62,24 @@ namespace Tuna.Revit.Extension
 
             return reference;
         }
+
+        public static IList<Reference> SelectObjects(this UIDocument uiDocument, Autodesk.Revit.UI.Selection.ObjectType objectType)
+        {
+            if (uiDocument == null)
+            {
+                throw new ArgumentNullException(nameof(uiDocument), "UIDocument can not be null");
+            }
+
+            IList<Reference> objects = new List<Reference>();
+            try
+            {
+                objects = uiDocument.Selection.PickObjects(objectType);
+            }
+            catch (Autodesk.Revit.Exceptions.OperationCanceledException exception)
+            {
+                string logInfo = exception.Message;
+            }
+            return objects;
+        }
     }
 }
