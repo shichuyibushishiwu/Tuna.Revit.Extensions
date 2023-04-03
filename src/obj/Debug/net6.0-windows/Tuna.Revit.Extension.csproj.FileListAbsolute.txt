@@ -1,3 +1,0 @@
-E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\net6.0-windows\Tuna.Revit.Extension.csproj.AssemblyReference.cache
-E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\net6.0-windows\Tuna.Revit.Extension.GeneratedMSBuildEditorConfig.editorconfig
-E:\03-Github\Tuna.Revit.Extension\src\obj\Debug\net6.0-windows\Tuna.Revit.Extension.csproj.CoreCompileInputs.cache
