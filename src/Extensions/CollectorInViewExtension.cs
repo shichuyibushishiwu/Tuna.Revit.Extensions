@@ -30,7 +30,7 @@ namespace Tuna.Revit.Extension
         {
             if (!document!.IsValidObject)
             {
-                throw new ArgumentNullException("document is null or invalid object");
+                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
             }
             return new FilteredElementCollector(document, viewId);
         }

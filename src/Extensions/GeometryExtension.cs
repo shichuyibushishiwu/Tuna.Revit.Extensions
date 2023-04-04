@@ -63,6 +63,10 @@ namespace Tuna.Revit.Extension
             return document.TransientDisplay(new List<GeometryObject>() { obj }, graphicsStyleId);
         }
 
+        /// <summary>
+        /// get revit internal method where is from geometry element
+        /// </summary>
+        /// <returns></returns>
         private static MethodInfo GetTransientDisplayMethod()
         {
             return typeof(GeometryElement)

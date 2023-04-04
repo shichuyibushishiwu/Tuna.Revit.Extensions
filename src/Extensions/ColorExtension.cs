@@ -22,7 +22,7 @@ namespace Tuna.Revit.Extension
     public static class ColorExtension
     {
         /// <summary>
-        /// Convert To HTML
+        /// Convert to html
         /// </summary>
         /// <param name="color"></param>
         /// <returns></returns>
@@ -46,6 +46,25 @@ namespace Tuna.Revit.Extension
             return new Autodesk.Revit.DB.Color(color.R, color.G, color.B);
         }
 
+        /// <summary>
+        /// Check value is equal between two <see cref="Autodesk.Revit.DB.Color"/>
+        /// </summary>
+        /// <param name="color"></param>
+        /// <param name="otherColor"></param>
+        /// <returns></returns>
+        public static bool EqualTo(this Autodesk.Revit.DB.Color color, Autodesk.Revit.DB.Color otherColor)
+        {
+            if (color == null || !color.IsValid)
+            {
+                return false;
+            }
 
+            if (otherColor == null && !otherColor.IsValid)
+            {
+                return false;
+            }
+
+            return color.Red == otherColor.Red && color.Green == otherColor.Green && color.Blue == color.Blue;
+        }
     }
 }
