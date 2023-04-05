@@ -72,9 +72,13 @@ namespace Tuna.Revit.Extension
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, BuiltInCategory category)
         {
-            return document.GetElements(new ElementCategoryFilter(category));
+            return document.GetElements(new ElementCategoryFilter(category)).WhereElementIsNotElementType();
         }
 
+        public static FilteredElementCollector GetElements(this Document document, ElementId categoryId)
+        {
+            return document.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsNotElementType();
+        }
 
 
         /// <summary>
@@ -103,12 +107,7 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> predicate = null) where T : ElementType
         {
-            IEnumerable<T> elementTypes = document.GetElements(typeof(T)).Cast<T>();
-            if (predicate != null)
-            {
-                elementTypes = elementTypes.Where(predicate);
-            }
-            return elementTypes;
+            return document.GetElements(predicate);
         }
     }
 }

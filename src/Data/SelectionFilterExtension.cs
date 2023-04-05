@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Extensions
+namespace Tuna.Revit.Extension.Data
 {
     public static class SelectionFilterExtension
     {
@@ -29,8 +29,8 @@ namespace Tuna.Revit.Extension.Extensions
             /// <param name="filterCodition">自定义过滤条件</param>
             public ElementSelectionFilter(IEnumerable<ElementId> levelIds = null, Func<Element, bool> filterCodition = null)
             {
-                this._levelIds = levelIds;
-                this._filterCodition = filterCodition;
+                _levelIds = levelIds;
+                _filterCodition = filterCodition;
             }
 
             public bool AllowElement(Element element)
@@ -87,9 +87,9 @@ namespace Tuna.Revit.Extension.Extensions
             /// <param name="filterCodition">自定义条件限制选取的几何形状</param>
             public GeometrySelectionFilter(Document document, IEnumerable<ElementId> elementIds = null, Func<TGeometryObject, bool> filterCodition = null)
             {
-                this._document = document;
-                this._elementIds = elementIds;
-                this._filterCodition = filterCodition;
+                _document = document;
+                _elementIds = elementIds;
+                _filterCodition = filterCodition;
             }
 
             /// <summary>
@@ -101,10 +101,10 @@ namespace Tuna.Revit.Extension.Extensions
             /// <param name="filterCodition"></param>
             public GeometrySelectionFilter(Document document, BuiltInCategory builtInCategory, IEnumerable<ElementId> elementIds = null, Func<GeometryObject, bool> filterCodition = null)
             {
-                this._document = document;
-                this._builtInCategory = builtInCategory;
-                this._elementIds = elementIds;
-                this._filterCodition = filterCodition;
+                _document = document;
+                _builtInCategory = builtInCategory;
+                _elementIds = elementIds;
+                _filterCodition = filterCodition;
             }
 
             public bool AllowElement(Element element)
@@ -132,7 +132,7 @@ namespace Tuna.Revit.Extension.Extensions
             {
                 if (_document.GetElement(reference).GetGeometryObjectFromReference(reference) is TGeometryObject)
                 {
-                    if (this._filterCodition != null)
+                    if (_filterCodition != null)
                     {
                         var geometryObject = _document.GetElement(reference).GetGeometryObjectFromReference(reference);
                         if (geometryObject != null && geometryObject is TGeometryObject item)
@@ -149,7 +149,7 @@ namespace Tuna.Revit.Extension.Extensions
 
 
         /// <summary>
-        /// this class is used to filter element in link document object class is the same as imput class
+        /// this class is used to filter element in link document object class is the same as imput class 
         /// 这个类用于选择时过滤指定链接文件中的指定类型的构件,使用时
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
@@ -165,9 +165,11 @@ namespace Tuna.Revit.Extension.Extensions
             /// <param name="filterCodition">自定义目标类别构件的过滤条件</param>
             public RevitLinkElementFilter(IEnumerable<RevitLinkInstance> linkInstances = null, Func<TElement, bool> filterCodition = null)
             {
-                this._linkInstances = linkInstances;
-                this._filterCodition = filterCodition;
+                _linkInstances = linkInstances;
+                _filterCodition = filterCodition;
             }
+
+
             public bool AllowElement(Element elem)
             {
                 if (_linkInstances == null)

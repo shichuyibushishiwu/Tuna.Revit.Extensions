@@ -22,11 +22,11 @@ namespace Tuna.Revit.Extension
     public static class ElementExtension
     {
         /// <summary>
-        /// Get Element Parameter
+        /// Get element <see cref="Parameter"/> by <see cref="Autodesk.Revit.DB.ElementId"/>
         /// </summary>
-        /// <param name="element"></param>
-        /// <param name="parameterId"></param>
-        /// <returns></returns>
+        /// <param name="element">host element</param>
+        /// <param name="parameterId">target parameter id</param>
+        /// <returns>element <see cref="Parameter"/></returns>
         public static Parameter GetParameter(this Element element, ElementId parameterId)
         {
             if (element == null)

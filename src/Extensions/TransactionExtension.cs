@@ -12,6 +12,12 @@ namespace Tuna.Revit.Extension
         /// <summary>
         /// This is a function which used to start a document transaction
         /// </summary>
+        /// <example>
+        /// document.NewTransaction(()=>
+        /// {
+        ///     Wall.Create();
+        /// });
+        /// </example>
         /// <param name="document"></param>
         /// <param name="action"></param>
         /// <param name="name"></param>
@@ -146,7 +152,7 @@ namespace Tuna.Revit.Extension
             {
                 if (tsg.Start() == TransactionStatus.Started)
                 {
-                     action.Invoke(tsg);
+                    action.Invoke(tsg);
                 }
             }
         }

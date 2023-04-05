@@ -10,11 +10,13 @@
 
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tuna.Revit.Extension.Data;
 
 namespace Tuna.Revit.Extension
 {
@@ -27,13 +29,12 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static Element SelectElement(this UIDocument uiDocument)
         {
-            Reference elementRef = uiDocument.SelectObject(Autodesk.Revit.UI.Selection.ObjectType.Element);
-
-            if (elementRef == null)
+            var result = uiDocument.SelectObject(ObjectType.Element);
+            if (!result.Succeeded)
             {
                 return default;
             }
-            return uiDocument.Document.GetElement(elementRef);
+            return uiDocument.Document.GetElement(result.Value);
         }
 
         /// <summary>
@@ -43,43 +44,52 @@ namespace Tuna.Revit.Extension
         /// <param name="objectType"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public static Reference SelectObject(this UIDocument uiDocument, Autodesk.Revit.UI.Selection.ObjectType objectType)
+        public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, Autodesk.Revit.UI.Selection.ObjectType objectType)
         {
             if (uiDocument == null)
             {
                 throw new ArgumentNullException(nameof(uiDocument), "UIDocument can not be null");
             }
 
-            Reference reference = null;
+            SelectionResult<Reference> selectionResult = new SelectionResult<Reference>();
+
             try
             {
-                reference = uiDocument.Selection.PickObject(objectType);
+                selectionResult.Value = uiDocument.Selection.PickObject(objectType);
             }
             catch (Autodesk.Revit.Exceptions.OperationCanceledException exception)
             {
-                string logInfo = exception.Message;
+                selectionResult.Succeeded = false;
+                selectionResult.Message = exception.Message;
             }
 
-            return reference;
+            return selectionResult;
         }
 
-        public static IList<Reference> SelectObjects(this UIDocument uiDocument, Autodesk.Revit.UI.Selection.ObjectType objectType)
+        public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, 
+            ObjectType objectType, 
+            ISelectionFilter selectionFilter = null, 
+            string prompt = null)
         {
             if (uiDocument == null)
             {
                 throw new ArgumentNullException(nameof(uiDocument), "UIDocument can not be null");
             }
-
-            IList<Reference> objects = new List<Reference>();
+            SelectionResult<IList<Reference>> selectionResult = new SelectionResult<IList<Reference>>();
             try
             {
-                objects = uiDocument.Selection.PickObjects(objectType);
+                if (selectionFilter == null)
+                {
+                    selectionFilter = new DefaultSelectionFilter();
+                }
+                selectionResult.Value = uiDocument.Selection.PickObjects(objectType, selectionFilter);
             }
             catch (Autodesk.Revit.Exceptions.OperationCanceledException exception)
             {
-                string logInfo = exception.Message;
+                selectionResult.Succeeded = false;
+                selectionResult.Message = exception.Message;
             }
-            return objects;
+            return selectionResult;
         }
     }
 }
