@@ -16,18 +16,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Data
+namespace Tuna.Revit.Extension.Data.SelectionFilters
 {
     internal class DefaultSelectionFilter : ISelectionFilter
     {
-        public DefaultSelectionFilter()
-        {
+        private readonly Func<Element, bool> _predicate;
 
+        public DefaultSelectionFilter(Func<Element, bool> predicate = null)
+        {
+            _predicate = predicate;
         }
 
         public bool AllowElement(Element elem)
         {
-
+            if (_predicate != null)
+            {
+                return _predicate(elem);
+            }
             return true;
         }
 

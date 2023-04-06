@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using System.IO;
 
-namespace Tuna.Revit.Extension.Extensions
+namespace Tuna.Revit.Extension
 {
     public static class AssetExtension
     {

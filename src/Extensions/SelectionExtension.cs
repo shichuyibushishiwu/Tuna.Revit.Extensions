@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tuna.Revit.Extension.Data;
+using Tuna.Revit.Extension.Data.SelectionFilters;
 
 namespace Tuna.Revit.Extension
 {
@@ -66,10 +67,10 @@ namespace Tuna.Revit.Extension
             return selectionResult;
         }
 
-        public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, 
-            ObjectType objectType, 
-            ISelectionFilter selectionFilter = null, 
-            string prompt = null)
+        public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument,
+                                                                           ObjectType objectType,
+                                                                           ISelectionFilter selectionFilter = null,
+                                                                           string prompt = null)
         {
             if (uiDocument == null)
             {
@@ -90,6 +91,15 @@ namespace Tuna.Revit.Extension
                 selectionResult.Message = exception.Message;
             }
             return selectionResult;
+        }
+
+        public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument,
+                                                                           ObjectType objectType,
+                                                                           Func<Element, bool> predicate,
+                                                                           string prompt = null)
+        {
+
+            return uiDocument.SelectObjects(objectType, new DefaultSelectionFilter(predicate), prompt);
         }
     }
 }

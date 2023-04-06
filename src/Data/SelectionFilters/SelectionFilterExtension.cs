@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Data
+namespace Tuna.Revit.Extension.Data.SelectionFilters
 {
     public static class SelectionFilterExtension
     {
