@@ -20,7 +20,7 @@ namespace Tuna.Revit.Extension
     public static partial class CollectorExtension
     {
         /// <summary>
-        /// Get Elements InView
+        /// Get elements in view
         /// </summary>
         /// <param name="document"></param>
         /// <param name="viewId"></param>
@@ -36,7 +36,7 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get Elements InView
+        /// Get elements in view
         /// </summary>
         /// <param name="document"></param>
         /// <param name="viewId"></param>
@@ -48,7 +48,7 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get Elements InView
+        /// Get elements in view
         /// </summary>
         /// <param name="document"></param>
         /// <param name="viewId"></param>
@@ -60,7 +60,7 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get Elements InView
+        /// Get element in view
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="document"></param>
