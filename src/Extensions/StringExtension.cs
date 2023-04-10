@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Extensions
+namespace Tuna.Revit.Extension
 {
     public static class StringExtension
     {
