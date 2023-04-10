@@ -17,6 +17,9 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// Revit element filters extension
+    /// </summary>
     public static partial class CollectorExtension
     {
         /// <summary>

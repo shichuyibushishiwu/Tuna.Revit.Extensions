@@ -21,6 +21,9 @@ using Tuna.Revit.Extension.Interfaces;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// Revit ribbon ui extensions
+    /// </summary>
     public static class UIExtension
     {
         /// <summary>
@@ -50,7 +53,11 @@ namespace Tuna.Revit.Extension
             return panel;
         }
 
-
+        /// <summary>
+        /// Create a revit ribbon push button
+        /// </summary>
+        /// <typeparam name="TCommand"></typeparam>
+        /// <returns></returns>
         private static PushButtonData CreatePushButton<TCommand>() where TCommand : class, IExternalCommand, IRibbonButton, new()
         {
             IRibbonButton button = Activator.CreateInstance<TCommand>();
@@ -68,6 +75,13 @@ namespace Tuna.Revit.Extension
             return pushButtonData;
         }
 
+        /// <summary>
+        /// Create a revit ribbon push button
+        /// </summary>
+        /// <typeparam name="TCommand"></typeparam>
+        /// <param name="panel"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static PushButton CreatePushButton<TCommand>(this RibbonPanel panel) where TCommand : class, IExternalCommand, IRibbonButton, new()
         {
             if (panel == null)
@@ -77,6 +91,13 @@ namespace Tuna.Revit.Extension
             return panel.AddItem(CreatePushButton<TCommand>()) as PushButton;
         }
 
+        /// <summary>
+        /// Create a revit ribbon push button
+        /// </summary>
+        /// <typeparam name="TCommand"></typeparam>
+        /// <param name="pulldownButton"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static PushButton CreatePushButton<TCommand>(this PulldownButton pulldownButton) where TCommand : class, IExternalCommand, IRibbonButton, new()
         {
             if (pulldownButton == null)
@@ -86,6 +107,13 @@ namespace Tuna.Revit.Extension
             return pulldownButton.AddPushButton(CreatePushButton<TCommand>());
         }
 
+        /// <summary>
+        /// Create a revit ribbon push button
+        /// </summary>
+        /// <typeparam name="TCommand"></typeparam>
+        /// <param name="splitButton"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static PushButton CreatePushButton<TCommand>(this SplitButton splitButton) where TCommand : class, IExternalCommand, IExternalCommandAvailability, IRibbonButton, new()
         {
             if (splitButton == null)

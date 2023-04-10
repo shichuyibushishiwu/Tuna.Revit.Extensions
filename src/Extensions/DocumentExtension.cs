@@ -21,8 +21,18 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// revit document extension
+    /// </summary>
     public static class DocumentExtension
     {
+        /// <summary>
+        /// create a revit generic material appearance element
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static AppearanceAssetElement CreateAppearanceElement(this Document document, string name)
         {
             if (document == null || !document.IsValidObject)
@@ -56,12 +66,25 @@ namespace Tuna.Revit.Extension
             return newAppearance;
         }
 
-        public static bool ElementExist<T>(this Document document, Func<T, bool> func) where T : Element
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="document"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public static bool ElementExist<T>(this Document document, Func<T, bool> predicate) where T : Element
         {
-            return document.GetElements<T>().Any(func);
+            return document.GetElements<T>().Any(predicate);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="document"></param>
+        /// <param name="basicName"></param>
+        /// <returns></returns>
         public static string GetUniqueName<T>(this Document document, string basicName) where T : Element
         {
             int number = 0;
@@ -74,6 +97,15 @@ namespace Tuna.Revit.Extension
             return name;
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="name"></param>
+        /// <param name="ids"></param>
+        /// <param name="filterRule"></param>
+        /// <returns></returns>
         public static ParameterFilterElement CreateParameterFilterElement(this Document document, string name, ICollection<ElementId> ids, FilterRule filterRule)
         {
 #if !Rvt_18

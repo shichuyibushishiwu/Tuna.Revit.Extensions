@@ -25,6 +25,9 @@ using System.Text;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// revit material extension
+    /// </summary>
     public static class MaterialExtension
     {
         /// <summary>
@@ -32,7 +35,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="material"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static Color GetAppearanceColor(this Material material)
         {
             if (material == null || !material.IsValidObject)
@@ -58,7 +61,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="material"></param>
         /// <param name="color"></param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static void SetAppearanceColor(this Material material, Color color)
         {
             if (material == null || !material.IsValidObject)

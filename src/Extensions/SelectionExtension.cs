@@ -21,6 +21,9 @@ using Tuna.Revit.Extension.Data.SelectionFilters;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// revit selection extensions
+    /// </summary>
     public static class SelectionExtension
     {
         /// <summary>
@@ -44,7 +47,7 @@ namespace Tuna.Revit.Extension
         /// <param name="uiDocument"></param>
         /// <param name="objectType"></param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, Autodesk.Revit.UI.Selection.ObjectType objectType)
         {
             if (uiDocument == null)
@@ -67,6 +70,15 @@ namespace Tuna.Revit.Extension
             return selectionResult;
         }
 
+        /// <summary>
+        /// Prompts the user to select multiple objects which pass a customer filter.
+        /// </summary>
+        /// <param name="uiDocument"></param>
+        /// <param name="objectType"></param>
+        /// <param name="selectionFilter"></param>
+        /// <param name="prompt"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument,
                                                                            ObjectType objectType,
                                                                            ISelectionFilter selectionFilter = null,
@@ -76,6 +88,7 @@ namespace Tuna.Revit.Extension
             {
                 throw new ArgumentNullException(nameof(uiDocument), "UIDocument can not be null");
             }
+
             SelectionResult<IList<Reference>> selectionResult = new SelectionResult<IList<Reference>>();
             try
             {
@@ -93,12 +106,19 @@ namespace Tuna.Revit.Extension
             return selectionResult;
         }
 
+        /// <summary>
+        /// Prompts the user to select multiple objects which pass predicate.
+        /// </summary>
+        /// <param name="uiDocument"></param>
+        /// <param name="objectType"></param>
+        /// <param name="predicate"></param>
+        /// <param name="prompt"></param>
+        /// <returns></returns>
         public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument,
                                                                            ObjectType objectType,
                                                                            Func<Element, bool> predicate,
                                                                            string prompt = null)
         {
-
             return uiDocument.SelectObjects(objectType, new DefaultSelectionFilter(predicate), prompt);
         }
     }

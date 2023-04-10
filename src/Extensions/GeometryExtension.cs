@@ -18,6 +18,9 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// revit geometry extension
+    /// </summary>
     public static class GeometryExtension
     {
         private static readonly string _displayMethod = "SetForTransientDisplay";
