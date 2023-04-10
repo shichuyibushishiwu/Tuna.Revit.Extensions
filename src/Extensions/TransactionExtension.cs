@@ -13,7 +13,16 @@ namespace Tuna.Revit.Extension
     public static class TransactionExtension
     {
         /// <summary>
-        /// This is a function which used to start a document transaction
+        /// Start a revit database transaction . <br/><br/>
+        ///<example>
+        /// This shows how to used current method
+        /// <code>
+        /// document.NewTransaction(()=>
+        /// {
+        ///     //todo
+        /// }
+        /// </code>
+        /// </example>
         /// </summary>
         /// <param name="document"></param>
         /// <param name="action"></param>
@@ -32,10 +41,20 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// This is a function which used to start a document transaction
+        /// This is a function which used to start a document transaction.
+        ///<example>
+        /// This shows how to used current method
+        /// <code>
+        /// document.NewTransaction((doc)=>
+        /// {
+        ///     //todo
+        /// }
+        /// </code>
+        /// </example>
         /// </summary>
         /// <param name="document"></param>
         /// <param name="action"></param>
+        /// <param name="rollback"></param>
         /// <param name="name"></param>
         /// <returns>If document is read only,return <see cref="Autodesk.Revit.DB.TransactionStatus.Error"/></returns>
         public static TransactionStatus NewTransaction(this Document document, Action<Document> action, bool rollback = false, string name = "Default Transaction Name")
@@ -74,7 +93,9 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document"></param>
         /// <param name="action"></param>
+        /// <param name="rollback"></param>
         /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static TransactionStatus NewSubtransaction(this Document document, Action action, bool rollback = false)
         {
             if (!document!.IsValidObject)
@@ -105,9 +126,12 @@ namespace Tuna.Revit.Extension
         /// This is a function which used to start a document Transaction Group
         /// </summary>
         /// <param name="document"></param>
-        /// <param name="func"></param>
+        /// <param name="action"></param>
         /// <param name="name"></param>
+        /// <param name="rollback"></param>
+        /// <param name="assimilate"></param>
         /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static TransactionStatus NewTransactionGroup(this Document document, Action action, string name = "Default Transaction Group Name", bool rollback = false, bool assimilate = true)
         {
             if (!document!.IsValidObject)
@@ -134,7 +158,13 @@ namespace Tuna.Revit.Extension
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="action"></param>
+        /// <param name="name"></param>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static void NewTransactionGroup(this Document document, Action<TransactionGroup> action, string name = "Default Transaction Group Name")
         {
             if (!document!.IsValidObject)

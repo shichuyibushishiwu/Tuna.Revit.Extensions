@@ -9,9 +9,13 @@
 ///************************************************************************************
 
 using Autodesk.Revit.DB;
-#if Rvt_18|| Rvt_19|| Rvt_20 ||Rvt_21 ||Rvt_22 ||Rvt_23
+
+#if Rvt_16|| Rvt_17
+using Autodesk.Revit.Utility;
+#else
 using Autodesk.Revit.DB.Visual;
 #endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,9 +51,12 @@ namespace Tuna.Revit.Extension
 
             AppearanceAssetElement newAppearance = null;
 
-            Asset genericAsset = document.Application.GetAssets(AssetType.Appearance)
-                .Where(x => x.Name == "Generic")
-                .FirstOrDefault();
+#if Rvt_16 || Rvt_17
+            Asset genericAsset = document.Application.get_Assets(AssetType.Appearance).Cast<Asset>().Where(x => x.Name == "Generic").FirstOrDefault();
+#else
+            Asset genericAsset = document.Application.GetAssets(AssetType.Appearance).Where(x => x.Name == "Generic").FirstOrDefault();
+#endif
+
 
             if (genericAsset != null)
             {
@@ -60,14 +67,19 @@ namespace Tuna.Revit.Extension
                 AppearanceAssetElement appearance = document.GetElements<AppearanceAssetElement>().FirstOrDefault();
                 if (appearance != null)
                 {
+#if Rvt_16 || Rvt_17
+                    newAppearance = AppearanceAssetElement.Create(document, document.GetUniqueName<AppearanceAssetElement>(name), appearance.GetRenderingAsset());
+#else
                     newAppearance = appearance.Duplicate(name);
+#endif
+
                 }
             }
             return newAppearance;
         }
 
         /// <summary>
-        /// 
+        /// Is check element exist
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="document"></param>
@@ -79,7 +91,7 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// 
+        /// Get revit unique element name
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="document"></param>
@@ -99,7 +111,7 @@ namespace Tuna.Revit.Extension
 
 
         /// <summary>
-        /// 
+        /// Get parameter filter element
         /// </summary>
         /// <param name="document"></param>
         /// <param name="name"></param>
@@ -108,12 +120,12 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static ParameterFilterElement CreateParameterFilterElement(this Document document, string name, ICollection<ElementId> ids, FilterRule filterRule)
         {
-#if !Rvt_18
-            ElementParameterFilter elementParameterFilter = new ElementParameterFilter(filterRule);
-            return ParameterFilterElement.Create(document, name, ids, elementParameterFilter);
+#if Rvt_16 || Rvt_17 || Rvt_18
+            return ParameterFilterElement.Create(document, name, ids, new List<FilterRule>() { filterRule });
 
 #else
-            return ParameterFilterElement.Create(document, name, ids, new List<FilterRule>() { filterRule });
+            ElementParameterFilter elementParameterFilter = new ElementParameterFilter(filterRule);
+            return ParameterFilterElement.Create(document, name, ids, elementParameterFilter);
 #endif
         }
     }
