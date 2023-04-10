@@ -9,6 +9,8 @@
 ///************************************************************************************
 
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.DB.Mechanical;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,9 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// Revit element filters
+    /// </summary>
     public static partial class CollectorExtension
     {
         /// <summary>
@@ -61,6 +66,39 @@ namespace Tuna.Revit.Extension
             {
                 throw new ArgumentException("type is not a subclass of element");
             }
+
+            if (type.IsSubclassOf(typeof(SpatialElement)))
+            {
+                if (type == typeof(Room))
+                {
+                    return document.GetElements(new RoomFilter());
+                }
+                else if (type == typeof(Area))
+                {
+                    return document.GetElements(new AreaFilter());
+                }
+                else if (type == typeof(Space))
+                {
+                    return document.GetElements(new SpaceFilter());
+                }
+            }
+            else if (type.IsSubclassOf(typeof(SpatialElementTag)))
+            {
+                if (type == typeof(RoomTag))
+                {
+                    return document.GetElements(new RoomTagFilter());
+                }
+                else if (type == typeof(AreaTag))
+                {
+                    return document.GetElements(new AreaTagFilter());
+                }
+                else if (type == typeof(SpaceTag))
+                {
+                    return document.GetElements(new SpaceTagFilter());
+                }
+            }
+
+
             return document.GetElements(new ElementClassFilter(type));
         }
 
