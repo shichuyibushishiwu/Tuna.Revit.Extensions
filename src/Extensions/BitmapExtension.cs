@@ -18,6 +18,9 @@ using System.Windows.Media.Imaging;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// system bitmap extension
+    /// </summary>
     public static class BitmapExtension
     {
         /// <summary>

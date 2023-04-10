@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension
 {
     /// <summary>
-    /// Revit element filters
+    /// Revit element filters extension
     /// </summary>
     public static partial class CollectorExtension
     {
@@ -55,7 +55,13 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// This is a function which used to get elements 
+        /// This is a function which used to get elements which type support following types:<br/>
+        /// <see cref="Autodesk.Revit.DB.Architecture.Room"/><br/>
+        /// <see cref="Area"/><br/>
+        /// <see cref="Space"/><br/>
+        /// <see cref="RoomTag"/><br/>
+        /// <see cref="AreaTag"/><br/>
+        /// <see cref="SpaceTag"/><br/>
         /// </summary>
         /// <param name="document"></param>
         /// <param name="type"></param>
@@ -113,6 +119,12 @@ namespace Tuna.Revit.Extension
             return document.GetElements(new ElementCategoryFilter(category)).WhereElementIsNotElementType();
         }
 
+        /// <summary>
+        /// Get elements by element category id , you can used <see cref="Constants.BuiltInParameters"/> to get parameter id
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
         public static FilteredElementCollector GetElements(this Document document, ElementId categoryId)
         {
             return document.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsNotElementType();
@@ -141,7 +153,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <typeparam name="T"><see cref="Autodesk.Revit.DB.ElementType"/></typeparam>
         /// <param name="document"></param>
-        /// <param name="func"></param>
+        /// <param name="predicate"></param>
         /// <returns></returns>
         public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> predicate = null) where T : ElementType
         {

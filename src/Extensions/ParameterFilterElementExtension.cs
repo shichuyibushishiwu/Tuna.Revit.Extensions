@@ -17,8 +17,16 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// Revit parameter filter extensions
+    /// </summary>
     public static class ParameterFilterElementExtension
     {
+        /// <summary>
+        /// Get parameter filter element's filter
+        /// </summary>
+        /// <param name="element"></param>
+        /// <returns></returns>
         public static ElementFilter GetElementFilter(this ParameterFilterElement element)
         {
 #if Rvt_18

@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension
 {
     /// <summary>
-    /// 与Parameter相关的方法扩展
+    /// revit parameter extension
     /// </summary>
     public static class ParameterExtension
     {
@@ -27,78 +27,91 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="parameter"></param>
         /// <returns>Parameter value</returns>
-        public static string GetParameterValue(this Parameter parameter)
+        public static T GetParameterValue<T>(this Parameter parameter)
         {
             if (parameter == null)
             {
-                return null;
+                throw new ArgumentNullException(nameof(parameter), "parameter can not be null");
             }
-            string value = string.Empty;
-            switch (parameter.StorageType)
+
+            try
             {
-                case StorageType.None:
-                    break;
-                case StorageType.Integer:
-                    value = parameter.AsInteger().ToString();
-                    break;
-                case StorageType.Double:
-                    value = parameter.AsDouble().ToString();
-                    break;
-                case StorageType.String:
-                    value = parameter.AsString();
-                    break;
-                case StorageType.ElementId:
-                    value = parameter.AsElementId().ToString();
-                    break;
-                default:
-                    break;
+                switch (parameter.StorageType)
+                {
+                    case StorageType.Integer:
+                        return (T)(object)parameter.AsInteger();
+                    case StorageType.Double:
+                        return (T)(object)parameter.AsDouble();
+                    case StorageType.String:
+                        return (T)(object)parameter.AsString();
+                    case StorageType.ElementId:
+                        return (T)(object)parameter.AsElementId();
+                    default:
+                        return (T)(object)parameter.AsValueString();
+                }
             }
-            return value;
+            catch (Exception)
+            {
+                throw new Exception($"Invalid value conversion , revit parameter storage type is {parameter.StorageType}");
+            }
         }
 
         /// <summary>
         /// Set parameter value based on StorageType
         /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <param name="parameter"></param>
-        /// <param name="propertyValue"></param>
-        /// <returns>Is the parameter set successful</returns>
-        public static bool SetParameterValue(this Parameter parameter, string propertyValue)
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public static bool SetParameterValue<T>(this Parameter parameter, T value)
         {
-            bool result = false;
-            if (parameter.IsReadOnly || parameter == null || propertyValue == null)
+            if (parameter == null)
             {
-                return result;
+                throw new ArgumentNullException(nameof(parameter), "parameter can not be null");
             }
+
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value), "value can not be null");
+            }
+
+            if (parameter.IsReadOnly)
+            {
+                throw new ArgumentNullException(nameof(parameter), "parameter is read only");
+            }
+
+            bool result = false;
             var storageType = parameter.StorageType;
             switch (storageType)
             {
-                case StorageType.None:
-                    break;
                 case StorageType.Integer:
-                    var intFlag = int.TryParse(propertyValue, out int intValue);
-                    if (intFlag)
+                    if (value is not int intValue)
                     {
-                        result = parameter.Set(intValue);
+                        throw new Exception($"Invalid value conversion , revit parameter storage type is {parameter.StorageType} ");
                     }
+                    result = parameter.Set(intValue);
                     break;
                 case StorageType.Double:
-                    var doubleFlag = double.TryParse(propertyValue, out double doubleValue);
-                    if (doubleFlag)
+                    if (value is not double doubleValue)
                     {
-                        result = parameter.Set(doubleValue);
+                        throw new Exception($"Invalid value conversion , revit parameter storage type is {parameter.StorageType} ");
                     }
+                    result = parameter.Set(doubleValue);
                     break;
                 case StorageType.String:
-                    result = parameter.Set(propertyValue);
+                    if (value is not string stringValue)
+                    {
+                        throw new Exception($"Invalid value conversion , revit parameter storage type is {parameter.StorageType} ");
+                    }
+                    result = parameter.Set(stringValue);
                     break;
                 case StorageType.ElementId:
-                    var idFlag = int.TryParse(propertyValue, out int idValue);
-                    if (idFlag)
+                    if (value is not ElementId idValue)
                     {
-                        result = parameter.Set(new ElementId(idValue));
+                        throw new Exception($"Invalid value conversion , revit parameter storage type is {parameter.StorageType} ");
                     }
-                    break;
-                default:
+                    result = parameter.Set(idValue);
                     break;
             }
             return result;

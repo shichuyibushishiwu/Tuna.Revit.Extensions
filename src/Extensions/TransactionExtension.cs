@@ -7,21 +7,20 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// Revit database taransaction extensions
+    /// </summary>
     public static class TransactionExtension
     {
         /// <summary>
         /// This is a function which used to start a document transaction
         /// </summary>
-        /// <example>
-        /// document.NewTransaction(()=>
-        /// {
-        ///     Wall.Create();
-        /// });
-        /// </example>
         /// <param name="document"></param>
         /// <param name="action"></param>
+        /// <param name="rollback"></param>
         /// <param name="name"></param>
         /// <returns>If document is read only,return <see cref="Autodesk.Revit.DB.TransactionStatus.Error"/></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static TransactionStatus NewTransaction(this Document document, Action action, bool rollback = false, string name = "Default Transaction Name")
         {
             if (action == null)

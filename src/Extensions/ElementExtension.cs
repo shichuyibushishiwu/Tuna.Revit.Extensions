@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// revit element extension
+    /// </summary>
     public static class ElementExtension
     {
         /// <summary>

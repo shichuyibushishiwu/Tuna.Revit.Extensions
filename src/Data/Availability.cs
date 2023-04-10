@@ -16,6 +16,9 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension.Data
 {
+    /// <summary>
+    /// Invalid
+    /// </summary>
     [Flags]
     public enum AvailabilityMode
     {

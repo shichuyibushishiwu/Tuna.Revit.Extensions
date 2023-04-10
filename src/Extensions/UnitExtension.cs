@@ -13,10 +13,13 @@ using Autodesk.Revit.DB;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// Revit unit Extensions
+    /// </summary>
     public static class UnitExtension
     {
         /// <summary>
-        /// Convert To Millimeters
+        /// Convert value to millimeters
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -26,7 +29,7 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Convert To Millimeters
+        /// Convert value to millimeters
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
