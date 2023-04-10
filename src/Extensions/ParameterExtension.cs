@@ -17,6 +17,9 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// 与Parameter相关的方法扩展
+    /// </summary>
     public static class ParameterExtension
     {
         /// <summary>
@@ -26,8 +29,12 @@ namespace Tuna.Revit.Extension
         /// <returns>Parameter value</returns>
         public static string GetParameterValue(this Parameter parameter)
         {
+            if (parameter == null)
+            {
+                return null;
+            }
             string value = string.Empty;
-            switch (parameter?.StorageType)
+            switch (parameter.StorageType)
             {
                 case StorageType.None:
                     break;
@@ -68,31 +75,28 @@ namespace Tuna.Revit.Extension
                 case StorageType.None:
                     break;
                 case StorageType.Integer:
-                    var intValue = propertyValue.ToInt32();
-                    if (intValue == null)
+                    var intFlag = int.TryParse(propertyValue, out int intValue);
+                    if (intFlag)
                     {
-                        return result;
+                        result = parameter.Set(intValue);
                     }
-                    result = parameter.Set(intValue.Value);
                     break;
                 case StorageType.Double:
-                    var doubleValue = propertyValue.ToDouble();
-                    if (doubleValue == null)
+                    var doubleFlag = double.TryParse(propertyValue, out double doubleValue);
+                    if (doubleFlag)
                     {
-                        return result;
+                        result = parameter.Set(doubleValue);
                     }
-                    result = parameter.Set(doubleValue.Value);
                     break;
                 case StorageType.String:
                     result = parameter.Set(propertyValue);
                     break;
                 case StorageType.ElementId:
-                    var intId = propertyValue.ToInt32();
-                    if (intId == null)
+                    var idFlag = int.TryParse(propertyValue, out int idValue);
+                    if (idFlag)
                     {
-                        return result;
+                        result = parameter.Set(new ElementId(idValue));
                     }
-                    result = parameter.Set(new ElementId(intId.Value));
                     break;
                 default:
                     break;
