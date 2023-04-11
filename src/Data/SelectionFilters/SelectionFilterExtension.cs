@@ -13,24 +13,25 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
     public static class SelectionFilterExtension
     {
         /// <summary>
-        /// this class is used to filter elements where class is the same as imput class
+        /// this class is used to filter elements where class is the same as input class
         /// this class is also used to filter where is loacted in assign level's elements
+        /// 构件选择过滤器，可用于选择时，自定义条件过滤选择需要的元素构件
         /// </summary>
         /// <typeparam name="TElement">element target class</typeparam>
         public class ElementSelectionFilter<TElement> : ISelectionFilter where TElement : Element
         {
             private IEnumerable<ElementId> _levelIds = null;
-            private readonly Func<TElement, bool> _filterCodition;
+            private readonly Func<TElement, bool> _filterCondition;
 
             /// <summary>
             /// 构造函数
             /// </summary>
             /// <param name="levelIds">指定楼层的Id</param>
-            /// <param name="filterCodition">自定义过滤条件</param>
-            public ElementSelectionFilter(IEnumerable<ElementId> levelIds = null, Func<Element, bool> filterCodition = null)
+            /// <param name="filterCondition">自定义过滤条件</param>
+            public ElementSelectionFilter(IEnumerable<ElementId> levelIds = null, Func<TElement, bool> filterCondition = null)
             {
                 _levelIds = levelIds;
-                _filterCodition = filterCodition;
+                _filterCondition = filterCondition;
             }
 
             public bool AllowElement(Element element)
@@ -45,7 +46,7 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
                             result = null;
                         }
                     }
-                    if (_filterCodition != null && !_filterCodition.Invoke(result))
+                    if (_filterCondition != null && !_filterCondition.Invoke(result))
                     {
                         result = null;
                     }
@@ -61,14 +62,14 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
 
             public bool AllowReference(Reference reference, XYZ position)
             {
-                throw new NotImplementedException();
+                return true;
             }
         }
 
         /// <summary>
-        /// this class is used to filter geometry object class is the same as imput class
+        /// this class is used to filter geometry object class is the same as input class
         /// this class is also used to filter geometry object where is belong to assign element class
-        /// 这个类用于指定类型的几何图形，且可指定目标构件
+        /// 几何选择过滤器，这个类用于选择时过滤指定类型的几何图形，且可指定目标构件
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
         /// <typeparam name="TGeometryObject"></typeparam>
@@ -77,19 +78,19 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
             private readonly Document _document;
             private readonly BuiltInCategory _builtInCategory = BuiltInCategory.INVALID;
             private readonly IEnumerable<ElementId> _elementIds;
-            private readonly Func<TGeometryObject, bool> _filterCodition;
+            private readonly Func<TGeometryObject, bool> _filterCondition;
 
             /// <summary>
             /// 构造函数，当不需要指定构件类型时使用
             /// </summary>
             /// <param name="document">当前文档</param>
             /// <param name="elementIds">限定构件</param>
-            /// <param name="filterCodition">自定义条件限制选取的几何形状</param>
-            public GeometrySelectionFilter(Document document, IEnumerable<ElementId> elementIds = null, Func<TGeometryObject, bool> filterCodition = null)
+            /// <param name="filterCondition">自定义条件限制选取的几何形状</param>
+            public GeometrySelectionFilter(Document document, IEnumerable<ElementId> elementIds = null, Func<TGeometryObject, bool> filterCondition = null)
             {
                 _document = document;
                 _elementIds = elementIds;
-                _filterCodition = filterCodition;
+                _filterCondition = filterCondition;
             }
 
             /// <summary>
@@ -98,13 +99,13 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
             /// <param name="document"></param>
             /// <param name="builtInCategory">指定构件类别</param>
             /// <param name="elementIds"></param>
-            /// <param name="filterCodition"></param>
-            public GeometrySelectionFilter(Document document, BuiltInCategory builtInCategory, IEnumerable<ElementId> elementIds = null, Func<GeometryObject, bool> filterCodition = null)
+            /// <param name="filterCondition"></param>
+            public GeometrySelectionFilter(Document document, BuiltInCategory builtInCategory, IEnumerable<ElementId> elementIds = null, Func<TGeometryObject, bool> filterCondition = null)
             {
                 _document = document;
                 _builtInCategory = builtInCategory;
                 _elementIds = elementIds;
-                _filterCodition = filterCodition;
+                _filterCondition = filterCondition;
             }
 
             public bool AllowElement(Element element)
@@ -132,12 +133,12 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
             {
                 if (_document.GetElement(reference).GetGeometryObjectFromReference(reference) is TGeometryObject)
                 {
-                    if (_filterCodition != null)
+                    if (_filterCondition != null)
                     {
                         var geometryObject = _document.GetElement(reference).GetGeometryObjectFromReference(reference);
                         if (geometryObject != null && geometryObject is TGeometryObject item)
                         {
-                            return _filterCodition.Invoke(item);
+                            return _filterCondition.Invoke(item);
                         }
                         return false;
                     }
@@ -149,24 +150,24 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
 
 
         /// <summary>
-        /// this class is used to filter element in link document object class is the same as imput class 
-        /// 这个类用于选择时过滤指定链接文件中的指定类型的构件,使用时
+        /// this class is used to filter element in link document object class is the same as input class 
+        /// 链接构件过滤器，用于选择时过滤指定链接文件中的指定类型的构件
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
         public class RevitLinkElementFilter<TElement> : ISelectionFilter where TElement : Element
         {
             private readonly IEnumerable<RevitLinkInstance> _linkInstances;
-            private readonly Func<TElement, bool> _filterCodition;
+            private readonly Func<TElement, bool> _filterCondition;
 
             /// <summary>
             /// 构造函数
             /// </summary>
             /// <param name="linkInstances">指定过滤的链接模型</param>
-            /// <param name="filterCodition">自定义目标类别构件的过滤条件</param>
-            public RevitLinkElementFilter(IEnumerable<RevitLinkInstance> linkInstances = null, Func<TElement, bool> filterCodition = null)
+            /// <param name="filterCondition">自定义目标类别构件的过滤条件</param>
+            public RevitLinkElementFilter(IEnumerable<RevitLinkInstance> linkInstances = null, Func<TElement, bool> filterCondition = null)
             {
                 _linkInstances = linkInstances;
-                _filterCodition = filterCodition;
+                _filterCondition = filterCondition;
             }
 
 
@@ -179,6 +180,7 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
                 else
                 {
                     var resultLinkInstance = _linkInstances.Where(x => x.Id == elem.Id);
+                    //指定选择的元素位于哪些链接模型中
                     if (resultLinkInstance != null && resultLinkInstance.Any())
                     {
                         return true;
@@ -198,7 +200,7 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
                         {
                             element = null;
                         }
-                        if (_filterCodition != null && !_filterCodition.Invoke(element))
+                        if (_filterCondition != null && !_filterCondition.Invoke(element))
                         {
                             element = null;
                         }
