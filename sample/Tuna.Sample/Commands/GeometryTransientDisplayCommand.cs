@@ -10,6 +10,7 @@
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ namespace Tuna.Sample.Commands
             UIDocument uiDocument = commandData.Application.ActiveUIDocument;
 
             Document document = uiDocument.Document;
+
+            document.GetElements<Room>();
 
             document.TransientDisplay(new List<GeometryObject>()
             {

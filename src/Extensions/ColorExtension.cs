@@ -19,7 +19,6 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
-
     /// <summary>
     /// Revit color extension
     /// </summary>
@@ -32,10 +31,16 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static string ConvertToHTML(this Autodesk.Revit.DB.Color color)
         {
-            if (!color!.IsValid)
+            if (color == null)
             {
-                color = new Autodesk.Revit.DB.Color(80, 80, 80);
+                throw new ArgumentNullException("color");
             }
+
+            if (!color.IsValid)
+            {
+                throw new ArgumentNullException("color", "color is invalid");
+            }
+
             return ColorTranslator.ToHtml(Color.FromArgb(color.Red, color.Green, color.Blue));
         }
 
@@ -47,6 +52,10 @@ namespace Tuna.Revit.Extension
         /// <returns><see cref="Autodesk.Revit.DB.Color"/></returns>
         public static Autodesk.Revit.DB.Color ConvertToRevitColor(this System.Drawing.Color color)
         {
+            if (color == null)
+            {
+                throw new ArgumentNullException("color");
+            }
             return new Autodesk.Revit.DB.Color(color.R, color.G, color.B);
         }
 

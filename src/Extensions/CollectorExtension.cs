@@ -11,6 +11,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Mechanical;
+using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,16 @@ namespace Tuna.Revit.Extension
     /// </summary>
     public static partial class CollectorExtension
     {
+        private static readonly Dictionary<Type, Type> FilterTypes = new Dictionary<Type, Type>()
+        {
+            [typeof(Room)] = typeof(RoomFilter),
+            [typeof(RoomTag)] = typeof(RoomTagFilter),
+            [typeof(Area)] = typeof(AreaFilter),
+            [typeof(AreaTag)] = typeof(AreaTagFilter),
+            [typeof(Space)] = typeof(SpaceFilter),
+            [typeof(SpaceTag)] = typeof(SpaceTagFilter),
+        };
+
         /// <summary>
         /// This is a function which used to new <see cref="Autodesk.Revit.DB.FilteredElementCollector"/> instance
         /// </summary>
@@ -57,11 +68,11 @@ namespace Tuna.Revit.Extension
         /// <summary>
         /// This is a function which used to get elements which type support following types:<br/>
         /// <see cref="Autodesk.Revit.DB.Architecture.Room"/><br/>
-        /// <see cref="Area"/><br/>
-        /// <see cref="Space"/><br/>
-        /// <see cref="RoomTag"/><br/>
-        /// <see cref="AreaTag"/><br/>
-        /// <see cref="SpaceTag"/><br/>
+        /// <see cref="Autodesk.Revit.DB.Architecture.RoomTag"/><br/>
+        /// <see cref="Autodesk.Revit.DB.Area"/><br/>
+        /// <see cref="Autodesk.Revit.DB.AreaTag"/><br/>
+        /// <see cref="Autodesk.Revit.DB.Mechanical.Space"/><br/>
+        /// <see cref="Autodesk.Revit.DB.Mechanical.SpaceTag"/><br/>
         /// </summary>
         /// <param name="document"></param>
         /// <param name="type"></param>
@@ -73,38 +84,10 @@ namespace Tuna.Revit.Extension
                 throw new ArgumentException("type is not a subclass of element");
             }
 
-            if (type.IsSubclassOf(typeof(SpatialElement)))
+            if (FilterTypes.TryGetValue(type, out Type filterType))
             {
-                if (type == typeof(Room))
-                {
-                    return document.GetElements(new RoomFilter());
-                }
-                else if (type == typeof(Area))
-                {
-                    return document.GetElements(new AreaFilter());
-                }
-                else if (type == typeof(Space))
-                {
-                    return document.GetElements(new SpaceFilter());
-                }
+                return document.GetElements(Activator.CreateInstance(filterType) as ElementFilter);
             }
-            else if (type.IsSubclassOf(typeof(SpatialElementTag)))
-            {
-                if (type == typeof(RoomTag))
-                {
-                    return document.GetElements(new RoomTagFilter());
-                }
-                else if (type == typeof(AreaTag))
-                {
-                    return document.GetElements(new AreaTagFilter());
-                }
-                else if (type == typeof(SpaceTag))
-                {
-                    return document.GetElements(new SpaceTagFilter());
-                }
-            }
-
-
             return document.GetElements(new ElementClassFilter(type));
         }
 
@@ -119,6 +102,31 @@ namespace Tuna.Revit.Extension
             return document.GetElements(new ElementCategoryFilter(category)).WhereElementIsNotElementType();
         }
 
+        public static FilteredElementCollector GetElements(this Document document, StructuralWallUsage structuralWallUsage)
+        {
+            return document.GetElements(new StructuralWallUsageFilter(structuralWallUsage));
+        }
+
+        public static FilteredElementCollector GetElements(this Document document, StructuralMaterialType structuralMaterialType)
+        {
+            return document.GetElements(new StructuralMaterialTypeFilter(structuralMaterialType));
+        }
+
+        public static FilteredElementCollector GetElements(this Document document, StructuralInstanceUsage structuralInstanceUsage)
+        {
+            return document.GetElements(new StructuralInstanceUsageFilter(structuralInstanceUsage));
+        }
+
+        public static FilteredElementCollector GetElements(this Document document, FamilySymbol familySymbol)
+        {
+            return document.GetElements(new FamilyInstanceFilter(document, familySymbol.Id));
+        }
+
+        public static FilteredElementCollector GetElements(this Document document, Level level)
+        {
+            return document.GetElements(new ElementLevelFilter(level.Id));
+        }
+
         /// <summary>
         /// Get elements by element category id , you can used <see cref="Constants.BuiltInParameters"/> to get parameter id
         /// </summary>
@@ -130,6 +138,32 @@ namespace Tuna.Revit.Extension
             return document.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsNotElementType();
         }
 
+        public static FilteredElementCollector GetElements(this Document document, StructuralType structuralType)
+        {
+            return document.GetElements(new ElementStructuralTypeFilter(structuralType));
+        }
+
+        public static FilteredElementCollector GetElementTypes(this Document document, ElementId categoryId)
+        {
+            return document.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsElementType();
+        }
+
+        public static FilteredElementCollector GetElementTypes(this Document document, BuiltInCategory category)
+        {
+            return document.GetElements(new ElementCategoryFilter(category)).WhereElementIsElementType();
+        }
+
+        /// <summary>
+        /// This is a function which used to get elements types
+        /// </summary>
+        /// <typeparam name="T"><see cref="Autodesk.Revit.DB.ElementType"/></typeparam>
+        /// <param name="document"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> predicate = null) where T : ElementType
+        {
+            return document.GetElements(predicate);
+        }
 
         /// <summary>
         /// This is a function which used to get elements 
@@ -148,16 +182,10 @@ namespace Tuna.Revit.Extension
             return elements;
         }
 
-        /// <summary>
-        /// This is a function which used to get elements types
-        /// </summary>
-        /// <typeparam name="T"><see cref="Autodesk.Revit.DB.ElementType"/></typeparam>
-        /// <param name="document"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> predicate = null) where T : ElementType
+        public static FilteredElementCollector GetStructualFamilies(this Document document, StructuralMaterialType structuralMaterialType)
         {
-            return document.GetElements(predicate);
+            return document.GetElements(new FamilyStructuralMaterialTypeFilter(structuralMaterialType));
         }
+
     }
 }
