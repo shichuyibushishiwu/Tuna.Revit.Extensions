@@ -49,5 +49,53 @@ namespace Tuna.Revit.Extension
             }
             return default;
         }
+
+        /// <summary>
+        /// Get element type instances count in the document
+        /// </summary>
+        /// <typeparam name="T"><see cref="Autodesk.Revit.DB.Element"/> what is <see cref="Autodesk.Revit.DB.ElementType"/> typical corresponding pair </typeparam>
+        /// <param name="types"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public static IDictionary<ElementType, int> GetElementTypeInstancesCount<T>(this IEnumerable<ElementType> types) where T : Element
+        {
+            if (types == null)
+            {
+                throw new ArgumentNullException(nameof(types), "types can not be null");
+            }
+
+            Dictionary<ElementType, int> result = new Dictionary<ElementType, int>();
+            if (types.Any())
+            {
+                Dictionary<ElementId, int> counts = types.ToDictionary((e) => e?.Id, _ => 0);
+                Document document = types.First().Document;
+                var elements = document.GetElements<T>();
+                foreach (var element in elements)
+                {
+                    var id = element.GetTypeId();
+
+                    if (counts.TryGetValue(id, out int count))
+                    {
+                        counts[id] = count++;
+                        continue;
+                    }
+                    counts.Add(id, 0);
+                }
+                result = counts.ToDictionary(p => document.GetElement(p.Key) as ElementType, p => p.Value);
+            }
+            return result;
+        }
+
+
+        /// <summary>
+        /// Get element types which has instances in the document
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="types"></param>
+        /// <returns></returns>
+        public static IEnumerable<ElementType> HasInstances<T>(this IEnumerable<ElementType> types) where T : Element
+        {
+            return types.GetElementTypeInstancesCount<T>().Where(p => p.Value > 0).ToDictionary(p => p.Key, p => p.Value).Keys.ToList();
+        }
     }
 }

@@ -43,6 +43,8 @@ namespace Tuna.Sample.Commands
             commandData.Application.ActiveUIDocument.Selection.SetElementIds(elems.ToElementIds());
             TaskDialog.Show("shiwu", $"{elems.GetElementCount()}");
 
+            document.GetElementTypes<WallType>().HasInstances<Wall>();
+
             return Result.Succeeded;
         }
     }
