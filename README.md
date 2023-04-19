@@ -66,11 +66,3 @@ panel.CreateButton<CreateWallCommand>((b)=>
 ```
 
 
-
-
-
-
-
-
-
-
