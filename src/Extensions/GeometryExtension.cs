@@ -30,9 +30,11 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document"></param>
         /// <param name="objects"></param>
-        /// <returns>The element id of the created element</returns>
+        /// <param name="graphicsStyleId"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
         /// <exception cref="Exception"></exception>
-        public static ElementId TransientDisplay(this Document document, IEnumerable<GeometryObject> objects, ElementId graphicsStyleId = null)
+        public static ElementId TransientDisplay(this Document document, IList<GeometryObject> objects, ElementId graphicsStyleId = null)
         {
             if (document == null)
             {
