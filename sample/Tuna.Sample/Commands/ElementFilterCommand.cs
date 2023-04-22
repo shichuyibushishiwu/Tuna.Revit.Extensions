@@ -10,6 +10,7 @@
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
@@ -28,23 +29,34 @@ namespace Tuna.Sample.Commands
             UIDocument uIDocument = commandData.Application.ActiveUIDocument;
             Document document = uIDocument.Document;
 
-            document.GetElements(Tuna.Revit.Extension.Constants.BuiltInCategories.Door);
+            #region
 
-            Autodesk.Revit.DB.FilteredElementCollector doors = document.GetElements(new ElementCategoryFilter(Tuna.Revit.Extension.Constants.BuiltInCategories.Door));
-            TaskDialog.Show("sd", doors.Count().ToString());
+            //var elems = document.GetElements(StructuralType.Column).ToList();
+            //StringBuilder builder = new StringBuilder();
+            //foreach (Element element in elems)
+            //{
+            //    builder.Append(element.Name+"\n");
+            //}
+            //TaskDialog.Show("Tuna", builder.ToString());
+            #endregion
 
-            ParameterValueProvider provider = new ParameterValueProvider(new ElementId(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS));
 
-            FilterStringRuleEvaluator evaluator = new FilterStringEquals();
+            //var elems = document.GetElements(document.GetElement(new ElementId(197050)) as Family).ToElements().Cast<FamilySymbol>();
+            //StringBuilder builder = new StringBuilder();
+            //foreach (var element in elems)
+            //{
+            //    builder.Append(element.GetStructuralSection().Cast<object>().Count() + "\n");
+            //}
+            //TaskDialog.Show("Tuna", builder.ToString());
 
-            FilterRule filterRule = new FilterStringRule(provider, evaluator, "ListA", false);
-
-            FilteredElementCollector elems = document.GetElements(new ElementParameterFilter(new List<FilterRule>() { filterRule }));
-            commandData.Application.ActiveUIDocument.Selection.SetElementIds(elems.ToElementIds());
-            TaskDialog.Show("shiwu", $"{elems.GetElementCount()}");
-
-            document.GetElementTypes<WallType>().HasInstances<Wall>();
-
+         
+            var elems = document.GetElements(StructuralType.Footing).ToList();
+            StringBuilder builder = new StringBuilder(); builder.Append(elems.Count().ToString());
+            foreach (Element element in elems)
+            {
+                builder.Append(element.Name + "\n");
+            }
+            TaskDialog.Show("Tuna", builder.ToString());
             return Result.Succeeded;
         }
     }

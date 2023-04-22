@@ -33,6 +33,11 @@ namespace Tuna.Revit.Extension.Constants
         public static ElementId Door => new ElementId(BuiltInCategory.OST_Doors);
 
         /// <summary>
+        /// OST_Walls
+        /// </summary>
+        public static ElementId Wall => new ElementId(BuiltInCategory.OST_Walls);
+
+        /// <summary>
         /// OST_CableTray
         /// </summary>
         public static ElementId CableTray => new ElementId(BuiltInCategory.OST_CableTray);
