@@ -76,7 +76,7 @@ namespace Tuna.Revit.Extension
 
                     if (counts.TryGetValue(id, out int count))
                     {
-                        counts[id] = count++;
+                        counts[id] = count + 1;
                         continue;
                     }
                     counts.Add(id, 0);
@@ -93,9 +93,33 @@ namespace Tuna.Revit.Extension
         /// <typeparam name="T"></typeparam>
         /// <param name="types"></param>
         /// <returns></returns>
-        public static IEnumerable<ElementType> HasInstances<T>(this IEnumerable<ElementType> types) where T : Element
+        public static IEnumerable<ElementType> WhereHasInstances<T>(this IEnumerable<ElementType> types) where T : Element
         {
             return types.GetElementTypeInstancesCount<T>().Where(p => p.Value > 0).ToDictionary(p => p.Key, p => p.Value).Keys.ToList();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="view"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public static FilteredElementCollector TryGetIntersectElements(this Element element, View view)
+        {
+            if (element == null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+            Document document = element.Document;
+            BoundingBoxXYZ boundingBox = element.get_BoundingBox(view);
+            Outline outline = new Outline(boundingBox.Min, boundingBox.Max);
+            FilteredElementCollector elements = document.GetElements(new BoundingBoxIntersectsFilter(outline));
+            if (elements.Any())
+            {
+                elements = document.GetElementIntersectsInCollector(elements.ToElementIds(), element);
+            }
+            return elements;
         }
     }
 }

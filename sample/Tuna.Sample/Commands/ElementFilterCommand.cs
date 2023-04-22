@@ -49,10 +49,11 @@ namespace Tuna.Sample.Commands
             //}
             //TaskDialog.Show("Tuna", builder.ToString());
 
-         
-            var elems = document.GetElements(StructuralType.Footing).ToList();
-            StringBuilder builder = new StringBuilder(); builder.Append(elems.Count().ToString());
-            foreach (Element element in elems)
+
+            var elems = document.GetElementTypes(BuiltInCategory.OST_Walls).Cast<WallType>().WhereHasInstances<Wall>();
+            StringBuilder builder = new StringBuilder();
+            builder.Append(elems.Count().ToString());
+            foreach (var element in elems)
             {
                 builder.Append(element.Name + "\n");
             }
