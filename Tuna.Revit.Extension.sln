@@ -36,6 +36,8 @@ Global
 		Rvt_22_Release|Any CPU = Rvt_22_Release|Any CPU
 		Rvt_23_Debug|Any CPU = Rvt_23_Debug|Any CPU
 		Rvt_23_Release|Any CPU = Rvt_23_Release|Any CPU
+		Rvt_24_Debug|Any CPU = Rvt_24_Debug|Any CPU
+		Rvt_24_Release|Any CPU = Rvt_24_Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_23_Debug|Any CPU.Build.0 = Rvt_23_Debug|Any CPU
 		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_23_Release|Any CPU.ActiveCfg = Rvt_23_Release|Any CPU
 		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_23_Release|Any CPU.Build.0 = Rvt_23_Release|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_24_Debug|Any CPU.ActiveCfg = Rvt_24_Debug|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_24_Debug|Any CPU.Build.0 = Rvt_24_Debug|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_24_Release|Any CPU.ActiveCfg = Rvt_24_Release|Any CPU
+		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_24_Release|Any CPU.Build.0 = Rvt_24_Release|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -110,6 +116,10 @@ Global
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_23_Debug|Any CPU.Build.0 = Rvt_16_Debug|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_23_Release|Any CPU.ActiveCfg = Rvt_16_Release|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_23_Release|Any CPU.Build.0 = Rvt_16_Release|Any CPU
+		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_24_Debug|Any CPU.ActiveCfg = Rvt_24_Debug|Any CPU
+		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_24_Debug|Any CPU.Build.0 = Rvt_24_Debug|Any CPU
+		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_24_Release|Any CPU.ActiveCfg = Rvt_24_Release|Any CPU
+		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_24_Release|Any CPU.Build.0 = Rvt_24_Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

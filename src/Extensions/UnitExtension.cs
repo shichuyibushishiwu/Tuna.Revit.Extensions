@@ -35,10 +35,10 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static double ConvertToMillimeters(this double value)
         {
-#if Rvt_21 || Rvt_22 || Rvt_23
-            return UnitUtils.Convert(value, UnitTypeId.Feet, UnitTypeId.Millimeters);
-#else 
+#if Rvt_16 || Rvt_17 || Rvt_18 || Rvt_19 || Rvt_20
             return UnitUtils.Convert(value, DisplayUnitType.DUT_DECIMAL_FEET, DisplayUnitType.DUT_MILLIMETERS);
+#else
+            return UnitUtils.Convert(value, UnitTypeId.Feet, UnitTypeId.Millimeters);
 #endif
         }
     }

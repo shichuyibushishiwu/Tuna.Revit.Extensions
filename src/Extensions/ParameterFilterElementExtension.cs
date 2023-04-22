@@ -36,11 +36,11 @@ namespace Tuna.Revit.Extension
                 return new ElementParameterFilter(rules);
             }
             return null;
-#endif
-
-#if Rvt_23 || Rvt_22 || Rvt_21 || Rvt_20 || Rvt_19
+#else
             return element.GetElementFilter();
 #endif
+
+
         }
     }
 }
