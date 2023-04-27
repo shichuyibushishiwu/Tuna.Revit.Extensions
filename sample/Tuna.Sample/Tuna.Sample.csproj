@@ -3,11 +3,11 @@
 	<PropertyGroup>
 		<TargetFramework>net48</TargetFramework>
 		<PlatformTarget>x64</PlatformTarget>
-		<Configurations>Debug;Release;Rvt_16_Debug;Rvt_17_Debug</Configurations>
+		<Configurations>Debug;Release;Rvt_16_Debug;Rvt_17_Debug;Rvt_16_Release</Configurations>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\src\Tuna.Revit.Extension.csproj" />
+	  <ProjectReference Include="..\..\src\Tuna.Revit.Extension.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -29,7 +29,7 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static ElementFilter GetElementFilter(this ParameterFilterElement element)
         {
-#if Rvt_18
+#if Rvt_16 || Rvt_17 || Rvt_18
             var rules = element.GetRules();
             if (rules.Count > 0)
             {
