@@ -10,6 +10,7 @@
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using System;
@@ -58,6 +59,9 @@ namespace Tuna.Sample.Commands
                 builder.Append(element.Name + "\n");
             }
             TaskDialog.Show("Tuna", builder.ToString());
+
+
+            document.GetElements<Room>();
             return Result.Succeeded;
         }
     }
