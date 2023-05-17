@@ -187,7 +187,22 @@ namespace Tuna.Revit.Extension
             return document.GetElements(new FamilyStructuralMaterialTypeFilter(structuralMaterialType));
         }
 
+        public static IEnumerable<FamilySymbol> GetFamilySymbols(this Family family, Predicate<FamilySymbol> predicate = null)
+        {
+            if (family == null)
+            {
+                throw new ArgumentNullException(nameof(family));
+            }
+            FilteredElementCollector collector = new FilteredElementCollector(family.Document);
+            var symbols = collector.WherePasses(new FamilySymbolFilter(family.Id)).Cast<FamilySymbol>();
+            if (predicate != null)
+            {
+                symbols.Where(x => predicate(x));
+            }
+            return symbols;
+        }
 
-    
+
+
     }
 }
