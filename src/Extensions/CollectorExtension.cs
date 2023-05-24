@@ -305,6 +305,23 @@ namespace Tuna.Revit.Extension
         {
             return document.GetElements(new FamilyStructuralMaterialTypeFilter(structuralMaterialType)).Cast<Family>();
         }
+      
+        public static IEnumerable<FamilySymbol> GetFamilySymbols(this Family family, Predicate<FamilySymbol> predicate = null)
+        {
+            if (family == null)
+            {
+                throw new ArgumentNullException(nameof(family));
+            }
+            FilteredElementCollector collector = new FilteredElementCollector(family.Document);
+            var symbols = collector.WherePasses(new FamilySymbolFilter(family.Id)).Cast<FamilySymbol>();
+            if (predicate != null)
+            {
+                symbols.Where(x => predicate(x));
+            }
+            return symbols;
+        }
+
+
 
         /// <summary>
         /// Get family symbol elements by family <see cref="Autodesk.Revit.DB.ElementId"/> 
@@ -317,5 +334,6 @@ namespace Tuna.Revit.Extension
         {
             return document.GetElements(new FamilySymbolFilter(familyId)).Cast<FamilySymbol>();
         }
+
     }
 }
