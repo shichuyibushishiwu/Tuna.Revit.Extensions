@@ -31,22 +31,28 @@ namespace Tuna.Sample.Commands
 
             Document document = uiDocument.Document;
 
-            document.GetElements<Room>();
-
+     
             document.TransientDisplay(new List<GeometryObject>()
             {
                 Line.CreateBound(XYZ.Zero, XYZ.Zero + new XYZ(20, 20, 20))
             });
 
+
+            Categories categories = document.Settings.Categories;
+            var genericModel = categories.get_Item(BuiltInCategory.OST_GenericModel);
+            if (!genericModel.SubCategories.Contains("Test"))
+            {
+                document.NewTransaction(() =>
+                {
+                    var subcategory = categories.NewSubcategory(genericModel, "Test");
+                    subcategory.LineColor = new Color(0, 127, 0);
+                });
+            }
+
             var gs = document.GetElements<GraphicsStyle>().FirstOrDefault(g => g.Name == "Test");
-            document.TransientDisplay(Line.CreateBound(XYZ.Zero, XYZ.Zero + new XYZ(20, 20, 20)), gs.Id);
+            document.TransientDisplay(Line.CreateBound(XYZ.Zero, XYZ.Zero + new XYZ(0, 10, 10)), gs.Id);
 
             return Result.Succeeded;
-        }
-
-        private void Application_Idling(object sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
-        {
-            Debug.WriteLine("asd");
         }
     }
 }

@@ -23,12 +23,15 @@ namespace Tuna.Revit.Extension
     public static partial class CollectorExtension
     {
         /// <summary>
-        /// Get elements in view
+        /// Get elements in view <see cref="Autodesk.Revit.DB.ElementId"/>
         /// </summary>
-        /// <param name="document"></param>
-        /// <param name="viewId"></param>
+        /// <remarks>
+        /// 根据视图获取视图中的所有图元
+        /// </remarks>
+        /// <param name="document">revit document</param>
+        /// <param name="viewId">host view</param>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="System.ArgumentNullException"></exception>
         public static FilteredElementCollector GetElementsInView(this Document document, ElementId viewId)
         {
             if (!document!.IsValidObject)
@@ -39,10 +42,13 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements in view
+        /// Get elements in view by <see cref="Autodesk.Revit.DB.ElementFilter"/>
         /// </summary>
-        /// <param name="document"></param>
-        /// <param name="viewId"></param>
+        /// <remarks>
+        /// 根据元素过滤器获取视图中的图元
+        /// </remarks>
+        /// <param name="document">revit document</param>
+        /// <param name="viewId">host view</param>
         /// <param name="elementFilter"></param>
         /// <returns></returns>
         public static FilteredElementCollector GetElementsInView(this Document document, ElementId viewId, ElementFilter elementFilter)
@@ -51,10 +57,13 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements in view
+        /// Get elements in view by <see cref="System.Type"/>
         /// </summary>
-        /// <param name="document"></param>
-        /// <param name="viewId"></param>
+        /// <remarks>
+        /// 根据类型获取视图中的图元
+        /// </remarks>
+        /// <param name="document">revit document</param>
+        /// <param name="viewId">host view</param>
         /// <param name="type"></param>
         /// <returns></returns>
         public static FilteredElementCollector GetElementsInView(this Document document, ElementId viewId, Type type)
@@ -63,11 +72,14 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get element in view
+        /// Get element in view by <typeparamref name="T"/>
         /// </summary>
+        /// <remarks>
+        /// 根据类型获取视图中的图元
+        /// </remarks>
         /// <typeparam name="T"></typeparam>
-        /// <param name="document"></param>
-        /// <param name="viewId"></param>
+        /// <param name="document">revit document</param>
+        /// <param name="viewId">host view</param>
         /// <param name="predicate"></param>
         /// <returns></returns>
         public static IEnumerable<T> GetElementsInView<T>(this Document document, ElementId viewId, Func<T, bool> predicate = null) where T : Element

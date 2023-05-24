@@ -29,6 +29,11 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
 
         public bool AllowElement(Element elem)
         {
+            if (elem == null)
+            {
+                return false;
+            }
+
             if (_predicate != null)
             {
                 return _predicate(elem);

@@ -1,8 +1,8 @@
 ﻿///************************************************************************************
-///   Author:Tony Stark
-///   CreateTime:2023/5/17 星期三 14:34:53
-///   Mail:2609639898@qq.com
-///   Github:https://github.com/getup700
+///   Author:十五
+///   CretaeTime:2023/4/22 1:08:36
+///   Mail:1012201478@qq.com
+///   Github:https://github.com/shichuyibushishiwu
 ///
 ///   Description:
 ///
@@ -66,6 +66,20 @@ namespace Tuna.Revit.Extension
                 }
             }
             return parameters;
+        }
+        /// <summary>
+        /// Get family symbol elements
+        /// </summary>
+        /// <param name="family"></param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public static IEnumerable<FamilySymbol> GetFamilySymbols(this Family family)
+        {
+            if (family == null)
+            {
+                throw new ArgumentNullException(nameof(family));
+            }
+            return family.Document.GetFamilySymbols(family.Id);
         }
 
     }
