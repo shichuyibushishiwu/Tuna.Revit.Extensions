@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net48</TargetFramework>
 		<PlatformTarget>x64</PlatformTarget>
-		<Configurations>Debug;Release;Rvt_16_Debug;Rvt_17_Debug;Rvt_16_Release;Rvt_24_Release;Rvt_24_Debug</Configurations>
+		<Configurations>Debug;Release;Rvt_16_Debug;Rvt_17_Debug;Rvt_16_Release;Rvt_18_Debug;Rvt_19_Debug;Rvt_20_Debug;Rvt_21_Debug;Rvt_22_Debug;Rvt_23_Debug;Rvt_24_Debug;Rvt_17_Release;Rvt_18_Release;Rvt_19_Release;Rvt_20_Release;Rvt_21_Release;Rvt_22_Release;Rvt_23_Release;Rvt_24_Release</Configurations>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -42,6 +42,16 @@ namespace Tuna.Sample.Commands
             #endregion
 
 
+            FilterStringRuleEvaluator evaluator = new FilterStringEquals();
+#if RVT_23_DEBUG || RVT_23_RELEASE || RVT_24_DEBUG || RVT_24_RELEASE
+            FilterRule filterRule = new FilterStringRule(provider, evaluator, "ListA");
+#else
+            FilterRule filterRule = new FilterStringRule(provider, evaluator, "ListA", false);
+#endif
+            FilteredElementCollector elems = document.GetElements(new ElementParameterFilter(new List<FilterRule>() { filterRule }));
+            commandData.Application.ActiveUIDocument.Selection.SetElementIds(elems.ToElementIds());
+            TaskDialog.Show("shiwu", $"{elems.GetElementCount()}");
+
             //var elems = document.GetElements(document.GetElement(new ElementId(197050)) as Family).ToElements().Cast<FamilySymbol>();
             //StringBuilder builder = new StringBuilder();
             //foreach (var element in elems)
@@ -59,6 +69,7 @@ namespace Tuna.Sample.Commands
                 builder.Append(element.Name + "\n");
             }
             TaskDialog.Show("Tuna", builder.ToString());
+
 
 
             document.GetElements<Room>();

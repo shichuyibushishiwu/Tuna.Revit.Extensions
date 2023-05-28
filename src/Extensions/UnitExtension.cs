@@ -35,11 +35,35 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static double ConvertToMillimeters(this double value)
         {
-#if Rvt_16 || Rvt_17 || Rvt_18 || Rvt_19 || Rvt_20
-            return UnitUtils.Convert(value, DisplayUnitType.DUT_DECIMAL_FEET, DisplayUnitType.DUT_MILLIMETERS);
+#if Rvt_21 || Rvt_22 || Rvt_23 || Rvt_24
+            return UnitUtils.Convert(value, UnitTypeId.Feet, UnitTypeId.Millimeters);         
 #else
-            return UnitUtils.Convert(value, UnitTypeId.Feet, UnitTypeId.Millimeters);
+            return UnitUtils.Convert(value, DisplayUnitType.DUT_DECIMAL_FEET, DisplayUnitType.DUT_MILLIMETERS);
 #endif
+        }
+
+        /// <summary>
+        /// Convert millimeters to feet
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double ConvertToFeet(this double value)
+        {
+#if Rvt_21 || Rvt_22 || Rvt_23 || Rvt_24
+            return UnitUtils.Convert(value, UnitTypeId.Millimeters, UnitTypeId.Feet);
+#else
+            return UnitUtils.Convert(value, DisplayUnitType.DUT_MILLIMETERS, DisplayUnitType.DUT_DECIMAL_FEET);
+#endif
+        }
+
+        /// <summary>
+        /// Convert millimeters to feet
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static double ConvertToFeet(this int value)
+        {
+            return ((double)value).ConvertToFeet();
         }
     }
 }
