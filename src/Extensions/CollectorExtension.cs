@@ -109,7 +109,7 @@ namespace Tuna.Revit.Extension
         /// <param name="document">revit document</param>
         /// <param name="category"></param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
-        public static FilteredElementCollector GetElements(this Document document,  BuiltInCategory category)
+        public static FilteredElementCollector GetElements(this Document document, BuiltInCategory category)
         {
             return document.GetElements(new ElementCategoryFilter(category)).WhereElementIsNotElementType();
         }
@@ -292,6 +292,8 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
+        /// <c>[Slow Filter]</c>
+        /// 根据结构族参数 <b>「用于模型行为的材质」</b> 过滤出文档中的结构族对象
         /// Get structual families by <see cref="Autodesk.Revit.DB.Structure.StructuralMaterialType"/>
         /// </summary>
         /// <remarks>
@@ -316,6 +318,19 @@ namespace Tuna.Revit.Extension
         public static IEnumerable<FamilySymbol> GetFamilySymbols(this Document document, ElementId familyId)
         {
             return document.GetElements(new FamilySymbolFilter(familyId)).Cast<FamilySymbol>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public static IEnumerable<TElement> GetModelElements<TElement>(this Document document) where TElement : Element
+        {
+            var elements = document.GetElements(new ElementIsElementTypeFilter(true));
+            elements.ToElements().Where(element => element.Category!.HasMaterialQuantities);
+            return elements.Cast<TElement>();
         }
     }
 }
