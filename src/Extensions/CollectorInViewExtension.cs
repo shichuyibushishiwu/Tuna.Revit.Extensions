@@ -8,6 +8,7 @@
 ///
 ///************************************************************************************
 
+using Autodesk.Revit.Creation;
 using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
@@ -23,68 +24,62 @@ namespace Tuna.Revit.Extension
     public static partial class CollectorExtension
     {
         /// <summary>
-        /// Get elements in view <see cref="Autodesk.Revit.DB.ElementId"/>
-        /// </summary>
-        /// <remarks>
         /// 根据视图获取视图中的所有图元
-        /// </remarks>
-        /// <param name="document">revit document</param>
-        /// <param name="viewId">host view</param>
+        /// <para>Get elements in view <see cref="Autodesk.Revit.DB.View"/></para>
+        /// </summary>
+        /// <param name="view">host view</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException"></exception>
-        public static FilteredElementCollector GetElementsInView(this Document document, ElementId viewId)
+        public static FilteredElementCollector GetElements(this View view)
         {
-            if (!document!.IsValidObject)
+            if (view == null || !view.IsValidObject)
             {
-                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
+                throw new ArgumentNullException(nameof(view), "view is null or invalid object");
             }
-            return new FilteredElementCollector(document, viewId);
+
+            if (view.IsTemplate)
+            {
+                throw new ArgumentNullException(nameof(view), "view is a template");
+            }
+
+            return new FilteredElementCollector(view.Document, view.Id);
         }
 
         /// <summary>
-        /// Get elements in view by <see cref="Autodesk.Revit.DB.ElementFilter"/>
-        /// </summary>
-        /// <remarks>
         /// 根据元素过滤器获取视图中的图元
-        /// </remarks>
-        /// <param name="document">revit document</param>
-        /// <param name="viewId">host view</param>
+        /// <para>Get elements in view by <see cref="Autodesk.Revit.DB.ElementFilter"/></para>
+        /// </summary>
+        /// <param name="view">host view</param>
         /// <param name="elementFilter"></param>
         /// <returns></returns>
-        public static FilteredElementCollector GetElementsInView(this Document document, ElementId viewId, ElementFilter elementFilter)
+        public static FilteredElementCollector GetElements(this View view, ElementFilter elementFilter)
         {
-            return document.GetElementsInView(viewId).WherePasses(elementFilter);
+            return view.GetElements().WherePasses(elementFilter);
         }
 
         /// <summary>
-        /// Get elements in view by <see cref="System.Type"/>
-        /// </summary>
-        /// <remarks>
         /// 根据类型获取视图中的图元
-        /// </remarks>
-        /// <param name="document">revit document</param>
-        /// <param name="viewId">host view</param>
+        /// <para>Get elements in view by <see cref="System.Type"/></para>
+        /// </summary>
+        /// <param name="view"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static FilteredElementCollector GetElementsInView(this Document document, ElementId viewId, Type type)
+        public static FilteredElementCollector GetElements(this View view, Type type)
         {
-            return document.GetElementsInView(viewId, new ElementClassFilter(type));
+            return view.GetElements(new ElementClassFilter(type));
         }
 
         /// <summary>
-        /// Get element in view by <typeparamref name="T"/>
-        /// </summary>
-        /// <remarks>
         /// 根据类型获取视图中的图元
-        /// </remarks>
+        /// <para>Get element in view by <typeparamref name="T"/></para>
+        /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="document">revit document</param>
-        /// <param name="viewId">host view</param>
+        /// <param name="view">host view</param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public static IEnumerable<T> GetElementsInView<T>(this Document document, ElementId viewId, Func<T, bool> predicate = null) where T : Element
+        public static IEnumerable<T> GetElements<T>(this View view, Func<T, bool> predicate = null) where T : Element
         {
-            IEnumerable<T> elements = document.GetElementsInView(viewId, typeof(T)).Cast<T>();
+            IEnumerable<T> elements = view.GetElements(typeof(T)).Cast<T>();
             if (predicate != null)
             {
                 elements = elements.Where(predicate);

@@ -43,14 +43,14 @@ namespace Tuna.Sample.Commands
 
 
             FilterStringRuleEvaluator evaluator = new FilterStringEquals();
-#if RVT_23_DEBUG || RVT_23_RELEASE || RVT_24_DEBUG || RVT_24_RELEASE
-            FilterRule filterRule = new FilterStringRule(provider, evaluator, "ListA");
-#else
-            FilterRule filterRule = new FilterStringRule(provider, evaluator, "ListA", false);
-#endif
-            FilteredElementCollector elems = document.GetElements(new ElementParameterFilter(new List<FilterRule>() { filterRule }));
-            commandData.Application.ActiveUIDocument.Selection.SetElementIds(elems.ToElementIds());
-            TaskDialog.Show("shiwu", $"{elems.GetElementCount()}");
+//#if RVT_23_DEBUG || RVT_23_RELEASE || RVT_24_DEBUG || RVT_24_RELEASE
+//            FilterRule filterRule = new FilterStringRule(provider, evaluator, "ListA");
+//#else
+//            FilterRule filterRule = new FilterStringRule(provider, evaluator, "ListA", false);
+//#endif
+//            FilteredElementCollector elems = document.GetElements(new ElementParameterFilter(new List<FilterRule>() { filterRule }));
+//            commandData.Application.ActiveUIDocument.Selection.SetElementIds(elems.ToElementIds());
+            //TaskDialog.Show("shiwu", $"{elems.GetElementCount()}");
 
             //var elems = document.GetElements(document.GetElement(new ElementId(197050)) as Family).ToElements().Cast<FamilySymbol>();
             //StringBuilder builder = new StringBuilder();
@@ -61,14 +61,14 @@ namespace Tuna.Sample.Commands
             //TaskDialog.Show("Tuna", builder.ToString());
 
 
-            var elems = document.GetElementTypes(BuiltInCategory.OST_Walls).Cast<WallType>().WhereHasInstances<Wall>();
-            StringBuilder builder = new StringBuilder();
-            builder.Append(elems.Count().ToString());
-            foreach (var element in elems)
-            {
-                builder.Append(element.Name + "\n");
-            }
-            TaskDialog.Show("Tuna", builder.ToString());
+            //var elems = document.GetElementTypes(BuiltInCategory.OST_Walls).Cast<WallType>().WhereHasInstances<Wall>();
+            //StringBuilder builder = new StringBuilder();
+            //builder.Append(elems.Count().ToString());
+            //foreach (var element in elems)
+            //{
+            //    builder.Append(element.Name + "\n");
+            //}
+            //TaskDialog.Show("Tuna", builder.ToString());
 
 
 

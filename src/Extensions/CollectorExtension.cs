@@ -28,7 +28,7 @@ namespace Tuna.Revit.Extension
         /// <summary>
         /// Spatial element types
         /// </summary>
-        private static readonly Dictionary<Type, Type> FilterTypes = new Dictionary<Type, Type>()
+        internal static readonly Dictionary<Type, Type> FilterTypes = new Dictionary<Type, Type>()
         {
             [typeof(Room)] = typeof(RoomFilter),
             [typeof(RoomTag)] = typeof(RoomTagFilter),
@@ -54,11 +54,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <see cref="Autodesk.Revit.DB.ElementFilter"/>
-        /// </summary>
-        /// <remarks>
         /// <c>[Quick Filter]</c>根据元素过滤器过滤出符合条件的图元对象
-        /// </remarks>
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.ElementFilter"/></para>
+        /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="filter">element filter</param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -72,8 +70,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <see cref="System.Type"/>
-        /// which type support following types:<br/>
+        /// 根据类型（包括以下列出的类型）过滤出文档中的图元对象，该类型必须继承于 <see cref="Autodesk.Revit.DB.Element"/>,
+        /// 但不是所有<see cref="Autodesk.Revit.DB.Element"/>派生的类都可以通过<see cref="Autodesk.Revit.DB.ElementClassFilter"/>进行过滤
+        /// <para>Get elements by <see cref="System.Type"/> which type support following types </para>
         /// <see cref="Autodesk.Revit.DB.Architecture.Room"/><br/>
         /// <see cref="Autodesk.Revit.DB.Architecture.RoomTag"/><br/>
         /// <see cref="Autodesk.Revit.DB.Area"/><br/>
@@ -81,10 +80,6 @@ namespace Tuna.Revit.Extension
         /// <see cref="Autodesk.Revit.DB.Mechanical.Space"/><br/>
         /// <see cref="Autodesk.Revit.DB.Mechanical.SpaceTag"/><br/>
         /// </summary>
-        /// <remarks>
-        /// 根据类型（包括以上列出的类型）过滤出文档中的图元对象，该类型必须继承于 <see cref="Autodesk.Revit.DB.Element"/>,
-        /// 但不是所有<see cref="Autodesk.Revit.DB.Element"/>派生的类都可以通过<see cref="Autodesk.Revit.DB.ElementClassFilter"/>进行过滤
-        /// </remarks>
         /// <param name="document">revit document</param>
         /// <param name="type">type of element</param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -127,12 +122,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <see cref="Autodesk.Revit.DB.Structure.StructuralMaterialType"/>
+        /// <c>[Slow Filter]</c>根据结构族参数 <b>「用于模型行为的材质」</b> 过滤出文档中的结构图元对象
+        ///<para> Get elements by <see cref="Autodesk.Revit.DB.Structure.StructuralMaterialType"/></para>
         /// </summary>
-        /// <remarks>
-        /// <c>[Slow Filter]</c>
-        /// 根据结构族参数 <b>「用于模型行为的材质」</b> 过滤出文档中的结构图元对象
-        /// </remarks>
         /// <param name="document">revit document</param>
         /// <param name="structuralMaterialType"></param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -142,12 +134,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <see cref="Autodesk.Revit.DB.Structure.StructuralInstanceUsage"/>
+        /// <c>[Slow Filter]</c>根据结构图元的实例参数<b>「结构用途」</b> 过滤出文档中的结构图元对象
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.Structure.StructuralInstanceUsage"/></para>
         /// </summary>
-        /// <remarks>
-        /// <c>[Slow Filter]</c>
-        /// 根据结构图元的实例参数<b>「结构用途」</b> 过滤出文档中的结构图元对象
-        /// </remarks>
         /// <param name="document">revit document</param>
         /// <param name="structuralInstanceUsage"></param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -157,11 +146,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <see cref="Autodesk.Revit.DB.FamilySymbol"/>
-        /// </summary>
-        /// <remarks>
         /// <c>[Slow Filter]</c>根据族类型过滤出文档中的族实例对象
-        /// </remarks>
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.FamilySymbol"/></para>
+        /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="familySymbol"></param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -171,11 +158,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <see cref="Autodesk.Revit.DB.Level"/>
-        /// </summary>
-        /// <remarks>
         /// <c>[Quick Filter]</c>根据标高过滤出文档中约束为当前标高的对象
-        /// </remarks>
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.Level"/></para>
+        /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="level">host level</param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -185,12 +170,10 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by element category id , you can used <see cref="Constants.BuiltInParameters"/> to get parameter id
-        /// </summary>
-        /// <remarks>
         /// <c>[Quick Filter]</c>根据内置类别的<see cref="Autodesk.Revit.DB.ElementId"/>过滤出文档中的图元对象,
         /// 扩展包提供了常量类型<see cref="Tuna.Revit.Extension.Constants.BuiltInCategories"/>可进行<c>Id</c>的调用
-        /// </remarks>
+        /// <para>Get elements by element category id , you can used <see cref="Constants.BuiltInParameters"/> to get parameter id</para>
+        /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="categoryId"></param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -200,11 +183,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        ///  Get structural elements by <see cref="Autodesk.Revit.DB.Structure.StructuralType"/>
-        /// </summary>
-        /// <remarks>
         /// <c>[Quick Filter]</c>根据结构图元的实例属性 <c>StructuralType</c> 过滤出文档中的结构图元对象,同一个族类型从不同的按钮创建出来后的结构类型不同
-        /// </remarks>
+        /// <para>Get structural elements by <see cref="Autodesk.Revit.DB.Structure.StructuralType"/></para>
+        /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="structuralType"></param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -214,11 +195,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <see cref="Autodesk.Revit.DB.CurveElementType"/>
-        /// </summary>
-        /// <remarks>
         /// <c>[Quick Filter]</c>根据线性类型获取图元对象
-        /// </remarks>
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.CurveElementType"/></para>
+        /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="curveElementType"></param>
         /// <returns></returns>
@@ -228,12 +207,10 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by category <see cref="Autodesk.Revit.DB.ElementId"/>
-        /// </summary>
-        /// <remarks>
         /// <c>[Quick Filter]</c>根据内置类别的<see cref="Autodesk.Revit.DB.ElementId"/>过滤出文档中的图元类型对象,
         /// 扩展包提供了常量类型<see cref="Tuna.Revit.Extension.Constants.BuiltInCategories"/>可进行<c>Id</c>的调用
-        /// </remarks>
+        /// <para>Get elements by category <see cref="Autodesk.Revit.DB.ElementId"/></para>
+        /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="categoryId"></param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -243,11 +220,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <see cref="Autodesk.Revit.DB.BuiltInCategory"/>
-        /// </summary>
-        /// <remarks>
         /// <c>[Quick Filter]</c>根据内置类别过滤出文档中的图元类型对象
-        /// </remarks>
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.BuiltInCategory"/></para>
+        /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="category"></param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -257,11 +232,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements types by <typeparamref name="T"/>
-        /// </summary>
-        /// <remarks>
         /// 根据类型过滤出文档中的图元类型对象
-        /// </remarks>
+        /// <para>Get elements types by <typeparamref name="T"/></para>
+        /// </summary>
         /// <typeparam name="T"><see cref="Autodesk.Revit.DB.ElementType"/></typeparam>
         /// <param name="document">revit document</param>
         /// <param name="predicate"></param>
@@ -272,11 +245,9 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <typeparamref name="T"/>
-        /// </summary>
-        /// <remarks>
         /// 根据类型过滤出文档中的图元对象
-        /// </remarks>
+        /// <para>Get elements by <typeparamref name="T"/></para>
+        /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="document">revit document</param>
         /// <param name="predicate"></param>
@@ -294,12 +265,8 @@ namespace Tuna.Revit.Extension
         /// <summary>
         /// <c>[Slow Filter]</c>
         /// 根据结构族参数 <b>「用于模型行为的材质」</b> 过滤出文档中的结构族对象
-        /// Get structual families by <see cref="Autodesk.Revit.DB.Structure.StructuralMaterialType"/>
+        /// <para>Get structual families by <see cref="Autodesk.Revit.DB.Structure.StructuralMaterialType"/></para>
         /// </summary>
-        /// <remarks>
-        /// <c>[Slow Filter]</c>
-        /// 根据结构族参数 <b>「用于模型行为的材质」</b> 过滤出文档中的结构族对象
-        /// </remarks>
         /// <param name="document">revit document</param>
         /// <param name="structuralMaterialType"></param>
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
@@ -309,8 +276,8 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get family symbol elements by family <see cref="Autodesk.Revit.DB.ElementId"/> 
-        /// <para><c>[Quick Filter]</c>根据族的<see cref="Autodesk.Revit.DB.ElementId"/>过滤出文档中的族类型</para>
+        /// <c>[Quick Filter]</c>根据族的<see cref="Autodesk.Revit.DB.ElementId"/>过滤出文档中的族类型
+        /// <para>Get family symbol elements by family <see cref="Autodesk.Revit.DB.ElementId"/> </para>
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="familyId"></param>
@@ -321,16 +288,17 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// 
+        /// Get all of the 3d model elements from target document
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
         /// <param name="document"></param>
         /// <returns></returns>
         public static IEnumerable<TElement> GetModelElements<TElement>(this Document document) where TElement : Element
         {
-            var elements = document.GetElements(new ElementIsElementTypeFilter(true));
-            elements.ToElements().Where(element => element.Category!.HasMaterialQuantities);
-            return elements.Cast<TElement>();
+            return document.GetElements(new ElementIsElementTypeFilter(true))
+                .ToElements()
+                .Where(element => element.Category!.HasMaterialQuantities)
+                .Cast<TElement>();
         }
     }
 }
