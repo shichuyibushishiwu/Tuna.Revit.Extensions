@@ -32,12 +32,25 @@ namespace Tuna.Sample.Commands
             Document document = uIDocument.Document;
 
 
-            var elems = document.GetModelElements<Element>();
-     
+            var elems = document.GetGraphicElements<FamilyInstance>(instance => instance.Name == "name");
+
+            Enumerator.Range(1, 100);
+
 
             TaskDialog.Show("asd", elems.Count().ToString());
 
             return Result.Succeeded;
         }
+    }
+
+    public static class Test
+    {
+        /// <summary>
+        /// Get all of the 3d model elements from target document
+        /// </summary>
+        /// <typeparam name="TElement"></typeparam>
+        /// <param name="document"></param>
+        /// <returns></returns>
+
     }
 }

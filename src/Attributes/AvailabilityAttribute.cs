@@ -17,14 +17,24 @@ using Tuna.Revit.Extension.Data;
 
 namespace Tuna.Revit.Extension.Attributes
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class AvailabilityAttribute : Attribute
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="availability"></param>
         public AvailabilityAttribute(AvailabilityMode availability )
         {
             Availability = availability;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public AvailabilityMode Availability { get; }
     }
 }

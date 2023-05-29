@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tuna.Revit.Extension;
 
 namespace Tuna.Revit.Extension
 {
@@ -46,10 +47,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         internal static FilteredElementCollector GetElements(this Document document)
         {
-            if (!document!.IsValidObject)
-            {
-                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
-            }
+            ArgumentNullException.IsNull(document);
             return new FilteredElementCollector(document);
         }
 
@@ -62,10 +60,7 @@ namespace Tuna.Revit.Extension
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, ElementFilter filter)
         {
-            if (filter == null)
-            {
-                throw new ArgumentNullException("filter can not be null");
-            }
+            ArgumentNullException.IsNull(filter);
             return document.GetElements().WherePasses(filter);
         }
 
@@ -287,19 +282,32 @@ namespace Tuna.Revit.Extension
             return document.GetElements(new FamilySymbolFilter(familyId)).Cast<FamilySymbol>();
         }
 
+
+
         /// <summary>
-        /// Get all of the 3d model elements from target document
+        /// 获取文档中的所有三维图形图元，如果 <typeparamref name="TElement"/> 不是 <see cref="Autodesk.Revit.DB.Element"/>, 则将按类型获取
+        /// <para>Get all of the 3d model elements from target document</para>
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
         /// <param name="document"></param>
+        /// <param name="predicate"></param>
         /// <returns></returns>
-        public static IEnumerable<TElement> GetModelElements<TElement>(this Document document) where TElement : Element
+        public static IEnumerable<TElement> GetGraphicElements<TElement>(this Document document, Func<TElement, bool> predicate = null) where TElement : Element
         {
-            var elements = document.GetElements(new ElementIsElementTypeFilter(true))
-                  .ToElements()
-                  .Where(element => element.Category!.HasMaterialQuantities);
-
-            return elements.Cast<TElement>();
+            var elements = document.GetElements(new ElementIsElementTypeFilter(true));
+            if (typeof(TElement).IsSubclassOf(typeof(Element)))
+            {
+                elements = elements.WherePasses(new ElementClassFilter(typeof(TElement)));
+            }
+            IEnumerable<TElement> result = elements
+                   .ToElements()
+                   .Where(element => element.Category != null && element.Category.HasMaterialQuantities)
+                   .Cast<TElement>();
+            if (predicate != null)
+            {
+                result = result.Where(predicate);
+            }
+            return result;
         }
     }
 }

@@ -31,10 +31,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         internal static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds)
         {
-            if (!document!.IsValidObject)
-            {
-                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
-            }
+            ArgumentNullException.IsNull(document);
             return new FilteredElementCollector(document, elementIds);
         }
 

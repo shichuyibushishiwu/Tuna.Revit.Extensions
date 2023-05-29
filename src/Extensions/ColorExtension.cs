@@ -31,14 +31,10 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static string ConvertToHTML(this Autodesk.Revit.DB.Color color)
         {
-            if (color == null)
-            {
-                throw new ArgumentNullException("color");
-            }
-
+            ArgumentNullException.IsNull(color);
             if (!color.IsValid)
             {
-                throw new ArgumentNullException("color", "color is invalid");
+                throw new System.ArgumentNullException("color", "color is invalid");
             }
 
             return ColorTranslator.ToHtml(Color.FromArgb(color.Red, color.Green, color.Blue));
@@ -52,10 +48,7 @@ namespace Tuna.Revit.Extension
         /// <returns><see cref="Autodesk.Revit.DB.Color"/></returns>
         public static Autodesk.Revit.DB.Color ConvertToRevitColor(this System.Drawing.Color color)
         {
-            if (color == null)
-            {
-                throw new ArgumentNullException("color");
-            }
+            ArgumentNullException.IsNull(color);
             return new Autodesk.Revit.DB.Color(color.R, color.G, color.B);
         }
 
@@ -67,14 +60,16 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static bool EqualTo(this Autodesk.Revit.DB.Color color, Autodesk.Revit.DB.Color otherColor)
         {
-            if (color == null || !color.IsValid)
+            ArgumentNullException.IsNull(color);
+            ArgumentNullException.IsNull(otherColor);
+            if (!color.IsValid)
             {
-                return false;
+                throw new System.ArgumentNullException("color", "color is invalid");
             }
-
-            if (otherColor == null && !otherColor.IsValid)
+    
+            if (!color.IsValid)
             {
-                return false;
+                throw new System.ArgumentNullException("color", "color is invalid");
             }
 
             return color.Red == otherColor.Red && color.Green == otherColor.Green && color.Blue == color.Blue;
