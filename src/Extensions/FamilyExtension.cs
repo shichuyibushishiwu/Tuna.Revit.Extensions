@@ -44,7 +44,7 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Convert ParameterSet to List<Parameter>
+        /// Convert ParameterSet to List<FamilyParameter>
         /// </summary>
         /// <param name="parameterSet"></param>
         /// <param name="predicate"></param>

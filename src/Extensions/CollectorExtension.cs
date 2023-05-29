@@ -295,10 +295,11 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static IEnumerable<TElement> GetModelElements<TElement>(this Document document) where TElement : Element
         {
-            return document.GetElements(new ElementIsElementTypeFilter(true))
-                .ToElements()
-                .Where(element => element.Category!.HasMaterialQuantities)
-                .Cast<TElement>();
+            var elements = document.GetElements(new ElementIsElementTypeFilter(true))
+                  .ToElements()
+                  .Where(element => element.Category!.HasMaterialQuantities);
+
+            return elements.Cast<TElement>();
         }
     }
 }
