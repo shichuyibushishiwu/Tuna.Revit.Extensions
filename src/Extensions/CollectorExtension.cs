@@ -61,7 +61,7 @@ namespace Tuna.Revit.Extension
         public static FilteredElementCollector GetElements(this Document document, ElementFilter filter)
         {
             ArgumentNullException.IsNull(filter);
-            return document.GetElements().WherePasses(filter);
+            return GetElements(document).WherePasses(filter);
         }
 
         /// <summary>
@@ -309,5 +309,7 @@ namespace Tuna.Revit.Extension
             }
             return result;
         }
+
+       
     }
 }
