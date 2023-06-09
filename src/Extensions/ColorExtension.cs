@@ -31,7 +31,7 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static string ConvertToHTML(this Autodesk.Revit.DB.Color color)
         {
-            ArgumentNullException.IsNull(color);
+            ArgumentNullException.ThrowIfNull(color);
             if (!color.IsValid)
             {
                 throw new System.ArgumentNullException("color", "color is invalid");
@@ -48,7 +48,7 @@ namespace Tuna.Revit.Extension
         /// <returns><see cref="Autodesk.Revit.DB.Color"/></returns>
         public static Autodesk.Revit.DB.Color ConvertToRevitColor(this System.Drawing.Color color)
         {
-            ArgumentNullException.IsNull(color);
+            ArgumentNullException.ThrowIfNull(color);
             return new Autodesk.Revit.DB.Color(color.R, color.G, color.B);
         }
 
@@ -60,8 +60,8 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static bool EqualTo(this Autodesk.Revit.DB.Color color, Autodesk.Revit.DB.Color otherColor)
         {
-            ArgumentNullException.IsNull(color);
-            ArgumentNullException.IsNull(otherColor);
+            ArgumentNullException.ThrowIfNull(color);
+            ArgumentNullException.ThrowIfNull(otherColor);
             if (!color.IsValid)
             {
                 throw new System.ArgumentNullException("color", "color is invalid");

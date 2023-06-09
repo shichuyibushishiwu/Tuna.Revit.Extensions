@@ -31,11 +31,11 @@ namespace Tuna.Revit.Extension
         /// </summary>
         internal static readonly Dictionary<Type, Type> FilterTypes = new Dictionary<Type, Type>()
         {
-            [typeof(Room)] = typeof(RoomFilter),
-            [typeof(RoomTag)] = typeof(RoomTagFilter),
-            [typeof(Area)] = typeof(AreaFilter),
-            [typeof(AreaTag)] = typeof(AreaTagFilter),
-            [typeof(Space)] = typeof(SpaceFilter),
+            [typeof(Room)]     = typeof(RoomFilter),
+            [typeof(RoomTag)]  = typeof(RoomTagFilter),
+            [typeof(Area)]     = typeof(AreaFilter),
+            [typeof(AreaTag)]  = typeof(AreaTagFilter),
+            [typeof(Space)]    = typeof(SpaceFilter),
             [typeof(SpaceTag)] = typeof(SpaceTagFilter),
         };
 
@@ -47,7 +47,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         internal static FilteredElementCollector GetElements(this Document document)
         {
-            ArgumentNullException.IsNull(document);
+            ArgumentNullException.ThrowIfNull(document);
             return new FilteredElementCollector(document);
         }
 
@@ -60,7 +60,7 @@ namespace Tuna.Revit.Extension
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, ElementFilter filter)
         {
-            ArgumentNullException.IsNull(filter);
+            ArgumentNullException.ThrowIfNull(filter);
             return GetElements(document).WherePasses(filter);
         }
 

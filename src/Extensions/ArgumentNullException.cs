@@ -18,16 +18,16 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension
 {
     /// <summary>
-    /// 
+    /// Exception
     /// </summary>
     public static class ArgumentNullException
     {
         /// <summary>
-        /// 
+        /// Throw null exception if parameter is null
         /// </summary>
         /// <param name="parameter"></param>
         /// <exception cref="System.ArgumentNullException"></exception>
-        public static void IsNull(object parameter)
+        public static void ThrowIfNull(object parameter)
         {
             if (parameter == null)
             {
@@ -36,13 +36,13 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// 
+        /// Throw null exception if parameter is null or invalid
         /// </summary>
         /// <param name="parameter"></param>
         /// <exception cref="System.ArgumentNullException"></exception>
-        public static void IsNull(Element parameter)
+        public static void ThrowIfNullOrInvalid(Element parameter)
         {
-            ArgumentNullException.IsNull(parameter);
+            ThrowIfNull(parameter);
             if (!parameter.IsValidObject)
             {
                 throw new System.ArgumentNullException(nameof(parameter), $"{parameter} must be valid object");
