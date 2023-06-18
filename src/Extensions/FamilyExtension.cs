@@ -17,10 +17,13 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class FamilyExtension
     {
         /// <summary>
-        /// Convert FamilyParameterSet to List<FamilyParameter>
+        /// Convert FamilyParameterSet to 
         /// </summary>
         /// <param name="familyParameterSet"></param>
         /// <param name="predicate"></param>
@@ -44,7 +47,7 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Convert ParameterSet to List<FamilyParameter>
+        /// Convert ParameterSet to 
         /// </summary>
         /// <param name="parameterSet"></param>
         /// <param name="predicate"></param>
@@ -75,10 +78,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static IEnumerable<FamilySymbol> GetFamilySymbols(this Family family)
         {
-            if (family == null)
-            {
-                throw new ArgumentNullException(nameof(family));
-            }
+            ArgumentNullException.ThrowIfNullOrInvalid(family);
             return family.Document.GetFamilySymbols(family.Id);
         }
 

@@ -9,6 +9,7 @@
 ///************************************************************************************
 
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,6 @@ namespace Tuna.Revit.Extension
         /// Throw null exception if parameter is null
         /// </summary>
         /// <param name="parameter"></param>
-        /// <exception cref="System.ArgumentNullException"></exception>
         public static void ThrowIfNull(object parameter)
         {
             if (parameter == null)
@@ -36,16 +36,58 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Throw null exception if parameter is null or invalid
+        /// Throw null exception if element is null or invalid
         /// </summary>
-        /// <param name="parameter"></param>
+        /// <param name="element"></param>
         /// <exception cref="System.ArgumentNullException"></exception>
-        public static void ThrowIfNullOrInvalid(Element parameter)
+        public static void ThrowIfNullOrInvalid(Element element)
         {
-            ThrowIfNull(parameter);
-            if (!parameter.IsValidObject)
+            ThrowIfNull(element);
+            if (!element.IsValidObject)
             {
-                throw new System.ArgumentNullException(nameof(parameter), $"{parameter} must be valid object");
+                throw new System.ArgumentNullException(nameof(element), $"element must be valid object");
+            }
+        }
+
+        /// <summary>
+        /// Throw null exception if document is null or invalid
+        /// </summary>
+        /// <param name="document"></param>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public static void ThrowIfNullOrInvalid(Document document)
+        {
+            ThrowIfNull(document);
+            if (!document.IsValidObject)
+            {
+                throw new System.ArgumentNullException(nameof(document), $"document must be valid object");
+            }
+        }
+
+        /// <summary>
+        /// Throw null exception if ui document is null or invalid
+        /// </summary>
+        /// <param name="document"></param>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public static void ThrowIfNullOrInvalid(UIDocument document)
+        {
+            ThrowIfNull(document);
+            if (!document.IsValidObject)
+            {
+                throw new System.ArgumentNullException(nameof(document), $"ui document must be valid object");
+            }
+        }
+
+        /// <summary>
+        /// Throw null exception if ui document is null or invalid
+        /// </summary>
+        /// <param name="color"></param>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public static void ThrowIfNullOrInvalid(Color color)
+        {
+            ThrowIfNull(color);
+            if (!color.IsValid)
+            {
+                throw new System.ArgumentNullException(nameof(color), $"ui document must be valid object");
             }
         }
     }

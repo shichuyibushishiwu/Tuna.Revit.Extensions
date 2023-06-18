@@ -32,10 +32,7 @@ namespace Tuna.Revit.Extension
         /// <returns>element <see cref="Parameter"/></returns>
         public static Parameter GetParameter(this Element element, ElementId parameterId)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element), "element can not be null");
-            }
+            ArgumentNullException.ThrowIfNullOrInvalid(element);
 
             if (parameterId != ElementId.InvalidElementId)
             {
@@ -59,10 +56,8 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static IDictionary<ElementType, int> GetElementTypeInstancesCount<T>(this IEnumerable<ElementType> types) where T : Element
         {
-            if (types == null)
-            {
-                throw new ArgumentNullException(nameof(types), "types can not be null");
-            }
+            ArgumentNullException.ThrowIfNull(types);
+         
 
             Dictionary<ElementType, int> result = new Dictionary<ElementType, int>();
             if (types.Any())
@@ -107,10 +102,8 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static FilteredElementCollector TryGetIntersectElements(this Element element, View view)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
+            ArgumentNullException.ThrowIfNullOrInvalid(element);
+
             Document document = element.Document;
             BoundingBoxXYZ boundingBox = element.get_BoundingBox(view);
             Outline outline = new Outline(boundingBox.Min, boundingBox.Max);

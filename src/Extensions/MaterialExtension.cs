@@ -38,12 +38,9 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static Color GetAppearanceColor(this Material material)
         {
-            if (material == null || !material.IsValidObject)
-            {
-                throw new ArgumentNullException(nameof(material), "material is null or invalid material");
-            }
+            ArgumentNullException.ThrowIfNullOrInvalid(material);
 
-            Color color = Color.InvalidColorValue;
+             Color color = Color.InvalidColorValue;
             ElementId appearanceAssetId = material.AppearanceAssetId;
             if (appearanceAssetId != ElementId.InvalidElementId)
             {
@@ -64,15 +61,10 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static void SetAppearanceColor(this Material material, Color color)
         {
-            if (material == null || !material.IsValidObject)
-            {
-                throw new ArgumentNullException(nameof(material), "material is null or invalid material");
-            }
+            ArgumentNullException.ThrowIfNullOrInvalid(material);
+            ArgumentNullException.ThrowIfNullOrInvalid(color);
 
-            if (color == null || !color.IsValid)
-            {
-                throw new ArgumentNullException(nameof(color), "color can not be null or color is invalid");
-            }
+         
 
             ElementId appearanceAssetId = material.AppearanceAssetId;
             if (appearanceAssetId != ElementId.InvalidElementId)
