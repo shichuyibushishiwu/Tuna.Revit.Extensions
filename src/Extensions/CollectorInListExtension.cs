@@ -20,7 +20,7 @@ namespace Tuna.Revit.Extension
     /// <summary>
     /// Revit element filters extension
     /// </summary>
-    public static partial class CollectorExtension
+    public static class CollectorInListExtension
     {
         /// <summary>
         /// 

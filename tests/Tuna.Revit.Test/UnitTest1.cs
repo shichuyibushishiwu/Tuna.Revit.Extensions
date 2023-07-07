@@ -10,7 +10,7 @@ namespace Tuna.Revit.Test
             var result = Extension.Enumerator.Range(0,-1,-0.1);
             foreach (var item in result)
             {
-                Console.WriteLine(item);
+             
             }
             Assert.Pass();
         }

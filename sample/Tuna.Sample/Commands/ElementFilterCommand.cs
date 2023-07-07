@@ -25,29 +25,34 @@ using Tuna.Revit.Extension.Constants;
 namespace Tuna.Sample.Commands
 {
     [Transaction(TransactionMode.Manual)]
-    internal class ElementFilterCommand : IExternalCommand
+    public class ElementFilterCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             UIDocument uIDocument = commandData.Application.ActiveUIDocument;
             Document document = uIDocument.Document;
 
-            document.GetElements()
-                .OfCategories(BuiltInCategory.OST_Walls)
-                .WithParameterStringValue(BuiltInParameter.ALL_MODEL_MODEL, ParameterFilterStringOperator.BeginWith, "m")
-                .WithParameterStringValue(BuiltInParameter.ALL_MODEL_COST, ParameterFilterStringOperator.Contains, "m")
-                .WithParameterStringValue(BuiltInParameter.ALL_MODEL_FAMILY_NAME, ParameterFilterStringOperator.BeginWith, "m")
-                .WithParameterStringValue(BuiltInParameter.ALLOW_AUTO_EMBED, ParameterFilterStringOperator.BeginWith, "m")
-                .ToFilter()
-                .ToElements();
+            //document.GetElements()
+            //    .OfCategories(BuiltInCategory.OST_Walls)
+            //    .WithParameterStringValue(BuiltInParameter.ALL_MODEL_MODEL, ParameterFilterStringOperator.BeginWith, "m")
+            //    .WithParameterStringValue(BuiltInParameter.ALL_MODEL_COST, ParameterFilterStringOperator.Contains, "m")
+            //    .WithParameterStringValue(BuiltInParameter.ALL_MODEL_FAMILY_NAME, ParameterFilterStringOperator.BeginWith, "m")
+            //    .WithParameterStringValue(BuiltInParameter.ALLOW_AUTO_EMBED, ParameterFilterStringOperator.BeginWith, "m")
+            //    .ToFilter()
+            //    .ToElements();
 
 
-            document.GetElements<FamilyInstance>(instance => instance.Symbol.FamilyName == "预制");
+
+            //document.GetElements<FamilyInstance>(instance => instance.Symbol.FamilyName == "预制");
 
 
-            var elems = document.GetGraphicElements<FamilyInstance>(instance => instance.Name == "name");
+            //var elems = document.GetGraphicElements<FamilyInstance>(instance => instance.Name == "name");
 
-            Enumerator.Range(1, 100);
+            //Enumerator.Range(1, 100);
+
+            var elems = uIDocument.ActiveGraphicalView.GetElements<Wall>();
+
+
 
 
             TaskDialog.Show("asd", elems.Count().ToString());
@@ -56,14 +61,5 @@ namespace Tuna.Sample.Commands
         }
     }
 
-    public static class Test
-    {
-        /// <summary>
-        /// Get all of the 3d model elements from target document
-        /// </summary>
-        /// <typeparam name="TElement"></typeparam>
-        /// <param name="document"></param>
-        /// <returns></returns>
 
-    }
 }

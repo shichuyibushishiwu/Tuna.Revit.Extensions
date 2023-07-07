@@ -24,7 +24,7 @@ namespace Tuna.Revit.Extension
     /// <summary>
     /// Revit element filters extension
     /// </summary>
-    public static partial class CollectorExtension
+    public static class CollectorExtension
     {
         /// <summary>
         /// Spatial element types
@@ -68,12 +68,12 @@ namespace Tuna.Revit.Extension
         /// 根据类型（包括以下列出的类型）过滤出文档中的图元对象，该类型必须继承于 <see cref="Autodesk.Revit.DB.Element"/>,
         /// 但不是所有<see cref="Autodesk.Revit.DB.Element"/>派生的类都可以通过<see cref="Autodesk.Revit.DB.ElementClassFilter"/>进行过滤
         /// <para>Get elements by <see cref="System.Type"/> which type support following types </para>
-        /// <see cref="Autodesk.Revit.DB.Architecture.Room"/><br/>
-        /// <see cref="Autodesk.Revit.DB.Architecture.RoomTag"/><br/>
-        /// <see cref="Autodesk.Revit.DB.Area"/><br/>
-        /// <see cref="Autodesk.Revit.DB.AreaTag"/><br/>
-        /// <see cref="Autodesk.Revit.DB.Mechanical.Space"/><br/>
-        /// <see cref="Autodesk.Revit.DB.Mechanical.SpaceTag"/><br/>
+        /// <see cref="Autodesk.Revit.DB.Architecture.Room"/>
+        /// <see cref="Autodesk.Revit.DB.Architecture.RoomTag"/>
+        /// <see cref="Autodesk.Revit.DB.Area"/>
+        /// <see cref="Autodesk.Revit.DB.AreaTag"/>
+        /// <see cref="Autodesk.Revit.DB.Mechanical.Space"/>
+        /// <see cref="Autodesk.Revit.DB.Mechanical.SpaceTag"/>
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="type">type of element</param>
@@ -93,8 +93,8 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <see cref="Autodesk.Revit.DB.BuiltInCategory"/>
-        /// <para><c>[Quick Filter]</c>根据内置类别过滤出文档中的图元对象</para>
+        /// <c>[Quick Filter]</c>根据内置类别过滤出文档中的图元对象
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.BuiltInCategory"/></para>
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="category"></param>
@@ -105,8 +105,8 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get elements by <see cref="Autodesk.Revit.DB.Structure.StructuralWallUsage"/>
-        /// <para><c>[Slow Filter]</c>根据结构墙体实例参数 <b>「结构用途」</b> 过滤出文档中的结构墙体图元对象</para>
+        /// <c>[Slow Filter]</c>根据结构墙体实例参数 <b>「结构用途」</b> 过滤出文档中的结构墙体图元对象
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.Structure.StructuralWallUsage"/></para>
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="structuralWallUsage"></param>
@@ -282,10 +282,9 @@ namespace Tuna.Revit.Extension
             return document.GetElements(new FamilySymbolFilter(familyId)).Cast<FamilySymbol>();
         }
 
-
-
         /// <summary>
-        /// 获取文档中的所有三维图形图元，如果 <typeparamref name="TElement"/> 不是 <see cref="Autodesk.Revit.DB.Element"/>, 则将按类型获取
+        /// 获取文档中的所有三维图形图元，如果指定的类型不是 <see cref="Autodesk.Revit.DB.Element"/>, 
+        /// 则将按类型  <typeparamref name="TElement"/>  获取指定的图元
         /// <para>Get all of the 3d model elements from target document</para>
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
@@ -309,7 +308,5 @@ namespace Tuna.Revit.Extension
             }
             return result;
         }
-
-       
     }
 }
