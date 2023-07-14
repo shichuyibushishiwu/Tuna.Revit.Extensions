@@ -87,11 +87,25 @@ namespace Tuna.Revit.Extension
             return view.GetElements(new ElementCategoryFilter(category)).WhereElementIsNotElementType();
         }
 
+        /// <summary>
+        /// <c>[Slow Filter]</c>根据结构墙体实例参数 <b>「结构用途」</b> 过滤出视图中的结构墙体图元对象
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.Structure.StructuralWallUsage"/></para> 
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="structuralWallUsage"></param>
+        /// <returns></returns>
         public static FilteredElementCollector GetElements(this View view, StructuralWallUsage structuralWallUsage)
         {
             return view.GetElements(new StructuralWallUsageFilter(structuralWallUsage));
         }
 
+        /// <summary>
+        /// <c>[Slow Filter]</c>根据结构族参数 <b>「用于模型行为的材质」</b> 过滤出视图中的结构图元对象
+        ///<para> Get elements by <see cref="Autodesk.Revit.DB.Structure.StructuralMaterialType"/></para>
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="structuralMaterialType"></param>
+        /// <returns></returns>
         public static FilteredElementCollector GetElements(this View view, StructuralMaterialType structuralMaterialType)
         {
             return view.GetElements(new StructuralMaterialTypeFilter(structuralMaterialType));
@@ -108,35 +122,55 @@ namespace Tuna.Revit.Extension
             return view.GetElements(new StructuralInstanceUsageFilter(structuralInstanceUsage));
         }
 
+        /// <summary>
+        /// <c>[Slow Filter]</c>根据族类型过滤出视图中的族实例对象
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.FamilySymbol"/></para>
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="familySymbol"></param>
+        /// <returns></returns>
         public static FilteredElementCollector GetElements(this View view, FamilySymbol familySymbol)
         {
             return view.GetElements(new FamilyInstanceFilter(view.Document, familySymbol.Id));
         }
 
+        /// <summary>
+        /// <c>[Quick Filter]</c>根据内置类别的<see cref="Autodesk.Revit.DB.ElementId"/>过滤出视图中的图元对象,
+        /// 扩展包提供了常量类型<see cref="Tuna.Revit.Extension.Constants.BuiltInCategories"/>可进行<c><see cref="Autodesk.Revit.DB.ElementId"/></c>的调用
+        /// <para>Get elements by element category id , you can used <see cref="Constants.BuiltInParameters"/> to get parameter id</para>
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
         public static FilteredElementCollector GetElements(this View view, ElementId categoryId)
         {
             return view.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsNotElementType();
         }
 
+        /// <summary>
+        /// <c>[Quick Filter]</c>根据结构图元的实例属性 <c>StructuralType</c> 过滤出视图中的结构图元对象,同一个族类型从不同的按钮创建出来后的结构类型不同
+        /// <para>Get structural elements by <see cref="Autodesk.Revit.DB.Structure.StructuralType"/></para> 
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="structuralType"></param>
+        /// <returns></returns>
         public static FilteredElementCollector GetElements(this View view, StructuralType structuralType)
         {
             return view.GetElements(new ElementStructuralTypeFilter(structuralType));
         }
 
+        /// <summary>
+        /// <c>[Quick Filter]</c>根据线性类型获取视图中图元对象
+        /// <para>Get elements by <see cref="Autodesk.Revit.DB.CurveElementType"/></para>
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="curveElementType"></param>
+        /// <returns></returns>
         public static FilteredElementCollector GetElements(this View view, CurveElementType curveElementType)
         {
             return view.GetElements(new CurveElementFilter(curveElementType));
         }
 
-        public static FilteredElementCollector GetElementTypes(this View view, ElementId categoryId)
-        {
-            return view.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsElementType();
-        }
-
-        public static FilteredElementCollector GetElementTypes(this View view, BuiltInCategory category)
-        {
-            return view.GetElements(new ElementCategoryFilter(category)).WhereElementIsElementType();
-        }
 
         /// <summary>
         /// 根据类型获取视图中的图元
@@ -155,7 +189,5 @@ namespace Tuna.Revit.Extension
             }
             return elements;
         }
-
-
     }
 }

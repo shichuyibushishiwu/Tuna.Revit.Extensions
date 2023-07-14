@@ -50,7 +50,7 @@ namespace Tuna.Sample.Commands
 
             //Enumerator.Range(1, 100);
 
-            var elems = uIDocument.ActiveGraphicalView.GetElements<Wall>();
+            var elems = uIDocument.ActiveGraphicalView.GetElements(BuiltInCategory.OST_Walls);
 
 
 

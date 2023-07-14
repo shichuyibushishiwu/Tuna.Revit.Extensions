@@ -190,7 +190,7 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// <c>[Quick Filter]</c>根据线性类型获取图元对象
+        /// <c>[Quick Filter]</c>根据线性类型获取文档中图元对象
         /// <para>Get elements by <see cref="Autodesk.Revit.DB.CurveElementType"/></para>
         /// </summary>
         /// <param name="document">revit document</param>
