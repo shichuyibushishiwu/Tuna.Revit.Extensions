@@ -23,10 +23,10 @@ namespace Tuna.Revit.Extension
     public static class CollectorInListExtension
     {
         /// <summary>
-        /// 
+        /// 在列表范围进行查询
         /// </summary>
-        /// <param name="document"></param>
-        /// <param name="elementIds"></param>
+        /// <param name="document">所在的文档</param>
+        /// <param name="elementIds">要查询的列表范围</param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException"></exception>
         internal static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds)
@@ -36,11 +36,11 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// 
+        /// 根据元素过滤器过滤出列表中符合条件的图元
         /// </summary>
-        /// <param name="document"></param>
-        /// <param name="elementIds"></param>
-        /// <param name="elementFilter"></param>
+        /// <param name="document">所在的文档</param>
+        /// <param name="elementIds">要查询的列表范围</param>
+        /// <param name="elementFilter">元素过滤器</param>
         /// <returns></returns>
         public static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds, ElementFilter elementFilter)
         {
@@ -48,11 +48,11 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// 
+        /// 从列表中查找与目标图元发生碰撞的对象
         /// </summary>
-        /// <param name="document"></param>
-        /// <param name="elementIds"></param>
-        /// <param name="element"></param>
+        /// <param name="document">所在的文档</param>
+        /// <param name="elementIds">要查询的列表范围</param>
+        /// <param name="element">要进行碰撞的图元</param>
         /// <returns></returns>
         public static FilteredElementCollector GetElementIntersectsInCollector(this Document document, ICollection<ElementId> elementIds, Element element)
         {
