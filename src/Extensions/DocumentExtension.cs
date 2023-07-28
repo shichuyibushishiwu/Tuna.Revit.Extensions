@@ -39,7 +39,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static AppearanceAssetElement CreateAppearanceElement(this Document document, string name)
         {
-            ArgumentNullException.ThrowIfNullOrInvalid(document);
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
 
             if (string.IsNullOrEmpty(name))
             {

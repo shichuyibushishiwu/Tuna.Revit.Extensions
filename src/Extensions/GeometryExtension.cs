@@ -36,7 +36,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="Exception"></exception>
         public static ElementId TransientDisplay(this Document document, IList<GeometryObject> objects, ElementId graphicsStyleId = null)
         {
-            ArgumentNullException.ThrowIfNullOrInvalid(document);
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
 
             MethodInfo method = GetTransientDisplayMethod();
             if (method == null)

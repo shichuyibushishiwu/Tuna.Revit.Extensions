@@ -33,7 +33,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static FilteredElementCollector GetElements(this View view)
         {
-            ArgumentNullException.ThrowIfNullOrInvalid(view);
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(view);
             if (view.IsTemplate)
             {
                 throw new System.ArgumentNullException(nameof(view), "view is a template");
@@ -50,7 +50,7 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static FilteredElementCollector GetElements(this View view, ElementFilter elementFilter)
         {
-            ArgumentNullException.ThrowIfNull(elementFilter);
+            ArgumentNullExceptionUtils.ThrowIfNull(elementFilter);
             return view.GetElements().WherePasses(elementFilter);
         }
 

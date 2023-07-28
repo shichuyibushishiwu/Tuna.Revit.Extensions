@@ -78,7 +78,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static IEnumerable<FamilySymbol> GetFamilySymbols(this Family family)
         {
-            ArgumentNullException.ThrowIfNullOrInvalid(family);
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(family);
             return family.Document.GetFamilySymbols(family.Id);
         }
 

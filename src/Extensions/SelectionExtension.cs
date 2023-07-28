@@ -50,7 +50,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, Autodesk.Revit.UI.Selection.ObjectType objectType)
         {
-            ArgumentNullException.ThrowIfNullOrInvalid(uiDocument);
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
 
             SelectionResult<Reference> selectionResult = new SelectionResult<Reference>();
 
@@ -81,7 +81,7 @@ namespace Tuna.Revit.Extension
                                                                            ISelectionFilter selectionFilter = null,
                                                                            string prompt = null)
         {
-            ArgumentNullException.ThrowIfNullOrInvalid(uiDocument);
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
 
             SelectionResult<IList<Reference>> selectionResult = new SelectionResult<IList<Reference>>();
             try

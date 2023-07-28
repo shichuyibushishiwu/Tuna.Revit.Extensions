@@ -31,7 +31,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="Exception"></exception>
         public static T GetParameterValue<T>(this Parameter parameter)
         {
-            ArgumentNullException.ThrowIfNull(parameter);
+            ArgumentNullExceptionUtils.ThrowIfNull(parameter);
 
             try
             {
@@ -65,8 +65,8 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static bool SetParameterValue<T>(this Parameter parameter, T value)
         {
-            ArgumentNullException.ThrowIfNull(parameter);
-            ArgumentNullException.ThrowIfNull(value);
+            ArgumentNullExceptionUtils.ThrowIfNull(parameter);
+            ArgumentNullExceptionUtils.ThrowIfNull(value);
 
             if (parameter.IsReadOnly)
             {

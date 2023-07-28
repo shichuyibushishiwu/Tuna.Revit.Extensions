@@ -21,7 +21,7 @@ namespace Tuna.Revit.Extension
     /// <summary>
     /// Exception
     /// </summary>
-    public static class ArgumentNullException
+    public static class ArgumentNullExceptionUtils
     {
         /// <summary>
         /// Throw null exception if parameter is null
@@ -78,7 +78,7 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Throw null exception if ui document is null or invalid
+        /// Throw null exception if revit color is null or invalid
         /// </summary>
         /// <param name="color"></param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -87,7 +87,7 @@ namespace Tuna.Revit.Extension
             ThrowIfNull(color);
             if (!color.IsValid)
             {
-                throw new System.ArgumentNullException(nameof(color), $"ui document must be valid object");
+                throw new System.ArgumentNullException(nameof(color), $"color must be valid object");
             }
         }
     }

@@ -35,8 +35,8 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static RibbonPanel CreatePushButton<T>(this RibbonPanel panel, Action<PushButtonData> action) where T : class, IExternalCommand, new()
         {
-            ArgumentNullException.ThrowIfNull(panel);
-            ArgumentNullException.ThrowIfNull(action);
+            ArgumentNullExceptionUtils.ThrowIfNull(panel);
+            ArgumentNullExceptionUtils.ThrowIfNull(action);
          
 
             Type commandType = typeof(T);
@@ -78,7 +78,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static PushButton CreatePushButton<TCommand>(this RibbonPanel panel) where TCommand : class, IExternalCommand, IRibbonButton, new()
         {
-            ArgumentNullException.ThrowIfNull(panel);
+            ArgumentNullExceptionUtils.ThrowIfNull(panel);
           
             return panel.AddItem(CreatePushButton<TCommand>()) as PushButton;
         }
@@ -92,7 +92,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static PushButton CreatePushButton<TCommand>(this PulldownButton pulldownButton) where TCommand : class, IExternalCommand, IRibbonButton, new()
         {
-            ArgumentNullException.ThrowIfNull(pulldownButton);
+            ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
            
             return pulldownButton.AddPushButton(CreatePushButton<TCommand>());
         }
@@ -106,7 +106,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static PushButton CreatePushButton<TCommand>(this SplitButton splitButton) where TCommand : class, IExternalCommand, IExternalCommandAvailability, IRibbonButton, new()
         {
-            ArgumentNullException.ThrowIfNull(splitButton);
+            ArgumentNullExceptionUtils.ThrowIfNull(splitButton);
           
             return splitButton.AddPushButton(CreatePushButton<TCommand>());
         }

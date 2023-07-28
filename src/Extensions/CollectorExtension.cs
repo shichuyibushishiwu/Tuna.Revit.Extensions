@@ -47,7 +47,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         internal static FilteredElementCollector GetElements(this Document document)
         {
-            ArgumentNullException.ThrowIfNull(document);
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
             return new FilteredElementCollector(document);
         }
 
@@ -60,7 +60,7 @@ namespace Tuna.Revit.Extension
         /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, ElementFilter filter)
         {
-            ArgumentNullException.ThrowIfNull(filter);
+            ArgumentNullExceptionUtils.ThrowIfNull(filter);
             return GetElements(document).WherePasses(filter);
         }
 
