@@ -79,7 +79,6 @@ namespace Tuna.Revit.Extension
         public static PushButton CreatePushButton<TCommand>(this RibbonPanel panel) where TCommand : class, IExternalCommand, IRibbonButton, new()
         {
             ArgumentNullExceptionUtils.ThrowIfNull(panel);
-          
             return panel.AddItem(CreatePushButton<TCommand>()) as PushButton;
         }
 
@@ -93,7 +92,6 @@ namespace Tuna.Revit.Extension
         public static PushButton CreatePushButton<TCommand>(this PulldownButton pulldownButton) where TCommand : class, IExternalCommand, IRibbonButton, new()
         {
             ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
-           
             return pulldownButton.AddPushButton(CreatePushButton<TCommand>());
         }
 
@@ -107,7 +105,6 @@ namespace Tuna.Revit.Extension
         public static PushButton CreatePushButton<TCommand>(this SplitButton splitButton) where TCommand : class, IExternalCommand, IExternalCommandAvailability, IRibbonButton, new()
         {
             ArgumentNullExceptionUtils.ThrowIfNull(splitButton);
-          
             return splitButton.AddPushButton(CreatePushButton<TCommand>());
         }
     }

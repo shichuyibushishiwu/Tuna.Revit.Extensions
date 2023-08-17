@@ -39,8 +39,6 @@ namespace Tuna.Revit.Extension
 #else
             return element.GetElementFilter();
 #endif
-
-
         }
     }
 }

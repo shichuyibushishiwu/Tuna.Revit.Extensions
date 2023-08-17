@@ -53,7 +53,6 @@ namespace Tuna.Revit.Extension
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
 
             SelectionResult<Reference> selectionResult = new SelectionResult<Reference>();
-
             try
             {
                 selectionResult.Value = uiDocument.Selection.PickObject(objectType);

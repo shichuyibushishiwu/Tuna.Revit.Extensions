@@ -57,8 +57,6 @@ namespace Tuna.Revit.Extension
         public static IDictionary<ElementType, int> GetElementTypeInstancesCount<T>(this IEnumerable<ElementType> types) where T : Element
         {
             ArgumentNullExceptionUtils.ThrowIfNull(types);
-         
-
             Dictionary<ElementType, int> result = new Dictionary<ElementType, int>();
             if (types.Any())
             {

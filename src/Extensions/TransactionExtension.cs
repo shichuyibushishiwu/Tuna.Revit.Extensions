@@ -33,7 +33,6 @@ namespace Tuna.Revit.Extension
         public static TransactionStatus NewTransaction(this Document document, Action action, bool rollback = false, string name = "Default Transaction Name")
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
-
             return NewTransaction(document, (d) => action.Invoke(), rollback, name);
         }
 
@@ -58,13 +57,11 @@ namespace Tuna.Revit.Extension
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
             ArgumentNullExceptionUtils.ThrowIfNull(action);
-         
 
             if (document.IsReadOnly)
             {
                 return TransactionStatus.Error;
             }
-
             using (Transaction transaction = new Transaction(document, name))
             {
                 if (transaction.Start() == TransactionStatus.Started)
@@ -91,7 +88,6 @@ namespace Tuna.Revit.Extension
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
             ArgumentNullExceptionUtils.ThrowIfNull(action);
-         
 
             using (SubTransaction transaction = new SubTransaction(document))
             {
@@ -121,7 +117,6 @@ namespace Tuna.Revit.Extension
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
             ArgumentNullExceptionUtils.ThrowIfNull(action);
-        
 
             using (TransactionGroup tsg = new TransactionGroup(document, name))
             {
@@ -148,7 +143,6 @@ namespace Tuna.Revit.Extension
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
             ArgumentNullExceptionUtils.ThrowIfNull(action);
-        
 
             using (TransactionGroup tsg = new TransactionGroup(document, name))
             {
