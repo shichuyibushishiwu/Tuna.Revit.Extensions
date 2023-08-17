@@ -31,12 +31,7 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static string ConvertToHTML(this Autodesk.Revit.DB.Color color)
         {
-            ArgumentNullExceptionUtils.ThrowIfNull(color);
-            if (!color.IsValid)
-            {
-                throw new System.ArgumentNullException("color", "color is invalid");
-            }
-
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(color);
             return ColorTranslator.ToHtml(Color.FromArgb(color.Red, color.Green, color.Blue));
         }
 

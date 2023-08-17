@@ -25,7 +25,7 @@
 		<PackageIcon>Tuna.png</PackageIcon>
 		<TunaVer>6</TunaVer>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Description>This is a extension package for revit api.</Description>
+		<Description>This is an extension package for revit api.</Description>
 		<PackageProjectUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions/wiki</PackageProjectUrl>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>

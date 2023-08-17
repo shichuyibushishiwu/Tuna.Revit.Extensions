@@ -69,7 +69,6 @@ namespace Tuna.Revit.Extension
 #else
                     newAppearance = appearance.Duplicate(name);
 #endif
-
                 }
             }
             return newAppearance;
