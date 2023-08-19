@@ -101,6 +101,7 @@ namespace Tuna.Revit.Extension
         public static FilteredElementCollector TryGetIntersectElements(this Element element, View view)
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(view);
 
             Document document = element.Document;
             BoundingBoxXYZ boundingBox = element.get_BoundingBox(view);

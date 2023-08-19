@@ -53,7 +53,7 @@ namespace Tuna.Sample.Commands
             var elems = uIDocument.ActiveGraphicalView.GetElements(BuiltInCategory.OST_Walls);
 
 
-
+            document.GetElements(typeof(Wall), typeof(Wall));
 
             TaskDialog.Show("asd", elems.Count().ToString());
 

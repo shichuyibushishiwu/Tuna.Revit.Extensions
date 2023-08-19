@@ -31,11 +31,11 @@ namespace Tuna.Revit.Extension
         /// </summary>
         internal static readonly Dictionary<Type, Type> FilterTypes = new Dictionary<Type, Type>()
         {
-            [typeof(Room)]     = typeof(RoomFilter),
-            [typeof(RoomTag)]  = typeof(RoomTagFilter),
-            [typeof(Area)]     = typeof(AreaFilter),
-            [typeof(AreaTag)]  = typeof(AreaTagFilter),
-            [typeof(Space)]    = typeof(SpaceFilter),
+            [typeof(Room)] = typeof(RoomFilter),
+            [typeof(RoomTag)] = typeof(RoomTagFilter),
+            [typeof(Area)] = typeof(AreaFilter),
+            [typeof(AreaTag)] = typeof(AreaTagFilter),
+            [typeof(Space)] = typeof(SpaceFilter),
             [typeof(SpaceTag)] = typeof(SpaceTagFilter),
         };
 
@@ -43,7 +43,7 @@ namespace Tuna.Revit.Extension
         /// This is a function which used to new <see cref="Autodesk.Revit.DB.FilteredElementCollector"/> instance
         /// </summary>
         /// <param name="document"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
         internal static FilteredElementCollector GetElements(this Document document)
         {
@@ -57,7 +57,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="filter">element filter</param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, ElementFilter filter)
         {
             ArgumentNullExceptionUtils.ThrowIfNull(filter);
@@ -68,18 +68,23 @@ namespace Tuna.Revit.Extension
         /// 根据类型（包括以下列出的类型）过滤出文档中的图元对象，该类型必须继承于 <see cref="Autodesk.Revit.DB.Element"/>,
         /// 但不是所有<see cref="Autodesk.Revit.DB.Element"/>派生的类都可以通过<see cref="Autodesk.Revit.DB.ElementClassFilter"/>进行过滤
         /// <para>Get elements by <see cref="System.Type"/> which type support following types </para>
-        /// <see cref="Autodesk.Revit.DB.Architecture.Room"/>
-        /// <see cref="Autodesk.Revit.DB.Architecture.RoomTag"/>
-        /// <see cref="Autodesk.Revit.DB.Area"/>
-        /// <see cref="Autodesk.Revit.DB.AreaTag"/>
-        /// <see cref="Autodesk.Revit.DB.Mechanical.Space"/>
-        /// <see cref="Autodesk.Revit.DB.Mechanical.SpaceTag"/>
+        /// <list type="bullet">
+        /// <item><see cref="Autodesk.Revit.DB.Architecture.Room"/></item>
+        /// <item><see cref="Autodesk.Revit.DB.Architecture.RoomTag"/></item>
+        /// <item><see cref="Autodesk.Revit.DB.Area"/></item>
+        /// <item><see cref="Autodesk.Revit.DB.AreaTag"/></item>
+        /// <item><see cref="Autodesk.Revit.DB.Mechanical.Space"/></item>
+        /// <item><see cref="Autodesk.Revit.DB.Mechanical.SpaceTag"/></item>
+        /// </list>
         /// </summary>
+        /// <remarks>如果是上面列表中的类型，将使用慢速过滤器</remarks>
         /// <param name="document">revit document</param>
         /// <param name="type">type of element</param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <exception cref="System.ArgumentException">类型必须继承于<see cref="Autodesk.Revit.DB.Element"/></exception>
         public static FilteredElementCollector GetElements(this Document document, Type type)
         {
+            ArgumentNullExceptionUtils.ThrowIfNull(type);
             if (!type.IsSubclassOf(typeof(Element)))
             {
                 throw new ArgumentException("type is not a subclass of element");
@@ -93,15 +98,51 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
+        /// 根据类型过滤出文档中的图元对象，该类型必须继承于<see cref="Autodesk.Revit.DB.Element"/>
+        /// </summary>
+        /// <param name="document">Revit document</param>
+        /// <param name="type">element type</param>
+        /// <param name="types">element types</param>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        public static FilteredElementCollector GetElements(this Document document, Type type, params Type[] types)
+        {
+            if (types.Length == 0)
+            {
+                return document.GetElements(type);
+            }
+            List<Type> allTypes = types.ToList();
+            allTypes.Add(type);
+            return document.GetElements(new ElementMulticlassFilter(allTypes));
+        }
+
+        /// <summary>
         /// <c>[Quick Filter]</c>根据内置类别过滤出文档中的图元对象
         /// <para>Get elements by <see cref="Autodesk.Revit.DB.BuiltInCategory"/></para>
         /// </summary>
-        /// <param name="document">revit document</param>
-        /// <param name="category"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <param name="document">Revit document</param>
+        /// <param name="category">内置类别<see cref="Autodesk.Revit.DB.BuiltInCategory"/></param>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, BuiltInCategory category)
         {
             return document.GetElements(new ElementCategoryFilter(category)).WhereElementIsNotElementType();
+        }
+
+        /// <summary>
+        /// <c>[Quick Filter]</c>根据内置类别过滤出文档中的图元对象
+        /// </summary>
+        /// <param name="document">revit document</param>
+        /// <param name="category"></param>
+        /// <param name="categories"></param>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        public static FilteredElementCollector GetElements(this Document document, BuiltInCategory category, params BuiltInCategory[] categories)
+        {
+            if (categories.Length == 0)
+            {
+                return document.GetElements(category);
+            }
+            List<BuiltInCategory> allCategories = categories.ToList();
+            allCategories.Add(category);
+            return document.GetElements(new ElementMulticategoryFilter(allCategories)).WhereElementIsNotElementType();
         }
 
         /// <summary>
@@ -110,7 +151,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="structuralWallUsage"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, StructuralWallUsage structuralWallUsage)
         {
             return document.GetElements(new StructuralWallUsageFilter(structuralWallUsage));
@@ -122,7 +163,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="structuralMaterialType"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, StructuralMaterialType structuralMaterialType)
         {
             return document.GetElements(new StructuralMaterialTypeFilter(structuralMaterialType));
@@ -134,7 +175,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="structuralInstanceUsage"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, StructuralInstanceUsage structuralInstanceUsage)
         {
             return document.GetElements(new StructuralInstanceUsageFilter(structuralInstanceUsage));
@@ -146,7 +187,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="familySymbol"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, FamilySymbol familySymbol)
         {
             return document.GetElements(new FamilyInstanceFilter(document, familySymbol.Id));
@@ -158,7 +199,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="level">host level</param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, Level level)
         {
             return document.GetElements(new ElementLevelFilter(level.Id));
@@ -171,7 +212,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="categoryId"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, ElementId categoryId)
         {
             return document.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsNotElementType();
@@ -183,7 +224,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="structuralType"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, StructuralType structuralType)
         {
             return document.GetElements(new ElementStructuralTypeFilter(structuralType));
@@ -195,7 +236,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="curveElementType"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this Document document, CurveElementType curveElementType)
         {
             return document.GetElements(new CurveElementFilter(curveElementType));
@@ -208,7 +249,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="categoryId"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElementTypes(this Document document, ElementId categoryId)
         {
             return document.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsElementType();
@@ -220,7 +261,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="category"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElementTypes(this Document document, BuiltInCategory category)
         {
             return document.GetElements(new ElementCategoryFilter(category)).WhereElementIsElementType();
@@ -233,7 +274,7 @@ namespace Tuna.Revit.Extension
         /// <typeparam name="T"><see cref="Autodesk.Revit.DB.ElementType"/></typeparam>
         /// <param name="document">revit document</param>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
         public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> predicate = null) where T : ElementType
         {
             return document.GetElements(predicate);
@@ -246,7 +287,7 @@ namespace Tuna.Revit.Extension
         /// <typeparam name="T"></typeparam>
         /// <param name="document">revit document</param>
         /// <param name="predicate"></param>
-        /// <returns><see cref="IEnumerable{T}"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
         public static IEnumerable<T> GetElements<T>(this Document document, Func<T, bool> predicate = null) where T : Element
         {
             IEnumerable<T> elements = document.GetElements(typeof(T)).Cast<T>();
@@ -264,7 +305,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="structuralMaterialType"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static IEnumerable<Family> GetStructualFamilies(this Document document, StructuralMaterialType structuralMaterialType)
         {
             return document.GetElements(new FamilyStructuralMaterialTypeFilter(structuralMaterialType)).Cast<Family>();
@@ -276,37 +317,29 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="document">revit document</param>
         /// <param name="familyId"></param>
-        /// <returns><see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static IEnumerable<FamilySymbol> GetFamilySymbols(this Document document, ElementId familyId)
         {
             return document.GetElements(new FamilySymbolFilter(familyId)).Cast<FamilySymbol>();
         }
 
         /// <summary>
-        /// 获取文档中的所有三维图形图元，如果指定的类型不是 <see cref="Autodesk.Revit.DB.Element"/>, 
-        /// 则将按类型  <typeparamref name="TElement"/>  获取指定的图元
-        /// <para>Get all of the 3d model elements from target document</para>
+        /// 获取文档中的所有三维图形图元
+        ///  <para>Get all of the 3d model elements from target document</para>
         /// </summary>
-        /// <typeparam name="TElement"></typeparam>
-        /// <param name="document"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public static IEnumerable<TElement> GetGraphicElements<TElement>(this Document document, Func<TElement, bool> predicate = null) where TElement : Element
+        /// <param name="document">Revit document</param>
+        /// <param name="predicate">predicate</param>
+        /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
+        public static IEnumerable<Element> GetGraphicElements(this Document document, Func<Element, bool> predicate)
         {
-            var elements = document.GetElements(new ElementIsElementTypeFilter(true));
-            if (typeof(TElement).IsSubclassOf(typeof(Element)))
-            {
-                elements = elements.WherePasses(new ElementClassFilter(typeof(TElement)));
-            }
-            IEnumerable<TElement> result = elements
-                   .ToElements()
-                   .Where(element => element.Category != null && element.Category.HasMaterialQuantities)
-                   .Cast<TElement>();
+            var elements = document.GetElements(new ElementIsElementTypeFilter(true))
+                .ToElements()
+                .Where(element => element.Category != null && element.Category.HasMaterialQuantities);
             if (predicate != null)
             {
-                result = result.Where(predicate);
+                elements = elements.Where(predicate);
             }
-            return result;
+            return elements;
         }
     }
 }
