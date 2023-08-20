@@ -23,7 +23,7 @@
 		<Company>Tuna</Company>
 		<Authors>Shiwu</Authors>
 		<PackageIcon>Tuna.png</PackageIcon>
-		<TunaVer>6</TunaVer>
+		<TunaVer>7</TunaVer>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Description>This is an extension package for revit api.</Description>
 		<PackageProjectUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions/wiki</PackageProjectUrl>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension
 {
-    public static class ParameterFilterProviderExtension
+    internal static class ParameterFilterProviderExtension
     {
         public static ParameterFilterProvider GetElements(this Document document)
         {

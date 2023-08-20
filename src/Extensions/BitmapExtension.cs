@@ -26,8 +26,8 @@ namespace Tuna.Revit.Extension
         /// <summary>
         /// Convert <see cref="System.Drawing.Bitmap"/> to <see cref="BitmapSource"/>
         /// </summary>
-        /// <param name="bitmap"></param>
-        /// <returns></returns>
+        /// <param name="bitmap"><see cref="System.Drawing.Bitmap"/></param>
+        /// <returns><see cref="BitmapSource"/></returns>
         public static BitmapSource ConvertToBitmapSource(this System.Drawing.Bitmap bitmap)
         {
             ArgumentNullExceptionUtils.ThrowIfNull(bitmap);

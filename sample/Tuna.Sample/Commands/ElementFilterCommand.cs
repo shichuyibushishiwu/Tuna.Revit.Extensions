@@ -32,6 +32,64 @@ namespace Tuna.Sample.Commands
             UIDocument uIDocument = commandData.Application.ActiveUIDocument;
             Document document = uIDocument.Document;
 
+
+
+            document.GetElements<Wall>();
+
+            document.GetElements(typeof(Wall));
+
+            document.GetElements(typeof(Wall), typeof(Floor));
+
+            document.GetElements(new ElementClassFilter(typeof(Wall)));
+
+            document.GetElements(BuiltInCategories.Wall);
+
+            document.GetElements(BuiltInCategory.OST_Walls);
+
+            document.GetElements(BuiltInCategory.OST_Walls, BuiltInCategory.OST_WallsCutPattern);
+
+            document.GetElements(StructuralWallUsage.Bearing);
+
+            document.GetElements(StructuralMaterialType.Steel);
+
+            document.GetElements(StructuralType.Column);
+
+            document.GetElements(CurveElementType.ModelCurve);
+
+
+
+            document.GetElementTypes(BuiltInCategories.Wall);
+
+            document.GetElementTypes(BuiltInCategory.OST_Walls);
+
+            document.GetElementTypes<WallType>();
+
+
+
+            document.GetStructualFamilies(StructuralMaterialType.Steel);
+   
+
+            var result = document.GetElements("固定", "900*2100");
+            if (result.Succeeded)
+            {
+                FilteredElementCollector windows = result.Value;
+            }
+
+            Level level = document.GetElements<Level>(l => l.Name == "level1").FirstOrDefault();
+            if (level != null)
+            {
+                document.GetElements(level);
+            }
+
+
+
+            var elems = uIDocument.ActiveGraphicalView.GetElements(BuiltInCategory.OST_Walls);
+
+
+
+
+
+
             //document.GetElements()
             //    .OfCategories(BuiltInCategory.OST_Walls)
             //    .WithParameterStringValue(BuiltInParameter.ALL_MODEL_MODEL, ParameterFilterStringOperator.BeginWith, "m")
@@ -49,13 +107,6 @@ namespace Tuna.Sample.Commands
             //var elems = document.GetGraphicElements<FamilyInstance>(instance => instance.Name == "name");
 
             //Enumerator.Range(1, 100);
-
-            var elems = uIDocument.ActiveGraphicalView.GetElements(BuiltInCategory.OST_Walls);
-
-
-            document.GetElements(typeof(Wall), typeof(Wall));
-
-            TaskDialog.Show("asd", elems.Count().ToString());
 
             return Result.Succeeded;
         }
