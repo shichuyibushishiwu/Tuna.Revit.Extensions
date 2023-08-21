@@ -64,8 +64,6 @@ namespace Tuna.Revit.Extension
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(material);
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(color);
 
-         
-
             ElementId appearanceAssetId = material.AppearanceAssetId;
             if (appearanceAssetId != ElementId.InvalidElementId)
             {

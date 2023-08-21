@@ -344,7 +344,5 @@ namespace Tuna.Revit.Extension
             }
             return elements;
         }
-
-
     }
 }

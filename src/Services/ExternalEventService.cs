@@ -7,27 +7,42 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension.Services
 {
-    internal class ExternalEventService : IExternalEventService, IExternalEventHandler
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ExternalEventService : IExternalEventService, IExternalEventHandler
     {
         private readonly ExternalEvent _externalEvent;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public ExternalEventService()
         {
             _externalEvent = ExternalEvent.Create(this);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="app"></param>
         public void Execute(UIApplication app)
         {
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetName() => "Tuna external event";
 
-        public void Run()
+        /// <summary>
+        /// 
+        /// </summary>
+        public void PostCommand()
         {
             ExternalEventRequest request = _externalEvent.Raise();
-
-
         }
     }
 }

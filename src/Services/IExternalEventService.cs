@@ -14,6 +14,6 @@ namespace Tuna.Revit.Extension.Services
         /// <summary>
         /// 
         /// </summary>
-        void Run();
+        void PostCommand();
     }
 }

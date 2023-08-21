@@ -29,7 +29,7 @@ namespace Tuna.Revit.Extension
         /// <para>Get elements in view <see cref="Autodesk.Revit.DB.View"/></para>
         /// </summary>
         /// <param name="view">host view</param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         /// <exception cref="System.ArgumentNullException"></exception>
         public static FilteredElementCollector GetElements(this View view)
         {
@@ -47,7 +47,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="view">host view</param>
         /// <param name="elementFilter"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this View view, ElementFilter elementFilter)
         {
             ArgumentNullExceptionUtils.ThrowIfNull(elementFilter);
@@ -60,7 +60,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="view">Revit view</param>
         /// <param name="type"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this View view, Type type)
         {
             if (!type.IsSubclassOf(typeof(Element)))
@@ -81,7 +81,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="view"></param>
         /// <param name="category"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this View view, BuiltInCategory category)
         {
             return view.GetElements(new ElementCategoryFilter(category)).WhereElementIsNotElementType();
@@ -93,7 +93,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="view"></param>
         /// <param name="structuralWallUsage"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this View view, StructuralWallUsage structuralWallUsage)
         {
             return view.GetElements(new StructuralWallUsageFilter(structuralWallUsage));
@@ -105,7 +105,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="view"></param>
         /// <param name="structuralMaterialType"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this View view, StructuralMaterialType structuralMaterialType)
         {
             return view.GetElements(new StructuralMaterialTypeFilter(structuralMaterialType));
@@ -116,7 +116,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="view"></param>
         /// <param name="structuralInstanceUsage"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this View view, StructuralInstanceUsage structuralInstanceUsage)
         {
             return view.GetElements(new StructuralInstanceUsageFilter(structuralInstanceUsage));
@@ -128,7 +128,7 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="view"></param>
         /// <param name="familySymbol"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this View view, FamilySymbol familySymbol)
         {
             return view.GetElements(new FamilyInstanceFilter(view.Document, familySymbol.Id));
@@ -141,19 +141,21 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="view"></param>
         /// <param name="categoryId"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this View view, ElementId categoryId)
         {
             return view.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsNotElementType();
         }
 
         /// <summary>
-        /// <c>[Quick Filter]</c>根据结构图元的实例属性 <c>StructuralType</c> 过滤出视图中的结构图元对象,同一个族类型从不同的按钮创建出来后的结构类型不同
+        /// <c>[Quick Filter]</c>
+        /// 根据<see cref="Autodesk.Revit.DB.FamilyInstance"/> 的属性 <c>StructuralType</c> 过滤出视图中的结构图元对象
         /// <para>Get structural elements by <see cref="Autodesk.Revit.DB.Structure.StructuralType"/></para> 
         /// </summary>
+        /// <remarks>同一个族类型从不同的按钮创建出来后的结构类型不同</remarks>
         /// <param name="view"></param>
         /// <param name="structuralType"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this View view, StructuralType structuralType)
         {
             return view.GetElements(new ElementStructuralTypeFilter(structuralType));
@@ -165,12 +167,11 @@ namespace Tuna.Revit.Extension
         /// </summary>
         /// <param name="view"></param>
         /// <param name="curveElementType"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
         public static FilteredElementCollector GetElements(this View view, CurveElementType curveElementType)
         {
             return view.GetElements(new CurveElementFilter(curveElementType));
         }
-
 
         /// <summary>
         /// 根据类型获取视图中的图元
@@ -179,7 +180,7 @@ namespace Tuna.Revit.Extension
         /// <typeparam name="T"></typeparam>
         /// <param name="view">host view</param>
         /// <param name="predicate"></param>
-        /// <returns></returns>
+        /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
         public static IEnumerable<T> GetElements<T>(this View view, Func<T, bool> predicate = null) where T : Element
         {
             IEnumerable<T> elements = view.GetElements(typeof(T)).Cast<T>();

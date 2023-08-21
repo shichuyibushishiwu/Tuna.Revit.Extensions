@@ -31,18 +31,21 @@ namespace Tuna.Revit.Extension
         private static MethodInfo _method = GetTransientDisplayMethod() ?? throw new Exception($"No target method");
 
         /// <summary>
-        /// Creates geometry of transient (temporary) element for application display which will not be saved with the model.
+        /// 在项目中创建临时显示的图元，临时图元将不会被保存在项目中，在项目关闭后，临时图元将被删除
+        /// <para>Creates geometry of transient (temporary) element for application display which will not be saved with the model.</para>
         /// </summary>
         /// <param name="document">Revit document</param>
         /// <param name="objects">Transient element geometry</param>
         /// <param name="graphicsStyleId">Transient element  graphics element style element id</param>
-        /// <returns></returns>
+        /// <returns>
+        /// 创建的临时图元的 <see cref="Autodesk.Revit.DB.ElementId"/>
+        /// <para>The element id of the created element</para>
+        /// </returns>
         /// <exception cref="System.ArgumentNullException"></exception>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="System.Exception"></exception>
         public static ElementId TransientDisplay(this Document document, IList<GeometryObject> objects, ElementId graphicsStyleId = null)
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
-
             ElementId elementId = (ElementId)_method.Invoke(null, parameters: new object[4]
             {
                document,
@@ -55,19 +58,24 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Creates geometry of transient (temporary) element for application display which will not be saved with the model.
+        /// 在项目中创建临时显示的图元，临时图元将不会被保存在项目中，在项目关闭后，临时图元将被删除
+        /// <para>Creates geometry of transient (temporary) element for application display which will not be saved with the model.</para>
         /// </summary>
         /// <param name="document">Revit document</param>
         /// <param name="geometryObject">Transient element geometry</param>
         /// <param name="graphicsStyleId">Transient element  graphics element style element id</param>
-        /// <returns>The element id of the created element</returns>
+        /// <returns>
+        /// 创建的临时图元的 <see cref="Autodesk.Revit.DB.ElementId"/>
+        /// <para>The element id of the created element</para>
+        /// </returns>
         public static ElementId TransientDisplay(this Document document, GeometryObject geometryObject, ElementId graphicsStyleId = null)
         {
             return document.TransientDisplay(new List<GeometryObject>() { geometryObject }, graphicsStyleId);
         }
 
         /// <summary>
-        /// Clean up all transient (temporary) elements produced by tuna in the document
+        /// 清理金枪鱼扩展包创建的所有临时图元
+        /// <para>Clean up all transient (temporary) elements produced by tuna in the document</para>
         /// </summary>
         /// <param name="document">Revit document</param>
         public static void CleanTransientElements(this Document document)
@@ -76,12 +84,16 @@ namespace Tuna.Revit.Extension
             {
                 return;
             }
-            document.NewTransaction((d) => d.Delete(_transientElementIds.ToArray()));
+            document.NewTransaction((d) =>
+            {
+                d.Delete(_transientElementIds.ToArray());
+            });
             _transientElementIds.Clear();
         }
 
         /// <summary>
-        /// Reset transient (temporary) element geometry
+        /// 重新设置临时图元的图形
+        /// <para>Reset transient (temporary) element geometry</para>
         /// </summary>
         /// <param name="document">Revit document</param>
         /// <param name="transientElementId">transient element id</param>
@@ -99,7 +111,8 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Reset transient (temporary) element geometry
+        /// 重新设置临时图元的图形
+        /// <para>Reset transient (temporary) element geometry</para>
         /// </summary>
         /// <param name="document">Revit document</param>
         /// <param name="transientElementId">Transient element id</param>

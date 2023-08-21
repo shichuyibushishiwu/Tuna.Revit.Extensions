@@ -70,17 +70,18 @@ namespace Tuna.Revit.Extension
             }
             return parameters;
         }
+
         /// <summary>
-        /// Get family symbol elements
+        /// 获取族的所有类型
+        /// <para>Get all family symbols of family</para>
         /// </summary>
-        /// <param name="family"></param>
-        /// <returns></returns>
+        /// <param name="family">族</param>
+        /// <returns>从族所在的文档中查询的结果 <see cref="IEnumerable{T}"/></returns>
         /// <exception cref="System.ArgumentNullException"></exception>
         public static IEnumerable<FamilySymbol> GetFamilySymbols(this Family family)
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(family);
             return family.Document.GetFamilySymbols(family.Id);
         }
-
     }
 }

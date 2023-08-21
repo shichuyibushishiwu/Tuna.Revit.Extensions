@@ -81,7 +81,6 @@ namespace Tuna.Revit.Extension
             return selectionResult;
         }
 
-
         /// <summary>
         /// 获取类型为 <typeparamref name="T"/> 的图元类型和实例的数量
         /// <para>Get element instances count in the document</para>
@@ -144,7 +143,7 @@ namespace Tuna.Revit.Extension
         /// <typeparam name="T"></typeparam>
         /// <param name="document"></param>
         /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
-        public static IEnumerable<ElementType> GetElementTypesWhereHasInstances<T>(Document document) where T : HostObject
+        public static IEnumerable<ElementType> GetElementTypesWhereHasInstances<T>(this Document document) where T : HostObject
         {
             return document.GetElementTypesAndInstancesCount<T>().Where(p => p.Value > 0).ToDictionary(p => p.Key, p => p.Value).Keys.ToList();
         }
