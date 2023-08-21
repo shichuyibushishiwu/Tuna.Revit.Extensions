@@ -25,14 +25,13 @@ namespace Tuna.Revit.Extension
         /// <summary>
         /// Obtain parameter value based on StorageType
         /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <param name="parameter"></param>
-        /// <returns>Parameter value</returns>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static T GetParameterValue<T>(this Parameter parameter)
         {
-            if (parameter == null)
-            {
-                throw new ArgumentNullException(nameof(parameter), "parameter can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNull(parameter);
 
             try
             {
@@ -66,19 +65,12 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static bool SetParameterValue<T>(this Parameter parameter, T value)
         {
-            if (parameter == null)
-            {
-                throw new ArgumentNullException(nameof(parameter), "parameter can not be null");
-            }
-
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value), "value can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNull(parameter);
+            ArgumentNullExceptionUtils.ThrowIfNull(value);
 
             if (parameter.IsReadOnly)
             {
-                throw new ArgumentNullException(nameof(parameter), "parameter is read only");
+                throw new System.ArgumentNullException(nameof(parameter), "parameter is read only");
             }
 
             bool result = false;

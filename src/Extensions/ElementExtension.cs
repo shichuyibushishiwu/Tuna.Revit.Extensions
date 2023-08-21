@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tuna.Revit.Extension.Data;
 
 namespace Tuna.Revit.Extension
 {
@@ -25,17 +26,15 @@ namespace Tuna.Revit.Extension
     public static class ElementExtension
     {
         /// <summary>
-        /// Get element <see cref="Parameter"/> by <see cref="Autodesk.Revit.DB.ElementId"/>
+        /// 获取图元的参数
+        /// <para>Get element <see cref="Parameter"/> by <see cref="Autodesk.Revit.DB.ElementId"/></para>
         /// </summary>
         /// <param name="element">host element</param>
         /// <param name="parameterId">target parameter id</param>
         /// <returns>element <see cref="Parameter"/></returns>
         public static Parameter GetParameter(this Element element, ElementId parameterId)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element), "element can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
 
             if (parameterId != ElementId.InvalidElementId)
             {
@@ -51,51 +50,126 @@ namespace Tuna.Revit.Extension
         }
 
         /// <summary>
-        /// Get element type instances count in the document
+        /// 根据族名称和族类型名称获取文档中的图元
+        /// <para>Get the elements in the document by family name and family symbol name</para>
         /// </summary>
-        /// <typeparam name="T"><see cref="Autodesk.Revit.DB.Element"/> what is <see cref="Autodesk.Revit.DB.ElementType"/> typical corresponding pair </typeparam>
-        /// <param name="types"></param>
+        /// <param name="document">要查询的文档</param>
+        /// <param name="familyName">族名称</param>
+        /// <param name="familySymbolName">族类型名称</param>
         /// <returns></returns>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        public static IDictionary<ElementType, int> GetElementTypeInstancesCount<T>(this IEnumerable<ElementType> types) where T : Element
+        public static SelectionResult<FilteredElementCollector> GetElements(this Document document, string familyName, string familySymbolName)
         {
-            if (types == null)
+            SelectionResult<FilteredElementCollector> selectionResult = new SelectionResult<FilteredElementCollector>();
+            Family family = document.GetElements<Family>(f => f.Name == familyName).FirstOrDefault();
+            if (family == null)
             {
-                throw new ArgumentNullException(nameof(types), "types can not be null");
+                selectionResult.Message = $"在项目中找不到名称为{familyName}的族";
+                return selectionResult;
             }
 
-            Dictionary<ElementType, int> result = new Dictionary<ElementType, int>();
-            if (types.Any())
+            FamilySymbol familySymbol = document.GetFamilySymbols(family.Id).FirstOrDefault(s => s.Name == familySymbolName);
+            if (familySymbol == null)
             {
-                Dictionary<ElementId, int> counts = types.ToDictionary((e) => e?.Id, _ => 0);
-                Document document = types.First().Document;
-                var elements = document.GetElements<T>();
-                foreach (var element in elements)
-                {
-                    var id = element.GetTypeId();
-
-                    if (counts.TryGetValue(id, out int count))
-                    {
-                        counts[id] = count++;
-                        continue;
-                    }
-                    counts.Add(id, 0);
-                }
-                result = counts.ToDictionary(p => document.GetElement(p.Key) as ElementType, p => p.Value);
+                selectionResult.Message = $"在族{familyName}中找不到名称为{familySymbolName}的类型";
+                return selectionResult;
             }
-            return result;
+
+            selectionResult.Value = document.GetElements(familySymbol);
+            selectionResult.Message = "查询成功";
+            selectionResult.Succeeded = true;
+
+            return selectionResult;
         }
 
-
         /// <summary>
-        /// Get element types which has instances in the document
+        /// 获取类型为 <typeparamref name="T"/> 的图元类型和实例的数量
+        /// <para>Get element instances count in the document</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="types"></param>
+        /// <param name="document"></param>
         /// <returns></returns>
-        public static IEnumerable<ElementType> HasInstances<T>(this IEnumerable<ElementType> types) where T : Element
+        public static IDictionary<ElementType, int> GetElementTypesAndInstancesCount<T>(this Document document) where T : HostObject
         {
-            return types.GetElementTypeInstancesCount<T>().Where(p => p.Value > 0).ToDictionary(p => p.Key, p => p.Value).Keys.ToList();
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
+            Dictionary<ElementId, int> amount = new Dictionary<ElementId, int>();
+            var elements = document.GetElements<T>();
+            foreach (var element in elements)
+            {
+                ElementId id = element.GetTypeId();
+                
+                if (amount.TryGetValue(id, out int count))
+                {
+                    amount[id] = count + 1;
+                    continue;
+                }
+                amount.Add(id, 1);
+            }
+
+            return amount.ToDictionary(p => document.GetElement(p.Key) as ElementType, p => p.Value);
+        }
+
+        /// <summary>
+        /// 统计类型在文档中存在的实例的数量
+        /// </summary>
+        /// <typeparam name="T">类型所对应的实力的类</typeparam>
+        /// <param name="elementTypes"></param>
+        /// <returns></returns>
+        public static IDictionary<ElementType, int> Counts<T>(this IEnumerable<ElementType> elementTypes) where T : HostObject
+        {
+            Dictionary<ElementId, int> amount = elementTypes.ToDictionary(t => t.Id, _ => 0);
+            if (!elementTypes.Any())
+            {
+                return new Dictionary<ElementType, int>();
+            }
+
+            Document document = elementTypes.FirstOrDefault().Document;
+            IEnumerable<T> elements = document.GetElements<T>();
+            foreach (var element in elements)
+            {
+                ElementId id = element.GetTypeId();
+                if (amount.TryGetValue(id, out int count))
+                {
+                    amount[id] = count + 1;
+                    continue;
+                }
+            }
+            return amount.ToDictionary(p => document.GetElement(p.Key) as ElementType, p => p.Value);
+        }
+
+        /// <summary>
+        /// 获取具有图元实例的图元类型
+        /// <para>Get the elements in the document whose has instances exist</para>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="document"></param>
+        /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
+        public static IEnumerable<ElementType> GetElementTypesWhereHasInstances<T>(this Document document) where T : HostObject
+        {
+            return document.GetElementTypesAndInstancesCount<T>().Where(p => p.Value > 0).ToDictionary(p => p.Key, p => p.Value).Keys.ToList();
+        }
+
+        /// <summary>
+        /// 尝试去获取文档中与图元相交的对象
+        /// <para>Try to get elements in the document which intersects with the primitive</para>
+        /// </summary>
+        /// <param name="element"></param>
+        /// <param name="view"></param>
+        /// <returns>图元所在的文档中与图元相交的对象</returns>
+        /// <exception cref="System.ArgumentNullException"></exception>
+        public static FilteredElementCollector TryGetIntersectElements(this Element element, View view)
+        {
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(view);
+
+            Document document = element.Document;
+            BoundingBoxXYZ boundingBox = element.get_BoundingBox(view);
+            Outline outline = new Outline(boundingBox.Min, boundingBox.Max);
+            FilteredElementCollector elements = document.GetElements(new BoundingBoxIntersectsFilter(outline));
+            if (elements.Any())
+            {
+                elements = document.GetElementIntersectsInCollector(elements.ToElementIds(), element);
+            }
+            return elements;
         }
     }
 }

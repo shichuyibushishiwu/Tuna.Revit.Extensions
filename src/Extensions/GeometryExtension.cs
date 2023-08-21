@@ -15,6 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Tuna.Revit.Extension
 {
@@ -23,49 +24,103 @@ namespace Tuna.Revit.Extension
     /// </summary>
     public static class GeometryExtension
     {
+        private static List<ElementId> _transientElementIds = new List<ElementId>();
+
         private static readonly string _displayMethod = "SetForTransientDisplay";
 
+        private static MethodInfo _method = GetTransientDisplayMethod() ?? throw new Exception($"No target method");
+
         /// <summary>
-        /// Creates geometry of transient (temporary) element for application display which will not be saved with the model.
+        /// 在项目中创建临时显示的图元，临时图元将不会被保存在项目中，在项目关闭后，临时图元将被删除
+        /// <para>Creates geometry of transient (temporary) element for application display which will not be saved with the model.</para>
         /// </summary>
-        /// <param name="document"></param>
-        /// <param name="objects"></param>
-        /// <param name="graphicsStyleId"></param>
-        /// <returns></returns>
+        /// <param name="document">Revit document</param>
+        /// <param name="objects">Transient element geometry</param>
+        /// <param name="graphicsStyleId">Transient element  graphics element style element id</param>
+        /// <returns>
+        /// 创建的临时图元的 <see cref="Autodesk.Revit.DB.ElementId"/>
+        /// <para>The element id of the created element</para>
+        /// </returns>
         /// <exception cref="System.ArgumentNullException"></exception>
-        /// <exception cref="Exception"></exception>
+        /// <exception cref="System.Exception"></exception>
         public static ElementId TransientDisplay(this Document document, IList<GeometryObject> objects, ElementId graphicsStyleId = null)
         {
-            if (document == null)
-            {
-                throw new ArgumentNullException(nameof(document));
-            }
-
-            MethodInfo method = GetTransientDisplayMethod();
-            if (method == null)
-            {
-                throw new Exception($"No target method");
-            }
-
-            return (ElementId)method.Invoke(null, parameters: new object[4]
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
+            ElementId elementId = (ElementId)_method.Invoke(null, parameters: new object[4]
             {
                document,
                ElementId.InvalidElementId,
                objects,
                graphicsStyleId ?? ElementId.InvalidElementId
             });
+            _transientElementIds.Add(elementId);
+            return elementId;
         }
 
         /// <summary>
-        /// Creates geometry of transient (temporary) element for application display which will not be saved with the model.
+        /// 在项目中创建临时显示的图元，临时图元将不会被保存在项目中，在项目关闭后，临时图元将被删除
+        /// <para>Creates geometry of transient (temporary) element for application display which will not be saved with the model.</para>
         /// </summary>
-        /// <param name="document"></param>
-        /// <param name="obj"></param>
-        /// <param name="graphicsStyleId"></param>
-        /// <returns>The element id of the created element</returns>
-        public static ElementId TransientDisplay(this Document document, GeometryObject obj, ElementId graphicsStyleId = null)
+        /// <param name="document">Revit document</param>
+        /// <param name="geometryObject">Transient element geometry</param>
+        /// <param name="graphicsStyleId">Transient element  graphics element style element id</param>
+        /// <returns>
+        /// 创建的临时图元的 <see cref="Autodesk.Revit.DB.ElementId"/>
+        /// <para>The element id of the created element</para>
+        /// </returns>
+        public static ElementId TransientDisplay(this Document document, GeometryObject geometryObject, ElementId graphicsStyleId = null)
         {
-            return document.TransientDisplay(new List<GeometryObject>() { obj }, graphicsStyleId);
+            return document.TransientDisplay(new List<GeometryObject>() { geometryObject }, graphicsStyleId);
+        }
+
+        /// <summary>
+        /// 清理金枪鱼扩展包创建的所有临时图元
+        /// <para>Clean up all transient (temporary) elements produced by tuna in the document</para>
+        /// </summary>
+        /// <param name="document">Revit document</param>
+        public static void CleanTransientElements(this Document document)
+        {
+            if (_transientElementIds.Count == 0)
+            {
+                return;
+            }
+            document.NewTransaction((d) =>
+            {
+                d.Delete(_transientElementIds.ToArray());
+            });
+            _transientElementIds.Clear();
+        }
+
+        /// <summary>
+        /// 重新设置临时图元的图形
+        /// <para>Reset transient (temporary) element geometry</para>
+        /// </summary>
+        /// <param name="document">Revit document</param>
+        /// <param name="transientElementId">transient element id</param>
+        /// <param name="objects">transient element geometries</param>
+        /// <param name="graphicsStyleId">transient element graphics style element id </param>
+        public static void ResetTransientElementGeometry(this Document document, ElementId transientElementId, IList<GeometryObject> objects, ElementId graphicsStyleId = null)
+        {
+            _method.Invoke(null, parameters: new object[4]
+            {
+               document,
+               transientElementId,
+               objects,
+               graphicsStyleId ?? ElementId.InvalidElementId
+            });
+        }
+
+        /// <summary>
+        /// 重新设置临时图元的图形
+        /// <para>Reset transient (temporary) element geometry</para>
+        /// </summary>
+        /// <param name="document">Revit document</param>
+        /// <param name="transientElementId">Transient element id</param>
+        /// <param name="geometryObject">Transient element geometries</param>
+        /// <param name="graphicsStyleId">Transient element graphics style element id </param>
+        public static void ResetTransientElementGeometry(this Document document, ElementId transientElementId, GeometryObject geometryObject, ElementId graphicsStyleId = null)
+        {
+            document.ResetTransientElementGeometry(transientElementId, new List<GeometryObject>() { geometryObject }, graphicsStyleId);
         }
 
         /// <summary>

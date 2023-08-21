@@ -26,15 +26,11 @@ namespace Tuna.Revit.Extension
         /// <summary>
         /// Convert <see cref="System.Drawing.Bitmap"/> to <see cref="BitmapSource"/>
         /// </summary>
-        /// <param name="bitmap"></param>
-        /// <returns></returns>
+        /// <param name="bitmap"><see cref="System.Drawing.Bitmap"/></param>
+        /// <returns><see cref="BitmapSource"/></returns>
         public static BitmapSource ConvertToBitmapSource(this System.Drawing.Bitmap bitmap)
         {
-            if (bitmap == null)
-            {
-                throw new ArgumentNullException(nameof(bitmap), "bitmap can not be null");
-            }
-
+            ArgumentNullExceptionUtils.ThrowIfNull(bitmap);
             return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
                 bitmap.GetHbitmap(),
                 IntPtr.Zero,

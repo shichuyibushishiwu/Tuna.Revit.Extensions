@@ -35,15 +35,9 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static RibbonPanel CreatePushButton<T>(this RibbonPanel panel, Action<PushButtonData> action) where T : class, IExternalCommand, new()
         {
-            if (panel == null)
-            {
-                throw new ArgumentNullException(nameof(panel), "panel can not be null");
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action), "action can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNull(panel);
+            ArgumentNullExceptionUtils.ThrowIfNull(action);
+         
 
             Type commandType = typeof(T);
             string name = commandType.Name;
@@ -84,10 +78,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static PushButton CreatePushButton<TCommand>(this RibbonPanel panel) where TCommand : class, IExternalCommand, IRibbonButton, new()
         {
-            if (panel == null)
-            {
-                throw new ArgumentNullException(nameof(panel), "panel can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNull(panel);
             return panel.AddItem(CreatePushButton<TCommand>()) as PushButton;
         }
 
@@ -100,10 +91,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static PushButton CreatePushButton<TCommand>(this PulldownButton pulldownButton) where TCommand : class, IExternalCommand, IRibbonButton, new()
         {
-            if (pulldownButton == null)
-            {
-                throw new ArgumentNullException(nameof(pulldownButton), "pull down button can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
             return pulldownButton.AddPushButton(CreatePushButton<TCommand>());
         }
 
@@ -116,10 +104,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static PushButton CreatePushButton<TCommand>(this SplitButton splitButton) where TCommand : class, IExternalCommand, IExternalCommandAvailability, IRibbonButton, new()
         {
-            if (splitButton == null)
-            {
-                throw new ArgumentNullException(nameof(splitButton), "split button can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNull(splitButton);
             return splitButton.AddPushButton(CreatePushButton<TCommand>());
         }
     }

@@ -3,7 +3,7 @@
 ![GitHub](https://img.shields.io/github/license/shichuyibushishiwu/Tuna.Revit.Extension?label=License)
 ![GitHub](https://img.shields.io/badge/Shiwu-Tuna-green)
 # Introductions
-Welcome to the Tuna.Revit.Extensions wiki! This is a extension package for revit api.
+Welcome to the Tuna.Revit.Extensions wiki! This is an extension package for revit api.
 
 # Guide
 ## Constants

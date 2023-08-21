@@ -13,7 +13,7 @@ namespace Tuna.Revit.Extension
     public static class TransactionExtension
     {
         /// <summary>
-        /// Start a revit database transaction . <br/><br/>
+        /// Start a revit database transaction
         ///<example>
         /// This shows how to used current method
         /// <code>
@@ -32,11 +32,7 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static TransactionStatus NewTransaction(this Document document, Action action, bool rollback = false, string name = "Default Transaction Name")
         {
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action), "action can not be null");
-            }
-
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
             return NewTransaction(document, (d) => action.Invoke(), rollback, name);
         }
 
@@ -59,21 +55,13 @@ namespace Tuna.Revit.Extension
         /// <returns>If document is read only,return <see cref="Autodesk.Revit.DB.TransactionStatus.Error"/></returns>
         public static TransactionStatus NewTransaction(this Document document, Action<Document> action, bool rollback = false, string name = "Default Transaction Name")
         {
-            if (!document!.IsValidObject)
-            {
-                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action), "action can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
+            ArgumentNullExceptionUtils.ThrowIfNull(action);
 
             if (document.IsReadOnly)
             {
                 return TransactionStatus.Error;
             }
-
             using (Transaction transaction = new Transaction(document, name))
             {
                 if (transaction.Start() == TransactionStatus.Started)
@@ -98,15 +86,8 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static TransactionStatus NewSubtransaction(this Document document, Action action, bool rollback = false)
         {
-            if (!document!.IsValidObject)
-            {
-                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action), "action can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
+            ArgumentNullExceptionUtils.ThrowIfNull(action);
 
             using (SubTransaction transaction = new SubTransaction(document))
             {
@@ -134,15 +115,8 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static TransactionStatus NewTransactionGroup(this Document document, Action action, string name = "Default Transaction Group Name", bool rollback = false, bool assimilate = true)
         {
-            if (!document!.IsValidObject)
-            {
-                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action), "action can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
+            ArgumentNullExceptionUtils.ThrowIfNull(action);
 
             using (TransactionGroup tsg = new TransactionGroup(document, name))
             {
@@ -167,15 +141,8 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static void NewTransactionGroup(this Document document, Action<TransactionGroup> action, string name = "Default Transaction Group Name")
         {
-            if (!document!.IsValidObject)
-            {
-                throw new ArgumentNullException(nameof(document), "document is null or invalid object");
-            }
-
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action), "action can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
+            ArgumentNullExceptionUtils.ThrowIfNull(action);
 
             using (TransactionGroup tsg = new TransactionGroup(document, name))
             {

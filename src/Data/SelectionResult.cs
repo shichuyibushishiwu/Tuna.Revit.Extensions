@@ -38,7 +38,7 @@ namespace Tuna.Revit.Extension.Data
         /// <summary>
         /// result
         /// </summary>
-        public T Value { get; set; }
+        public T Value { get; internal set; } = default(T);
 
         /// <summary>
         /// selction state

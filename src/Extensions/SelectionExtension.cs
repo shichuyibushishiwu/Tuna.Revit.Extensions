@@ -50,13 +50,9 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, Autodesk.Revit.UI.Selection.ObjectType objectType)
         {
-            if (uiDocument == null)
-            {
-                throw new ArgumentNullException(nameof(uiDocument), "UIDocument can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
 
             SelectionResult<Reference> selectionResult = new SelectionResult<Reference>();
-
             try
             {
                 selectionResult.Value = uiDocument.Selection.PickObject(objectType);
@@ -84,10 +80,7 @@ namespace Tuna.Revit.Extension
                                                                            ISelectionFilter selectionFilter = null,
                                                                            string prompt = null)
         {
-            if (uiDocument == null)
-            {
-                throw new ArgumentNullException(nameof(uiDocument), "UIDocument can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
 
             SelectionResult<IList<Reference>> selectionResult = new SelectionResult<IList<Reference>>();
             try

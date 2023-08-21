@@ -31,16 +31,7 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static string ConvertToHTML(this Autodesk.Revit.DB.Color color)
         {
-            if (color == null)
-            {
-                throw new ArgumentNullException("color");
-            }
-
-            if (!color.IsValid)
-            {
-                throw new ArgumentNullException("color", "color is invalid");
-            }
-
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(color);
             return ColorTranslator.ToHtml(Color.FromArgb(color.Red, color.Green, color.Blue));
         }
 
@@ -52,10 +43,7 @@ namespace Tuna.Revit.Extension
         /// <returns><see cref="Autodesk.Revit.DB.Color"/></returns>
         public static Autodesk.Revit.DB.Color ConvertToRevitColor(this System.Drawing.Color color)
         {
-            if (color == null)
-            {
-                throw new ArgumentNullException("color");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNull(color);
             return new Autodesk.Revit.DB.Color(color.R, color.G, color.B);
         }
 
@@ -67,17 +55,9 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static bool EqualTo(this Autodesk.Revit.DB.Color color, Autodesk.Revit.DB.Color otherColor)
         {
-            if (color == null || !color.IsValid)
-            {
-                return false;
-            }
-
-            if (otherColor == null && !otherColor.IsValid)
-            {
-                return false;
-            }
-
-            return color.Red == otherColor.Red && color.Green == otherColor.Green && color.Blue == color.Blue;
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(color);
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(otherColor);
+            return (color.Red, color.Green, color.Blue) == (otherColor.Red, otherColor.Green, otherColor.Blue);
         }
     }
 }

@@ -31,11 +31,15 @@ namespace Tuna.Revit.Extension
         /// <returns></returns>
         public static FilterRule CreateEqualsRule(ElementId id, string name, bool caseSensitive = false)
         {
-#if Rvt_23
+#if Rvt_23||Rvt_24
             return ParameterFilterRuleFactory.CreateEqualsRule(id, name);
 #else
             return ParameterFilterRuleFactory.CreateEqualsRule(id, name, caseSensitive);
 #endif
         }
+
+
+
+
     }
 }

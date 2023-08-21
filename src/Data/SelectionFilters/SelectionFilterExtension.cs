@@ -70,7 +70,6 @@ namespace Tuna.Revit.Extension.Data.SelectionFilters
         /// this class is also used to filter geometry object where is belong to assign element class
         /// 这个类用于指定类型的几何图形，且可指定目标构件
         /// </summary>
-        /// <typeparam name="TElement"></typeparam>
         /// <typeparam name="TGeometryObject"></typeparam>
         public class GeometrySelectionFilter<TGeometryObject> : ISelectionFilter where TGeometryObject : GeometryObject
         {

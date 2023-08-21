@@ -10,42 +10,107 @@
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Tuna.Revit.Extension;
+using Tuna.Revit.Extension.Constants;
 
 namespace Tuna.Sample.Commands
 {
     [Transaction(TransactionMode.Manual)]
-    internal class ElementFilterCommand : IExternalCommand
+    public class ElementFilterCommand : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             UIDocument uIDocument = commandData.Application.ActiveUIDocument;
             Document document = uIDocument.Document;
 
-            document.GetElements(Tuna.Revit.Extension.Constants.BuiltInCategories.Door);
 
-            Autodesk.Revit.DB.FilteredElementCollector doors = document.GetElements(new ElementCategoryFilter(Tuna.Revit.Extension.Constants.BuiltInCategories.Door));
-            TaskDialog.Show("sd", doors.Count().ToString());
 
-            ParameterValueProvider provider = new ParameterValueProvider(new ElementId(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS));
+            document.GetElements<Wall>();
 
-            FilterStringRuleEvaluator evaluator = new FilterStringEquals();
+            document.GetElements(typeof(Wall));
 
-            FilterRule filterRule = new FilterStringRule(provider, evaluator, "ListA", false);
+            document.GetElements(typeof(Wall), typeof(Floor));
 
-            FilteredElementCollector elems = document.GetElements(new ElementParameterFilter(new List<FilterRule>() { filterRule }));
-            commandData.Application.ActiveUIDocument.Selection.SetElementIds(elems.ToElementIds());
-            TaskDialog.Show("shiwu", $"{elems.GetElementCount()}");
+            document.GetElements(new ElementClassFilter(typeof(Wall)));
 
-            document.GetElementTypes<WallType>().HasInstances<Wall>();
+            document.GetElements(BuiltInCategories.Wall);
+
+            document.GetElements(BuiltInCategory.OST_Walls);
+
+            document.GetElements(BuiltInCategory.OST_Walls, BuiltInCategory.OST_WallsCutPattern);
+
+            document.GetElements(StructuralWallUsage.Bearing);
+
+            document.GetElements(StructuralMaterialType.Steel);
+
+            document.GetElements(StructuralType.Column);
+
+            document.GetElements(CurveElementType.ModelCurve);
+
+
+
+            document.GetElementTypes(BuiltInCategories.Wall);
+
+            document.GetElementTypes(BuiltInCategory.OST_Walls);
+
+            document.GetElementTypes<WallType>();
+
+
+
+            document.GetStructualFamilies(StructuralMaterialType.Steel);
+   
+
+            var result = document.GetElements("固定", "900*2100");
+            if (result.Succeeded)
+            {
+                FilteredElementCollector windows = result.Value;
+            }
+
+            Level level = document.GetElements<Level>(l => l.Name == "level1").FirstOrDefault();
+            if (level != null)
+            {
+                document.GetElements(level);
+            }
+
+
+
+            var elems = uIDocument.ActiveGraphicalView.GetElements(BuiltInCategory.OST_Walls);
+
+
+
+
+
+
+            //document.GetElements()
+            //    .OfCategories(BuiltInCategory.OST_Walls)
+            //    .WithParameterStringValue(BuiltInParameter.ALL_MODEL_MODEL, ParameterFilterStringOperator.BeginWith, "m")
+            //    .WithParameterStringValue(BuiltInParameter.ALL_MODEL_COST, ParameterFilterStringOperator.Contains, "m")
+            //    .WithParameterStringValue(BuiltInParameter.ALL_MODEL_FAMILY_NAME, ParameterFilterStringOperator.BeginWith, "m")
+            //    .WithParameterStringValue(BuiltInParameter.ALLOW_AUTO_EMBED, ParameterFilterStringOperator.BeginWith, "m")
+            //    .ToFilter()
+            //    .ToElements();
+
+
+
+            //document.GetElements<FamilyInstance>(instance => instance.Symbol.FamilyName == "预制");
+
+
+            //var elems = document.GetGraphicElements<FamilyInstance>(instance => instance.Name == "name");
+
+            //Enumerator.Range(1, 100);
 
             return Result.Succeeded;
         }
     }
+
+
 }

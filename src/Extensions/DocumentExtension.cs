@@ -39,14 +39,11 @@ namespace Tuna.Revit.Extension
         /// <exception cref="System.ArgumentNullException"></exception>
         public static AppearanceAssetElement CreateAppearanceElement(this Document document, string name)
         {
-            if (document == null || !document.IsValidObject)
-            {
-                throw new ArgumentNullException(nameof(document), "document can not be null");
-            }
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
 
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException(nameof(name), "name can not be null");
+                throw new System.ArgumentNullException(nameof(name), "name can not be null");
             }
 
             AppearanceAssetElement newAppearance = null;
@@ -72,7 +69,6 @@ namespace Tuna.Revit.Extension
 #else
                     newAppearance = appearance.Duplicate(name);
 #endif
-
                 }
             }
             return newAppearance;
