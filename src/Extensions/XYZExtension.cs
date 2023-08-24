@@ -26,7 +26,7 @@ namespace Tuna.Revit.Extension
         /// <param name="orientation"></param>
         /// <param name="distance"></param>
         /// <returns></returns>
-        public static XYZ Calulate(this XYZ origin, XYZ orientation, double distance)
+        public static XYZ Calculate(this XYZ origin, XYZ orientation, double distance)
         {
             var originClone = new XYZ(origin.X, origin.Y, origin.Z);
             var shift = orientation.Normalize() * (distance.ConvertToFeet());
