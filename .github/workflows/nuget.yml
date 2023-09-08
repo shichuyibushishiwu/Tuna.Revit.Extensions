@@ -1,2 +1,6 @@
-name: "tuna"
-description: "publish nuget package"
+name: tuna
+on: push
+jobs:
+ nuget:
+   name: release nuget
+   runs-on: ubuntu-latest
