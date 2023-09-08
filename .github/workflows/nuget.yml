@@ -1,8 +1,18 @@
 name: tuna
 on: push
 jobs:
- nuget: 
-  name: release nuget
-  runs-on: ubuntu-latest
-  steps: 
-   - name: checkout
+ nuget:
+   name: release nuget
+   runs-on: ubuntu-latest
+   steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: setup
+      uses: actions/setup-dotnet@v1
+    - name: build
+      run: dotnet build --configuration release
+    - name: puiblish
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+       PROJECT_FILE_PATH: Tuna.Revit.Extersion.csproj
+       NUGET_KEY: ${{secrets.NUGET_API_KEY}}
