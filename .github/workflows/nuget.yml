@@ -4,3 +4,6 @@ jobs:
  nuget:
    name: release nuget
    runs-on: ubuntu-latest
+   steps:
+    - name: checkout
+      uses: actions/checkout@v2
