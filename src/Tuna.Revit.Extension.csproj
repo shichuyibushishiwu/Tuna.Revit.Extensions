@@ -35,7 +35,7 @@
 		<RvtVersion>2016</RvtVersion>
 		<DefineConstants>Rvt_16</DefineConstants>
 		<TargetFramework>net452</TargetFramework>
-		<Version>2016.2.$(TunaVer)</Version>
+		<Version>2016.2.8</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_17))'">
@@ -132,7 +132,7 @@
 
 	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
 		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2016.0.2">
-			<IncludeAssets>compile</IncludeAssets>
+		
 		</PackageReference>
 	</ItemGroup>
 
