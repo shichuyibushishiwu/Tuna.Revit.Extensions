@@ -16,9 +16,10 @@ jobs:
 
     #- name: Build DotNet
       #uses: Elskom/build-dotnet@v1.1.1
+      
     - name: Build
       run: |
-        cd DotNet.WebApp
+        cd Tuna.Revit.Extension
         dotnet build --configuration Rvt_16_Release --no-restore
         
     - name: Publish NuGet
