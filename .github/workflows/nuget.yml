@@ -1,13 +1,20 @@
 name: tuna
-on: push
+on: 
+ push: 
+  branches: 
+   - main 
 jobs:
  nuget:
    name: release nuget
    runs-on: windows-latest
    steps:
     - name: checkout
-      uses: actions/checkout@v2
-    - name: setup
-      uses: actions/setup-dotnet@v1
-  
-
+      uses: actions/checkout@v4.0.0
+      
+    - name: Publish NuGet
+      uses: brandedoutcast/publish-nuget@v2.5.5
+      with: 
+       PROJECT_FILE_PATH: Tuna.Revit.Extersion.csproj
+       BUILD_CONFIGURATION: Rvt_16_Release
+       NUGET_KEY: ${{secrets.NUGETKEY}}
+       NUGET_SOURCE: https://api.nuget.org
