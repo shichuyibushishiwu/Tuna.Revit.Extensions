@@ -5,7 +5,7 @@ on:
    - main 
 
 env:
-  DOTNET_VERSION: '6.0.401'
+  DOTNET_VERSION: '4.7.x'
 jobs:
  nuget:
    name: release nuget
@@ -13,15 +13,14 @@ jobs:
    steps:
     - uses: actions/checkout@v4.0.0
     - name: Setup dotnet
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v3.2.0
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Install dependencies
       run: dotnet restore
 
-    #- name: Build DotNet
-      #uses: Elskom/build-dotnet@v1.1.1
+
       
     - name: Build
       run: dotnet build --configuration Rvt_20_Release --no-restore
