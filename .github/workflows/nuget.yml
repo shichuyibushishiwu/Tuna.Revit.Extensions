@@ -18,7 +18,7 @@ jobs:
       uses: brandedoutcast/publish-nuget@v2.5.5
       with: 
        PROJECT_FILE_PATH: src/Tuna.Revit.Extension.csproj
-       BUILD_CONFIGURATION: Release
+       BUILD_CONFIGURATION: Rvt_20_Release
        NUGET_KEY: ${{secrets.NUGETKEY}}
        NUGET_SOURCE: https://api.nuget.org
 
