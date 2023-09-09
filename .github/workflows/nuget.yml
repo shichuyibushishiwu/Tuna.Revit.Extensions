@@ -11,6 +11,9 @@ jobs:
     - name: checkout
       uses: actions/checkout@v4.0.0
 
+    - name: Install dependencies
+      run: dotnet restore
+
     #- name: Build DotNet
       #uses: Elskom/build-dotnet@v1.1.1
       
