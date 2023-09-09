@@ -22,8 +22,8 @@ jobs:
 
 
       
-    - name: Build
-      run: dotnet build --configuration Rvt_20_Release --no-restore
+   # - name: Build
+     # run: dotnet build --configuration Rvt_20_Release --no-restore
         
     - name: Publish NuGet
       uses: brandedoutcast/publish-nuget@v2.5.5
