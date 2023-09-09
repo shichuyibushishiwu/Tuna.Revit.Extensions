@@ -18,9 +18,7 @@ jobs:
       #uses: Elskom/build-dotnet@v1.1.1
       
     - name: Build
-      run: |
-        Tuna.Revit.Extension
-        dotnet build --configuration Rvt_16_Release --no-restore
+      run: dotnet build --configuration Rvt_16_Release --no-restore
         
     - name: Publish NuGet
       uses: brandedoutcast/publish-nuget@v2.5.5
