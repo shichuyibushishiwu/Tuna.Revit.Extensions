@@ -19,7 +19,7 @@ jobs:
       
     - name: Build
       run: |
-        cd Tuna.Revit.Extension
+        Tuna.Revit.Extension
         dotnet build --configuration Rvt_16_Release --no-restore
         
     - name: Publish NuGet
