@@ -57,7 +57,7 @@ namespace Tuna.Revit.Extension
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(color);
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(otherColor);
-            return (color.Red, color.Green, color.Blue) == (otherColor.Red, otherColor.Green, otherColor.Blue);
+            return color.Red == otherColor.Red && color.Green == otherColor.Green && color.Blue == otherColor.Blue;
         }
     }
 }
