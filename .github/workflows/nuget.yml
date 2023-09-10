@@ -21,9 +21,13 @@ jobs:
 
     - name: path
       run: cd src\bin\Rvt_16_Release
+
+    - name: paths
+      run: cd..
+      
     - name: show
       run: dir
       
     - name: Publish NuGet
-      run: dotnet nuget push src\bin\Rvt_16\Release\*.nupkg -k ${{secrets.NUGETKEY}} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push src\bin\Rvt_16\Release\Tuna.Revit.Extension.2016.2.8.nupkg -k ${{secrets.NUGETKEY}} -s https://api.nuget.org/v3/index.json
 
