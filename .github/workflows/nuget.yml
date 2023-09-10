@@ -18,15 +18,6 @@ jobs:
       
     - name: Build
       run: dotnet build --configuration Rvt_16_Release
-
-    - name: path
-      run: cd src\bin\Rvt_16_Release
-
-    - name: paths
-      run: cd..
-      
-    - name: show
-      run: dir
       
     - name: Publish NuGet
       run: dotnet nuget push src\bin\Rvt_16_Release\*.nupkg -k ${{secrets.NUGETKEY}} -s https://api.nuget.org/v3/index.json
