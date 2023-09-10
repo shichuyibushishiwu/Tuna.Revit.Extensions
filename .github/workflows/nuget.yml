@@ -20,5 +20,5 @@ jobs:
       run: dotnet build --configuration Rvt_16_Release
       
     - name: Publish NuGet
-      run: dotnet nuget push src\bin\Rvt_16_Release\*.nupkg -k ${{secrets.NUGETKEY}} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push src\bin\Rvt_16_Release\*.nupkg -k ${{secrets.NUGETKEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
 
