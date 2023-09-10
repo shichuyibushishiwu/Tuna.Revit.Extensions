@@ -4,26 +4,20 @@ on:
   branches: 
    - main 
 
-env:
-  DOTNET_VERSION: '3.1.101'
+
 jobs:
  nuget:
    name: release nuget
    runs-on: windows-latest
    steps:
+    - name: checkout
     - uses: actions/checkout@v4.0.0
-    - name: Setup dotnet
-      uses: actions/setup-dotnet@v3.2.0
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
-
+    
     - name: Install dependencies
       run: dotnet restore
-
-
       
-   # - name: Build
-     # run: dotnet build --configuration Rvt_20_Release --no-restore
+    - name: Build
+      run: dotnet build --configuration Rvt_16_Release
         
     - name: Publish NuGet
       uses: brandedoutcast/publish-nuget@v2.5.5
@@ -31,5 +25,5 @@ jobs:
        PROJECT_FILE_PATH: src/Tuna.Revit.Extension.csproj
        BUILD_CONFIGURATION: Rvt_16_Release
        NUGET_KEY: ${{secrets.NUGETKEY}}
-       NUGET_SOURCE: https://api.nuget.org
+       NUGET_SOURCE: https://api.nuget.org/v3/index.json
 
