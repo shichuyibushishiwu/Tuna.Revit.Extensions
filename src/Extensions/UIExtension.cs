@@ -1,12 +1,12 @@
-﻿///************************************************************************************
-///   Author:十五
-///   CretaeTime:2022/4/20 13:16:40
-///   Mail:1012201478@qq.com
-///   Github:https://github.com/shichuyibushishiwu
-///
-///   Description:
-///
-///************************************************************************************
+﻿/************************************************************************************
+   Author:十五
+   CretaeTime:2022/4/20 13:16:40
+   Mail:1012201478@qq.com
+   Github:https://github.com/shichuyibushishiwu
+
+   Description:
+
+************************************************************************************/
 
 
 using Autodesk.Revit.UI;
@@ -65,7 +65,7 @@ namespace Tuna.Revit.Extension
                 LongDescription = button.LongDescription,
             };
             pushButtonData.SetContextualHelp(button.ContextualHelp);
-            pushButtonData.SetAvailability(commandType);
+            //pushButtonData.SetAvailability(commandType);
             return pushButtonData;
         }
 

@@ -33,7 +33,7 @@ namespace Tuna.Sample.Commands
             Document document = uIDocument.Document;
 
 
-
+            //这些方法可以获取到项目中的图元，不包括图元类型，所以如果在使用 BuiltInCategory 的时候，不需要再对类型进行过滤
             document.GetElements<Wall>();
 
             document.GetElements(typeof(Wall));
@@ -52,12 +52,18 @@ namespace Tuna.Sample.Commands
 
             document.GetElements(StructuralMaterialType.Steel);
 
+            document.GetElements(StructuralInstanceUsage.Column);
+
             document.GetElements(StructuralType.Column);
 
             document.GetElements(CurveElementType.ModelCurve);
 
+            document.GetElements(document.GetFamilySymbols(document.GetElements(typeof(Family)).FirstElementId()).FirstOrDefault());
+
+            document.GetElements(document.GetElements<Level>().FirstOrDefault());
 
 
+            //这些方法可以获取到项目中的类型
             document.GetElementTypes(BuiltInCategories.Wall);
 
             document.GetElementTypes(BuiltInCategory.OST_Walls);
@@ -65,9 +71,9 @@ namespace Tuna.Sample.Commands
             document.GetElementTypes<WallType>();
 
 
-
+            //这个方法可以获取结构相关的族
             document.GetStructualFamilies(StructuralMaterialType.Steel);
-   
+
 
             var result = document.GetElements("固定", "900*2100");
             if (result.Succeeded)
@@ -75,19 +81,7 @@ namespace Tuna.Sample.Commands
                 FilteredElementCollector windows = result.Value;
             }
 
-            Level level = document.GetElements<Level>(l => l.Name == "level1").FirstOrDefault();
-            if (level != null)
-            {
-                document.GetElements(level);
-            }
-
-
-
             var elems = uIDocument.ActiveGraphicalView.GetElements(BuiltInCategory.OST_Walls);
-
-
-
-
 
 
             //document.GetElements()
@@ -102,7 +96,6 @@ namespace Tuna.Sample.Commands
 
 
             //document.GetElements<FamilyInstance>(instance => instance.Symbol.FamilyName == "预制");
-
 
             //var elems = document.GetGraphicElements<FamilyInstance>(instance => instance.Name == "name");
 

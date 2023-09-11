@@ -8,7 +8,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Tuna.Revit.Extension.csproj" />
+	  <PackageReference Include="Tuna.Revit.Extension" Version="2020.0.8" />
 	</ItemGroup>
 
 </Project>

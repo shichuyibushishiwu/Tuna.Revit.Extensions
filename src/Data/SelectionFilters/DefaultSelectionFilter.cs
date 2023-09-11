@@ -1,12 +1,12 @@
-﻿///************************************************************************************
-///   Author:十五
-///   CretaeTime:2023/4/6 0:25:10
-///   Mail:1012201478@qq.com
-///   Github:https://github.com/shichuyibushishiwu
-///
-///   Description:
-///
-///************************************************************************************
+﻿/************************************************************************************
+   Author:十五
+   CretaeTime:2023/4/6 0:25:10
+   Mail:1012201478@qq.com
+   Github:https://github.com/shichuyibushishiwu
+
+   Description:
+
+************************************************************************************/
 
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
@@ -16,34 +16,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Data.SelectionFilters
+namespace Tuna.Revit.Extension.Data.SelectionFilters;
+
+/// <summary>
+/// 默认的选择过滤器
+/// </summary>
+internal class DefaultSelectionFilter : ISelectionFilter
 {
-    internal class DefaultSelectionFilter : ISelectionFilter
+    private readonly Func<Element, bool> _predicate;
+
+    public DefaultSelectionFilter(Func<Element, bool> predicate = null)
     {
-        private readonly Func<Element, bool> _predicate;
+        _predicate = predicate;
+    }
 
-        public DefaultSelectionFilter(Func<Element, bool> predicate = null)
+    public bool AllowElement(Element elem)
+    {
+        if (elem == null)
         {
-            _predicate = predicate;
+            return false;
         }
 
-        public bool AllowElement(Element elem)
+        if (_predicate != null)
         {
-            if (elem == null)
-            {
-                return false;
-            }
-
-            if (_predicate != null)
-            {
-                return _predicate(elem);
-            }
-            return true;
+            return _predicate(elem);
         }
+        return false;
+    }
 
-        public bool AllowReference(Reference reference, XYZ position)
-        {
-            return true;
-        }
+    public bool AllowReference(Reference reference, XYZ position)
+    {
+        return true;
     }
 }

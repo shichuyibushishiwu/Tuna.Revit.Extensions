@@ -1,12 +1,12 @@
-﻿///************************************************************************************
-///   Author:十五
-///   CretaeTime:2022/11/29 0:08:10
-///   Mail:1012201478@qq.com
-///   Github:https://github.com/shichuyibushishiwu
-///
-///   Description:
-///
-///************************************************************************************
+﻿/************************************************************************************
+   Author:十五
+   CretaeTime:2022/11/29 0:08:10
+   Mail:1012201478@qq.com
+   Github:https://github.com/shichuyibushishiwu
+
+   Description:
+
+************************************************************************************/
 
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -75,21 +75,14 @@ namespace Tuna.Revit.Extension
         /// <param name="prompt"></param>
         /// <returns></returns>
         /// <exception cref="System.ArgumentNullException"></exception>
-        public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument,
-                                                                           ObjectType objectType,
-                                                                           ISelectionFilter selectionFilter = null,
-                                                                           string prompt = null)
+        public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, ISelectionFilter selectionFilter = null, string prompt = null)
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
-
             SelectionResult<IList<Reference>> selectionResult = new SelectionResult<IList<Reference>>();
             try
             {
-                if (selectionFilter == null)
-                {
-                    selectionFilter = new DefaultSelectionFilter();
-                }
-                selectionResult.Value = uiDocument.Selection.PickObjects(objectType, selectionFilter);
+                selectionFilter ??= new DefaultSelectionFilter();
+                selectionResult.Value = uiDocument.Selection.PickObjects(objectType, selectionFilter, prompt);
             }
             catch (Autodesk.Revit.Exceptions.OperationCanceledException exception)
             {
@@ -107,10 +100,7 @@ namespace Tuna.Revit.Extension
         /// <param name="predicate"></param>
         /// <param name="prompt"></param>
         /// <returns></returns>
-        public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument,
-                                                                           ObjectType objectType,
-                                                                           Func<Element, bool> predicate,
-                                                                           string prompt = null)
+        public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> predicate, string prompt = null)
         {
             return uiDocument.SelectObjects(objectType, new DefaultSelectionFilter(predicate), prompt);
         }

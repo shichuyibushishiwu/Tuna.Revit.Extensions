@@ -8,13 +8,23 @@
 ///
 ///************************************************************************************
 
+using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Tuna.Sample
 {
-    internal class App
+    internal class App : IExternalApplication
     {
+        public Result OnShutdown(UIControlledApplication application)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Result OnStartup(UIControlledApplication application)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

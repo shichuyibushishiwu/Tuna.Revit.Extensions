@@ -58,6 +58,7 @@ panel.CreateButton<CreateWallCommand>((b)=>
 * Revit 2021
 * Revit 2022
 * Revit 2023
+* Revit 2024
 
 # Install
 
