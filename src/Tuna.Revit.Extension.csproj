@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>net48</TargetFramework>
 		<OutputType>Library</OutputType>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 		<UseWPF>true</UseWPF>
 		<LangVersion>preview</LangVersion>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
@@ -201,6 +201,4 @@
 			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
-
-
 </Project>
