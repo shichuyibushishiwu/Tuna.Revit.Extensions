@@ -23,12 +23,15 @@
 		<Company>Tuna</Company>
 		<Authors>Shiwu</Authors>
 		<PackageIcon>Tuna.png</PackageIcon>
-		<TunaVer>8</TunaVer>
+		<TunaVer>9</TunaVer>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Description>This is an extension package for revit api.</Description>
 		<PackageProjectUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions/wiki</PackageProjectUrl>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<RepositoryUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions</RepositoryUrl>
+		<Copyright>shichuyibushishiwu</Copyright>
+		<NeutralLanguage>zh;en</NeutralLanguage>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
@@ -184,6 +187,8 @@
 		</PackageReference>
 	</ItemGroup>
 
+
+
 	<ItemGroup>
 		<Compile Remove="Properties\**" />
 		<EmbeddedResource Remove="Properties\**" />
@@ -191,14 +196,14 @@
 		<Page Remove="Properties\**" />
 	</ItemGroup>
 
+
 	<ItemGroup>
-		<None Include="..\README.md">
-			<Pack>True</Pack>
+		<None Include="..\README.md" Pack="True">
 			<PackagePath>\</PackagePath>
 		</None>
-		<None Include="..\Tuna.png">
-			<Pack>True</Pack>
+		<None Include="..\Tuna.png" Pack="True">
 			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
+	
 </Project>

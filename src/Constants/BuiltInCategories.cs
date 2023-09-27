@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Constants;
+namespace Tuna.Revit.Extension;
 
 /// <summary>
 /// Revit 中部分常用的内置类别

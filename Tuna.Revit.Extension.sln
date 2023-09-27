@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
+		TunaRibbon.xsd = TunaRibbon.xsd
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Sample", "sample\Tuna.Sample\Tuna.Sample.csproj", "{57D210DC-A989-4C3E-84E8-A40B7114052B}"
@@ -19,6 +20,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{78294CC8-0B3B-48D5-AC91-2E3C02377287}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{561BD9FE-C5B6-4817-930A-AC46291408EE}"
+	ProjectSection(SolutionItems) = preProject
+		tests\XMLFile1.xml = tests\XMLFile1.xml
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Revit.Test", "tests\Tuna.Revit.Test\Tuna.Revit.Test.csproj", "{49F3D6ED-FF71-403C-8D2B-8775A3080407}"
 EndProject
