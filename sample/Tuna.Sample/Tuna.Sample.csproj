@@ -53,6 +53,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Tuna.Revit.Extension" Version="2020.0.8" />
+	  <PackageReference Include="Tuna.Revit.Extension" Version="2021.0.9" />
 	</ItemGroup>
 </Project>
