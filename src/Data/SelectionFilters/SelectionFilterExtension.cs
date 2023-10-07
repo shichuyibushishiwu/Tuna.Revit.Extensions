@@ -118,7 +118,7 @@ namespace Tuna.Revit.Extension
                 var result = element;
                 if (_builtInCategory != BuiltInCategory.INVALID && element.Category != null)
                 {
-                    if (element.Category.Id.Value != (int)_builtInCategory)
+                    if (element.Category.Id.IntegerValue != (int)_builtInCategory)
                     {
                         result = null;
                     }
