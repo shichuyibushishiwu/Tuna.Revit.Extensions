@@ -1,12 +1,12 @@
-﻿///************************************************************************************
-///   Author:十五
-///   CretaeTime:2023/4/6 0:25:10
-///   Mail:1012201478@qq.com
-///   Github:https://github.com/shichuyibushishiwu
-///
-///   Description:
-///
-///************************************************************************************
+﻿/************************************************************************************
+   Author:十五
+   CretaeTime:2023/4/6 0:25:10
+   Mail:1012201478@qq.com
+   Github:https://github.com/shichuyibushishiwu
+
+   Description:
+
+************************************************************************************/
 
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
@@ -16,34 +16,64 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Data.SelectionFilters
+namespace Tuna.Revit.Extension;
+
+/// <summary>
+/// 默认的选择过滤器
+/// <para>The default selection filter</para>
+/// </summary>
+public class DefaultSelectionFilter : ISelectionFilter
 {
-    internal class DefaultSelectionFilter : ISelectionFilter
+    private readonly Func<Element, bool> _elementPredicate;
+    private readonly Func<(Reference Reference, XYZ XYZ), bool> _referencePredicate;
+
+    /// <summary>
+    /// <para>Definition of selection filter</para>
+    /// </summary>
+    /// <param name="elementPredicate">Allow element</param>
+    /// <param name="referencePredicate">Allow reference</param>
+    public DefaultSelectionFilter(Func<Element, bool> elementPredicate = null, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate = null)
     {
-        private readonly Func<Element, bool> _predicate;
+        _elementPredicate = elementPredicate;
+        _referencePredicate = referencePredicate;
+    }
 
-        public DefaultSelectionFilter(Func<Element, bool> predicate = null)
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="elem"><inheritdoc/></param>
+    /// <returns><inheritdoc/></returns>
+    public virtual bool AllowElement(Element elem)
+    {
+        if (elem == null)
         {
-            _predicate = predicate;
+            return false;
         }
 
-        public bool AllowElement(Element elem)
+        if (_elementPredicate != null)
         {
-            if (elem == null)
-            {
-                return false;
-            }
+            return _elementPredicate(elem);
+        }
+        return true;
+    }
 
-            if (_predicate != null)
-            {
-                return _predicate(elem);
-            }
-            return true;
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="reference"><inheritdoc/></param>
+    /// <param name="position"><inheritdoc/></param>
+    /// <returns><inheritdoc/></returns>
+    public virtual bool AllowReference(Reference reference, XYZ position)
+    {
+        if (reference == null || position == null)
+        {
+            return false;
         }
 
-        public bool AllowReference(Reference reference, XYZ position)
+        if (_referencePredicate != null)
         {
-            return true;
+            return _referencePredicate((reference, position));
         }
+        return true;
     }
 }

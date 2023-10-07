@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://tempuri.org/XMLSchema.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/XMLSchema.xsd"
+	xmlns:tmp="http://tempuri.org"
+    xmlns:mstns="http://tempuri.org/XMLSchema.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	
+	<xs:annotation>
+		<xs:documentation>用于编写Ribbon界面的XML</xs:documentation>
+	</xs:annotation>
+
+	<xs:complexType name="RibbonItems">
+		<xs:choice maxOccurs="unbounded" minOccurs="0">
+			<xs:element ref="mstns:RibbonPulldownButton"></xs:element>
+			<xs:element ref="mstns:RibbonSplitButton"></xs:element>
+			<xs:element ref="mstns:RibbonStackPanel"></xs:element>
+			<xs:element ref="mstns:RibbonPushButton"></xs:element>
+			<xs:element ref="mstns:RibbonTextBox"></xs:element>
+			<xs:element ref="mstns:RibbonSlideOut"></xs:element>
+			<xs:element ref="mstns:Separator"></xs:element>
+		</xs:choice>
+		<xs:attribute name="Title" type="xs:string" use="required"></xs:attribute>
+	</xs:complexType>
+	
+	<xs:element name="Ribbon">
+		<xs:annotation>
+			<xs:documentation>Ribbon 根元素</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="16" minOccurs="1">
+				<xs:element ref="mstns:RibbonTab"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RibbonTab">
+		<xs:annotation>
+			<xs:documentation>功能选项卡</xs:documentation>
+		</xs:annotation>
+		<xs:complexType >
+			<xs:sequence maxOccurs="unbounded" minOccurs="1">
+				<xs:element ref="mstns:RibbonPanel"/>
+			</xs:sequence>
+			<xs:attribute id="tabTitle" name="Title" type="xs:string" use="required"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RibbonPanel" type="mstns:RibbonItems">
+		<xs:annotation>
+			<xs:documentation>功能面板</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="RibbonPushButton">
+		<xs:annotation>
+			<xs:documentation>命令按钮，可以绑定扩展的命令到面板中</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="Name" type="xs:string"></xs:attribute>
+			<xs:attribute name="Title" type="xs:string" use="required"></xs:attribute>
+			<xs:attribute name="LargeImage" type="xs:string"></xs:attribute>
+			<xs:attribute name="SamllImage" type="xs:string" ></xs:attribute>
+			<xs:attribute name="CommandClassFullName" type="xs:string"  use="required"></xs:attribute>
+			<xs:attribute name="AvailabilityClassFullName" type="xs:string" ></xs:attribute>
+			<xs:attribute name="LongDescription" type="xs:string" ></xs:attribute>
+			<xs:attribute name="ToolTip" type="xs:string" ></xs:attribute>
+			<xs:attribute name="ToolTipImage" type="xs:string" ></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="Separator" >
+		<xs:annotation>
+			<xs:documentation>分隔符,用户分割面板</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="RibbonStackPanel">
+		<xs:annotation>
+			<xs:documentation>堆叠式按钮</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence maxOccurs="3" minOccurs="2">
+				<xs:element ref="mstns:RibbonPushButton"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RibbonSplitButton">
+		<xs:annotation>
+			<xs:documentation>下拉式按钮</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice >
+				<xs:element ref="mstns:RibbonPushButton"></xs:element>
+				<xs:element ref="mstns:Separator"></xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RibbonPulldownButton">
+		<xs:annotation>
+			<xs:documentation>下拉式按钮</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice >
+				<xs:element ref="mstns:RibbonPushButton"></xs:element>
+				<xs:element ref="mstns:Separator"></xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RibbonSlideOut">
+		<xs:annotation>
+			<xs:documentation>下滑式面板</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="RibbonTextBox">
+		<xs:annotation>
+			<xs:documentation>文本输入框</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+
+	<xs:element name="RibbonComboBox">
+		<xs:annotation>
+			<xs:documentation>下拉选择框</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RibbonComboBoxMember">
+					<xs:annotation>
+						<xs:documentation>xx</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="RibbonRadioButtonGroup">
+		<xs:annotation>
+			<xs:documentation>xx</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RibbonToggleButton">
+					<xs:annotation>
+						<xs:documentation>xx</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

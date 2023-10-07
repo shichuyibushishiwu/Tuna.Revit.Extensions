@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tuna.Revit.Extension;
 
+
 namespace Tuna.Sample.Commands
 {
     [Transaction(TransactionMode.Manual)]
@@ -25,10 +26,15 @@ namespace Tuna.Sample.Commands
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            UIDocument uiDocument = commandData.Application.ActiveUIDocument;
+            //UIDocument uiDocument = commandData.Application.ActiveUIDocument;
 
-            uiDocument.SelectObject(Autodesk.Revit.UI.Selection.ObjectType.Element);
+            //uiDocument.SelectObject(Autodesk.Revit.UI.Selection.ObjectType.Element);
 
+
+
+            var doors = commandData.Application.ActiveUIDocument.Document.GetElements(BuiltInCategories.Door);
+
+            TaskDialog.Show("count", doors.Count().ToString());
 
             return Result.Succeeded;
         }

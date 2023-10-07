@@ -1,0 +1,11 @@
+﻿<?xml version="1.0"  encoding="utf-8"?>
+
+<Ribbon xmlns="http://tempuri.org/XMLSchema.xsd">
+	<RibbonTab Title="afa">
+		<RibbonPanel Title="as">
+			<RibbonPulldownButton>
+				<RibbonPushButton Title="asd" CommandClassFullName="af"/>
+			</RibbonPulldownButton>
+		</RibbonPanel>
+	</RibbonTab>
+</Ribbon>
