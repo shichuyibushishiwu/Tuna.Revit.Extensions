@@ -188,15 +188,12 @@
 	</ItemGroup>
 
 
-
 	<ItemGroup>
 		<Compile Remove="Properties\**" />
 		<EmbeddedResource Remove="Properties\**" />
 		<None Remove="Properties\**" />
 		<Page Remove="Properties\**" />
 	</ItemGroup>
-
-
 
 	<ItemGroup>
 		<None Include="..\README.md" Pack="True">
