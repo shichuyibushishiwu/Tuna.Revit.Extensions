@@ -1,4 +1,11 @@
-﻿using Autodesk.Revit.DB;
+﻿/************************************************************************************
+   Author:YanDong
+
+   Description:
+
+************************************************************************************/
+
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
@@ -8,7 +15,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Data.SelectionFilters
+namespace Tuna.Revit.Extension
 {
     public static class SelectionFilterExtension
     {

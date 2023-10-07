@@ -68,7 +68,7 @@ public static class CollectorExtension
     /// <c>[Quick Filter]</c>
     /// 根据类型（包括以下列出的类型）过滤出文档中的图元对象，该类型必须继承于 <see cref="Autodesk.Revit.DB.Element"/>,
     /// 但不是所有<see cref="Autodesk.Revit.DB.Element"/>派生的类都可以通过<see cref="Autodesk.Revit.DB.ElementClassFilter"/>进行过滤
-    /// <para>Get the element in the document which type is subclass of <see cref="Autodesk.Revit.DB.Element"/></para>
+    /// <para>Get the elements in the document which type is subclass of <see cref="Autodesk.Revit.DB.Element"/></para>
     /// <list type="bullet">
     /// <item><see cref="Autodesk.Revit.DB.Architecture.Room"/></item>
     /// <item><see cref="Autodesk.Revit.DB.Architecture.RoomTag"/></item>
@@ -119,7 +119,8 @@ public static class CollectorExtension
     }
 
     /// <summary>
-    /// <c>[Quick Filter]</c>根据内置类别过滤出文档中的图元对象
+    /// <c>[Quick Filter]</c>
+    /// 根据内置类别过滤出文档中的图元对象
     /// <para>Get elements in the document by <see cref="Autodesk.Revit.DB.BuiltInCategory"/></para>
     /// </summary>
     /// <param name="document">要查询的文档</param>
@@ -220,8 +221,8 @@ public static class CollectorExtension
     /// <summary>
     /// <c>[Quick Filter]</c>
     /// 根据内置类别的<see cref="Autodesk.Revit.DB.ElementId"/>过滤出文档中的图元对象,
-    /// 扩展包提供了常量类型<see cref="Tuna.Revit.Extension.Constants.BuiltInCategories"/>可进行<c>Id</c>的调用
-    /// <para>Get elements in the document by element category id , you can used <see cref="Constants.BuiltInParameters"/> to get parameter id</para>
+    /// 扩展包提供了常量类型<see cref="BuiltInCategories"/>可进行<c>Id</c>的调用
+    /// <para>Get elements in the document by element category id , you can used <see cref="BuiltInParameters"/> to get parameter id</para>
     /// </summary>
     /// <param name="document">要查询的文档</param>
     /// <param name="categoryId">要查询的类别<see cref="Autodesk.Revit.DB.ElementId"/></param>
@@ -234,8 +235,8 @@ public static class CollectorExtension
     /// <summary>
     /// <c>[Quick Filter]</c>
     /// 根据内置类别的<see cref="Autodesk.Revit.DB.ElementId"/>过滤出文档中的图元对象,
-    /// 扩展包提供了常量类型<see cref="Tuna.Revit.Extension.Constants.BuiltInCategories"/>可进行<c>Id</c>的调用
-    /// <para>Get elements in the document by element category id , you can used <see cref="Constants.BuiltInParameters"/> to get parameter id</para>
+    /// 扩展包提供了常量类型<see cref="BuiltInCategories"/>可进行<c>Id</c>的调用
+    /// <para>Get elements in the document by element category id , you can used <see cref="BuiltInParameters"/> to get parameter id</para>
     /// </summary>
     /// <param name="document">要查询的文档</param>
     /// <param name="categoryId">要查询的类别<see cref="Autodesk.Revit.DB.ElementId"/></param>

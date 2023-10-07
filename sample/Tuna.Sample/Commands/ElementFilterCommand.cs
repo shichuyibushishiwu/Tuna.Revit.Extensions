@@ -15,8 +15,7 @@ using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Linq;
 using Tuna.Revit.Extension;
-using Tuna.Revit.Extension.Constants;
-using Tuna.Revit.Extension.Data;
+
 
 namespace Tuna.Sample.Commands;
 
@@ -71,19 +70,15 @@ public class ElementFilterCommand : IExternalCommand
         document.GetStructualFamilies(StructuralMaterialType.Steel);
 
 
-        var result = document.GetElements("固定", "900*2100");
-        if (result.Succeeded)
-        {
-            FilteredElementCollector windows = result.Value;
-        }
-
         var elems = uIDocument.ActiveGraphicalView.GetElements(BuiltInCategory.OST_Walls);
 
 
-        SelectionResult<IList<Reference>> selectionResult = uIDocument.SelectObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, element => element.Category.Id == BuiltInCategories.Door, "选择门");
+        uIDocument.SelectObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, element => element.Category.Id == BuiltInCategories.Door, "选择门");
+
+        uIDocument.SelectObject(Autodesk.Revit.UI.Selection.ObjectType.Element, element => element.Category.Id == BuiltInCategories.Door, "选择门");
 
 
-     
+
 
         //document.GetElements()
         //    .OfCategories(BuiltInCategory.OST_Walls)

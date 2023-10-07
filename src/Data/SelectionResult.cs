@@ -8,41 +8,35 @@
 
 ************************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace Tuna.Revit.Extension;
 
-namespace Tuna.Revit.Extension.Data
+/// <summary>
+/// 和Revit进行交互后的结果
+/// <para>Revit selection result</para>
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public class SelectionResult<T>
 {
     /// <summary>
-    /// Revit selection result
+    /// succeeded
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class SelectionResult<T>
+    public SelectionResult()
     {
-        /// <summary>
-        /// succeeded
-        /// </summary>
-        public SelectionResult()
-        {
-            Succeeded = true;
-        }
-
-        /// <summary>
-        /// message
-        /// </summary>
-        public string Message { get; set; }
-
-        /// <summary>
-        /// result
-        /// </summary>
-        public T Value { get; internal set; } = default(T);
-
-        /// <summary>
-        /// selction state
-        /// </summary>
-        public bool Succeeded { get; set; }
+        Succeeded = true;
     }
+
+    /// <summary>
+    /// message
+    /// </summary>
+    public string Message { get; set; }
+
+    /// <summary>
+    /// result
+    /// </summary>
+    public T Value { get; internal set; } = default(T);
+
+    /// <summary>
+    /// selction state
+    /// </summary>
+    public bool Succeeded { get; set; }
 }

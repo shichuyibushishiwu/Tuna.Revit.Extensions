@@ -36,10 +36,6 @@
 		<PackageReference Include="Tuna.Revit.Extension" Version="2019.0.$(TunaVersion)" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_20))'">
-		<PackageReference Include="Tuna.Revit.Extension" Version="2020.0.$(TunaVersion)" />
-	</ItemGroup>
-
 	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_21))'">
 		<PackageReference Include="Tuna.Revit.Extension" Version="2021.0.$(TunaVersion)" />
 	</ItemGroup>
@@ -54,5 +50,9 @@
 
 	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_24))'">
 		<PackageReference Include="Tuna.Revit.Extension" Version="2024.0.$(TunaVersion)" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Tuna.Revit.Extension" Version="2020.0.9" />
 	</ItemGroup>
 </Project>

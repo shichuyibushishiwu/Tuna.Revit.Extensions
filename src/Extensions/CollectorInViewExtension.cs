@@ -134,8 +134,8 @@ public static class CollectorInViewExtension
 
     /// <summary>
     /// <c>[Quick Filter]</c>根据内置类别的<see cref="Autodesk.Revit.DB.ElementId"/>过滤出视图中的图元对象,
-    /// 扩展包提供了常量类型<see cref="Tuna.Revit.Extension.Constants.BuiltInCategories"/>可进行<c><see cref="Autodesk.Revit.DB.ElementId"/></c>的调用
-    /// <para>Get elements by element category id , you can used <see cref="Constants.BuiltInParameters"/> to get parameter id</para>
+    /// 扩展包提供了常量类型<see cref="BuiltInCategories"/>可进行<c><see cref="Autodesk.Revit.DB.ElementId"/></c>的调用
+    /// <para>Get elements by element category id , you can used <see cref="BuiltInParameters"/> to get parameter id</para>
     /// </summary>
     /// <param name="view"></param>
     /// <param name="categoryId"></param>
