@@ -20,7 +20,7 @@
 		<UseWindowsForms>true</UseWindowsForms>
 	</PropertyGroup>
 
-	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
+	<!--<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
 		<PackageReference Include="Tuna.Revit.Extension" Version="2016.2.$(TunaVersion)" />
 	</ItemGroup>
 
@@ -50,9 +50,15 @@
 
 	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_24))'">
 		<PackageReference Include="Tuna.Revit.Extension" Version="2024.0.$(TunaVersion)" />
+	</ItemGroup>-->
+
+	<ItemGroup>
+	  <Content Remove="C:\Users\Shiwu\.nuget\packages\tuna.revit.extension\2021.0.9\contentFiles\any\any\TunaRibbon.xsd" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Tuna.Revit.Extension" Version="2021.0.9" />
+	  <PackageReference Include="Tuna.Revit.Extension" Version="2016.2.10" />
 	</ItemGroup>
+
+
 </Project>

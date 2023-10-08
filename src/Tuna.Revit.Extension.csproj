@@ -38,7 +38,7 @@
 		<RvtVersion>2016</RvtVersion>
 		<DefineConstants>Rvt_16</DefineConstants>
 		<TargetFramework>net452</TargetFramework>
-		<Version>2016.2.8</Version>
+		<Version>2016.2.$(TunaVer)</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_17))'">
@@ -204,12 +204,12 @@
 		</None>
 		<Content Include="..\TunaRibbon.xsd">
 			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any;content</PackagePath>
+			<PackagePath>\</PackagePath>
 		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 
 </Project>
