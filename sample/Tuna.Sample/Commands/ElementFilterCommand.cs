@@ -15,7 +15,7 @@ using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Linq;
 using Tuna.Revit.Extension;
-using Tuna.Revit.Extension.Constants;
+
 
 namespace Tuna.Sample.Commands;
 
@@ -75,7 +75,9 @@ public class ElementFilterCommand : IExternalCommand
 
         uIDocument.SelectObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, element => element.Category.Id == BuiltInCategories.Door, "选择门");
 
-     
+        uIDocument.SelectElement(BuiltInCategory.OST_Walls, "选择墙体");
+
+
 
 
 
