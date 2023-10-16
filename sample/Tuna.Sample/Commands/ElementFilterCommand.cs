@@ -16,7 +16,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Tuna.Revit.Extension;
 
-
 namespace Tuna.Sample.Commands;
 
 [Transaction(TransactionMode.Manual)]
@@ -77,6 +76,9 @@ public class ElementFilterCommand : IExternalCommand
 
         uIDocument.SelectElement(BuiltInCategory.OST_Walls, "选择墙体");
 
+
+      
+     
 
 
 

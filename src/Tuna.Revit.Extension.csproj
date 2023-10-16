@@ -196,20 +196,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\README.md" Pack="True">
-			<PackagePath>\</PackagePath>
-		</None>
-		<None Include="..\Tuna.png" Pack="True">
-			<PackagePath>\</PackagePath>
-		</None>
-		<Content Include="..\TunaRibbon.xsd">
-			<Pack>true</Pack>
-			<PackagePath>contentFiles\any\any;content</PackagePath>
-		</Content>
+		<None Include="..\README.md" Pack="True" PackagePath="\" />
+		<None Include="..\Tuna.png" Pack="True" PackagePath="\" />
+		<None Include="..\TunaRibbon.xsd" Pack="True" PackagePath="\" Visible="False"/>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 
 </Project>

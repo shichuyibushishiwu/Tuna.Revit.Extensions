@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension
 {
     /// <summary>
-    /// 
+    /// 考虑因素较多.暂不可使用
     /// </summary>
+    [Obsolete]
     public static class Enumerator
     {
         /// <summary>
