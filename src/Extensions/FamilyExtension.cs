@@ -10,78 +10,85 @@
 
 using Autodesk.Revit.DB;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension
+namespace Tuna.Revit.Extension;
+
+/// <summary>
+/// Revit family extension
+/// </summary>
+public static class FamilyExtension
 {
     /// <summary>
-    /// 
+    /// Converter <see cref="IEnumerable"/> to <see cref="List{T}"/>
     /// </summary>
-    public static class FamilyExtension
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TParent"></typeparam>
+    /// <param name="set"></param>
+    /// <param name="predicate"></param>
+    /// <returns></returns>
+    private static List<T> ToList<T, TParent>(TParent set, Predicate<T> predicate = null) where TParent : IEnumerable
     {
-        /// <summary>
-        /// Convert FamilyParameterSet to 
-        /// </summary>
-        /// <param name="familyParameterSet"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public static List<FamilyParameter> ToList(this FamilyParameterSet familyParameterSet, Predicate<FamilyParameter> predicate = null)
+        static IEnumerable<T> ToList(TParent set)
         {
-            var familyParameters = new List<FamilyParameter>();
-            foreach (var item in familyParameterSet)
+            foreach (T parameter in set)
             {
-                var familyParameter = item as FamilyParameter;
-                if (familyParameter == null)
-                {
-                    continue;
-                }
-                if (predicate != null && predicate(familyParameter) || predicate == null)
-                {
-                    familyParameters.Add(familyParameter);
-                }
+                yield return parameter;
             }
-            return familyParameters;
         }
+        return (predicate == null ? ToList(set) : ToList(set).Where(p => predicate(p))).ToList();
+    }
 
-        /// <summary>
-        /// Convert ParameterSet to 
-        /// </summary>
-        /// <param name="parameterSet"></param>
-        /// <param name="predicate"></param>
-        /// <returns></returns>
-        public static List<Parameter> ToList(this ParameterSet parameterSet, Predicate<Parameter> predicate = null)
-        {
-            var parameters = new List<Parameter>();
-            var iterator = parameterSet.ForwardIterator();
-            while (iterator.MoveNext())
-            {
-                var parameter = iterator.Current as Parameter;
-                if (parameter == null)
-                {
-                    continue;
-                }
-                if (predicate == null || predicate(parameter))
-                {
-                    parameters.Add(parameter);
-                }
-            }
-            return parameters;
-        }
+    /// <summary>
+    /// 从 <see cref="FamilyParameterSet"/> 创建一个 <see cref="List{T}"/>
+    /// <para>Create a <see cref="List{T}"/> from <see cref="FamilyParameterSet"/> </para>
+    /// </summary>
+    /// <param name="familyParameterSet">族参数集</param>
+    /// <param name="predicate">对集合进行过滤</param>
+    /// <returns>参数集 <see cref="List{T}"/> </returns>
+    public static List<FamilyParameter> ToList(this FamilyParameterSet familyParameterSet, Predicate<FamilyParameter> predicate = null) => ToList<FamilyParameter, FamilyParameterSet>(familyParameterSet, predicate);
 
-        /// <summary>
-        /// 获取族的所有类型
-        /// <para>Get all family symbols of family</para>
-        /// </summary>
-        /// <param name="family">族</param>
-        /// <returns>从族所在的文档中查询的结果 <see cref="IEnumerable{T}"/></returns>
-        /// <exception cref="System.ArgumentNullException"></exception>
-        public static IEnumerable<FamilySymbol> GetFamilySymbols(this Family family)
-        {
-            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(family);
-            return family.Document.GetFamilySymbols(family.Id);
-        }
+    /// <summary>
+    /// 从 <see cref="ParameterSet"/> 创建一个 <see cref="List{T}"/>
+    /// <para>Create a <see cref="List{T}"/> from <see cref="ParameterSet"/> </para>
+    /// </summary>
+    /// <param name="parameterSet">参数集</param>
+    /// <param name="predicate">对集合进行过滤</param>
+    /// <returns>参数集 <see cref="List{T}"/> </returns>
+    public static List<Parameter> ToList(this ParameterSet parameterSet, Predicate<Parameter> predicate = null) => ToList<Parameter, ParameterSet>(parameterSet, predicate);
+
+    /// <summary>
+    /// 获取族的所有类型
+    /// <para>Get all family symbols of family</para>
+    /// </summary>
+    /// <param name="family">族</param>
+    /// <returns>从族所在的文档中查询的结果 <see cref="IEnumerable{T}"/></returns>
+    /// <exception cref="System.ArgumentNullException"></exception>
+    public static IEnumerable<FamilySymbol> GetFamilySymbols(this Family family)
+    {
+        ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(family);
+        return family.Document.GetFamilySymbols(family.Id);
+    }
+
+    /// <summary>
+    /// 根据族名称和族类型名称获取文档中的图元
+    /// <para>Get the elements in the document by family name and family symbol name</para>
+    /// </summary>
+    /// <param name="document">要查询的文档</param>
+    /// <param name="familyName">族名称</param>
+    /// <param name="familySymbolName">族类型名称</param>
+    /// <returns></returns>
+    /// <exception cref="System.ArgumentNullException"></exception>
+    public static FilteredElementCollector GetElements(this Document document, string familyName, string familySymbolName)
+    {
+        Family family = document.GetElements<Family>(f => f.Name == familyName).FirstOrDefault()
+            ?? throw new ArgumentNullException(nameof(familyName), $"can't find family name of {familyName} in the document");
+
+        FamilySymbol familySymbol = family.GetFamilySymbols().FirstOrDefault(s => s.Name == familySymbolName)
+            ?? throw new ArgumentNullException(nameof(familySymbolName), $"can't find family symbol name of {familySymbolName} in the family which name is  {familyName}");
+
+        return document.GetElements(familySymbol);
     }
 }

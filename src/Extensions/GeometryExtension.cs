@@ -24,11 +24,11 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public static class GeometryExtension
 {
-    private static List<ElementId> _transientElementIds = new List<ElementId>();
+    private static readonly List<ElementId> _transientElementIds = new List<ElementId>();
 
     private static readonly string _displayMethod = "SetForTransientDisplay";
 
-    private static MethodInfo _method = GetTransientDisplayMethod() ?? throw new Exception($"No target method");
+    private static readonly MethodInfo _method = GetTransientDisplayMethod() ?? throw new Exception($"No target method");
 
     /// <summary>
     /// 在项目中创建临时显示的图元，临时图元将不会被保存在项目中，在项目关闭后，临时图元将被删除
@@ -84,10 +84,8 @@ public static class GeometryExtension
         {
             return;
         }
-        document.NewTransaction((d) =>
-        {
-            d.Delete(_transientElementIds.ToArray());
-        });
+
+        document.NewTransaction(d => d.Delete(_transientElementIds.ToArray()));
         _transientElementIds.Clear();
     }
 
@@ -99,16 +97,13 @@ public static class GeometryExtension
     /// <param name="transientElementId">transient element id</param>
     /// <param name="objects">transient element geometries</param>
     /// <param name="graphicsStyleId">transient element graphics style element id </param>
-    public static void ResetTransientElementGeometry(this Document document, ElementId transientElementId, IList<GeometryObject> objects, ElementId graphicsStyleId = null)
+    public static void ResetTransientElementGeometry(this Document document, ElementId transientElementId, IList<GeometryObject> objects, ElementId graphicsStyleId = null) => _method.Invoke(null, parameters: new object[4]
     {
-        _method.Invoke(null, parameters: new object[4]
-        {
-               document,
-               transientElementId,
-               objects,
-               graphicsStyleId ?? ElementId.InvalidElementId
-        });
-    }
+        document,
+        transientElementId,
+        objects,
+        graphicsStyleId ?? ElementId.InvalidElementId
+    });
 
     /// <summary>
     /// 重新设置临时图元的图形
