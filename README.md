@@ -2,6 +2,10 @@
 
 ![GitHub](https://img.shields.io/github/license/shichuyibushishiwu/Tuna.Revit.Extension?label=License)
 ![GitHub](https://img.shields.io/badge/Shiwu-Tuna-green)
+![GitHub](https://img.shields.io/nuget/dt/Tuna.Revit.Extension?style=flat&logo=nuget&label=nuget&link=https%3A%2F%2Fwww.nuget.org%2Fpackages%2FTuna.Revit.Extension%2F)
+
+
+
 # Introductions
 Welcome to the Tuna.Revit.Extensions wiki! This is an extension package for revit api.
 
