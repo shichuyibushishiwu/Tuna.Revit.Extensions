@@ -27,8 +27,6 @@ internal class TestCommand : IExternalCommand
 
         //uiDocument.SelectPoint();
 
-   
-
 
         return Result.Succeeded;
     }

@@ -138,6 +138,18 @@ public static class SelectionExtension
     }
 
     /// <summary>
+    /// 当前方法用于提示用户选择图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+    /// </summary>
+    /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <returns>用户选择的结果</returns>
+    public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, string prompt = null)
+    {
+        return uiDocument.SelectElement(_ => true, prompt);
+    }
+
+    /// <summary>
     /// 当前方法用于提示用户选择多个对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
     /// <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
     /// </summary>
@@ -247,6 +259,18 @@ public static class SelectionExtension
     public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
     {
         return uiDocument.SelectElements(element => element.Category?.Id == new ElementId(builtInCategory), prompt);
+    }
+
+    /// <summary>
+    /// 当前方法用于提示用户选择多个图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+    /// </summary>
+    /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <returns>用户选择的结果</returns>
+    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, string prompt = null)
+    {
+        return uiDocument.SelectElements(_ => true, prompt);
     }
 
     /// <summary>
@@ -374,5 +398,17 @@ public static class SelectionExtension
     public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(element => element.Category?.Id == new ElementId(builtInCategory), prompt);
+    }
+
+    /// <summary>
+    /// 当前方法用于提示用户选择一个项目中的点，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// <para>Prompts the user to select multiple elements by drawing a rectangle, if the user cancels the operation (for example, through ESC), the method will return failed result, otherwise true.</para>
+    /// </summary>
+    /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <returns>用户选择的结果</returns>
+    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, string prompt = null)
+    {
+        return uiDocument.SelectElementsByRectangle(_ => true, prompt);
     }
 }
