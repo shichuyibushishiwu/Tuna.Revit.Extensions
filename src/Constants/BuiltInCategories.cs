@@ -23,6 +23,22 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public class BuiltInCategories
 {
+    private static List<ElementId> ArchitecturalCategories = new List<ElementId>()
+    {
+        Door,
+        Wall,
+    };
+
+    private static List<ElementId> GetCategoryIdsByViewDiscipline(ViewDiscipline viewDiscipline) => viewDiscipline switch
+    {
+        ViewDiscipline.Architectural => ArchitecturalCategories,
+        ViewDiscipline.Structural => ArchitecturalCategories,
+        ViewDiscipline.Mechanical => ArchitecturalCategories,
+        ViewDiscipline.Electrical => ArchitecturalCategories,
+        ViewDiscipline.Plumbing => ArchitecturalCategories,
+        _ => Enumerable.Empty<ElementId>().ToList(),
+    };
+
     /// <summary>
     /// 无效的类别
     /// <para>INVALID</para>
@@ -42,7 +58,8 @@ public class BuiltInCategories
     public static ElementId Wall { get; } = new ElementId(BuiltInCategory.OST_Walls);
 
     /// <summary>
-    /// OST_CableTray
+    /// 内置的电缆桥架类别
+    /// <para>OST_CableTray</para>
     /// </summary>
     public static ElementId CableTray { get; } = new ElementId(BuiltInCategory.OST_CableTray);
 
