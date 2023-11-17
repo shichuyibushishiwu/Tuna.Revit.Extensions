@@ -31,3 +31,17 @@ internal class TestCommand : IExternalCommand
         return Result.Succeeded;
     }
 }
+
+internal class TestApplication : IExternalApplication
+{
+    public Result OnShutdown(UIControlledApplication application)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Result OnStartup(UIControlledApplication application)
+    {
+        application.CreateRibbonTab("ad", tab => tab.CreateRibbonPanel("", panel => panel);
+        return Result.Succeeded;
+    }
+}

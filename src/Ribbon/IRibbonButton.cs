@@ -11,7 +11,7 @@
 using Autodesk.Revit.UI;
 using System.Drawing;
 
-namespace Tuna.Revit.Extension.Interfaces;
+namespace Tuna.Revit.Extension;
 
 /// <summary>
 /// Revit ribbon ui push button information
