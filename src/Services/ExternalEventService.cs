@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,9 +42,51 @@ namespace Tuna.Revit.Extension.Services
         /// <summary>
         /// 
         /// </summary>
-        public void PostCommand()
+        public async Task PostCommandAsync(Action<UIApplication> handle)
         {
             ExternalEventRequest request = _externalEvent.Raise();
+            if (request == ExternalEventRequest.Accepted)
+            {
+                await InternalPostCommandAsync(handle);
+            }
+        }
+
+        private async Task InternalPostCommandAsync(Action<UIApplication> handle)
+        {
+            _handle = handle;
+          
+            await Task.CompletedTask;
+        }
+
+        private Action<UIApplication> _handle;
+
+        public void PostCommand(Action<UIApplication> handle)
+        {
+            _handle = handle;
+            _externalEvent.Raise();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class Extensions
+    {
+        public static Task CommandAsync<T>(this ExternalEventService service, Action<UIApplication> handle)
+        {
+            var tsc = new TaskCompletionSource<T>();
+            service.PostCommand(uiapp =>
+            {
+                try
+                {
+                    handle.Invoke(uiapp);
+                }
+                catch (Exception e)
+                {
+                    tsc.SetException(e);
+                }
+            });
+            return tsc.Task;
         }
     }
 }

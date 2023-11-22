@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.Revit.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,6 @@ namespace Tuna.Revit.Extension.Services
         /// <summary>
         /// 
         /// </summary>
-        void PostCommand();
+        Task PostCommandAsync(Action<UIApplication> handle);
     }
 }
