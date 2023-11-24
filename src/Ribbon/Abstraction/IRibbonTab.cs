@@ -6,9 +6,19 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension;
 
+/// <summary>
+/// 
+/// </summary>
 public interface IRibbonTab
 {
+    /// <summary>
+    /// 
+    /// </summary>
     string TabName { get; }
 
-    void CreateRibbonPanel(string name, Action<IRibbonPanel> action);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="name"></param>
+    IRibbonPanel CreateRibbonPanel(string name);
 }

@@ -43,7 +43,20 @@ internal class TestApplication : IExternalApplication
 
     public Result OnStartup(UIControlledApplication application)
     {
-        //application.CreateRibbonTab("ad", tab => tab.CreateRibbonPanel("", panel => panel);
+        application.CreateRibbonTab("tuna", tab => tab
+
+        .CreateRibbonPanel("archi", panel => panel
+            .AddPulldownButton()
+            .AddSplitButton()
+            .AddTextBox()
+            .AddComboBox()
+            .AddSlideOut(panel => panel
+                .AddSplitButton()))
+
+        .CreateRibbonPanel("struct", panel => panel
+            .AddSplitButton()));
+
+
         return Result.Succeeded;
     }
 }

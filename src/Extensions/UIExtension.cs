@@ -26,100 +26,108 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public static class UIExtension
 {
-    /// <summary>
-    /// Create ribbon push button
-    /// </summary>
-    /// <typeparam name="T">IExternalCommand</typeparam>
-    /// <param name="panel"></param>
-    /// <param name="action"></param>
-    /// <returns></returns>
-    public static RibbonPanel CreatePushButton<T>(this RibbonPanel panel, Action<PushButtonData> action) where T : class, IExternalCommand, new()
+    static PushButtonData CreatePushButtonData<T>(string text = null) where T : class, new()
     {
-        ArgumentNullExceptionUtils.ThrowIfNull(panel);
-        ArgumentNullExceptionUtils.ThrowIfNull(action);
-
-
+        //按钮的类型
         Type commandType = typeof(T);
+
+        //按钮的名称
         string name = commandType.Name;
-        PushButtonData pushButtonData = new PushButtonData($"btn_{name}", name, commandType.Assembly.Location, commandType.FullName);
-        action.Invoke(pushButtonData);
-        panel.AddItem(pushButtonData);
-        return panel;
+
+        //实例化一个按钮的数据
+        return new PushButtonData($"btn_{name}", text ?? name, commandType.Assembly.Location, commandType.FullName);
     }
 
-    /// <summary>
-    /// Create a revit ribbon push button
-    /// </summary>
-    /// <typeparam name="TCommand"></typeparam>
-    /// <returns></returns>
-    private static PushButtonData CreatePushButton<TCommand>() where TCommand : class, IExternalCommand, IRibbonButton, new()
+    static PushButtonData CreatePushButtonData<T>() where T : class, IRibbonButton, new()
     {
-        IRibbonButton button = Activator.CreateInstance<TCommand>();
-        Type commandType = typeof(TCommand);
-        PushButtonData pushButtonData = new PushButtonData($"btn_{commandType.Name}", button.Text, commandType.Assembly.Location, commandType.FullName)
-        {
-            Image = button.Image.ConvertToBitmapSource(),
-            LargeImage = button.LargeImage.ConvertToBitmapSource(),
-            ToolTipImage = button.ToolTipImage.ConvertToBitmapSource(),
-            ToolTip = button.ToolTip,
-            LongDescription = button.LongDescription,
-        };
+        //创建抽象按钮的实例
+        IRibbonButton button = Activator.CreateInstance<T>();
+
+        //实例化一个按钮的数据
+        PushButtonData pushButtonData = CreatePushButtonData<T>(button.Text);
+
+        //对参数进行赋值
+        pushButtonData.Image = button.Image.ConvertToBitmapSource();
+        pushButtonData.LargeImage = button.LargeImage.ConvertToBitmapSource();
+        pushButtonData.ToolTipImage = button.ToolTipImage.ConvertToBitmapSource();
+        pushButtonData.ToolTip = button.ToolTip;
+        pushButtonData.LongDescription = button.LongDescription;
         pushButtonData.SetContextualHelp(button.ContextualHelp);
-        //pushButtonData.SetAvailability(commandType);
+
         return pushButtonData;
     }
 
-    /// <summary>
-    /// Create a revit ribbon push button
-    /// </summary>
-    /// <typeparam name="TCommand"></typeparam>
-    /// <param name="panel"></param>
-    /// <returns></returns>
-    /// <exception cref="System.ArgumentNullException"></exception>
-    public static PushButton CreatePushButton<TCommand>(this RibbonPanel panel) where TCommand : class, IExternalCommand, IRibbonButton, new()
+
+    public static ComboBox CreateComboBox(this RibbonPanel panel, string name, Action<ComboBoxData> handle = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
-        return panel.AddItem(CreatePushButton<TCommand>()) as PushButton;
+        ComboBoxData combo = new ComboBoxData(name);
+        handle?.Invoke(combo);
+        return panel.AddItem(combo) as ComboBox;
     }
 
     /// <summary>
-    /// Create a revit ribbon push button
+    /// 在面板上创建一个按钮
+    /// <para>Create a ribbon push button on the panel</para>
     /// </summary>
-    /// <typeparam name="TCommand"></typeparam>
-    /// <param name="pulldownButton"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">外部命令，必须是一个自定义类型，且继承于<see cref="Autodesk.Revit.UI.IExternalCommand"/>,且必须存在一个无参的构造函数</typeparam>
+    /// <param name="panel">要添加按钮的面板</param>
+    /// <param name="handle">对按钮的参数进行赋值</param>
+    /// <returns>创建的按钮</returns>
+    public static PushButton CreatePushButton<T>(this RibbonPanel panel, Action<PushButtonData> handle) where T : class, IExternalCommand, new()
+    {
+        ArgumentNullExceptionUtils.ThrowIfNull(panel);
+        ArgumentNullExceptionUtils.ThrowIfNull(handle);
+
+        //实例化一个按钮的数据
+        PushButtonData pushButtonData = CreatePushButtonData<T>();
+
+        //用户自己添加按钮的其他数据
+        handle.Invoke(pushButtonData);
+
+        //添加到面板，并返回给调用方
+        return panel.AddItem(pushButtonData) as PushButton;
+    }
+
+    /// <summary>
+    /// 在面板上创建一个按钮
+    /// <para>Create a ribbon push button on the panel</para>
+    /// </summary>
+    /// <typeparam name="T">外部命令，必须是一个自定义类型，且继承于<see cref="Autodesk.Revit.UI.IExternalCommand"/> 和 <see cref="IRibbonButton"/>,且必须存在一个无参的构造函数</typeparam>
+    /// <param name="panel">要添加按钮的面板</param>
+    /// <returns>创建的按钮</returns>
     /// <exception cref="System.ArgumentNullException"></exception>
-    public static PushButton CreatePushButton<TCommand>(this PulldownButton pulldownButton) where TCommand : class, IExternalCommand, IRibbonButton, new()
+    public static PushButton CreatePushButton<T>(this RibbonPanel panel) where T : class, IExternalCommand, IRibbonButton, new()
+    {
+        ArgumentNullExceptionUtils.ThrowIfNull(panel);
+        return panel.AddItem(CreatePushButtonData<T>()) as PushButton;
+    }
+
+    /// <summary>
+    /// 在下拉按钮上创建一个按钮
+    /// <para>Create a ribbon push button on the panel</para>
+    /// </summary>
+    /// <typeparam name="T">外部命令，必须是一个自定义类型，且继承于<see cref="Autodesk.Revit.UI.IExternalCommand"/> 和 <see cref="IRibbonButton"/>,且必须存在一个无参的构造函数</typeparam>
+    /// <param name="pulldownButton">要添加按钮的下拉按钮</param>
+    /// <returns>创建的按钮</returns>
+    /// <exception cref="System.ArgumentNullException"></exception>
+    public static PushButton CreatePushButton<T>(this PulldownButton pulldownButton) where T : class, IExternalCommand, IRibbonButton, new()
     {
         ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
-        return pulldownButton.AddPushButton(CreatePushButton<TCommand>());
+        return pulldownButton.AddPushButton(CreatePushButtonData<T>());
     }
 
     /// <summary>
-    /// Create a revit ribbon push button
+    /// 在下拉按钮上创建一个按钮
+    /// <para>Create a ribbon push button on the panel</para>
     /// </summary>
-    /// <typeparam name="TCommand"></typeparam>
-    /// <param name="splitButton"></param>
-    /// <returns></returns>
+    /// <typeparam name="T">外部命令，必须是一个自定义类型，且继承于<see cref="Autodesk.Revit.UI.IExternalCommand"/> 和 <see cref="IRibbonButton"/>,且必须存在一个无参的构造函数</typeparam>
+    /// <param name="splitButton">要添加按钮的下拉按钮</param>
+    /// <returns>创建的按钮</returns>
     /// <exception cref="System.ArgumentNullException"></exception>
-    public static PushButton CreatePushButton<TCommand>(this SplitButton splitButton) where TCommand : class, IExternalCommand, IExternalCommandAvailability, IRibbonButton, new()
+    public static PushButton CreatePushButton<T>(this SplitButton splitButton) where T : class, IExternalCommand, IExternalCommandAvailability, IRibbonButton, new()
     {
         ArgumentNullExceptionUtils.ThrowIfNull(splitButton);
-        return splitButton.AddPushButton(CreatePushButton<TCommand>());
+        return splitButton.AddPushButton(CreatePushButtonData<T>());
     }
-
-
-
-
-
-    public static void CreateRibbonTab(this UIControlledApplication application, string name,Action<IRibbonTab> action)
-    {
-        application.CreateRibbonTab(name);
-        action.Invoke(new RibbonTab()
-        {
-
-        });
-    }
-
-
 }
