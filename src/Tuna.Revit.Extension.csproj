@@ -30,7 +30,6 @@
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<RepositoryUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions</RepositoryUrl>
 		<Copyright>shichuyibushishiwu</Copyright>
-		<NeutralLanguage>zh;en</NeutralLanguage>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 
@@ -198,7 +197,7 @@
 	<ItemGroup>
 		<None Include="..\README.md" Pack="True" PackagePath="\" />
 		<None Include="..\Tuna.png" Pack="True" PackagePath="\" />
-		<None Include="..\TunaRibbon.xsd" Pack="True" PackagePath="\" Visible="False" />
+		<None Include="..\TunaRibbon.xsd" Pack="True" PackagePath="\" Visible="true" />
 	</ItemGroup>
 
 	<ItemGroup>

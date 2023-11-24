@@ -7,86 +7,51 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Services
+namespace Tuna.Revit.Extension;
+
+/// <summary>
+///  通用的外部事件
+/// </summary>
+public class ExternalEventService : IExternalEventService, IExternalEventHandler
 {
+    private readonly ExternalEvent _externalEvent;
+    private Action<UIApplication> _handle;
+
     /// <summary>
-    /// 
+    /// 初始化外部事件，只能在有效上下文进行
     /// </summary>
-    public class ExternalEventService : IExternalEventService, IExternalEventHandler
+    public ExternalEventService() => _externalEvent = ExternalEvent.Create(this);
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="app"><inheritdoc/></param>
+    public void Execute(UIApplication app)
     {
-        private readonly ExternalEvent _externalEvent;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ExternalEventService()
+        if (_handle == null)
         {
-            _externalEvent = ExternalEvent.Create(this);
+            throw new ArgumentNullException("handle can not be null");
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="app"></param>
-        public void Execute(UIApplication app)
-        {
-
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public string GetName() => "Tuna external event";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public async Task PostCommandAsync(Action<UIApplication> handle)
-        {
-            ExternalEventRequest request = _externalEvent.Raise();
-            if (request == ExternalEventRequest.Accepted)
-            {
-                await InternalPostCommandAsync(handle);
-            }
-        }
-
-        private async Task InternalPostCommandAsync(Action<UIApplication> handle)
-        {
-            _handle = handle;
-          
-            await Task.CompletedTask;
-        }
-
-        private Action<UIApplication> _handle;
-
-        public void PostCommand(Action<UIApplication> handle)
-        {
-            _handle = handle;
-            _externalEvent.Raise();
-        }
+        _handle.Invoke(app);
     }
 
     /// <summary>
-    /// 
+    /// <inheritdoc/>
     /// </summary>
-    public static class Extensions
+    /// <returns><inheritdoc/></returns>
+    public string GetName() => "Tuna external event";
+
+    /// <summary>
+    /// <inheritdoc/>
+    /// </summary>
+    /// <param name="handle"><inheritdoc/></param>
+    public void PostCommand(Action<UIApplication> handle)
     {
-        public static Task CommandAsync<T>(this ExternalEventService service, Action<UIApplication> handle)
+        ArgumentNullExceptionUtils.ThrowIfNull(handle);
+        _handle = handle;
+        if (_externalEvent.Raise() != ExternalEventRequest.Accepted)
         {
-            var tsc = new TaskCompletionSource<T>();
-            service.PostCommand(uiapp =>
-            {
-                try
-                {
-                    handle.Invoke(uiapp);
-                }
-                catch (Exception e)
-                {
-                    tsc.SetException(e);
-                }
-            });
-            return tsc.Task;
+            throw new Exception("handle can not accepted");
         }
     }
 }

@@ -46,6 +46,7 @@ public class BuiltInParameters
         /// VIEW_SCALE
         /// </summary>
         public static ElementId Scale { get; } = new ElementId(BuiltInParameter.VIEW_SCALE);
+       
 
     }
 

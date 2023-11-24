@@ -9,12 +9,8 @@
 ************************************************************************************/
 
 using Autodesk.Revit.DB;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension;
 
@@ -568,12 +564,6 @@ public class BuiltInCategories
     /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_DuctLinings"/></para>
     /// </summary>
     public static ElementId DuctLinings { get; set; } = new ElementId(BuiltInCategory.OST_DuctLinings);
-
-    /// <summary>
-    /// 部件标记
-    /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyTags"/></para>
-    /// </summary>
-    public static ElementId AssemblyTags { get; set; } = new ElementId(BuiltInCategory.OST_AssemblyTags);
 
     /// <summary>
     /// 零件标记
@@ -1558,6 +1548,42 @@ public class BuiltInCategories
     /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_WireTags"/></para>
     /// </summary>
     public static ElementId WireTags { get; set; } = new ElementId(BuiltInCategory.OST_WireTags);
+
+    /// <summary>
+    /// 部件
+    /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_Assemblies"/></para>
+    /// </summary>
+    public static ElementId Assemblies { get; set; } = new ElementId(BuiltInCategory.OST_Assemblies);
+
+    /// <summary>
+    /// 部件原点
+    /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyOrigin"/></para>
+    /// </summary>
+    public static ElementId AssemblyOrigin { get; set; } = new ElementId(BuiltInCategory.OST_AssemblyOrigin);
+
+    /// <summary>
+    /// 
+    /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyOrigin_Lines"/></para>
+    /// </summary>
+    public static ElementId AssemblyOrigin_Lines { get; set; } = new ElementId(BuiltInCategory.OST_AssemblyOrigin_Lines);
+
+    /// <summary>
+    /// 
+    /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyOrigin_Planes"/></para>
+    /// </summary>
+    public static ElementId AssemblyOrigin_Planes { get; set; } = new ElementId(BuiltInCategory.OST_AssemblyOrigin_Planes);
+
+    /// <summary>
+    /// 
+    /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyOrigin_Points"/></para>
+    /// </summary>
+    public static ElementId AssemblyOrigin_Points { get; set; } = new ElementId(BuiltInCategory.OST_AssemblyOrigin_Points);
+
+    /// <summary>
+    /// 部件标记
+    /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyTags"/></para>
+    /// </summary>
+    public static ElementId AssemblyTags { get; set; } = new ElementId(BuiltInCategory.OST_AssemblyTags);
 
     /// <summary>
     /// 根据视图的规程过滤出可见性相关的类别<see cref="Autodesk.Revit.DB.ElementId"/>

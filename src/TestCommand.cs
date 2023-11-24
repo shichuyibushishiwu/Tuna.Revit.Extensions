@@ -8,6 +8,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+
 
 namespace Tuna.Revit.Extension;
 
@@ -41,7 +43,7 @@ internal class TestApplication : IExternalApplication
 
     public Result OnStartup(UIControlledApplication application)
     {
-        application.CreateRibbonTab("ad", tab => tab.CreateRibbonPanel("", panel => panel);
+        //application.CreateRibbonTab("ad", tab => tab.CreateRibbonPanel("", panel => panel);
         return Result.Succeeded;
     }
 }
