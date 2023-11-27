@@ -61,9 +61,20 @@ public static class UIExtension
     public static ComboBox CreateComboBox(this RibbonPanel panel, string name, Action<ComboBoxData> handle = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
+
         ComboBoxData combo = new ComboBoxData(name);
         handle?.Invoke(combo);
         return panel.AddItem(combo) as ComboBox;
+    }
+
+    public static PulldownButton CreatePulldown(this RibbonPanel panel, string name, string text, Action<PulldownButtonData> handle = null)
+    {
+        ArgumentNullExceptionUtils.ThrowIfNull(panel);
+
+        PulldownButtonData data = new PulldownButtonData(name, text);
+        handle?.Invoke(data);
+
+        return panel.AddItem(data) as PulldownButton;
     }
 
     /// <summary>
@@ -79,13 +90,9 @@ public static class UIExtension
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
         ArgumentNullExceptionUtils.ThrowIfNull(handle);
 
-        //实例化一个按钮的数据
         PushButtonData pushButtonData = CreatePushButtonData<T>();
-
-        //用户自己添加按钮的其他数据
         handle.Invoke(pushButtonData);
 
-        //添加到面板，并返回给调用方
         return panel.AddItem(pushButtonData) as PushButton;
     }
 

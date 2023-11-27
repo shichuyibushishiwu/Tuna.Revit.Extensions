@@ -74,7 +74,7 @@ public static class RibbonExtension
     }
 
     /// <summary>
-    /// 
+    /// 添加分割线
     /// </summary>
     /// <param name="ribbonPanel"></param>
     /// <returns></returns>
@@ -85,7 +85,7 @@ public static class RibbonExtension
     }
 
     /// <summary>
-    /// 
+    /// 添加滑动式抽屉
     /// </summary>
     /// <param name="ribbonPanel"></param>
     /// <param name="handle"></param>

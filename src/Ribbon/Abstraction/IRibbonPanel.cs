@@ -15,6 +15,8 @@ public interface IRibbonPanel
 
     void AddSeparator();
 
+    void AddPushButton<T>() where T : class, IExternalCommand, IRibbonButton, new();
+
     //public void CreatePulldownButton();
 
     //public void CreatePushButton<TCommand>() where TCommand : IExternalCommand;

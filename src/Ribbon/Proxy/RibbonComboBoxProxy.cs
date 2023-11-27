@@ -8,6 +8,7 @@ using System.Windows.Controls.Ribbon;
 
 namespace Tuna.Revit.Extension.Ribbon.Proxy;
 
-internal class RibbonComboBoxProxy : RibbonElementProxy<ComboBox>
+internal class RibbonComboBoxProxy : RibbonElementProxy<ComboBox>, IRibbonItem
 {
+    public RibbonItemType Type => RibbonItemType.ComboBox;
 }

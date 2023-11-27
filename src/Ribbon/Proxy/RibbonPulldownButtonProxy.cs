@@ -9,7 +9,7 @@ namespace Tuna.Revit.Extension.Ribbon.Proxy
 {
     internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, IRibbonItem, IRibbonItemsCollector
     {
-        private readonly List<IRibbonItem> _items = new List<IRibbonItem>();
+        private readonly List<IRibbonItem> _items = new();
 
         public RibbonItemType Type => RibbonItemType.PulldownButton;
 
@@ -24,7 +24,7 @@ namespace Tuna.Revit.Extension.Ribbon.Proxy
             _items.Add(ribbonButtonProxy);
         }
 
-
+        public string Text { get; set; }
 
         public IEnumerable<IRibbonItem> GetItems() => _items;
     }

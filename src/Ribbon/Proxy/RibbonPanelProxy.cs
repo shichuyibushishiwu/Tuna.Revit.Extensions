@@ -9,7 +9,7 @@ namespace Tuna.Revit.Extension.Ribbon.Proxy;
 
 internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel, IRibbonItemsCollector
 {
-    private readonly List<IRibbonItem> _items = new List<IRibbonItem>();
+    private readonly List<IRibbonItem> _items = new();
 
     public RibbonTabProxy Parent { get; internal set; }
 
@@ -33,16 +33,20 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel,
 
     }
 
-    public void CreatePulldownButton()
+    public void AddPulldownButton(string name, string text)
     {
+        PulldownButton pulldownButton = this.OriginalObject.CreatePulldown(name, text);
 
-
+        RibbonPulldownButtonProxy pulldownButtonProxy = new RibbonPulldownButtonProxy()
+        {
+            OriginalObject = pulldownButton,
+            Name = pulldownButton.Name,
+            Text = text
+        };
+        _items.Add(pulldownButtonProxy);
     }
 
-    public void CreatePushButton<TCommand>() where TCommand : IExternalCommand
-    {
 
-    }
 
     public void CreateRadioButtonGroup()
     {
