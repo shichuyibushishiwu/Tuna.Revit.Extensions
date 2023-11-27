@@ -24,7 +24,9 @@ namespace Tuna.Sample
 
         public Result OnStartup(UIControlledApplication application)
         {
-            throw new NotImplementedException();
+           
+
+            return Result.Succeeded;
         }
     }
 }

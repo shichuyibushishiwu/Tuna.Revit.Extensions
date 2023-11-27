@@ -8,6 +8,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+
 
 namespace Tuna.Revit.Extension;
 
@@ -19,13 +21,32 @@ internal class TestCommand : IExternalCommand
         UIDocument uiDocument = commandData.Application.ActiveUIDocument;
         Document document = uiDocument.Document;
 
+      
+        return Result.Succeeded;
+    }
+}
 
-        //uiDocument.SelectElement(e => e.Category?.Id == BuiltInCategories.Door);
-        //uiDocument.SelectElements(e => e.Category?.Id == BuiltInCategories.Door);
+internal class TestApplication : IExternalApplication
+{
+    public Result OnShutdown(UIControlledApplication application)
+    {
+        throw new NotImplementedException();
+    }
 
-        //uiDocument.SelectObject(Autodesk.Revit.UI.Selection.ObjectType.Edge, e => e.Category?.Id == BuiltInCategories.Door, "选择门边线");
+    public Result OnStartup(UIControlledApplication application)
+    {
+        application.CreateRibbonTab("tuna", tab => tab
 
-        //uiDocument.SelectPoint();
+        .CreateRibbonPanel("archi", panel => panel
+            .AddPulldownButton()
+            .AddSplitButton()
+            .AddTextBox()
+            .AddComboBox()
+            .AddSlideOut(panel => panel
+                .AddSplitButton()))
+
+        .CreateRibbonPanel("struct", panel => panel
+            .AddSplitButton()));
 
 
         return Result.Succeeded;

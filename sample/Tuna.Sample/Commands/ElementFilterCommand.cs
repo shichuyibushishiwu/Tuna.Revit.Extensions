@@ -36,7 +36,7 @@ public class ElementFilterCommand : IExternalCommand
 
         document.GetElements(new ElementClassFilter(typeof(Wall)));
 
-        document.GetElements(BuiltInCategories.Wall);
+        document.GetElements(BuiltInCategories.Wall, BuiltInCategories.Wall);
 
         document.GetElements(BuiltInCategory.OST_Walls);
 
@@ -68,7 +68,7 @@ public class ElementFilterCommand : IExternalCommand
         //这个方法可以获取结构相关的族
         document.GetStructualFamilies(StructuralMaterialType.Steel);
 
-
+       
         var elems = uIDocument.ActiveGraphicalView.GetElements(BuiltInCategory.OST_Walls);
 
 
@@ -77,7 +77,7 @@ public class ElementFilterCommand : IExternalCommand
         uIDocument.SelectElement(BuiltInCategory.OST_Walls, "选择墙体");
 
 
-      
+
      
 
 

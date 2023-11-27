@@ -108,7 +108,7 @@ namespace Tuna.Revit.Extension
             public GeometrySelectionFilter(Document document, BuiltInCategory builtInCategory, IEnumerable<ElementId> elementIds = null, Func<GeometryObject, bool> filterCodition = null)
             {
                 _document = document;
-                _builtInCategory = builtInCategory;
+                _builtInCategory = builtInCategory; 
                 _elementIds = elementIds;
                 _filterCodition = filterCodition;
             }

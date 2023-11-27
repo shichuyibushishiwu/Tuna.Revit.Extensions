@@ -23,14 +23,13 @@
 		<Company>Tuna</Company>
 		<Authors>Shiwu</Authors>
 		<PackageIcon>Tuna.png</PackageIcon>
-		<TunaVer>11</TunaVer>
+		<TunaVer>12</TunaVer>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Description>This is an extension package for revit api.</Description>
 		<PackageProjectUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions/wiki</PackageProjectUrl>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<RepositoryUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions</RepositoryUrl>
 		<Copyright>shichuyibushishiwu</Copyright>
-		<NeutralLanguage>zh;en</NeutralLanguage>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 
@@ -198,7 +197,7 @@
 	<ItemGroup>
 		<None Include="..\README.md" Pack="True" PackagePath="\" />
 		<None Include="..\Tuna.png" Pack="True" PackagePath="\" />
-		<None Include="..\TunaRibbon.xsd" Pack="True" PackagePath="\" Visible="False"/>
+		<None Include="..\TunaRibbon.xsd" Pack="True" PackagePath="\" Visible="true" />
 	</ItemGroup>
 
 	<ItemGroup>
