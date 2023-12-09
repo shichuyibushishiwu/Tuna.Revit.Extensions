@@ -8,7 +8,7 @@ using Tuna.Revit.Extension.Ribbon.Proxy;
 
 namespace Tuna.Revit.Extension;
 
-internal interface IRibbonItemsCollector
+public interface IRibbonItemsCollector
 {
     public IEnumerable<IRibbonItem> GetItems();
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension;
 
-internal interface IRibbonItem
+public interface IRibbonItem
 {
     RibbonItemType Type { get; }
 }

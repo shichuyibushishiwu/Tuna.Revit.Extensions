@@ -26,7 +26,7 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public static class UIExtension
 {
-    static PushButtonData CreatePushButtonData<T>(string text = null) where T : class, new()
+    static PushButtonData CreatePushButtonData<T>(string text = null) where T : class, IExternalCommand, new()
     {
         //按钮的类型
         Type commandType = typeof(T);
@@ -35,43 +35,46 @@ public static class UIExtension
         string name = commandType.Name;
 
         //实例化一个按钮的数据
-        return new PushButtonData($"btn_{name}", text ?? name, commandType.Assembly.Location, commandType.FullName);
-    }
+        PushButtonData pushButtonData = new($"btn_{name}", text ?? name, commandType.Assembly.Location, commandType.FullName);
 
-    static PushButtonData CreatePushButtonData<T>() where T : class, IRibbonButton, new()
-    {
-        //创建抽象按钮的实例
-        IRibbonButton button = Activator.CreateInstance<T>();
-
-        //实例化一个按钮的数据
-        PushButtonData pushButtonData = CreatePushButtonData<T>(button.Text);
-
-        //对参数进行赋值
-        pushButtonData.Image = button.Image.ConvertToBitmapSource();
-        pushButtonData.LargeImage = button.LargeImage.ConvertToBitmapSource();
-        pushButtonData.ToolTipImage = button.ToolTipImage.ConvertToBitmapSource();
-        pushButtonData.ToolTip = button.ToolTip;
-        pushButtonData.LongDescription = button.LongDescription;
-        pushButtonData.SetContextualHelp(button.ContextualHelp);
+        //如果命令实现了 IExternalCommandAvailability 接口
+        if (typeof(IExternalCommandAvailability).IsAssignableFrom(commandType))
+        {
+            pushButtonData.AvailabilityClassName = commandType.FullName;
+        }
 
         return pushButtonData;
     }
 
-
+    /// <summary>
+    /// 在面板上创建一个下拉框
+    /// </summary>
+    /// <param name="panel"></param>
+    /// <param name="name"></param>
+    /// <param name="handle"></param>
+    /// <returns></returns>
     public static ComboBox CreateComboBox(this RibbonPanel panel, string name, Action<ComboBoxData> handle = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
 
-        ComboBoxData combo = new ComboBoxData(name);
+        ComboBoxData combo = new(name);
         handle?.Invoke(combo);
         return panel.AddItem(combo) as ComboBox;
     }
 
-    public static PulldownButton CreatePulldown(this RibbonPanel panel, string name, string text, Action<PulldownButtonData> handle = null)
+    /// <summary>
+    /// 在面板上创建一个下拉按钮
+    /// </summary>
+    /// <param name="panel"></param>
+    /// <param name="name"></param>
+    /// <param name="text"></param>
+    /// <param name="handle"></param>
+    /// <returns></returns>
+    public static PulldownButton CreatePulldownButton(this RibbonPanel panel, string name, string text, Action<PulldownButtonData> handle = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
 
-        PulldownButtonData data = new PulldownButtonData(name, text);
+        PulldownButtonData data = new(name, text);
         handle?.Invoke(data);
 
         return panel.AddItem(data) as PulldownButton;
@@ -94,6 +97,26 @@ public static class UIExtension
         handle.Invoke(pushButtonData);
 
         return panel.AddItem(pushButtonData) as PushButton;
+    }
+
+
+    static PushButtonData CreatePushButtonData<T>() where T : class, IExternalCommand, IRibbonButton, new()
+    {
+        //创建抽象按钮的实例
+        IRibbonButton button = Activator.CreateInstance<T>();
+
+        //实例化一个按钮的数据
+        PushButtonData pushButtonData = CreatePushButtonData<T>(button.Text);
+
+        //对参数进行赋值
+        pushButtonData.Image = button.Image.ConvertToBitmapSource();
+        pushButtonData.LargeImage = button.LargeImage.ConvertToBitmapSource();
+        pushButtonData.ToolTipImage = button.ToolTipImage.ConvertToBitmapSource();
+        pushButtonData.ToolTip = button.ToolTip;
+        pushButtonData.LongDescription = button.LongDescription;
+        pushButtonData.SetContextualHelp(button.ContextualHelp);
+
+        return pushButtonData;
     }
 
     /// <summary>
@@ -132,7 +155,7 @@ public static class UIExtension
     /// <param name="splitButton">要添加按钮的下拉按钮</param>
     /// <returns>创建的按钮</returns>
     /// <exception cref="System.ArgumentNullException"></exception>
-    public static PushButton CreatePushButton<T>(this SplitButton splitButton) where T : class, IExternalCommand, IExternalCommandAvailability, IRibbonButton, new()
+    public static PushButton CreatePushButton<T>(this SplitButton splitButton) where T : class, IExternalCommand, IRibbonButton, new()
     {
         ArgumentNullExceptionUtils.ThrowIfNull(splitButton);
         return splitButton.AddPushButton(CreatePushButtonData<T>());

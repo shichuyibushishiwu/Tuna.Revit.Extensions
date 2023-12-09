@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tuna.Revit.Extension.Ribbon.Abstraction;
 
 namespace Tuna.Revit.Extension.Ribbon.Proxy;
 
@@ -33,17 +34,18 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel,
 
     }
 
-    public void AddPulldownButton(string name, string text)
+    public IRibbonPulldownButton AddPulldownButton(string name, string text)
     {
-        PulldownButton pulldownButton = this.OriginalObject.CreatePulldown(name, text);
+        PulldownButton pulldownButton = this.OriginalObject.CreatePulldownButton(name, text);
 
-        RibbonPulldownButtonProxy pulldownButtonProxy = new RibbonPulldownButtonProxy()
+        RibbonPulldownButtonProxy pulldownButtonProxy = new()
         {
             OriginalObject = pulldownButton,
             Name = pulldownButton.Name,
             Text = text
         };
         _items.Add(pulldownButtonProxy);
+        return pulldownButtonProxy;
     }
 
 
