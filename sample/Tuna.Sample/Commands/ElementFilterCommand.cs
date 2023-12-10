@@ -36,7 +36,7 @@ public class ElementFilterCommand : IExternalCommand
 
         document.GetElements(new ElementClassFilter(typeof(Wall)));
 
-        document.GetElements(BuiltInCategories.Wall, BuiltInCategories.Wall);
+        document.GetElements(BuiltInCategories.Walls, BuiltInCategories.Walls);
 
         document.GetElements(BuiltInCategory.OST_Walls);
 
@@ -58,7 +58,7 @@ public class ElementFilterCommand : IExternalCommand
 
 
         //这些方法可以获取到项目中的类型
-        document.GetElementTypes(BuiltInCategories.Wall);
+        document.GetElementTypes(BuiltInCategories.Walls);
 
         document.GetElementTypes(BuiltInCategory.OST_Walls);
 
@@ -72,7 +72,7 @@ public class ElementFilterCommand : IExternalCommand
         var elems = uIDocument.ActiveGraphicalView.GetElements(BuiltInCategory.OST_Walls);
 
 
-        uIDocument.SelectObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, element => element.Category.Id == BuiltInCategories.Door, "选择门");
+        uIDocument.SelectObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, element => element.Category.Id == BuiltInCategories.Doors, "选择门");
 
         uIDocument.SelectElement(BuiltInCategory.OST_Walls, "选择墙体");
 

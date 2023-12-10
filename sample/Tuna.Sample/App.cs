@@ -11,7 +11,9 @@
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Tuna.Revit.Extension;
 
 namespace Tuna.Sample
 {
@@ -19,12 +21,20 @@ namespace Tuna.Sample
     {
         public Result OnShutdown(UIControlledApplication application)
         {
-            throw new NotImplementedException();
+            return Result.Succeeded;
         }
 
         public Result OnStartup(UIControlledApplication application)
         {
-           
+            var tab = application.AddRibbonTab("tuna", tab => tab
+            .AddRibbonPanel("archi", panel => panel
+            .AddPushButton<Commands.ElementFilterCommand>()
+            .AddSeparator()
+            .AddPulldownButton("sd", pbt => pbt
+                .AddPushButton<Commands.ElementFilterCommand>()
+                .AddSeparator()
+                .AddPushButton<Commands.ExternalEventTestCommand>())
+            .AddSplitButton("SD", slt => slt.AddPushButton<Commands.ElementFilterCommand>().AddSeparator())));
 
             return Result.Succeeded;
         }

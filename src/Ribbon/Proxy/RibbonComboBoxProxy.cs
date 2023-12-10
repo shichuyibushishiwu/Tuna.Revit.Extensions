@@ -11,4 +11,6 @@ namespace Tuna.Revit.Extension.Ribbon.Proxy;
 internal class RibbonComboBoxProxy : RibbonElementProxy<ComboBox>, IRibbonItem
 {
     public RibbonItemType Type => RibbonItemType.ComboBox;
+
+    public string Name { get; set; }
 }

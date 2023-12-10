@@ -7,7 +7,20 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension.Ribbon.Abstraction;
 
+/// <summary>
+/// 下拉按钮
+/// </summary>
 public interface IRibbonPulldownButton : IRibbonItem, IRibbonItemsCollector
 {
-    void AddPushButton<TCommand>() where TCommand : class, IExternalCommand, IRibbonButton, new();
+    /// <summary>
+    /// 按钮按钮
+    /// </summary>
+    /// <typeparam name="TCommand"></typeparam>
+    IRibbonPulldownButton AddPushButton<TCommand>() where TCommand : class, IExternalCommand, new();
+
+    /// <summary>
+    /// 添加分割线
+    /// </summary>
+    /// <returns></returns>
+    IRibbonPulldownButton AddSeparator();
 }

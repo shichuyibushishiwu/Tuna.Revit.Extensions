@@ -1,32 +1,40 @@
 ﻿using Autodesk.Revit.UI;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tuna.Revit.Extension.Ribbon.Abstraction;
 
-namespace Tuna.Revit.Extension.Ribbon.Proxy
+namespace Tuna.Revit.Extension.Ribbon.Proxy;
+
+internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, IRibbonPulldownButton
 {
-    internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, IRibbonPulldownButton
+    private readonly List<IRibbonItem> _items = new();
+
+    public RibbonItemType Type => RibbonItemType.PulldownButton;
+
+    public IRibbonPulldownButton AddPushButton<TCommand>() where TCommand : class, IExternalCommand, new()
     {
-        private readonly List<IRibbonItem> _items = new();
+        RibbonButton ribbonButton = this.OriginalObject.CreatePushButton<TCommand>();
 
-        public RibbonItemType Type => RibbonItemType.PulldownButton;
-
-        public void AddPushButton<TCommand>() where TCommand : class, IExternalCommand, IRibbonButton, new()
+        RibbonButtonProxy ribbonButtonProxy = new()
         {
-            RibbonButton ribbonButton = this.OriginalObject.CreatePushButton<TCommand>();
-            RibbonButtonProxy ribbonButtonProxy = new()
-            {
-                OriginalObject = ribbonButton,
-                Name = ribbonButton.Name,
-            };
-            _items.Add(ribbonButtonProxy);
-        }
+            OriginalObject = ribbonButton,
+            Title = ribbonButton.Name,
+        };
 
-        public string Text { get; set; }
+        _items.Add(ribbonButtonProxy);
 
-        public IEnumerable<IRibbonItem> GetItems() => _items;
+        return this;
+    }
+
+    public string Text { get; set; }
+
+    public string Name => Text;
+
+    public IEnumerable<IRibbonItem> GetItems() => _items;
+
+    public IRibbonPulldownButton AddSeparator()
+    {
+        this.OriginalObject.AddSeparator();
+        
+        return this;
     }
 }

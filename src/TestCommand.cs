@@ -15,27 +15,20 @@ using System.Windows;
 namespace Tuna.Revit.Extension;
 
 [Transaction(TransactionMode.Manual)]
-internal class TestCommand : IExternalCommand, IRibbonButton
+[CommandButton(Title = "sd")]
+internal class TestCommand : IExternalCommand
 {
-    public string Text => throw new NotImplementedException();
-
-    public string LongDescription => throw new NotImplementedException();
-
-    public string ToolTip => throw new NotImplementedException();
-
-    public Bitmap Image => throw new NotImplementedException();
-
-    public Bitmap LargeImage => throw new NotImplementedException();
-
-    public Bitmap ToolTipImage => throw new NotImplementedException();
-
-    public ContextualHelp ContextualHelp => throw new NotImplementedException();
+ 
 
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
         UIDocument uiDocument = commandData.Application.ActiveUIDocument;
         Document document = uiDocument.Document;
 
+
+      
+
+ 
 
         return Result.Succeeded;
     }
@@ -50,18 +43,9 @@ internal class TestApplication : IExternalApplication
 
     public Result OnStartup(UIControlledApplication application)
     {
-        application.CreateRibbonTab("tuna", tab => tab
-        .CreateRibbonPanel("archi", panel => panel
-            .AddPulldownButton(pdb => pdb
-                .AddPushButton<TestCommand>())
-            .AddSplitButton()
-            .AddTextBox()
-            .AddComboBox()
-            .AddSlideOut(panel => panel
-                .AddSplitButton()))
-
-        .CreateRibbonPanel("struct", panel => panel
-            .AddSplitButton())); ;
+      var   tab = application.AddRibbonTab("tuna", tab => tab
+           .AddRibbonPanel("archi", panel => panel
+               .AddPushButton<TestCommand>().AddSeparator()));
 
 
         return Result.Succeeded;
