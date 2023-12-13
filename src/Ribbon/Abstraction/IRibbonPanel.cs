@@ -64,5 +64,5 @@ public interface IRibbonPanel : IRibbonItemsCollector, IRibbonItem
     /// 添加下拉框
     /// </summary>
     /// <returns></returns>
-    IRibbonPanel AddComboBox(string name);
+    IRibbonPanel AddComboBox(string name, Action<IRibbonComboBox> handle = null);
 }

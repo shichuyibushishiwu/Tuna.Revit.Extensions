@@ -79,22 +79,34 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
         return this;
     }
 
-    public IEnumerable<IRibbonItem> GetItems() => _items;
-
-    public IRibbonPanel AddComboBox(string name)
+    public IRibbonPanel AddComboBox(string name, Action<IRibbonComboBox> handle = null)
     {
         ComboBox comboBox = this.OriginalObject.CreateComboBox(name);
+
+        RibbonComboBoxProxy comboBoxProxy = new()
+        {
+            OriginalObject = comboBox,
+            Title = comboBox.Name,
+        };
+
+        handle.Invoke(comboBoxProxy);
+
+        _items.Add(comboBoxProxy);
 
         return this;
     }
 
     public IRibbonPanel AddRadioButtonGroup()
     {
-        throw new NotImplementedException();
+        return this;
     }
 
     public IRibbonPanel AddTextBox()
     {
-        throw new NotImplementedException();
+        
+
+        return this;
     }
+
+    public IEnumerable<IRibbonItem> GetItems() => _items;
 }
