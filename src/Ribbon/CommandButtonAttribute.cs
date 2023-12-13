@@ -61,15 +61,15 @@ public class CommandButtonAttribute : Attribute, IRibbonButtonData
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    Bitmap IRibbonButtonData.Image => default;
+    object IRibbonButtonData.Image => Image;
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    Bitmap IRibbonButtonData.LargeImage => default;
+    object IRibbonButtonData.LargeImage => LargeImage;
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    Bitmap IRibbonButtonData.ToolTipImage => default;
+    object IRibbonButtonData.ToolTipImage => ToolTipImage;
 }

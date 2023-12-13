@@ -41,19 +41,19 @@ public interface IRibbonButtonData
     /// 按钮的小图标(16px * 16px)
     /// <para>Ribbon button small image which size is 16px * 16px</para>
     /// </summary>
-    Bitmap Image { get; }
+    object Image { get; }
 
     /// <summary>
     /// 按钮的大图标(32px * 32px)
     /// <para>Ribbon button large image which size is 32px * 32px</para>
     /// </summary>
-    Bitmap LargeImage { get; }
+    object LargeImage { get; }
 
     /// <summary>
     /// 按钮的提示演示图标
     /// <para>Ribbon button tool tip image</para>
     /// </summary>
-    Bitmap ToolTipImage { get; }
+    object ToolTipImage { get; }
 
     /// <summary>
     /// 按钮的帮助路径

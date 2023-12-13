@@ -12,11 +12,13 @@
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 
@@ -65,13 +67,21 @@ public static class UIExtension
         static void SetPushButtonData(PushButtonData pushButtonData, IRibbonButtonData button)
         {
             pushButtonData.Text = button.Title;
-            pushButtonData.Image = button.Image?.ConvertToBitmapSource();
-            pushButtonData.LargeImage = button.LargeImage?.ConvertToBitmapSource();
-            pushButtonData.ToolTipImage = button.ToolTipImage?.ConvertToBitmapSource();
+            pushButtonData.Image = ImageResolve(button.Image);
+            pushButtonData.LargeImage = ImageResolve(button.LargeImage);
+            pushButtonData.ToolTipImage = ImageResolve(button.ToolTipImage);
             pushButtonData.ToolTip = button.ToolTip;
             pushButtonData.LongDescription = button.LongDescription;
             pushButtonData.SetContextualHelp(button.ContextualHelp);
         }
+
+        static ImageSource ImageResolve(object source) => source switch
+        {
+            string path => new BitmapImage(new Uri(path)),
+            Bitmap bitmap => bitmap.ConvertToBitmapSource(),
+            ImageSource imageSource => imageSource,
+            _ => default,
+        };
     }
 
     /// <summary>
@@ -102,7 +112,7 @@ public static class UIExtension
 
         PulldownButtonData data = new(name, text);
         handle?.Invoke(data);
-        
+
         return panel.AddItem(data) as PulldownButton;
     }
 
@@ -120,7 +130,7 @@ public static class UIExtension
 
         SplitButtonData data = new(name, text);
         handle?.Invoke(data);
-        
+
         return panel.AddItem(data) as SplitButton;
     }
 
@@ -154,25 +164,4 @@ public static class UIExtension
 
         return pulldownButton.AddPushButton(CreatePushButtonData<T>(handle));
     }
-
- 
-
-
-
-
-
-
-    /// <summary>
-    /// 在下拉按钮上创建一个按钮
-    /// <para>Create a ribbon push button on the panel</para>
-    /// </summary>
-    /// <typeparam name="T">外部命令，必须是一个自定义类型，且继承于<see cref="Autodesk.Revit.UI.IExternalCommand"/> 和 <see cref="IRibbonButtonData"/>,且必须存在一个无参的构造函数</typeparam>
-    /// <param name="splitButton">要添加按钮的下拉按钮</param>
-    /// <returns>创建的按钮</returns>
-    /// <exception cref="System.ArgumentNullException"></exception>
-    //public static PushButton CreatePushButton<T>(this SplitButton splitButton) where T : class, IExternalCommand, IRibbonButtonData, new()
-    //{
-    //    ArgumentNullExceptionUtils.ThrowIfNull(splitButton);
-    //    return splitButton.AddPushButton(CreatePushButtonData<T>());
-    //}
 }

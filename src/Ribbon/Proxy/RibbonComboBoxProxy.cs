@@ -18,8 +18,6 @@ internal class RibbonComboBoxProxy : RibbonElementProxy<ComboBox>, IRibbonComboB
         ComboBoxMemberData comboBoxMemberData = new(title, title);
         this.OriginalObject.AddItem(comboBoxMemberData);
 
-
-
         return this;
     }
 
