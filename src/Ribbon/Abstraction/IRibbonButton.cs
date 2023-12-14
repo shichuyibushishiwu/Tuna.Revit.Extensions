@@ -12,6 +12,4 @@ namespace Tuna.Revit.Extension;
 public interface IRibbonButton : IRibbonItem
 {
 
-
-
 }

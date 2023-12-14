@@ -9,6 +9,8 @@ internal class RibbonTabProxy : IRibbonTab
 
     public string Title { get; internal set; }
 
+    public string AppPath { get; set; }
+
     public UIApplication Application { get; internal set; }
 
     public IRibbonPanel CreateRibbonPanel(string name)

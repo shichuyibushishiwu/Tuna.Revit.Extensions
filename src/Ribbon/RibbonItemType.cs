@@ -35,4 +35,9 @@ public enum RibbonItemType
     /// 下拉框
     /// </summary>
     ComboBox,
+
+    /// <summary>
+    /// 分割线
+    /// </summary>
+    Separator
 }

@@ -22,28 +22,9 @@ internal class TestCommand : IExternalCommand
     {
         UIDocument uiDocument = commandData.Application.ActiveUIDocument;
         Document document = uiDocument.Document;
-      
-
  
 
         return Result.Succeeded;
     }
 }
 
-internal class TestApplication : IExternalApplication
-{
-    public Result OnShutdown(UIControlledApplication application)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Result OnStartup(UIControlledApplication application)
-    {
-      var   tab = application.AddRibbonTab("tuna", tab => tab
-           .AddRibbonPanel("archi", panel => panel
-               .AddPushButton<TestCommand>().AddSeparator()));
-
-
-        return Result.Succeeded;
-    }
-}

@@ -31,6 +31,10 @@ namespace Tuna.Sample
                 .AddPushButton<Commands.ElementFilterCommand>()
                 .AddSeparator()
                 .AddPulldownButton("sd", pbt => pbt
+                    .Configurate(d =>
+                    {
+                     
+                    })
                     .AddPushButton<Commands.ElementFilterCommand>()
                     .AddSeparator()
                     .AddPushButton<Commands.ExternalEventTestCommand>())

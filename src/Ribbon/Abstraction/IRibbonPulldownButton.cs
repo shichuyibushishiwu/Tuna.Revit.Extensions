@@ -21,6 +21,11 @@ public interface IRibbonPulldownButton : IRibbonItem, IRibbonItemsCollector
     /// <summary>
     /// 添加分割线
     /// </summary>
-    /// <returns></returns>
     IRibbonPulldownButton AddSeparator();
+
+    /// <summary>
+    /// 配置按钮信息
+    /// </summary>
+    /// <param name="config"></param>
+    IRibbonPulldownButton Configurate(Action<RibbonButtonData> config);
 }

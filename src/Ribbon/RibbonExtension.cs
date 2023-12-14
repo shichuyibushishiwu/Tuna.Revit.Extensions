@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Tuna.Revit.Extension.Ribbon.Proxy;
 
 namespace Tuna.Revit.Extension;
@@ -16,13 +17,20 @@ public static class RibbonExtension
     /// <param name="application"></param>
     /// <param name="title"></param>
     /// <param name="action"></param>
+    /// <returns></returns>
+    /// <exception cref="System.ArgumentNullException"></exception>
     public static IRibbonTab AddRibbonTab(this UIControlledApplication application, string title, Action<IRibbonTab> action)
     {
+        //application.ActiveAddInId
+        Assembly assembly = Assembly.GetCallingAssembly();
+
         var app = (typeof(UIControlledApplication)
             .GetMethod("getUIApplication", BindingFlags.Instance | BindingFlags.NonPublic)
-            .Invoke(application, Array.Empty<object>()) as UIApplication) ?? throw new ArgumentNullException("app");
+            .Invoke(application, Array.Empty<object>()) as UIApplication) ?? throw new ArgumentNullException("app reflection error");
+
         return app.AddRibbonTab(title, action);
     }
+
 
     /// <summary>
     /// 创建Tab
@@ -30,9 +38,10 @@ public static class RibbonExtension
     /// <param name="application"></param>
     /// <param name="title"></param>
     /// <param name="action"></param>
+    /// <returns></returns>
     public static IRibbonTab AddRibbonTab(this UIApplication application, string title, Action<IRibbonTab> action)
     {
-        application.CreateRibbonTab(title);
+        application.CreateRibbonTab(title); 
 
         RibbonTabProxy tab = new()
         {

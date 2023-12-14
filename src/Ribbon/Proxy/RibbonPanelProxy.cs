@@ -49,16 +49,14 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
 
     public IRibbonPanel AddPulldownButton(string title, Action<IRibbonPulldownButton> handle = null)
     {
-        RibbonPulldownButtonProxy pulldownButtonProxy = new();
+        RibbonPulldownButtonProxy pulldownButtonProxy = new() { Title = title };
         handle.Invoke(pulldownButtonProxy);
+        var data = pulldownButtonProxy.GetRibbonData();
 
-        PulldownButton pulldownButton = this.OriginalObject.CreatePulldownButton(title, title, btn =>
-        {
-          
-            
-        });
+        //PulldownButton pulldownButton = this.OriginalObject.CreatePulldownButton(title, title, btn => UIExtension.SetPushButtonData(btn, data));
 
-        pulldownButtonProxy.OriginalObject = pulldownButton;
+        //pulldownButtonProxy.OriginalObject = pulldownButton;
+        pulldownButtonProxy.InitializeComponent();
 
         _items.Add(pulldownButtonProxy);
 

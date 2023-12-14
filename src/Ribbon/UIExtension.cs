@@ -30,6 +30,21 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public static class UIExtension
 {
+    internal static void SetPushButtonData(PushButtonData pushButtonData, IRibbonButtonData button)
+    {
+        //get relative path
+        string root = Directory.GetParent(pushButtonData.AssemblyName).FullName;
+
+        //initialize data
+        pushButtonData.Text = button.Title;
+        pushButtonData.Image = RibbonImageResovler.Resolve(button.Image);
+        pushButtonData.LargeImage = RibbonImageResovler.Resolve(button.LargeImage);
+        pushButtonData.ToolTipImage = RibbonImageResovler.Resolve(button.ToolTipImage);
+        pushButtonData.ToolTip = button.ToolTip;
+        pushButtonData.LongDescription = button.LongDescription;
+        pushButtonData.SetContextualHelp(button.ContextualHelp);
+    }
+
     static PushButtonData CreatePushButtonData<T>(Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
     {
         //按钮的类型
@@ -64,37 +79,6 @@ public static class UIExtension
         handle?.Invoke(pushButtonData);
 
         return pushButtonData;
-
-        static void SetPushButtonData(PushButtonData pushButtonData, IRibbonButtonData button)
-        {
-            pushButtonData.Text = button.Title;
-            pushButtonData.Image = ImageResolve(button.Image);
-            pushButtonData.LargeImage = ImageResolve(button.LargeImage);
-            pushButtonData.ToolTipImage = ImageResolve(button.ToolTipImage);
-            pushButtonData.ToolTip = button.ToolTip;
-            pushButtonData.LongDescription = button.LongDescription;
-            pushButtonData.SetContextualHelp(button.ContextualHelp);
-        }
-
-        static ImageSource ImageResolve(object source)
-        {
-            switch (source)
-            {
-                case string path:
-                    if (File.Exists(path))
-                    {
-                        return new BitmapImage(new Uri(path));
-                    }
-                    else
-                    {
-                        //return new BitmapImage(new Uri(path));
-                    }
-                    return default;
-                case Bitmap bitmap: return bitmap.ConvertToBitmapSource();
-                case ImageSource imageSource: return imageSource;
-                default: return default;
-            }
-        }
     }
 
     /// <summary>
@@ -176,6 +160,13 @@ public static class UIExtension
     {
         ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
 
-        return pulldownButton. AddPushButton(CreatePushButtonData<T>(handle));
+        return pulldownButton.AddPushButton(CreatePushButtonData<T>(handle));
+    }
+
+    public static PushButton CreatePushButton(this PulldownButton pulldownButton, Action<PushButtonData> handle = null)
+    {
+        ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
+
+        return pulldownButton.AddPushButton(CreatePushButtonData<T>(handle));
     }
 }
