@@ -54,7 +54,7 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
 
         PulldownButton pulldownButton = this.OriginalObject.CreatePulldownButton(title, title, btn =>
         {
-            btn.Image
+          
             
         });
 

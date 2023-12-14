@@ -18,14 +18,10 @@ namespace Tuna.Revit.Extension;
 [CommandButton(Title = "sd")]
 internal class TestCommand : IExternalCommand
 {
- 
-
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
         UIDocument uiDocument = commandData.Application.ActiveUIDocument;
         Document document = uiDocument.Document;
-
-
       
 
  

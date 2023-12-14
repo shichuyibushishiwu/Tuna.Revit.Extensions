@@ -13,6 +13,7 @@ using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -75,13 +76,25 @@ public static class UIExtension
             pushButtonData.SetContextualHelp(button.ContextualHelp);
         }
 
-        static ImageSource ImageResolve(object source) => source switch
+        static ImageSource ImageResolve(object source)
         {
-            string path => new BitmapImage(new Uri(path)),
-            Bitmap bitmap => bitmap.ConvertToBitmapSource(),
-            ImageSource imageSource => imageSource,
-            _ => default,
-        };
+            switch (source)
+            {
+                case string path:
+                    if (File.Exists(path))
+                    {
+                        return new BitmapImage(new Uri(path));
+                    }
+                    else
+                    {
+                        //return new BitmapImage(new Uri(path));
+                    }
+                    return default;
+                case Bitmap bitmap: return bitmap.ConvertToBitmapSource();
+                case ImageSource imageSource: return imageSource;
+                default: return default;
+            }
+        }
     }
 
     /// <summary>
@@ -147,6 +160,7 @@ public static class UIExtension
 
         ComboBoxData combo = new(name);
         handle?.Invoke(combo);
+
         return panel.AddItem(combo) as ComboBox;
     }
 
@@ -162,6 +176,6 @@ public static class UIExtension
     {
         ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
 
-        return pulldownButton.AddPushButton(CreatePushButtonData<T>(handle));
+        return pulldownButton. AddPushButton(CreatePushButtonData<T>(handle));
     }
 }
