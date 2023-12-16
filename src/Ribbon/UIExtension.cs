@@ -12,6 +12,7 @@
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -30,26 +31,21 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public static class UIExtension
 {
-    internal static void SetPushButtonData(PushButtonData pushButtonData, IRibbonButtonData button)
+    internal static void SetPushButtonData(ButtonData buttonData, IRibbonButtonData buttonDataProxy)
     {
-        //get relative path
-        string root = Directory.GetParent(pushButtonData.AssemblyName).FullName;
+        string defaultResourcePath = $"{Directory.GetParent(RibbonHost.Defualt.Assembly?.Location).FullName}";
 
-        //initialize data
-        pushButtonData.Text = button.Title;
-        pushButtonData.Image = RibbonImageResovler.Resolve(button.Image);
-        pushButtonData.LargeImage = RibbonImageResovler.Resolve(button.LargeImage);
-        pushButtonData.ToolTipImage = RibbonImageResovler.Resolve(button.ToolTipImage);
-        pushButtonData.ToolTip = button.ToolTip;
-        pushButtonData.LongDescription = button.LongDescription;
-        pushButtonData.SetContextualHelp(button.ContextualHelp);
+        buttonData.Text = buttonDataProxy.Title;
+        buttonData.Image = RibbonImageResovler.Resolve(buttonDataProxy.Image);
+        buttonData.LargeImage = RibbonImageResovler.Resolve(buttonDataProxy.LargeImage);
+        buttonData.ToolTipImage = RibbonImageResovler.Resolve(buttonDataProxy.ToolTipImage);
+        buttonData.ToolTip = buttonDataProxy.ToolTip;
+        buttonData.LongDescription = buttonDataProxy.LongDescription;
+        buttonData.SetContextualHelp(buttonDataProxy.ContextualHelp);
     }
 
-    static PushButtonData CreatePushButtonData<T>(Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
+    static PushButtonData CreatePushButtonData(Action<PushButtonData> handle, Type commandType)
     {
-        //按钮的类型
-        Type commandType = typeof(T);
-
         //按钮的名称
         string name = commandType.Name;
 
@@ -72,7 +68,7 @@ public static class UIExtension
         //方式二，通过接口进行配置，优先级第二
         if (typeof(IRibbonButtonData).IsAssignableFrom(commandType))
         {
-            SetPushButtonData(pushButtonData, Activator.CreateInstance<T>() as IRibbonButtonData);
+            SetPushButtonData(pushButtonData, Activator.CreateInstance(commandType) as IRibbonButtonData);
         }
 
         //方式一，通过回调进行配置，优先级第一
@@ -80,6 +76,8 @@ public static class UIExtension
 
         return pushButtonData;
     }
+
+    static PushButtonData CreatePushButtonData<T>(Action<PushButtonData> handle = null) where T : class, IExternalCommand, new() => CreatePushButtonData(handle, typeof(T));
 
     /// <summary>
     /// 在面板上创建一个按钮
@@ -92,6 +90,9 @@ public static class UIExtension
     public static PushButton CreatePushButton<T>(this RibbonPanel panel, Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
     {
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
+
+        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
+
         return panel.AddItem(CreatePushButtonData<T>(handle)) as PushButton;
     }
 
@@ -157,16 +158,12 @@ public static class UIExtension
     /// <param name="handle"></param>
     /// <returns></returns>
     public static PushButton CreatePushButton<T>(this PulldownButton pulldownButton, Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
+        => CreatePushButton(pulldownButton, typeof(T), handle);
+
+    internal static PushButton CreatePushButton(this PulldownButton pulldownButton, Type type, Action<PushButtonData> handle = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
 
-        return pulldownButton.AddPushButton(CreatePushButtonData<T>(handle));
-    }
-
-    public static PushButton CreatePushButton(this PulldownButton pulldownButton, Action<PushButtonData> handle = null)
-    {
-        ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
-
-        return pulldownButton.AddPushButton(CreatePushButtonData<T>(handle));
+        return pulldownButton.AddPushButton(CreatePushButtonData(handle, type));
     }
 }

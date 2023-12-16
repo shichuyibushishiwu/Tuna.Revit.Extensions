@@ -23,7 +23,7 @@ public static class RibbonExtension
     {
         //application.ActiveAddInId
         Assembly assembly = Assembly.GetCallingAssembly();
-
+        
         var app = (typeof(UIControlledApplication)
             .GetMethod("getUIApplication", BindingFlags.Instance | BindingFlags.NonPublic)
             .Invoke(application, Array.Empty<object>()) as UIApplication) ?? throw new ArgumentNullException("app reflection error");

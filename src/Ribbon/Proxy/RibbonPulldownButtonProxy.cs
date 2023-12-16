@@ -9,7 +9,7 @@ internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, I
 {
     private readonly List<IRibbonItem> _items = new();
     private readonly RibbonButtonData _data;
-    private readonly Dictionary<RibbonItemType, Type> _conponents = new();
+    private readonly List<Tuple<RibbonItemType, Type>> _conponents = new();
 
     public RibbonPulldownButtonProxy() => _data = new RibbonButtonData();
 
@@ -19,13 +19,13 @@ internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, I
 
     public IRibbonPulldownButton AddPushButton<TCommand>() where TCommand : class, IExternalCommand, new()
     {
-        _conponents.Add(RibbonItemType.PushButton, typeof(TCommand));
+        _conponents.Add(new(RibbonItemType.PushButton, typeof(TCommand)));
         return this;
     }
 
     public IRibbonPulldownButton AddSeparator()
     {
-        _conponents.Add(RibbonItemType.Separator, default);
+        _conponents.Add(new(RibbonItemType.Separator, default));
         return this;
     }
 
@@ -33,6 +33,7 @@ internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, I
 
     public IRibbonPulldownButton Configurate(Action<RibbonButtonData> config)
     {
+        _data.Title = Title;
         config.Invoke(_data);
         return this;
     }
@@ -43,7 +44,7 @@ internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, I
     {
         foreach (var item in _conponents)
         {
-            switch (item.Key)
+            switch (item.Item1)
             {
                 case RibbonItemType.PushButton:
                     //RibbonButton ribbonButton = this.OriginalObject.CreatePushButton<TCommand>();
