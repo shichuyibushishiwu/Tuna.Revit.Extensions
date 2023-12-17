@@ -38,7 +38,14 @@ internal class RibbonImageResovler
                 }
                 else
                 {
-                    //return new BitmapImage(new Uri(path));
+                    if (RibbonHost.Defualt.IsVaild)
+                    {
+                        path = $"{RibbonHost.Defualt.InstallPath}//{path}";
+                        if (File.Exists(path))
+                        {
+                            return new BitmapImage(new Uri(path));
+                        }
+                    }
                 }
                 return default;
             case Bitmap bitmap: return bitmap.ConvertToBitmapSource();

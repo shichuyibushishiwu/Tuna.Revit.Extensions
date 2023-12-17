@@ -47,15 +47,15 @@ internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, I
             switch (item.Item1)
             {
                 case RibbonItemType.PushButton:
-                    //RibbonButton ribbonButton = this.OriginalObject.CreatePushButton<TCommand>();
+                    RibbonButton ribbonButton = this.OriginalObject.CreatePushButton(item.Item2);
 
-                    //RibbonButtonProxy ribbonButtonProxy = new()
-                    //{
-                    //    OriginalObject = ribbonButton,
-                    //    Title = ribbonButton.Name,
-                    //};
+                    RibbonButtonProxy ribbonButtonProxy = new()
+                    {
+                        OriginalObject = ribbonButton,
+                        Title = ribbonButton.Name,
+                    };
 
-                    //_items.Add(ribbonButtonProxy);
+                    _items.Add(ribbonButtonProxy);
                     break;
                 case RibbonItemType.Separator:
                     this.OriginalObject.AddSeparator();

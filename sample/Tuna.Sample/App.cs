@@ -28,19 +28,20 @@ namespace Tuna.Sample
         {
             var tab = application.AddRibbonTab("tuna", tab => tab
             .AddRibbonPanel("archi", panel => panel
-                .AddPushButton<Commands.ElementFilterCommand>()
+                .AddPushButton<Commands.CommandA>()
                 .AddSeparator()
-                .AddPulldownButton("sd", pbt => pbt
+                .AddPulldownButton("pdb", pbt => pbt
                     .Configurate(d =>
                     {
-                     
+                        d.LargeImage = "compass.png";
                     })
-                    .AddPushButton<Commands.ElementFilterCommand>()
+                    .AddPushButton<Commands.CommandA>()
                     .AddSeparator()
-                    .AddPushButton<Commands.ExternalEventTestCommand>())
-                .AddSplitButton("SD", slt => slt
-                    .AddPushButton<Commands.ElementFilterCommand>()
-                    .AddSeparator())
+                    .AddPushButton<Commands.CommandB>())
+                .AddSplitButton("stb", slt => slt
+                    .AddPushButton<Commands.CommandA>()
+                    .AddSeparator()
+                    .AddPushButton<Commands.CommandB>())
                 .AddComboBox("s", cb => cb.AddItem("dd").AddItem("ssad"))));
 
             return Result.Succeeded;

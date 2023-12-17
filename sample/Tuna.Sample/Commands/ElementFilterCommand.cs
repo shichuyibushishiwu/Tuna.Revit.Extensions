@@ -18,6 +18,7 @@ using Tuna.Revit.Extension;
 
 namespace Tuna.Sample.Commands;
 
+[CommandButton(Image = "compass.png")]
 [Transaction(TransactionMode.Manual)]
 public class ElementFilterCommand : IExternalCommand
 {
@@ -68,7 +69,7 @@ public class ElementFilterCommand : IExternalCommand
         //这个方法可以获取结构相关的族
         document.GetStructualFamilies(StructuralMaterialType.Steel);
 
-       
+
         var elems = uIDocument.ActiveGraphicalView.GetElements(BuiltInCategory.OST_Walls);
 
 
@@ -78,7 +79,7 @@ public class ElementFilterCommand : IExternalCommand
 
 
 
-     
+
 
 
 

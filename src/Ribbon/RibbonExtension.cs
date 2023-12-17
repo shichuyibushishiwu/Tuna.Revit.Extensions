@@ -21,9 +21,8 @@ public static class RibbonExtension
     /// <exception cref="System.ArgumentNullException"></exception>
     public static IRibbonTab AddRibbonTab(this UIControlledApplication application, string title, Action<IRibbonTab> action)
     {
-        //application.ActiveAddInId
-        Assembly assembly = Assembly.GetCallingAssembly();
-        
+        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
+
         var app = (typeof(UIControlledApplication)
             .GetMethod("getUIApplication", BindingFlags.Instance | BindingFlags.NonPublic)
             .Invoke(application, Array.Empty<object>()) as UIApplication) ?? throw new ArgumentNullException("app reflection error");
@@ -41,7 +40,7 @@ public static class RibbonExtension
     /// <returns></returns>
     public static IRibbonTab AddRibbonTab(this UIApplication application, string title, Action<IRibbonTab> action)
     {
-        application.CreateRibbonTab(title); 
+        application.CreateRibbonTab(title);
 
         RibbonTabProxy tab = new()
         {

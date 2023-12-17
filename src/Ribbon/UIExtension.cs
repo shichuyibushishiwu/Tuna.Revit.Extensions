@@ -33,9 +33,7 @@ public static class UIExtension
 {
     internal static void SetPushButtonData(ButtonData buttonData, IRibbonButtonData buttonDataProxy)
     {
-        string defaultResourcePath = $"{Directory.GetParent(RibbonHost.Defualt.Assembly?.Location).FullName}";
-
-        buttonData.Text = buttonDataProxy.Title;
+        buttonData.Text = string.IsNullOrWhiteSpace(buttonDataProxy.Title) ? buttonData.Text : buttonDataProxy.Title;
         buttonData.Image = RibbonImageResovler.Resolve(buttonDataProxy.Image);
         buttonData.LargeImage = RibbonImageResovler.Resolve(buttonDataProxy.LargeImage);
         buttonData.ToolTipImage = RibbonImageResovler.Resolve(buttonDataProxy.ToolTipImage);
@@ -92,7 +90,7 @@ public static class UIExtension
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
 
         RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
-
+     
         return panel.AddItem(CreatePushButtonData<T>(handle)) as PushButton;
     }
 
@@ -109,7 +107,10 @@ public static class UIExtension
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
 
         PulldownButtonData data = new(name, text);
+
         handle?.Invoke(data);
+
+        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
 
         return panel.AddItem(data) as PulldownButton;
     }
@@ -127,7 +128,10 @@ public static class UIExtension
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
 
         SplitButtonData data = new(name, text);
+
         handle?.Invoke(data);
+
+        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
 
         return panel.AddItem(data) as SplitButton;
     }
@@ -144,7 +148,10 @@ public static class UIExtension
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
 
         ComboBoxData combo = new(name);
+
         handle?.Invoke(combo);
+
+        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
 
         return panel.AddItem(combo) as ComboBox;
     }
@@ -158,7 +165,11 @@ public static class UIExtension
     /// <param name="handle"></param>
     /// <returns></returns>
     public static PushButton CreatePushButton<T>(this PulldownButton pulldownButton, Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
-        => CreatePushButton(pulldownButton, typeof(T), handle);
+    {
+        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
+
+        return CreatePushButton(pulldownButton, typeof(T), handle);
+    }
 
     internal static PushButton CreatePushButton(this PulldownButton pulldownButton, Type type, Action<PushButtonData> handle = null)
     {

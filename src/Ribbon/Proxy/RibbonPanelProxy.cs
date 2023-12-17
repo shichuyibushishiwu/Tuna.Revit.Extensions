@@ -35,6 +35,8 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
 
             });
 
+         
+
             RibbonButtonProxy ribbonButtonProxy = new()
             {
                 OriginalObject = ribbonButton,
@@ -49,7 +51,7 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
 
     public IRibbonPanel AddPulldownButton(string title, Action<IRibbonPulldownButton> handle = null)
     {
-        RibbonPulldownButtonProxy pulldownButtonProxy = new() { Title = title };
+        RibbonPulldownButtonProxy pulldownButtonProxy = new();
         handle.Invoke(pulldownButtonProxy);
         var data = pulldownButtonProxy.GetRibbonData();
 

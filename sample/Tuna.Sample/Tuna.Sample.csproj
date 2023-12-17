@@ -19,7 +19,7 @@
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<StartAction>Program</StartAction>
-		<StartProgram>D:\Autodesk\Revit 2020\Revit.exe</StartProgram>
+		<StartProgram>D:\Autodesk\Revit2020\Revit 2020\Revit.exe</StartProgram>
 	</PropertyGroup>
 
 	<!--<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
@@ -64,6 +64,12 @@
 
 	<ItemGroup>
 	  <None Update="Assets\Icon\compass.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Assets\Icon\gift16.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="Assets\Icon\gift32.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
