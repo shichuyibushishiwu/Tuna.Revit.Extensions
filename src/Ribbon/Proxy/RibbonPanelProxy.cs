@@ -35,7 +35,7 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
 
             });
 
-         
+            
 
             RibbonButtonProxy ribbonButtonProxy = new()
             {
