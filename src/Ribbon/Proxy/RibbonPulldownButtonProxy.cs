@@ -1,31 +1,66 @@
 ﻿using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Tuna.Revit.Extension.Ribbon.Abstraction;
 
-namespace Tuna.Revit.Extension.Ribbon.Proxy
+namespace Tuna.Revit.Extension.Ribbon.Proxy;
+
+internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, IRibbonPulldownButton
 {
-    internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, IRibbonItem, IRibbonItemsCollector
+    private readonly List<IRibbonItem> _items = new();
+    private readonly RibbonButtonData _data;
+    private readonly List<Tuple<RibbonItemType, Type>> _conponents = new();
+
+    public RibbonPulldownButtonProxy() => _data = new RibbonButtonData();
+
+    public RibbonItemType Type => RibbonItemType.PulldownButton;
+
+    public string Name => Title;
+
+    public IRibbonPulldownButton AddPushButton<TCommand>() where TCommand : class, IExternalCommand, new()
     {
-        private readonly List<IRibbonItem> _items = new();
+        _conponents.Add(new(RibbonItemType.PushButton, typeof(TCommand)));
+        return this;
+    }
 
-        public RibbonItemType Type => RibbonItemType.PulldownButton;
+    public IRibbonPulldownButton AddSeparator()
+    {
+        _conponents.Add(new(RibbonItemType.Separator, default));
+        return this;
+    }
 
-        public void AddPushButton<TCommand>() where TCommand : class, IExternalCommand, IRibbonButton, new()
+    public IEnumerable<IRibbonItem> GetItems() => _items;
+
+    public IRibbonPulldownButton Configurate(Action<RibbonButtonData> config)
+    {
+        _data.Title = Title;
+        config.Invoke(_data);
+        return this;
+    }
+
+    public IRibbonButtonData GetRibbonData() => _data;
+
+    public void InitializeComponent()
+    {
+        foreach (var item in _conponents)
         {
-            RibbonButton ribbonButton = this.OriginalObject.CreatePushButton<TCommand>();
-            RibbonButtonProxy ribbonButtonProxy = new RibbonButtonProxy()
+            switch (item.Item1)
             {
-                OriginalObject = ribbonButton,
-                Name = ribbonButton.Name,
-            };
-            _items.Add(ribbonButtonProxy);
+                case RibbonItemType.PushButton:
+                    RibbonButton ribbonButton = this.OriginalObject.CreatePushButton(item.Item2);
+
+                    RibbonButtonProxy ribbonButtonProxy = new()
+                    {
+                        OriginalObject = ribbonButton,
+                        Title = ribbonButton.Name,
+                    };
+
+                    _items.Add(ribbonButtonProxy);
+                    break;
+                case RibbonItemType.Separator:
+                    this.OriginalObject.AddSeparator();
+                    break;
+            }
         }
-
-        public string Text { get; set; }
-
-        public IEnumerable<IRibbonItem> GetItems() => _items;
     }
 }

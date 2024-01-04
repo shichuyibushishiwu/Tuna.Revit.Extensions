@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Ribbon xmlns="http://tempuri.org/XMLSchema.xsd">
+	<RibbonTab Title="金枪鱼">
+		<RibbonPanel Title="建模">
+			<RibbonPushButton SamllImage="wall.png" Title="墙体" CommandClassFullName="CreateWallCommand"></RibbonPushButton>
+		</RibbonPanel>
+
+		<RibbonPanel Title="出图">
+			<RibbonPulldownButton>
+				<RibbonPushButton SamllImage="wall.png" Title="墙体" CommandClassFullName="CreateWallCommand"></RibbonPushButton>
+			</RibbonPulldownButton>
+		</RibbonPanel>
+	</RibbonTab>
+</Ribbon>

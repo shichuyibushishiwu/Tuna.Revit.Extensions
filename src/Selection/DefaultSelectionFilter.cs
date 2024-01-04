@@ -54,6 +54,7 @@ public class DefaultSelectionFilter : ISelectionFilter
         {
             return _elementPredicate(elem);
         }
+
         return true;
     }
 
@@ -74,6 +75,7 @@ public class DefaultSelectionFilter : ISelectionFilter
         {
             return _referencePredicate((reference, position));
         }
+
         return true;
     }
 }

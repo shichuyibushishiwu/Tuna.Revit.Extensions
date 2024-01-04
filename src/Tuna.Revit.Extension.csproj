@@ -186,7 +186,6 @@
 		</PackageReference>
 	</ItemGroup>
 
-
 	<ItemGroup>
 		<Compile Remove="Properties\**" />
 		<EmbeddedResource Remove="Properties\**" />

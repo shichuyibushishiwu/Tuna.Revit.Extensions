@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension.Ribbon.Proxy;
 
-internal class RibbonButtonProxy : RibbonElementProxy<RibbonButton>, IRibbonItem
+internal class RibbonButtonProxy : RibbonElementProxy<RibbonButton>, IRibbonButton
 {
     public RibbonItemType Type => RibbonItemType.PushButton;
+
+    public string Name { get; set; }
 }

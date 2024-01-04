@@ -1,10 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Tuna.Revit.Extension.Ribbon.Proxy;
 
 namespace Tuna.Revit.Extension;
@@ -18,16 +15,41 @@ public static class RibbonExtension
     /// 创建Tab
     /// </summary>
     /// <param name="application"></param>
-    /// <param name="name"></param>
+    /// <param name="title"></param>
     /// <param name="action"></param>
-    public static void CreateRibbonTab(this UIControlledApplication application, string name, Action<IRibbonTab> action)
+    /// <returns></returns>
+    /// <exception cref="System.ArgumentNullException"></exception>
+    public static IRibbonTab AddRibbonTab(this UIControlledApplication application, string title, Action<IRibbonTab> action)
     {
-        application.CreateRibbonTab(name);
-        action.Invoke(new RibbonTabProxy()
+        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
+
+        var app = (typeof(UIControlledApplication)
+            .GetMethod("getUIApplication", BindingFlags.Instance | BindingFlags.NonPublic)
+            .Invoke(application, Array.Empty<object>()) as UIApplication) ?? throw new ArgumentNullException("app reflection error");
+
+        return app.AddRibbonTab(title, action);
+    }
+
+
+    /// <summary>
+    /// 创建Tab
+    /// </summary>
+    /// <param name="application"></param>
+    /// <param name="title"></param>
+    /// <param name="action"></param>
+    /// <returns></returns>
+    public static IRibbonTab AddRibbonTab(this UIApplication application, string title, Action<IRibbonTab> action)
+    {
+        application.CreateRibbonTab(title);
+
+        RibbonTabProxy tab = new()
         {
             Application = application,
-            TabName = name,
-        });
+            Title = title,
+        };
+
+        action?.Invoke(tab);
+        return tab;
     }
 
     /// <summary>
@@ -37,61 +59,10 @@ public static class RibbonExtension
     /// <param name="name"></param>
     /// <param name="handle"></param>
     /// <returns></returns>
-    public static IRibbonTab CreateRibbonPanel(this IRibbonTab tab, string name, Action<IRibbonPanel> handle)
+    public static IRibbonTab AddRibbonPanel(this IRibbonTab tab, string name, Action<IRibbonPanel> handle)
     {
         IRibbonPanel ribbonPanel = tab.CreateRibbonPanel(name);
         handle?.Invoke(ribbonPanel);
         return tab;
-    }
-
-
-    public static IRibbonPanel AddComboBox(this IRibbonPanel ribbonPanel)
-    {
-        return ribbonPanel;
-    }
-
-    public static IRibbonPanel AddTextBox(this IRibbonPanel ribbonPanel)
-    {
-        return ribbonPanel;
-    }
-
-    public static IRibbonPanel AddPulldownButton(this IRibbonPanel ribbonPanel)
-    {
-        return ribbonPanel;
-    }
-
- 
-
-    public static IRibbonPanel AddSplitButton(this IRibbonPanel ribbonPanel)
-    {
-        return ribbonPanel;
-    }
-
-    public static IRibbonPanel AddPushButton<TCommand>(this IRibbonPanel ribbonPanel) where TCommand : class, IExternalCommand, IRibbonButton, new()
-    {
-        ribbonPanel.AddPushButton<TCommand>();
-        return ribbonPanel;
-    }
-
-    /// <summary>
-    /// 添加分割线
-    /// </summary>
-    /// <param name="ribbonPanel"></param>
-    /// <returns></returns>
-    public static IRibbonPanel AddSeparator(this IRibbonPanel ribbonPanel)
-    {
-        ribbonPanel.AddSeparator();
-        return ribbonPanel;
-    }
-
-    /// <summary>
-    /// 添加滑动式抽屉
-    /// </summary>
-    /// <param name="ribbonPanel"></param>
-    /// <param name="handle"></param>
-    public static void AddSlideOut(this IRibbonPanel ribbonPanel, Action<IRibbonPanel> handle)
-    {
-        ribbonPanel.AddSlideOut();
-        handle?.Invoke(ribbonPanel);
     }
 }
