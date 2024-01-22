@@ -33,6 +33,12 @@ public class BuiltInCategories
     public static ElementId ViewportLabel { get; set; } = new ElementId(BuiltInCategory.OST_ViewportLabel);
 
     /// <summary>
+    /// 视口
+    /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_Viewports"/></para>
+    /// </summary>
+    public static ElementId Viewports { get; set; } = new ElementId(BuiltInCategory.OST_Viewports);
+
+    /// <summary>
     /// 灯具
     /// <para><see cref="Autodesk.Revit.DB.BuiltInCategory.OST_LightingDevices"/></para>
     /// </summary>

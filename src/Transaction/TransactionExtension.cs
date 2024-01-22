@@ -34,7 +34,7 @@ namespace Tuna.Revit.Extension
         public static TransactionStatus NewTransaction(this Document document, Action action, bool rollback = false, string name = "Default Transaction Name")
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
-            return NewTransaction(document, (d) => action.Invoke(), rollback, name);
+            return document.NewTransaction((d) => action.Invoke(), rollback, name);
         }
 
         /// <summary>
