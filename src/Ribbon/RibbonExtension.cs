@@ -23,9 +23,10 @@ public static class RibbonExtension
     {
         RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
 
+
         var app = (typeof(UIControlledApplication)
             .GetMethod("getUIApplication", BindingFlags.Instance | BindingFlags.NonPublic)
-            .Invoke(application, Array.Empty<object>()) as UIApplication) ?? throw new ArgumentNullException("app reflection error");
+            .Invoke(application, new object[0]) as UIApplication) ?? throw new ArgumentNullException("app reflection error");
 
         return app.AddRibbonTab(title, action);
     }

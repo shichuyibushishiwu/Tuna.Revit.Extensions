@@ -31,7 +31,7 @@ public class ExternalDefinitionAttribute : Attribute
 
 
 
-#if Rvt_23 || Rvt_24
+#if Rvt_22|| Rvt_23 || Rvt_24
     public ExternalDefinitionAttribute(string name, BuiltInParameterGroup builtInParameterGroup)
     {
         Name = name;
