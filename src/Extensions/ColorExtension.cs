@@ -55,8 +55,24 @@ public static class ColorExtension
     /// <returns>表示两个颜色的值是否相等，true 为相等；反之，不相等</returns>
     public static bool IsEqualTo(this Autodesk.Revit.DB.Color color, Autodesk.Revit.DB.Color otherColor)
     {
-        ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(color);
-        ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(otherColor); 
+        ArgumentNullExceptionUtils.ThrowIfNull(color);
+        ArgumentNullExceptionUtils.ThrowIfNull(otherColor);
+
+        if (color.IsValid && !otherColor.IsValid)
+        {
+            return false;
+        }
+
+        if (!color.IsValid && otherColor.IsValid)
+        {
+            return false;
+        }
+
+        if (!color.IsValid && !otherColor.IsValid)
+        {
+            return true;
+        }
+
         return color.Red == otherColor.Red && color.Green == otherColor.Green && color.Blue == otherColor.Blue;
     }
 }
