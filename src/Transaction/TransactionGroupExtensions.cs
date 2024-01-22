@@ -7,55 +7,75 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension;
 
+/// <summary>
+/// 事务组的扩展
+/// </summary>
 public static class TransactionGroupExtensions
 {
     /// <summary>
-    /// This is a function which used to start a document Transaction Group
+    /// 用于在当前文档中开始一个事务组
+    /// <para>This is a function which used to start a document Transaction Group</para>
     /// </summary>
     /// <param name="document"></param>
     /// <param name="action"></param>
     /// <param name="name"></param>
-    /// <param name="rollback"></param>
-    /// <param name="assimilate"></param>
-    /// <returns></returns>
+    /// <returns><see cref="TransactionResult"/></returns>
     /// <exception cref="System.ArgumentNullException"></exception>
-    public static TransactionStatus NewTransactionGroup(this Document document, Action action, string name = "Default Transaction Group Name", bool rollback = false, bool assimilate = true)
+    public static TransactionResult NewTransactionGroup(this Document document, Action<TransactionGroupOptions> action, string name = "Default Transaction Group Name")
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
         ArgumentNullExceptionUtils.ThrowIfNull(action);
 
+        TransactionResult result = new TransactionResult();
+        TransactionGroupOptions options = new TransactionGroupOptions();
+
         using (TransactionGroup tsg = new TransactionGroup(document, name))
         {
-            if (tsg.Start() == TransactionStatus.Started)
+            tsg.IsFailureHandlingForcedModal = options.IsFailureHandlingForcedModal;
+
+            result.TransactionStatus = tsg.Start(name);
+            if (result.TransactionStatus != TransactionStatus.Started)
             {
-                action.Invoke();
-                if (!rollback)
-                {
-                    return assimilate ? tsg.Assimilate() : tsg.Commit();
-                }
+                result.Message = $"{document} is not started";
+                return result;
             }
-            return tsg.RollBack();
+
+            try
+            {
+                action.Invoke(options);
+                result.TransactionStatus = options.IsMerge ? tsg.Assimilate() : tsg.Commit();
+                return result;
+            }
+            catch (TransactionRollbackException exception)
+            {
+                result.TransactionStatus = tsg.RollBack();
+                result.Message = exception.Message;
+                return result;
+            }
+            catch (Exception exception)
+            {
+                result.Exception = exception;
+                result.Message = exception.Message;
+                result.TransactionStatus = tsg.RollBack();
+                throw exception;
+            }
         }
     }
 
     /// <summary>
-    /// 
+    /// 用于在当前文档中开始一个事务组，并合并内部的所有事务
+    /// <para>This is a function which used to start a document Transaction Group</para>
     /// </summary>
     /// <param name="document"></param>
     /// <param name="action"></param>
     /// <param name="name"></param>
-    /// <exception cref="System.ArgumentNullException"></exception>
-    public static void NewTransactionGroup(this Document document, Action<TransactionGroup> action, string name = "Default Transaction Group Name")
+    /// <returns><see cref="TransactionResult"/></returns>
+    public static TransactionResult NewTransactionGroup(this Document document, Action action, string name = "Default Transaction Group Name")
     {
-        ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
-        ArgumentNullExceptionUtils.ThrowIfNull(action);
-
-        using (TransactionGroup tsg = new TransactionGroup(document, name))
+        return document.NewTransactionGroup((option) =>
         {
-            if (tsg.Start() == TransactionStatus.Started)
-            {
-                action.Invoke(tsg);
-            }
-        }
+            action();
+            option.Merge();
+        }, name);
     }
 }

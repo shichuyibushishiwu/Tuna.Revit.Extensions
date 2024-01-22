@@ -13,29 +13,54 @@ namespace Tuna.Revit.Extension;
 public static class SubTransactionExtensions
 {
     /// <summary>
-    /// This is a function which used to start a document SubTransaction 
+    /// 从当前文档启动一个子事务
+    /// <para>This is a function which used to start a document SubTransaction </para>
     /// </summary>
-    /// <param name="document"></param>
+    /// <param name="document">revit document</param>
     /// <param name="action"></param>
-    /// <param name="rollback"></param>
-    /// <returns></returns>
+    /// <returns><see cref="TransactionResult"/></returns>
     /// <exception cref="System.ArgumentNullException"></exception>
-    public static TransactionStatus NewSubtransaction(this Document document, Action action, bool rollback = false)
+    public static TransactionResult NewSubtransaction(this Document document, Action action)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
         ArgumentNullExceptionUtils.ThrowIfNull(action);
 
+        TransactionResult result = new TransactionResult();
+        if (document.IsReadOnly)
+        {
+            result.TransactionStatus = TransactionStatus.Error;
+            result.Message = $"{document} is read only";
+            return result;
+        }
+
         using (SubTransaction transaction = new SubTransaction(document))
         {
-            if (transaction.Start() == TransactionStatus.Started)
+            result.TransactionStatus = transaction.Start();
+            if (result.TransactionStatus != TransactionStatus.Started)
+            {
+                result.Message = $"{document} is not started";
+                return result;
+            }
+
+            try
             {
                 action.Invoke();
-                if (!rollback)
-                {
-                    return transaction.Commit();
-                }
+                result.TransactionStatus = transaction.Commit();
+                return result;
             }
-            return transaction.RollBack();
+            catch (TransactionRollbackException exception)
+            {
+                result.TransactionStatus = transaction.RollBack();
+                result.Message = exception.Message;
+                return result;
+            }
+            catch (Exception exception)
+            {
+                result.Exception = exception;
+                result.Message = exception.Message;
+                result.TransactionStatus = transaction.RollBack();
+                throw exception;
+            }
         }
     }
 }

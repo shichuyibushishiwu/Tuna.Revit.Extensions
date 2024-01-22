@@ -22,7 +22,20 @@ internal class TestCommand : IExternalCommand
     {
         UIDocument uiDocument = commandData.Application.ActiveUIDocument;
         Document document = uiDocument.Document;
- 
+
+        var result = uiDocument.SelectPoint();
+
+
+        if (!result.Succeeded)
+        {
+            return Result.Cancelled;
+        }
+
+        document.NewTransaction(() =>
+        {
+            document.Create.NewDetailCurve(document.ActiveView, Line.CreateBound(result.Value, result.Value + new XYZ(10, 0, 0)));
+            throw new TransactionRollbackException();
+        });
 
         return Result.Succeeded;
     }
