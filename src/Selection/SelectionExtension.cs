@@ -58,6 +58,7 @@ public static class SelectionExtension
         {
             selectionResult.Succeeded = false;
             selectionResult.Message = exception.Message;
+            throw exception;
         }
         return selectionResult;
     }
@@ -182,6 +183,7 @@ public static class SelectionExtension
         {
             selectionResult.Succeeded = false;
             selectionResult.Message = exception.Message;
+            throw exception;
         }
         return selectionResult;
     }
@@ -302,6 +304,7 @@ public static class SelectionExtension
         {
             result.Succeeded = false;
             result.Message = e.Message;
+            throw e;
         }
         return result;
     }
@@ -334,6 +337,7 @@ public static class SelectionExtension
         {
             result.Succeeded = false;
             result.Message = e.Message;
+            throw e;
         }
         return result;
     }
@@ -369,6 +373,7 @@ public static class SelectionExtension
         {
             selectionResult.Succeeded = false;
             selectionResult.Message = exception.Message;
+            throw exception;
         }
 
         return selectionResult;
@@ -410,5 +415,38 @@ public static class SelectionExtension
     public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, string prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(_ => true, prompt);
+    }
+
+    /// <summary>
+    /// 当前方法用于提示用户进行框选确定选择框的范围，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// </summary>
+    /// <param name="uIDocument">要操作的文档</param>
+    /// <param name="pickBoxStyle">盒子的类型</param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <returns>用户选择的结果</returns>
+    public static SelectionResult<PickedBox> SelectBox(this UIDocument uIDocument, PickBoxStyle pickBoxStyle = PickBoxStyle.Crossing, string prompt = null)
+    {
+        SelectionResult<PickedBox> selectionResult = new SelectionResult<PickedBox>();
+        try
+        {
+            PickedBox pickBox = string.IsNullOrWhiteSpace(prompt) ? uIDocument.Selection.PickBox(pickBoxStyle) : uIDocument.Selection.PickBox(pickBoxStyle, prompt);
+
+            selectionResult.Succeeded = true;
+            selectionResult.Message = "Succeeded";
+            selectionResult.Value = pickBox;
+        }
+        catch (Autodesk.Revit.Exceptions.OperationCanceledException)
+        {
+            selectionResult.Succeeded = false;
+            selectionResult.Message = "Canceled";
+        }
+        catch (Exception exception)
+        {
+            selectionResult.Succeeded = false;
+            selectionResult.Message = "Canceled";
+            throw exception;
+        }
+
+        return selectionResult;
     }
 }
