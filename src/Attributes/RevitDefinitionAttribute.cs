@@ -29,15 +29,12 @@ namespace Tuna.Revit.Extension.Attributes
         /// </summary>
         public BuiltInParameterGroup ParameterGroup { get; set; } = BuiltInParameterGroup.INVALID;
 
+#if Rvt_16 || Rvt_17 || Rvt_18 || Rvt_19 || Rvt_20
 
+        public ParameterType ParameterType { get; set; }
 
-#if Rvt_23 || Rvt_24
-        public ExternalDefinitionAttribute(string name, BuiltInParameterGroup builtInParameterGroup)
-        {
-            Name = name;
-            ParameterGroup = builtInParameterGroup;
-        }
-#else
+        public UnitType UnitType { get; set; }
+
         public ExternalDefinitionAttribute(string name, BuiltInParameterGroup builtInParameterGroup, ParameterType parameterType, UnitType unitType = UnitType.UT_Number)
         {
             Name = name;
@@ -45,10 +42,12 @@ namespace Tuna.Revit.Extension.Attributes
             ParameterType = parameterType;
             UnitType = unitType;
         }
-
-        public ParameterType ParameterType { get; set; }
-
-        public UnitType UnitType { get; set; }
+#else
+        public ExternalDefinitionAttribute(string name, BuiltInParameterGroup builtInParameterGroup)
+        {
+            Name = name;
+            ParameterGroup = builtInParameterGroup;
+        }
 #endif
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace Tuna.Revit.Extension.Attributes
             if (definition == null) return false;
             if (definition.Name != Name) return false;
             if (definition.ParameterGroup != ParameterGroup) return false;
-#if Rvt_16 || Rvt_17|| Rvt_18|| Rvt_19|| Rvt_20|| Rvt_21
+#if Rvt_16 || Rvt_17|| Rvt_18|| Rvt_19|| Rvt_20
             if (definition.ParameterType != ParameterType) return false;
             if (definition.UnitType != UnitType) return false;
 #endif
