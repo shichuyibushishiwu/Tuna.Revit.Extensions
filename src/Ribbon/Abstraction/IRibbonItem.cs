@@ -1,13 +1,17 @@
-﻿using Autodesk.Revit.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Tuna.Revit.Extension;
 
-namespace Tuna.Revit.Extension;
-
-internal interface IRibbonItem
+/// <summary>
+/// 界面元素
+/// </summary>
+public interface IRibbonItem
 {
+    /// <summary>
+    /// 界面元素的名称
+    /// </summary>
+    public string Name { get; }
+
+    /// <summary>
+    /// 界面元素类型
+    /// </summary>
     RibbonItemType Type { get; }
 }

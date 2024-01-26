@@ -46,7 +46,7 @@ namespace Tuna.Sample.Commands
            
 
             commandData.Application.ActiveUIDocument.SelectObject(Autodesk.Revit.UI.Selection.ObjectType.LinkedElement,
-                element => element.Category.Id == BuiltInCategories.Wall, "asd");
+                element => element.Category.Id == BuiltInCategories.Walls, "asd");
 
 
 

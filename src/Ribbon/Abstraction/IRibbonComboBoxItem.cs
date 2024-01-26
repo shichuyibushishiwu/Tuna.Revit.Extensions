@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension;
 
 /// <summary>
-/// 界面按钮元素
+/// 界面下拉框成员
 /// </summary>
-public interface IRibbonButton : IRibbonItem
+public interface IRibbonComboBoxItem
 {
-
 }

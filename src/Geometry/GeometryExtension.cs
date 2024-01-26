@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+
 namespace Tuna.Revit.Extension;
 
 /// <summary>
@@ -85,7 +86,7 @@ public static class GeometryExtension
             return;
         }
 
-        document.NewTransaction(d => d.Delete(_transientElementIds.ToArray()));
+        document.NewTransaction(() => document.Delete(_transientElementIds.ToArray()));
         _transientElementIds.Clear();
     }
 

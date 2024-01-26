@@ -11,28 +11,28 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Tuna.Revit.Extension.Attributes
+namespace Tuna.Revit.Extension;
+
+/// <summary>
+/// Revit外部参数特性以获取元素的参数
+/// </summary>
+[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+public class ExternalDefinitionAttribute : Attribute
 {
     /// <summary>
-    /// Revit外部参数特性以获取元素的参数
+    /// 参数的名称
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    public class ExternalDefinitionAttribute : Attribute
-    {
-        /// <summary>
-        /// 参数的名称
-        /// </summary>
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        /// <summary>
-        /// 参数所在组
-        /// </summary>
-        public BuiltInParameterGroup ParameterGroup { get; set; } = BuiltInParameterGroup.INVALID;
+    /// <summary>
+    /// 参数所在组
+    /// </summary>
+    public BuiltInParameterGroup ParameterGroup { get; set; } = BuiltInParameterGroup.INVALID;
 
 #if Rvt_16 || Rvt_17 || Rvt_18 || Rvt_19 || Rvt_20
 
         public ParameterType ParameterType { get; set; }
-
+        
         public UnitType UnitType { get; set; }
 
         public ExternalDefinitionAttribute(string name, BuiltInParameterGroup builtInParameterGroup, ParameterType parameterType, UnitType unitType = UnitType.UT_Number)
@@ -64,26 +64,25 @@ namespace Tuna.Revit.Extension.Attributes
             if (definition.ParameterType != ParameterType) return false;
             if (definition.UnitType != UnitType) return false;
 #endif
-            return true;
-        }
+        return true;
     }
+}
 
+
+/// <summary>
+/// 标记Revit内部参数属性以获取其参数
+/// </summary>
+[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+public class InternalDefinitionAttribute : Attribute
+{
+    public InternalDefinitionAttribute(BuiltInParameter builtInParameter)
+    {
+        BuiltInParameter = builtInParameter;
+    }
 
     /// <summary>
-    /// 标记Revit内部参数属性以获取其参数
+    /// Revit内置参数
     /// </summary>
-    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
-    public class InternalDefinitionAttribute : Attribute
-    {
-        public InternalDefinitionAttribute(BuiltInParameter builtInParameter)
-        {
-            BuiltInParameter = builtInParameter;
-        }
+    public BuiltInParameter BuiltInParameter { get; set; } = BuiltInParameter.INVALID;
 
-        /// <summary>
-        /// Revit内置参数
-        /// </summary>
-        public BuiltInParameter BuiltInParameter { get; set; } = BuiltInParameter.INVALID;
-
-    }
 }

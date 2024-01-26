@@ -4,63 +4,111 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tuna.Revit.Extension.Ribbon.Abstraction;
 
 namespace Tuna.Revit.Extension.Ribbon.Proxy;
 
-internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel, IRibbonItemsCollector
+internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
 {
     private readonly List<IRibbonItem> _items = new();
 
     public RibbonTabProxy Parent { get; internal set; }
 
+    public RibbonItemType Type => RibbonItemType.RibbonPanel;
+
+    public string Name => Title;
+
     public void AddSlideOut() => OriginalObject.AddSlideOut();
 
-    public void AddSeparator() => OriginalObject.AddSeparator();
-
-    public void AddPushButton<TCommand>() where TCommand : class, IExternalCommand, IRibbonButton, new()
+    public IRibbonPanel AddSeparator()
     {
-        RibbonButton ribbonButton = this.OriginalObject.CreatePushButton<TCommand>();
-        RibbonButtonProxy ribbonButtonProxy = new RibbonButtonProxy()
-        {
-            OriginalObject = ribbonButton,
-            Name = ribbonButton.Name,
-        };
-        _items.Add(ribbonButtonProxy);
+        OriginalObject.AddSeparator();
+        return this;
     }
 
-    public void AddComboBox()
+    public IRibbonPanel AddPushButton<TCommand>() where TCommand : class, IExternalCommand, new()
     {
+        if (!_items.Any(item => item.Name == $"btn_{typeof(TCommand)}"))
+        {
+            RibbonButton ribbonButton = this.OriginalObject.CreatePushButton<TCommand>((btn) =>
+            {
 
+            });
+
+            
+
+            RibbonButtonProxy ribbonButtonProxy = new()
+            {
+                OriginalObject = ribbonButton,
+                Title = ribbonButton.ItemText,
+                Name = ribbonButton.Name
+            };
+
+            _items.Add(ribbonButtonProxy);
+        }
+        return this;
     }
 
-    public void AddPulldownButton(string name, string text)
+    public IRibbonPanel AddPulldownButton(string title, Action<IRibbonPulldownButton> handle = null)
     {
-        PulldownButton pulldownButton = this.OriginalObject.CreatePulldown(name, text);
+        RibbonPulldownButtonProxy pulldownButtonProxy = new();
+        handle.Invoke(pulldownButtonProxy);
+        var data = pulldownButtonProxy.GetRibbonData();
 
-        RibbonPulldownButtonProxy pulldownButtonProxy = new RibbonPulldownButtonProxy()
-        {
-            OriginalObject = pulldownButton,
-            Name = pulldownButton.Name,
-            Text = text
-        };
+        PulldownButton pulldownButton = this.OriginalObject.CreatePulldownButton(title, title, btn => UIExtension.SetPushButtonData(btn, data));
+
+        pulldownButtonProxy.OriginalObject = pulldownButton;
+        pulldownButtonProxy.InitializeComponent();
+
         _items.Add(pulldownButtonProxy);
+
+        return this;
     }
 
-
-
-    public void CreateRadioButtonGroup()
+    public IRibbonPanel AddSplitButton(string title, Action<IRibbonSplitButton> handle = null)
     {
+        SplitButton splitButton = this.OriginalObject.CreateSplitButton(title, title);
 
+        RibbonSplitButtonProxy splitButtonProxy = new()
+        {
+            OriginalObject = splitButton,
+            Name = splitButton.Name
+        };
+
+        handle.Invoke(splitButtonProxy);
+
+        _items.Add(splitButtonProxy);
+
+        return this;
     }
 
-    public void CreateSplitButton()
+    public IRibbonPanel AddComboBox(string name, Action<IRibbonComboBox> handle = null)
     {
+        ComboBox comboBox = this.OriginalObject.CreateComboBox(name);
 
+        RibbonComboBoxProxy comboBoxProxy = new()
+        {
+            OriginalObject = comboBox,
+            Title = comboBox.Name,
+        };
+
+        handle.Invoke(comboBoxProxy);
+
+        _items.Add(comboBoxProxy);
+
+        return this;
     }
 
-    public void CreateTextBox()
+    public IRibbonPanel AddRadioButtonGroup()
+    {
+        return this;
+    }
+
+    public IRibbonPanel AddTextBox()
     {
 
+
+        return this;
     }
 
     public IEnumerable<IRibbonItem> GetItems() => _items;

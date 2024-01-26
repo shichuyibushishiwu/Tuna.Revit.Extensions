@@ -283,7 +283,7 @@ public static class CollectorExtension
     /// <summary>
     /// <c>[Quick Filter]</c>
     /// 根据内置类别的<see cref="Autodesk.Revit.DB.ElementId"/>过滤出文档中的图元类型对象,
-    /// 扩展包提供了常量类型<see cref="Tuna.Revit.Extension.Constants.BuiltInCategories"/>可进行<c>Id</c>的调用
+    /// 扩展包提供了常量类型<see cref="Tuna.Revit.Extension.BuiltInCategories"/>可进行<c>Id</c>的调用
     /// <para>Get elements by category <see cref="Autodesk.Revit.DB.ElementId"/></para>
     /// </summary>
     /// <param name="document">要查询的文档</param>
@@ -297,7 +297,7 @@ public static class CollectorExtension
     /// <summary>
     /// <c>[Quick Filter]</c>
     /// 根据多个内置类别的<see cref="Autodesk.Revit.DB.ElementId"/>过滤出文档中的图元类型对象,
-    /// 扩展包提供了常量类型<see cref="Tuna.Revit.Extension.Constants.BuiltInCategories"/>可进行<c>Id</c>的调用
+    /// 扩展包提供了常量类型<see cref="Tuna.Revit.Extension.BuiltInCategories"/>可进行<c>Id</c>的调用
     /// <para>Get elements by categories <see cref="Autodesk.Revit.DB.ElementId"/></para>
     /// </summary>
     /// <param name="document">要查询的文档</param>

@@ -21,6 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{78294C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{561BD9FE-C5B6-4817-930A-AC46291408EE}"
 	ProjectSection(SolutionItems) = preProject
+		src\Extensions\ArgumentNullExceptionUtils.cs = src\Extensions\ArgumentNullExceptionUtils.cs
 		tests\XMLFile1.xml = tests\XMLFile1.xml
 	EndProjectSection
 EndProject

@@ -20,6 +20,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tuna.Revit.Extension;
 
+
 namespace Tuna.Sample.Commands
 {
     [Transaction(TransactionMode.Manual)]
@@ -30,7 +31,6 @@ namespace Tuna.Sample.Commands
             UIDocument uiDocument = commandData.Application.ActiveUIDocument;
 
             Document document = uiDocument.Document;
-
      
             document.TransientDisplay(new List<GeometryObject>()
             {
