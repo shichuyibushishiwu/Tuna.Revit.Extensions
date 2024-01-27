@@ -29,41 +29,40 @@ public class ExternalDefinitionAttribute : Attribute
     /// </summary>
     public BuiltInParameterGroup ParameterGroup { get; set; } = BuiltInParameterGroup.INVALID;
 
+#if Rvt_16 || Rvt_17 || Rvt_18 || Rvt_19 || Rvt_20
 
+        public ParameterType ParameterType { get; set; }
+        
+        public UnitType UnitType { get; set; }
 
-#if Rvt_22|| Rvt_23 || Rvt_24
-    public ExternalDefinitionAttribute(string name, BuiltInParameterGroup builtInParameterGroup)
-    {
-        Name = name;
-        ParameterGroup = builtInParameterGroup;
-    }
+        public ExternalDefinitionAttribute(string name, BuiltInParameterGroup builtInParameterGroup, ParameterType parameterType, UnitType unitType = UnitType.UT_Number)
+        {
+            Name = name;
+            ParameterGroup = builtInParameterGroup;
+            ParameterType = parameterType;
+            UnitType = unitType;
+        }
 #else
-    public ExternalDefinitionAttribute(string name, BuiltInParameterGroup builtInParameterGroup, ParameterType parameterType, UnitType unitType = UnitType.UT_Number)
-    {
-        Name = name;
-        ParameterGroup = builtInParameterGroup;
-        ParameterType = parameterType;
-        UnitType = unitType;
-    }
-
-    public ParameterType ParameterType { get; set; }
-
-    public UnitType UnitType { get; set; }
+        public ExternalDefinitionAttribute(string name, BuiltInParameterGroup builtInParameterGroup)
+        {
+            Name = name;
+            ParameterGroup = builtInParameterGroup;
+        }
 #endif
 
-    /// <summary>
-    /// 判断两个参数是否完全一致
-    /// </summary>
-    /// <param name="definition"></param>
-    /// <returns></returns>
-    public bool Equal(Definition definition)
-    {
-        if (definition == null) return false;
-        if (definition.Name != Name) return false;
-        if (definition.ParameterGroup != ParameterGroup) return false;
-#if Rvt_16 || Rvt_17|| Rvt_18|| Rvt_19|| Rvt_20|| Rvt_21
-        if (definition.ParameterType != ParameterType) return false;
-        if (definition.UnitType != UnitType) return false;
+        /// <summary>
+        /// 判断两个参数是否完全一致
+        /// </summary>
+        /// <param name="definition"></param>
+        /// <returns></returns>
+        public bool Equal(Definition definition)
+        {
+            if (definition == null) return false;
+            if (definition.Name != Name) return false;
+            if (definition.ParameterGroup != ParameterGroup) return false;
+#if Rvt_16 || Rvt_17|| Rvt_18|| Rvt_19|| Rvt_20
+            if (definition.ParameterType != ParameterType) return false;
+            if (definition.UnitType != UnitType) return false;
 #endif
         return true;
     }

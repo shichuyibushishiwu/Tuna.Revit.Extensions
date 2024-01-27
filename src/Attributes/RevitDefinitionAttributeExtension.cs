@@ -29,18 +29,18 @@ public static class RevitDefinitionAttributeExtension
     /// <exception cref="ArgumentNullException">外部参数为null，或元素为空，或未在元素中找到指定外部参数</exception>
     public static Parameter GetUniqueParameter(this ExternalDefinitionAttribute externalDefinitionAttribute, Element element)
     {
-        if (externalDefinitionAttribute == null)
-        {
-            throw new ArgumentNullException($"ExternalDefinitionAttribute is null");
-        }
-        ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
-        var parameters = element.GetParameters(externalDefinitionAttribute.Name);
-        if (parameters.Count == 0)
-        {
-            throw new ArgumentNullException($"Element {element.Name} dose not have a parameter {externalDefinitionAttribute.Name}");
-        }
-        var parameter = parameters?.FirstOrDefault(x => externalDefinitionAttribute.Equal(x.Definition));
-        return parameter;
+            ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
+            if (externalDefinitionAttribute == null)
+            {
+                throw new ArgumentNullException($"ExternalDefinitionAttribute is null");
+            }
+            var parameters = element.GetParameters(externalDefinitionAttribute.Name);
+            if (parameters.Count == 0)
+            {
+                throw new ArgumentNullException($"Element {element.Name} dose not have a parameter {externalDefinitionAttribute.Name}");
+            }
+            var parameter = parameters?.FirstOrDefault(x => externalDefinitionAttribute.Equal(x.Definition));
+            return parameter;
     }
 
     /// <summary>
