@@ -38,7 +38,7 @@ public static class SubTransactionExtensions
             result.TransactionStatus = transaction.Start();
             if (result.TransactionStatus != TransactionStatus.Started)
             {
-                result.Message = $"{document} is not started";
+                result.Message = $"{transaction} is not started";
                 return result;
             }
 
