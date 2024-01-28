@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension;
 
-internal class BuiltInAssets
+/// <summary>
+/// 
+/// </summary>
+public class BuiltInAssets
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    public static string Category { get; } = "category";
 
+    /// <summary>
+    /// 
+    /// </summary>
+    public static string Description { get; } = "description";
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static string Thumbnail { get; } = "thumbnail";
 }
