@@ -115,5 +115,11 @@ public class BuiltInParameters
         /// ROOM_AREA
         /// </summary>
         public static ElementId Area { get; } = new ElementId(BuiltInParameter.ROOM_AREA);
+
+        public static ElementId Department { get; } = new ElementId(BuiltInParameter.ROOM_DEPARTMENT);
+
+        public static ElementId Height { get; } = new ElementId(BuiltInParameter.ROOM_HEIGHT);
+
+        public static ElementId Phase { get; } = new ElementId(BuiltInParameter.ROOM_PHASE);
     }
 }
