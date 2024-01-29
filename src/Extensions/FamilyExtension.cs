@@ -31,6 +31,8 @@ public static class FamilyExtension
     /// <returns></returns>
     private static List<T> ToList<T, TParent>(TParent set, Predicate<T> predicate = null) where TParent : IEnumerable
     {
+        return (predicate == null ? ToList(set) : ToList(set).Where(p => predicate(p))).ToList();
+
         static IEnumerable<T> ToList(TParent set)
         {
             foreach (T parameter in set)
@@ -38,7 +40,6 @@ public static class FamilyExtension
                 yield return parameter;
             }
         }
-        return (predicate == null ? ToList(set) : ToList(set).Where(p => predicate(p))).ToList();
     }
 
     /// <summary>
@@ -69,26 +70,7 @@ public static class FamilyExtension
     public static IEnumerable<FamilySymbol> GetFamilySymbols(this Family family)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(family);
+
         return family.Document.GetFamilySymbols(family.Id);
-    }
-
-    /// <summary>
-    /// 根据族名称和族类型名称获取文档中的图元
-    /// <para>Get the elements in the document by family name and family symbol name</para>
-    /// </summary>
-    /// <param name="document">要查询的文档</param>
-    /// <param name="familyName">族名称</param>
-    /// <param name="familySymbolName">族类型名称</param>
-    /// <returns></returns>
-    /// <exception cref="System.ArgumentNullException"></exception>
-    public static FilteredElementCollector GetElements(this Document document, string familyName, string familySymbolName)
-    {
-        Family family = document.GetElements<Family>(f => f.Name == familyName).FirstOrDefault()
-            ?? throw new ArgumentNullException(nameof(familyName), $"can't find family name of {familyName} in the document");
-
-        FamilySymbol familySymbol = family.GetFamilySymbols().FirstOrDefault(s => s.Name == familySymbolName)
-            ?? throw new ArgumentNullException(nameof(familySymbolName), $"can't find family symbol name of {familySymbolName} in the family which name is  {familyName}");
-
-        return document.GetElements(familySymbol);
     }
 }

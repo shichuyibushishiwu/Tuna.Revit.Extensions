@@ -19,7 +19,7 @@
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<StartAction>Program</StartAction>
-		<StartProgram>D:\Autodesk\Revit2020\Revit 2020\Revit.exe</StartProgram>
+		<StartProgram>D:\Autodesk\Revit 2020\Revit.exe</StartProgram>
 	</PropertyGroup>
 
 	<!--<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">

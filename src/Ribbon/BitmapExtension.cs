@@ -42,6 +42,7 @@ public static class BitmapExtension
 
             bitmapImage.BeginInit();
             bitmapImage.StreamSource = stream;
+            bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
             bitmapImage.EndInit();
             bitmapImage.Freeze();
         }

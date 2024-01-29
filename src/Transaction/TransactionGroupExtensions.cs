@@ -36,7 +36,7 @@ public static class TransactionGroupExtensions
             result.TransactionStatus = tsg.Start(name);
             if (result.TransactionStatus != TransactionStatus.Started)
             {
-                result.Message = $"{document} is not started";
+                result.Message = $"{tsg} is not started";
                 return result;
             }
 

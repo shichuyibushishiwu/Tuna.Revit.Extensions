@@ -23,7 +23,7 @@ namespace Tuna.Revit.Extension;
 /// <summary>
 /// Revit geometry extension
 /// </summary>
-public static class GeometryExtension
+public static class TransientElementExtensions
 {
     private static readonly List<ElementId> _transientElementIds = new List<ElementId>();
 

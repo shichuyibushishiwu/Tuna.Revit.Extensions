@@ -58,6 +58,7 @@ public static class SelectionExtension
         {
             selectionResult.Succeeded = false;
             selectionResult.Message = exception.Message;
+            throw exception;
         }
         return selectionResult;
     }
@@ -134,7 +135,20 @@ public static class SelectionExtension
     /// <returns>用户选择的结果</returns>
     public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
     {
-        return uiDocument.SelectElement(element => element.Category?.Id == new ElementId(builtInCategory), prompt);
+        return uiDocument.SelectElement(new ElementId(builtInCategory), prompt);
+    }
+
+    /// <summary>
+    /// 当前方法用于提示用户选择图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+    /// </summary>
+    /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="builtInCategoryId">要选择的图元类别的 <see cref="Autodesk.Revit.DB.ElementId"/></param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <returns>用户选择的结果</returns>
+    public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, ElementId builtInCategoryId, string prompt = null)
+    {
+        return uiDocument.SelectElement(element => element.Category?.Id == builtInCategoryId, prompt);
     }
 
     /// <summary>
@@ -162,6 +176,8 @@ public static class SelectionExtension
     public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, ISelectionFilter selectionFilter = null, string prompt = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
+
+
         SelectionResult<IList<Reference>> selectionResult = new SelectionResult<IList<Reference>>();
         try
         {
@@ -182,7 +198,48 @@ public static class SelectionExtension
         {
             selectionResult.Succeeded = false;
             selectionResult.Message = exception.Message;
+            throw exception;
         }
+
+        return selectionResult;
+    }
+
+    /// <summary>
+    /// 当前方法用于提示用户选择多个对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+    /// </summary>
+    /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="objectType">选择的对象类型</param>
+    /// <param name="pPreSelected">预选择的对象</param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <param name="selectionFilter">选择过滤器</param>
+    /// <returns>用户选择的结果</returns>
+    /// <exception cref="System.ArgumentNullException"></exception>
+    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, List<Reference> pPreSelected, string prompt, ISelectionFilter selectionFilter = null)
+    {
+        ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
+        ArgumentNullExceptionUtils.ThrowIfNull(pPreSelected);
+        ArgumentNullExceptionUtils.ThrowIfNull(prompt);
+
+        SelectionResult<IList<Reference>> selectionResult = new SelectionResult<IList<Reference>>();
+        try
+        {
+            selectionFilter ??= new DefaultSelectionFilter();
+            uiDocument.Selection.PickObjects(objectType, selectionFilter, prompt, pPreSelected);
+            selectionResult.Message = "Succeeded";
+        }
+        catch (Autodesk.Revit.Exceptions.OperationCanceledException)
+        {
+            selectionResult.Succeeded = false;
+            selectionResult.Message = "Canceled";
+        }
+        catch (Exception exception)
+        {
+            selectionResult.Succeeded = false;
+            selectionResult.Message = exception.Message;
+            throw exception;
+        }
+
         return selectionResult;
     }
 
@@ -244,8 +301,33 @@ public static class SelectionExtension
         {
             Message = result.Message,
             Succeeded = result.Succeeded,
-            Value = result.Succeeded ? result.Value.Select(referebce => uiDocument.Document.GetElement(referebce)) : Enumerable.Empty<Element>()
+            Value = result.Succeeded ? result.Value.Select(reference => uiDocument.Document.GetElement(reference)) : Enumerable.Empty<Element>()
         };
+    }
+
+    /// <summary>
+    /// 当前方法用于提示用户选择多个图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+    /// </summary>
+    /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="type">要选择的图元类型</param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <returns>用户选择的结果</returns>
+    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, Type type, string prompt = null)
+    {
+        return uiDocument.SelectElements(e => e.GetType() == type, prompt);
+    }
+
+    /// <summary>
+    /// 当前方法用于提示用户选择多个图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+    /// </summary>
+    /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <returns>用户选择的结果</returns>
+    public static SelectionResult<IEnumerable<Element>> SelectElements<T>(this UIDocument uiDocument, string prompt = null) where T : Element
+    {
+        return uiDocument.SelectElements(typeof(T), prompt);
     }
 
     /// <summary>
@@ -258,7 +340,20 @@ public static class SelectionExtension
     /// <returns>用户选择的结果</returns>
     public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
     {
-        return uiDocument.SelectElements(element => element.Category?.Id == new ElementId(builtInCategory), prompt);
+        return uiDocument.SelectElements(new ElementId(builtInCategory), prompt);
+    }
+
+    /// <summary>
+    /// 当前方法用于提示用户选择多个图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+    /// </summary>
+    /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="builtInCategoryId">要选择的图元类别的<see cref="Autodesk.Revit.DB.ElementId"/></param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <returns>用户选择的结果</returns>
+    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, ElementId builtInCategoryId, string prompt = null)
+    {
+        return uiDocument.SelectElements(element => element.Category?.Id == builtInCategoryId, prompt);
     }
 
     /// <summary>
@@ -302,6 +397,7 @@ public static class SelectionExtension
         {
             result.Succeeded = false;
             result.Message = e.Message;
+            throw e;
         }
         return result;
     }
@@ -334,6 +430,7 @@ public static class SelectionExtension
         {
             result.Succeeded = false;
             result.Message = e.Message;
+            throw e;
         }
         return result;
     }
@@ -369,6 +466,7 @@ public static class SelectionExtension
         {
             selectionResult.Succeeded = false;
             selectionResult.Message = exception.Message;
+            throw exception;
         }
 
         return selectionResult;
@@ -397,7 +495,20 @@ public static class SelectionExtension
     /// <returns>用户选择的结果</returns>
     public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
     {
-        return uiDocument.SelectElementsByRectangle(element => element.Category?.Id == new ElementId(builtInCategory), prompt);
+        return uiDocument.SelectElementsByRectangle(new ElementId(builtInCategory), prompt);
+    }
+
+    /// <summary>
+    /// 当前方法用于提示用户选择一个项目中的点，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// <para>Prompts the user to select multiple elements by drawing a rectangle, if the user cancels the operation (for example, through ESC), the method will return failed result, otherwise true.</para>
+    /// </summary>
+    /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="builtInCategoryId">要选择的图元对象的 <see cref="Autodesk.Revit.DB.ElementId"/></param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <returns>用户选择的结果</returns>
+    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, ElementId builtInCategoryId, string prompt = null)
+    {
+        return uiDocument.SelectElementsByRectangle(element => element.Category?.Id == builtInCategoryId, prompt);
     }
 
     /// <summary>
@@ -410,5 +521,38 @@ public static class SelectionExtension
     public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, string prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(_ => true, prompt);
+    }
+
+    /// <summary>
+    /// 当前方法用于提示用户进行框选确定选择框的范围，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// </summary>
+    /// <param name="uIDocument">要操作的文档</param>
+    /// <param name="pickBoxStyle">盒子的类型</param>
+    /// <param name="prompt">给用户的提示</param>
+    /// <returns>用户选择的结果</returns>
+    public static SelectionResult<PickedBox> SelectBox(this UIDocument uIDocument, PickBoxStyle pickBoxStyle = PickBoxStyle.Crossing, string prompt = null)
+    {
+        SelectionResult<PickedBox> selectionResult = new SelectionResult<PickedBox>();
+        try
+        {
+            PickedBox pickBox = string.IsNullOrWhiteSpace(prompt) ? uIDocument.Selection.PickBox(pickBoxStyle) : uIDocument.Selection.PickBox(pickBoxStyle, prompt);
+
+            selectionResult.Succeeded = true;
+            selectionResult.Message = "Succeeded";
+            selectionResult.Value = pickBox;
+        }
+        catch (Autodesk.Revit.Exceptions.OperationCanceledException)
+        {
+            selectionResult.Succeeded = false;
+            selectionResult.Message = "Canceled";
+        }
+        catch (Exception exception)
+        {
+            selectionResult.Succeeded = false;
+            selectionResult.Message = "Canceled";
+            throw exception;
+        }
+
+        return selectionResult;
     }
 }
