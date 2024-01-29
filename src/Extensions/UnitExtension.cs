@@ -73,7 +73,6 @@ public static class UnitExtension
     /// <returns>单位为英尺的值</returns>
     public static double ConvertToFeet(this int value) => ((double)value).ConvertToFeet();
 
-
     /// <summary>
     /// 将值的单位从 (毫米) 转为 (英尺)
     /// <para>Convert millimeters to feet</para>
@@ -81,4 +80,16 @@ public static class UnitExtension
     /// <param name="value">单位为毫米的值</param>
     /// <returns>单位为英尺的值</returns>
     public static double ConvertToFeet(this float value) => Convert.ToDouble(value.ToString()).ConvertToFeet();
+
+    /// <summary>
+    /// 判断两个数值在允许的公差（1e-9）范围内是否相等
+    /// </summary>
+    /// <param name="value">要比较的数值</param>
+    /// <param name="otherValue">要比较的另一个数值</param>
+    /// <param name="tolerance">公差</param>
+    /// <returns>返回 <see cref="bool"/> 值，当为 ture 时表示数值相等，false表示不相等</returns>
+    public static bool AlmostEquals(this double value, double otherValue, double tolerance = 1e-9)
+    {
+        return Math.Abs(value - otherValue) <= tolerance;
+    }
 }

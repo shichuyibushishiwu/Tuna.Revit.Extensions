@@ -421,4 +421,24 @@ public static class CollectorExtension
         }
         return elements;
     }
+
+    /// <summary>
+    /// 根据族名称和族类型名称获取文档中的图元
+    /// <para>Get the elements in the document by family name and family symbol name</para>
+    /// </summary>
+    /// <param name="document">要查询的文档</param>
+    /// <param name="familyName">族名称</param>
+    /// <param name="familySymbolName">族类型名称</param>
+    /// <returns></returns>
+    /// <exception cref="System.ArgumentNullException"></exception>
+    public static FilteredElementCollector GetElements(this Document document, string familyName, string familySymbolName)
+    {
+        Family family = document.GetElements<Family>(f => f.Name == familyName).FirstOrDefault()
+            ?? throw new ArgumentNullException(nameof(familyName), $"can't find family name of {familyName} in the document");
+
+        FamilySymbol familySymbol = family.GetFamilySymbols().FirstOrDefault(s => s.Name == familySymbolName)
+            ?? throw new ArgumentNullException(nameof(familySymbolName), $"can't find family symbol name of {familySymbolName} in the family which name is  {familyName}");
+
+        return document.GetElements(familySymbol);
+    }
 }
