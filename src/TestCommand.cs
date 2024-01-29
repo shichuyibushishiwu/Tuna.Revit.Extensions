@@ -23,7 +23,7 @@ internal class TestCommand : IExternalCommand
         UIDocument uiDocument = commandData.Application.ActiveUIDocument;
         Document document = uiDocument.Document;
 
-        var result = uiDocument.SelectObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, prompt: "asd", references: new List<Reference>()
+        var result = uiDocument.SelectObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, prompt: "asd", pPreSelected: new List<Reference>()
         {
             new Reference(document.GetElement(new ElementId(2312)))
         });

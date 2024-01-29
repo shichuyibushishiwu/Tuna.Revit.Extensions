@@ -40,7 +40,7 @@ namespace Tuna.Revit.Extension
         {
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(material);
 
-             Color color = Color.InvalidColorValue;
+            Color color = Color.InvalidColorValue;
             ElementId appearanceAssetId = material.AppearanceAssetId;
             if (appearanceAssetId != ElementId.InvalidElementId)
             {

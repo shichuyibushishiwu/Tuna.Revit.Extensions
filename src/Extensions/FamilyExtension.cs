@@ -70,6 +70,7 @@ public static class FamilyExtension
     public static IEnumerable<FamilySymbol> GetFamilySymbols(this Family family)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(family);
+
         return family.Document.GetFamilySymbols(family.Id);
     }
 }

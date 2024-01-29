@@ -32,10 +32,12 @@ public static class CollectorInViewExtension
     public static FilteredElementCollector GetElements(this View view)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(view);
+
         if (view.IsTemplate)
         {
             throw new System.ArgumentNullException(nameof(view), "view is a template");
         }
+
         return new FilteredElementCollector(view.Document, view.Id);
     }
 
@@ -70,6 +72,7 @@ public static class CollectorInViewExtension
         {
             return view.GetElements(Activator.CreateInstance(filterType) as ElementFilter);
         }
+
         return view.GetElements(new ElementClassFilter(type));
     }
 

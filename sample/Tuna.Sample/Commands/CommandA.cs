@@ -10,11 +10,23 @@ using Tuna.Revit.Extension;
 
 namespace Tuna.Sample.Commands;
 
-
-[CommandButton(LargeImage = "gift32.png", Image = "gift16.png")]
 [Transaction(TransactionMode.Manual)]
-internal class CommandA : IExternalCommand
+internal class CommandA : IExternalCommand, IRibbonButtonData
 {
+    public string Title => "ss";
+
+    public string LongDescription => "";
+
+    public string ToolTip => "";
+
+    public object Image => "gift16.png";
+
+    public object LargeImage => "gift32.png";
+
+    public object ToolTipImage => "";
+
+    public ContextualHelp ContextualHelp => new ContextualHelp(ContextualHelpType.Url, "https://shichuyibushishiwu.github.io/");
+
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
         TaskDialog.Show("msg", "A");

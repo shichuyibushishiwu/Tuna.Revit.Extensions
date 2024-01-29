@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension;
 
 /// <summary>
-/// 
+/// Revit assets
 /// </summary>
 public class BuiltInAssets
 {
