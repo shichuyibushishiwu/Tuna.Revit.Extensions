@@ -27,7 +27,8 @@ internal class TestCommand : IExternalCommand
         {
             new Reference(document.GetElement(new ElementId(2312)))
         });
-        if (result.Succeeded)
+
+        if (result.SelectionStatus == SelectionStatus.Succeeded)
         {
             foreach (var item in result.Value)
             {

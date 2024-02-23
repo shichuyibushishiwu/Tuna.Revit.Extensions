@@ -46,20 +46,21 @@ public static class SelectionExtension
                 ? uiDocument.Selection.PickObject(objectType, selectionFilter)
                 : uiDocument.Selection.PickObject(objectType, selectionFilter, prompt);
 
-            selectionResult.Succeeded = true;
+            selectionResult.SelectionStatus = SelectionStatus.Succeeded;
             selectionResult.Message = "Succeeded";
         }
         catch (Autodesk.Revit.Exceptions.OperationCanceledException)
         {
-            selectionResult.Succeeded = false;
+            selectionResult.SelectionStatus = SelectionStatus.Cancelled;
             selectionResult.Message = "Canceled";
         }
         catch (Exception exception)
         {
-            selectionResult.Succeeded = false;
+            selectionResult.SelectionStatus = SelectionStatus.Failed;
             selectionResult.Message = exception.Message;
-            throw exception;
+            selectionResult.Exception = exception;
         }
+
         return selectionResult;
     }
 
@@ -120,8 +121,8 @@ public static class SelectionExtension
         return new SelectionResult<Element>()
         {
             Message = result.Message,
-            Succeeded = result.Succeeded,
-            Value = result.Succeeded ? uiDocument.Document.GetElement(result.Value) : default(Element)
+            SelectionStatus = result.SelectionStatus,
+            Value = result.SelectionStatus == SelectionStatus.Succeeded ? uiDocument.Document.GetElement(result.Value) : default
         };
     }
 
@@ -164,6 +165,38 @@ public static class SelectionExtension
     }
 
     /// <summary>
+    /// 当前方法用于提示用户选择图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
+    /// <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="elementPredicate">给用户的提示</param>
+    /// <param name="prompt"></param>
+    /// <returns></returns>
+    public static SelectionResult<T> SelectElement<T>(this UIDocument uiDocument, Func<T, bool> elementPredicate = null, string prompt = null) where T : Element
+    {
+        SelectionResult<Element> result = uiDocument.SelectElement(element =>
+        {
+            if (element is not T targetElement)
+            {
+                return false;
+            }
+
+            if (elementPredicate != null)
+            {
+                return elementPredicate(targetElement);
+            }
+
+            return true;
+        }, prompt);
+
+        return new SelectionResult<T>()
+        {
+
+        };
+    }
+
+    /// <summary>
     /// 当前方法用于提示用户选择多个对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="SelectionResult{T}"/> 的属性 Succeeded 将为false，反之，为true
     /// <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
     /// </summary>
@@ -188,17 +221,18 @@ public static class SelectionExtension
                 : uiDocument.Selection.PickObjects(objectType, selectionFilter, prompt);
 
             selectionResult.Message = "Succeeded";
+            selectionResult.SelectionStatus = SelectionStatus.Succeeded;
         }
         catch (Autodesk.Revit.Exceptions.OperationCanceledException)
         {
-            selectionResult.Succeeded = false;
+            selectionResult.SelectionStatus = SelectionStatus.Cancelled;
             selectionResult.Message = "Canceled";
         }
         catch (Exception exception)
         {
-            selectionResult.Succeeded = false;
+            selectionResult.SelectionStatus = SelectionStatus.Failed;
             selectionResult.Message = exception.Message;
-            throw exception;
+            selectionResult.Exception = exception;
         }
 
         return selectionResult;
@@ -226,18 +260,20 @@ public static class SelectionExtension
         {
             selectionFilter ??= new DefaultSelectionFilter();
             uiDocument.Selection.PickObjects(objectType, selectionFilter, prompt, pPreSelected);
+
             selectionResult.Message = "Succeeded";
+            selectionResult.SelectionStatus = SelectionStatus.Succeeded;
         }
         catch (Autodesk.Revit.Exceptions.OperationCanceledException)
         {
-            selectionResult.Succeeded = false;
+            selectionResult.SelectionStatus = SelectionStatus.Cancelled;
             selectionResult.Message = "Canceled";
         }
         catch (Exception exception)
         {
-            selectionResult.Succeeded = false;
+            selectionResult.SelectionStatus = SelectionStatus.Failed;
             selectionResult.Message = exception.Message;
-            throw exception;
+            selectionResult.Exception = exception;
         }
 
         return selectionResult;
@@ -300,8 +336,8 @@ public static class SelectionExtension
         return new SelectionResult<IEnumerable<Element>>()
         {
             Message = result.Message,
-            Succeeded = result.Succeeded,
-            Value = result.Succeeded ? result.Value.Select(reference => uiDocument.Document.GetElement(reference)) : Enumerable.Empty<Element>()
+            SelectionStatus = result.SelectionStatus,
+            Value = result.SelectionStatus == SelectionStatus.Succeeded ? result.Value.Select(reference => uiDocument.Document.GetElement(reference)) : Enumerable.Empty<Element>()
         };
     }
 
@@ -311,11 +347,25 @@ public static class SelectionExtension
     /// </summary>
     /// <param name="uiDocument">要操作的文档</param>
     /// <param name="type">要选择的图元类型</param>
+    /// <param name="elementPredicate">对要选择的引用进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
-    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, Type type, string prompt = null)
+    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, Type type, Func<Element, bool> elementPredicate = null, string prompt = null)
     {
-        return uiDocument.SelectElements(e => e.GetType() == type, prompt);
+        return uiDocument.SelectElements(e =>
+        {
+            if (e.GetType() != type)
+            {
+                return false;
+            }
+
+            if (elementPredicate != null)
+            {
+                return elementPredicate(e);
+            }
+
+            return true;
+        }, prompt);
     }
 
     /// <summary>
@@ -323,11 +373,33 @@ public static class SelectionExtension
     /// <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
     /// </summary>
     /// <param name="uiDocument">要操作的文档</param>
+    /// <param name="elementPredicate">对要选择的引用进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
-    public static SelectionResult<IEnumerable<Element>> SelectElements<T>(this UIDocument uiDocument, string prompt = null) where T : Element
+    public static SelectionResult<IEnumerable<T>> SelectElements<T>(this UIDocument uiDocument, Func<T, bool> elementPredicate = null, string prompt = null) where T : Element
     {
-        return uiDocument.SelectElements(typeof(T), prompt);
+        SelectionResult<IEnumerable<Element>> result = uiDocument.SelectElements(element =>
+        {
+            if (element is not T targetElement)
+            {
+                return false;
+            }
+
+            if (elementPredicate != null)
+            {
+                return elementPredicate(targetElement);
+            }
+
+            return true;
+        }, prompt);
+
+        return new SelectionResult<IEnumerable<T>>()
+        {
+            Exception = result.Exception,
+            Message = result.Message,
+            SelectionStatus = result.SelectionStatus,
+            Value = result.SelectionStatus == SelectionStatus.Succeeded ? result.Value.Cast<T>() : Enumerable.Empty<T>()
+        };
     }
 
     /// <summary>
@@ -385,19 +457,19 @@ public static class SelectionExtension
                 ? uiDocument.Selection.PickPoint(snapTypes)
                 : uiDocument.Selection.PickPoint(snapTypes, prompt);
 
-            result.Succeeded = true;
+            result.SelectionStatus = SelectionStatus.Succeeded;
             result.Message = "Succeeded";
         }
         catch (Autodesk.Revit.Exceptions.OperationCanceledException)
         {
-            result.Succeeded = false;
+            result.SelectionStatus = SelectionStatus.Cancelled;
             result.Message = "Canceled";
         }
         catch (Exception e)
         {
-            result.Succeeded = false;
+            result.SelectionStatus = SelectionStatus.Failed;
             result.Message = e.Message;
-            throw e;
+            result.Exception = e;
         }
         return result;
     }
@@ -418,19 +490,19 @@ public static class SelectionExtension
                 ? uiDocument.Selection.PickPoint()
                 : uiDocument.Selection.PickPoint(prompt);
 
-            result.Succeeded = true;
+            result.SelectionStatus = SelectionStatus.Succeeded;
             result.Message = "Succeeded";
         }
         catch (Autodesk.Revit.Exceptions.OperationCanceledException)
         {
-            result.Succeeded = false;
+            result.SelectionStatus = SelectionStatus.Cancelled;
             result.Message = "Canceled";
         }
-        catch (Exception e)
+        catch (Exception exception)
         {
-            result.Succeeded = false;
-            result.Message = e.Message;
-            throw e;
+            result.SelectionStatus = SelectionStatus.Failed;
+            result.Message = exception.Message;
+            result.Exception = exception;
         }
         return result;
     }
@@ -454,19 +526,19 @@ public static class SelectionExtension
                 ? uiDocument.Selection.PickElementsByRectangle(selectionFilter)
                 : uiDocument.Selection.PickElementsByRectangle(selectionFilter, prompt);
 
-            selectionResult.Succeeded = true;
+            selectionResult.SelectionStatus = SelectionStatus.Succeeded;
             selectionResult.Message = "Succeeded";
         }
         catch (Autodesk.Revit.Exceptions.OperationCanceledException)
         {
-            selectionResult.Succeeded = false;
+            selectionResult.SelectionStatus = SelectionStatus.Cancelled;
             selectionResult.Message = "Canceled";
         }
         catch (Exception exception)
         {
-            selectionResult.Succeeded = false;
+            selectionResult.SelectionStatus = SelectionStatus.Failed;
             selectionResult.Message = exception.Message;
-            throw exception;
+            selectionResult.Exception = exception;
         }
 
         return selectionResult;
@@ -537,20 +609,20 @@ public static class SelectionExtension
         {
             PickedBox pickBox = string.IsNullOrWhiteSpace(prompt) ? uIDocument.Selection.PickBox(pickBoxStyle) : uIDocument.Selection.PickBox(pickBoxStyle, prompt);
 
-            selectionResult.Succeeded = true;
+            selectionResult.SelectionStatus = SelectionStatus.Succeeded;
             selectionResult.Message = "Succeeded";
             selectionResult.Value = pickBox;
         }
         catch (Autodesk.Revit.Exceptions.OperationCanceledException)
         {
-            selectionResult.Succeeded = false;
+            selectionResult.SelectionStatus = SelectionStatus.Cancelled;
             selectionResult.Message = "Canceled";
         }
         catch (Exception exception)
         {
-            selectionResult.Succeeded = false;
-            selectionResult.Message = "Canceled";
-            throw exception;
+            selectionResult.SelectionStatus = SelectionStatus.Failed;
+            selectionResult.Message = exception.Message;
+            selectionResult.Exception = exception;
         }
 
         return selectionResult;
