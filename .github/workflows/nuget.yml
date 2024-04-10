@@ -9,14 +9,14 @@ jobs:
  nuget:
    strategy: 
     matrix: 
-     version: [Rvt_16_Release, Rvt_17_Release, Rvt_18_Release, Rvt_19_Release, Rvt_20_Release, Rvt_21_Release, Rvt_22_Release, Rvt_23_Release, Rvt_24_Release]
+     version: [Rvt_16_Release, Rvt_17_Release, Rvt_18_Release, Rvt_19_Release, Rvt_20_Release, Rvt_21_Release, Rvt_22_Release, Rvt_23_Release, Rvt_24_Release, Rvt_25_Release]
    name: release nuget
    runs-on: windows-latest
    steps:
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v3.2.0
       with:
-       dotnet-version: 6.0.2xx
+       dotnet-version: 8.0.x
        
     - name: checkout
       uses: actions/checkout@v4.0.0
