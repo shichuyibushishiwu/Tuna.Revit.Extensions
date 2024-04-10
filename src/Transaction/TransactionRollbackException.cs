@@ -17,5 +17,5 @@ public class TransactionRollbackException : Exception
     /// <para>Initialize a friendly exception to roll back transaction</para>
     /// </summary>
     /// <param name="message"></param>
-    public TransactionRollbackException(string message = null) : base(message) { }
+    public TransactionRollbackException(string message = "Rollback") : base(message) { }
 }

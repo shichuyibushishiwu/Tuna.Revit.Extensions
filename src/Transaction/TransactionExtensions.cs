@@ -49,20 +49,18 @@ public static class TransactionExtensions
                 result.TransactionStatus = transaction.Commit(options);
                 return result;
             }
-            catch (TransactionRollbackException exception)
-            {
-                result.Message = exception.Message;
-                result.TransactionStatus = transaction.RollBack(options);
-                return result;
-            }
             catch (Exception exception)
             {
-                result.Exception = exception;
                 result.Message = exception.Message;
                 result.TransactionStatus = transaction.RollBack(options);
-                throw exception;
+                if (exception.GetType() != typeof(TransactionRollbackException))
+                {
+                    result.Exception = exception;
+                }
             }
         }
+
+        return result;
     }
 
     /// <summary>

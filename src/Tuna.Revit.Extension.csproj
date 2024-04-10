@@ -127,7 +127,6 @@
 	<ItemGroup>
 		<None Include="..\README.md" Pack="True" PackagePath="\" />
 		<None Include="..\Tuna.png" Pack="True" PackagePath="\" />
-		<None Include="..\TunaRibbon.xsd" Pack="True" PackagePath="\" Visible="true" />
 	</ItemGroup>
 
 	<ItemGroup>

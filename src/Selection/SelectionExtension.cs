@@ -192,7 +192,10 @@ public static class SelectionExtension
 
         return new SelectionResult<T>()
         {
-
+            Exception = result.Exception,
+            Message = result.Message,
+            SelectionStatus = result.SelectionStatus,
+            Value = result.SelectionStatus == SelectionStatus.Succeeded ? result.Value as T : default
         };
     }
 

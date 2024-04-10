@@ -27,7 +27,12 @@ public class ExternalDefinitionAttribute : Attribute
     /// <summary>
     /// 参数所在组
     /// </summary>
+#if Rvt_16 || Rvt_17 || Rvt_18 || Rvt_19 || Rvt_20 || Rvt_21 || Rvt_22 || Rvt_23
     public BuiltInParameterGroup ParameterGroup { get; set; } = BuiltInParameterGroup.INVALID;
+#else
+    public ForgeTypeId ParameterGroup { get; set; }
+#endif
+
 
 #if Rvt_16 || Rvt_17 || Rvt_18 || Rvt_19 || Rvt_20
 
@@ -43,24 +48,24 @@ public class ExternalDefinitionAttribute : Attribute
             UnitType = unitType;
         }
 #else
-        public ExternalDefinitionAttribute(string name, BuiltInParameterGroup builtInParameterGroup)
-        {
-            Name = name;
-            ParameterGroup = builtInParameterGroup;
-        }
+    public ExternalDefinitionAttribute(string name, ForgeTypeId builtInParameterGroup)
+    {
+        Name = name;
+        ParameterGroup = builtInParameterGroup;
+    }
 #endif
 
-        /// <summary>
-        /// 判断两个参数是否完全一致
-        /// </summary>
-        /// <param name="definition"></param>
-        /// <returns></returns>
-        public bool Equal(Definition definition)
-        {
-            if (definition == null) return false;
-            if (definition.Name != Name) return false;
-            if (definition.ParameterGroup != ParameterGroup) return false;
-#if Rvt_16 || Rvt_17|| Rvt_18|| Rvt_19|| Rvt_20
+    /// <summary>
+    /// 判断两个参数是否完全一致
+    /// </summary>
+    /// <param name="definition"></param>
+    /// <returns></returns>
+    public bool Equal(Definition definition)
+    {
+        if (definition == null) return false;
+        if (definition.Name != Name) return false;
+        if (definition.GetGroupTypeId() != ParameterGroup) return false;
+#if Rvt_16 || Rvt_17 || Rvt_18 || Rvt_19 || Rvt_20
             if (definition.ParameterType != ParameterType) return false;
             if (definition.UnitType != UnitType) return false;
 #endif
