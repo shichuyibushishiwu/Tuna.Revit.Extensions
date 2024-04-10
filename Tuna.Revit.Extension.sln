@@ -3,15 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0CD53AF8-74E4-4F2A-BA04-DC7B0AA1CEC1}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{34275DF4-26BE-4772-A596-EF731C0A66A2}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
 		Tuna.Revit.Build.props = Tuna.Revit.Build.props
-		TunaRibbon.xsd = TunaRibbon.xsd
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Sample", "sample\Tuna.Sample\Tuna.Sample.csproj", "{57D210DC-A989-4C3E-84E8-A40B7114052B}"
@@ -19,14 +16,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{78294CC8-0B3B-48D5-AC91-2E3C02377287}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{561BD9FE-C5B6-4817-930A-AC46291408EE}"
-	ProjectSection(SolutionItems) = preProject
-		src\Extensions\ArgumentNullExceptionUtils.cs = src\Extensions\ArgumentNullExceptionUtils.cs
-		tests\XMLFile1.xml = tests\XMLFile1.xml
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Revit.Test", "tests\Tuna.Revit.Test\Tuna.Revit.Test.csproj", "{49F3D6ED-FF71-403C-8D2B-8775A3080407}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Revit.Extension", "src\Tuna.Revit.Extension.csproj", "{F675D510-6992-4C0C-9FE9-AAB99638C7B5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2001D214-F87F-492C-A57C-F635633238CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -173,7 +168,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{57D210DC-A989-4C3E-84E8-A40B7114052B} = {78294CC8-0B3B-48D5-AC91-2E3C02377287}
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407} = {561BD9FE-C5B6-4817-930A-AC46291408EE}
-		{F675D510-6992-4C0C-9FE9-AAB99638C7B5} = {0CD53AF8-74E4-4F2A-BA04-DC7B0AA1CEC1}
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5} = {2001D214-F87F-492C-A57C-F635633238CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F3E44F7-9014-4012-85FD-37E211988994}
