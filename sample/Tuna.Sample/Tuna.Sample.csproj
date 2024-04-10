@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<UseWPF>true</UseWPF>
+		<TargetFramework>net48</TargetFramework>
 		<UseWindowsForms>true</UseWindowsForms>
 		<StartAction>Program</StartAction>
 		<StartProgram>D:\Autodesk\Revit 2020\Revit.exe</StartProgram>
