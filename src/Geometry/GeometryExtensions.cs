@@ -1,12 +1,21 @@
-﻿using Autodesk.Revit.DB;
+﻿/************************************************************************************
+   Author:十五
+   CretaeTime:
+   Mail:1012201478@qq.com
+   Github:https://github.com/shichuyibushishiwu
+
+   Description:
+
+************************************************************************************/
+
+using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Geometry;
-
+namespace Tuna.Revit.Extension;
 
 /// <summary>
 /// 图形扩展
@@ -40,29 +49,8 @@ public static class GeometryExtensions
                 case GeometryElement geometryElement:
                     objects.AddRange(ResolveGeometry(geometryElement));
                     break;
-                case Curve curve:
-                    objects.Add(curve);
-                    break;
-                case Edge edge:
-                    objects.Add(edge);
-                    break;
-                case Face face:
-                    objects.Add(face);
-                    break;
-                case Mesh mesh:
-                    objects.Add(mesh);
-                    break;
-                case Point point:
-                    objects.Add(point);
-                    break;
-                case PolyLine polyLine:
-                    objects.Add(polyLine);
-                    break;
-                case Profile profile:
-                    objects.Add(profile);
-                    break;
-                case Solid solid:
-                    objects.Add(solid);
+                default:
+                    objects.Add(item);
                     break;
             }
         }

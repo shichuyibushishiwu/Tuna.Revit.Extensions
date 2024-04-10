@@ -48,19 +48,16 @@ public static class SubTransactionExtensions
                 result.TransactionStatus = transaction.Commit();
                 return result;
             }
-            catch (TransactionRollbackException exception)
-            {
-                result.TransactionStatus = transaction.RollBack();
-                result.Message = exception.Message;
-                return result;
-            }
             catch (Exception exception)
             {
-                result.Exception = exception;
                 result.Message = exception.Message;
                 result.TransactionStatus = transaction.RollBack();
-                throw exception;
+                if (exception.GetType() != typeof(TransactionRollbackException))
+                {
+                    result.Exception = exception;
+                }
             }
         }
+        return result;
     }
 }

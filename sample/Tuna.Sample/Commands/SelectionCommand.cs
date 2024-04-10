@@ -36,14 +36,14 @@ namespace Tuna.Sample.Commands
 
             uiDocument.SelectObject(Autodesk.Revit.UI.Selection.ObjectType.Element);
 
-            SelectionResult<Reference> result = commandData.Application.ActiveUIDocument.SelectObject(Autodesk.Revit.UI.Selection.ObjectType.Face, 
+            SelectionResult<Reference> result = commandData.Application.ActiveUIDocument.SelectObject(Autodesk.Revit.UI.Selection.ObjectType.Face,
                 referencePredicate: parameters => parameters.Reference.ConvertToStableRepresentation(document).Contains("SURFACE"), "asd");
-            if (result.Succeeded)
+            if (result.SelectionStatus == SelectionStatus.Succeeded)
             {
-               
+
             }
 
-           
+
 
             commandData.Application.ActiveUIDocument.SelectObject(Autodesk.Revit.UI.Selection.ObjectType.LinkedElement,
                 element => element.Category.Id == BuiltInCategories.Walls, "asd");

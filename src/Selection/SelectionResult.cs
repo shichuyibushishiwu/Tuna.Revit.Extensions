@@ -8,6 +8,9 @@
 
 ************************************************************************************/
 
+using System;
+using Tuna.Revit.Extension;
+
 namespace Tuna.Revit.Extension;
 
 /// <summary>
@@ -17,14 +20,6 @@ namespace Tuna.Revit.Extension;
 /// <typeparam name="T"></typeparam>
 public class SelectionResult<T>
 {
-    /// <summary>
-    /// succeeded
-    /// </summary>
-    public SelectionResult()
-    {
-        Succeeded = true;
-    }
-
     /// <summary>
     /// message
     /// </summary>
@@ -38,5 +33,15 @@ public class SelectionResult<T>
     /// <summary>
     /// selction state
     /// </summary>
-    public bool Succeeded { get; set; }
+    public SelectionStatus SelectionStatus { get; set; }
+
+    /// <summary>
+    /// exception
+    /// </summary>
+    public Exception Exception { get; set; }
+
+    /// <summary>
+    /// Has exception
+    /// </summary>
+    public bool HasException => Exception != null;
 }

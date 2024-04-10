@@ -1,29 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../Tuna.Revit.Build.props" />
+
 	<PropertyGroup>
-		<TargetFramework>net48</TargetFramework>
 		<OutputType>Library</OutputType>
 		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-		<UseWPF>true</UseWPF>
-		<LangVersion>preview</LangVersion>
 		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-		<PlatformTarget>x64</PlatformTarget>
-		<Configurations>
-			Debug;Release;
-			Rvt_16_Debug;Rvt_16_Release;
-			Rvt_17_Debug;Rvt_17_Release;
-			Rvt_18_Debug;Rvt_18_Release;
-			Rvt_19_Debug;Rvt_19_Release;
-			Rvt_20_Debug;Rvt_20_Release;
-			Rvt_21_Debug;Rvt_21_Release;
-			Rvt_22_Debug;Rvt_22_Release;
-			Rvt_23_Debug;Rvt_23_Release;
-			Rvt_24_Debug;Rvt_24_Release;
-		</Configurations>
+		<UseWPF>true</UseWPF>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Company>Tuna</Company>
 		<Authors>Shiwu</Authors>
 		<PackageIcon>Tuna.png</PackageIcon>
-		<TunaVer>14</TunaVer>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Description>This is an extensions package for revit api.</Description>
 		<PackageProjectUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions/wiki</PackageProjectUrl>
@@ -33,68 +19,7 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
-		<RvtVersion>2016</RvtVersion>
-		<DefineConstants>Rvt_16</DefineConstants>
-		<TargetFramework>net452</TargetFramework>
-		<Version>2016.2.$(TunaVer)</Version>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_17))'">
-		<RvtVersion>2017</RvtVersion>
-		<DefineConstants>Rvt_17</DefineConstants>
-		<TargetFramework>net46</TargetFramework>
-		<Version>2017.2.$(TunaVer)</Version>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_18))'">
-		<RvtVersion>2018</RvtVersion>
-		<DefineConstants>Rvt_18</DefineConstants>
-		<TargetFramework>net46</TargetFramework>
-		<Version>2018.2.$(TunaVer)</Version>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_19))'">
-		<RvtVersion>2019</RvtVersion>
-		<DefineConstants>Rvt_19</DefineConstants>
-		<TargetFramework>net47</TargetFramework>
-		<Version>2019.0.$(TunaVer)</Version>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_20))'">
-		<RvtVersion>2020</RvtVersion>
-		<DefineConstants>Rvt_20</DefineConstants>
-		<TargetFramework>net47</TargetFramework>
-		<Version>2020.0.$(TunaVer)</Version>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_21))'">
-		<RvtVersion>2021</RvtVersion>
-		<DefineConstants>Rvt_21</DefineConstants>
-		<TargetFramework>net48</TargetFramework>
-		<Version>2021.0.$(TunaVer)</Version>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_22))'">
-		<RvtVersion>2022</RvtVersion>
-		<DefineConstants>Rvt_22</DefineConstants>
-		<TargetFramework>net48</TargetFramework>
-		<Version>2022.0.$(TunaVer)</Version>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_23))'">
-		<RvtVersion>2023</RvtVersion>
-		<DefineConstants>Rvt_23</DefineConstants>
-		<TargetFramework>net48</TargetFramework>
-		<Version>2023.0.$(TunaVer)</Version>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_24))'">
-		<RvtVersion>2024</RvtVersion>
-		<DefineConstants>Rvt_24</DefineConstants>
-		<TargetFramework>net48</TargetFramework>
-		<Version>2024.0.$(TunaVer)</Version>
-	</PropertyGroup>
+	
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rvt_16_Release|AnyCPU'">
 		<Optimize>True</Optimize>
@@ -185,6 +110,12 @@
 			<IncludeAssets>compile</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_25))'">
+		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2025.0.0">
+			<IncludeAssets>compile</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	
 
 	<ItemGroup>
 		<Compile Remove="Properties\**" />
@@ -196,10 +127,10 @@
 	<ItemGroup>
 		<None Include="..\README.md" Pack="True" PackagePath="\" />
 		<None Include="..\Tuna.png" Pack="True" PackagePath="\" />
-		<None Include="..\TunaRibbon.xsd" Pack="True" PackagePath="\" Visible="true" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="System.Drawing.Common" Version="8.0.3" />
 		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 

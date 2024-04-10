@@ -46,20 +46,18 @@ public static class TransactionGroupExtensions
                 result.TransactionStatus = options.IsMerge ? tsg.Assimilate() : tsg.Commit();
                 return result;
             }
-            catch (TransactionRollbackException exception)
-            {
-                result.TransactionStatus = tsg.RollBack();
-                result.Message = exception.Message;
-                return result;
-            }
             catch (Exception exception)
             {
-                result.Exception = exception;
                 result.Message = exception.Message;
                 result.TransactionStatus = tsg.RollBack();
-                throw exception;
+                if (exception.GetType() != typeof(TransactionRollbackException))
+                {
+                    result.Exception = exception;
+                }
             }
         }
+
+        return result;
     }
 
     /// <summary>

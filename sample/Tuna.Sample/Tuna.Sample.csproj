@@ -1,27 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="../../Tuna.Revit.Build.props" />
 	<PropertyGroup>
-		<TargetFramework>net48</TargetFramework>
-		<PlatformTarget>x64</PlatformTarget>
-		<LangVersion>latest</LangVersion>
-		<Configurations>
-			Debug;Release;
-			Rvt_16_Debug;Rvt_16_Release;
-			Rvt_17_Debug;Rvt_17_Release;
-			Rvt_18_Debug;Rvt_18_Release;
-			Rvt_19_Debug;Rvt_19_Release;
-			Rvt_20_Debug;Rvt_20_Release;
-			Rvt_21_Debug;Rvt_21_Release;
-			Rvt_22_Debug;Rvt_22_Release;
-			Rvt_23_Debug;Rvt_23_Release;
-			Rvt_24_Debug;Rvt_24_Release;
-		</Configurations>
-		<TunaVersion>8</TunaVersion>
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<StartAction>Program</StartAction>
 		<StartProgram>D:\Autodesk\Revit 2020\Revit.exe</StartProgram>
 	</PropertyGroup>
-
 	<!--<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
 		<PackageReference Include="Tuna.Revit.Extension" Version="2016.2.$(TunaVersion)" />
 	</ItemGroup>
@@ -74,12 +58,12 @@
 	  </None>
 	</ItemGroup>
 
-	<Target Name="CopyAddin" BeforeTargets="PostBuildEvent" Condition="'$(Configuration.Contains(Debug))'">
+	<!--<Target Name="CopyAddin" BeforeTargets="PostBuildEvent" Condition="'$(Configuration.Contains(Debug))'">
 		<ItemGroup>
 			<SourceFiles Include="$(ProjectDir)$(OutDir)\**\*.*"></SourceFiles>
 		</ItemGroup>
 		<Copy SourceFiles="$(ProjectDir)\Tuna.addin" DestinationFolder="C:\ProgramData\Autodesk\Revit\Addins\2020"></Copy>
 		<Copy SourceFiles="@(SourceFiles)" DestinationFiles="@(SourceFiles->'C:\ProgramData\Autodesk\Revit\Addins\2020\Tuna\%(RecursiveDir)%(Filename)%(Extension)')"></Copy>
 
-	</Target>
+	</Target>-->
 </Project>

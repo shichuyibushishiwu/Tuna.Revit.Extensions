@@ -26,4 +26,10 @@ public class TransactionResult
     /// 事务的状态
     /// </summary>
     public TransactionStatus TransactionStatus { get; set; }
+
+    /// <summary>
+    /// 是否存在未知的异常
+    /// <para>Has exception</para>
+    /// </summary>
+    public bool HasException => Exception != null;
 }
