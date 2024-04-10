@@ -84,7 +84,7 @@
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_25))'">
 		<RvtVersion>2025</RvtVersion>
 		<DefineConstants>Rvt_25</DefineConstants>
-		<TargetFramework>net8.0-windows7.0</TargetFramework>
+		<TargetFramework>net8.0-windows</TargetFramework>
 		<Version>2025.0.$(TunaVer)</Version>
 	</PropertyGroup>
 </Project>
