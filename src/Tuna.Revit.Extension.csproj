@@ -8,6 +8,7 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Company>Tuna</Company>
 		<Authors>Shiwu</Authors>
+		<TargetFramework>net48</TargetFramework>
 		<PackageIcon>Tuna.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Description>This is an extensions package for revit api.</Description>
