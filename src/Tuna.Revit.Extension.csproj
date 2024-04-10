@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="../Tuna.Revit.Build.props" />
 
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
@@ -17,8 +16,92 @@
 		<RepositoryUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions</RepositoryUrl>
 		<Copyright>shichuyibushishiwu</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Configurations>
+			Debug;Release;
+			Rvt_16_Debug;Rvt_16_Release;
+			Rvt_17_Debug;Rvt_17_Release;
+			Rvt_18_Debug;Rvt_18_Release;
+			Rvt_19_Debug;Rvt_19_Release;
+			Rvt_20_Debug;Rvt_20_Release;
+			Rvt_21_Debug;Rvt_21_Release;
+			Rvt_22_Debug;Rvt_22_Release;
+			Rvt_23_Debug;Rvt_23_Release;
+			Rvt_24_Debug;Rvt_24_Release;
+			Rvt_25_Debug;Rvt_25_Release;
+		</Configurations>
+		<TunaVer>15</TunaVer>
+		<PlatformTarget>x64</PlatformTarget>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
+		<RvtVersion>2016</RvtVersion>
+		<DefineConstants>Rvt_16</DefineConstants>
+		<TargetFramework>net452</TargetFramework>
+		<Version>2016.2.$(TunaVer)</Version>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_17))'">
+		<RvtVersion>2017</RvtVersion>
+		<DefineConstants>Rvt_17</DefineConstants>
+		<TargetFramework>net46</TargetFramework>
+		<Version>2017.2.$(TunaVer)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_18))'">
+		<RvtVersion>2018</RvtVersion>
+		<DefineConstants>Rvt_18</DefineConstants>
+		<TargetFramework>net46</TargetFramework>
+		<Version>2018.2.$(TunaVer)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_19))'">
+		<RvtVersion>2019</RvtVersion>
+		<DefineConstants>Rvt_19</DefineConstants>
+		<TargetFramework>net47</TargetFramework>
+		<Version>2019.0.$(TunaVer)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_20))'">
+		<RvtVersion>2020</RvtVersion>
+		<DefineConstants>Rvt_20</DefineConstants>
+		<TargetFramework>net47</TargetFramework>
+		<Version>2020.0.$(TunaVer)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_21))'">
+		<RvtVersion>2021</RvtVersion>
+		<DefineConstants>Rvt_21</DefineConstants>
+		<TargetFramework>net48</TargetFramework>
+		<Version>2021.0.$(TunaVer)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_22))'">
+		<RvtVersion>2022</RvtVersion>
+		<DefineConstants>Rvt_22</DefineConstants>
+		<TargetFramework>net48</TargetFramework>
+		<Version>2022.0.$(TunaVer)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_23))'">
+		<RvtVersion>2023</RvtVersion>
+		<DefineConstants>Rvt_23</DefineConstants>
+		<TargetFramework>net48</TargetFramework>
+		<Version>2023.0.$(TunaVer)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_24))'">
+		<RvtVersion>2024</RvtVersion>
+		<DefineConstants>Rvt_24</DefineConstants>
+		<TargetFramework>net48</TargetFramework>
+		<Version>2024.0.$(TunaVer)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_25))'">
+		<RvtVersion>2025</RvtVersion>
+		<DefineConstants>Rvt_25</DefineConstants>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<Version>2025.0.$(TunaVer)</Version>
+	</PropertyGroup>
 	
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rvt_16_Release|AnyCPU'">
@@ -114,6 +197,7 @@
 		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2025.0.0">
 			<IncludeAssets>compile</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="System.Drawing.Common" Version="8.0.3" />
 	</ItemGroup>
 	
 
@@ -130,7 +214,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Drawing.Common" Version="8.0.3" />
 		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
 
