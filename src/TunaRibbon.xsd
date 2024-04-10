@@ -1,0 +1,3824 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tuna.Revit.Extension</name>
+    </assembly>
+    <members>
+        <member name="T:Tuna.Revit.Extension.ExternalDefinitionAttribute">
+            <summary>
+            Revit外部参数特性以获取元素的参数
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.ExternalDefinitionAttribute.Name">
+            <summary>
+            参数的名称
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.ExternalDefinitionAttribute.ParameterGroup">
+            <summary>
+            参数所在组
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ExternalDefinitionAttribute.Equal(Autodesk.Revit.DB.Definition)">
+            <summary>
+            判断两个参数是否完全一致
+            </summary>
+            <param name="definition"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.InternalDefinitionAttribute">
+            <summary>
+            标记Revit内部参数属性以获取其参数
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.InternalDefinitionAttribute.BuiltInParameter">
+            <summary>
+            Revit内置参数
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.RevitDefinitionAttributeExtension">
+            <summary>
+            <see cref="T:Tuna.Revit.Extension.ExternalDefinitionAttribute"/>与<see cref="T:Tuna.Revit.Extension.InternalDefinitionAttribute"/>的解析方法
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.RevitDefinitionAttributeExtension.GetUniqueParameter(Tuna.Revit.Extension.ExternalDefinitionAttribute,Autodesk.Revit.DB.Element)">
+            <summary>
+            根据<see cref="T:Tuna.Revit.Extension.ExternalDefinitionAttribute"/>以获取元素的指定参数
+            </summary>
+            <param name="externalDefinitionAttribute">外部参数定义</param>
+            <param name="element">参数所在的元素</param>
+            <returns></returns>
+            <exception cref="T:ArgumentNullException">外部参数为null，或元素为空，或未在元素中找到指定外部参数</exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.RevitDefinitionAttributeExtension.GetUniqueParameter(Tuna.Revit.Extension.InternalDefinitionAttribute,Autodesk.Revit.DB.Element)">
+            <summary>
+            根据<see cref="T:Tuna.Revit.Extension.InternalDefinitionAttribute"/>获取元素指定内部参数
+            </summary>
+            <param name="internalDefinitionAttribute">内部参数定义</param>
+            <param name="element">参数所在的元素</param>
+            <returns>参数</returns>
+            <exception cref="T:ArgumentNullException">内部参数为null，或元素为空，或未在元素中找到指定外部参数</exception>
+            <exception cref="T:System.Exception">无效的参数定义</exception>
+        </member>
+        <member name="T:Tuna.Revit.Extension.CollectorExtension">
+            <summary>
+            Revit element filters extension
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.CollectorExtension.FilterTypes">
+            <summary>
+            Spatial element types
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document)">
+            <summary>
+            This is a function which used to new <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/> instance
+            </summary>
+            <param name="document"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+            <exception cref="T:Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementFilter)">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据元素过滤器过滤出符合条件的图元对象
+            <para>Get elements by <see cref="T:Autodesk.Revit.DB.ElementFilter"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="filter">element filter</param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,System.Type)">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据类型（包括以下列出的类型）过滤出文档中的图元对象，该类型必须继承于 <see cref="T:Autodesk.Revit.DB.Element"/>,
+            但不是所有<see cref="T:Autodesk.Revit.DB.Element"/>派生的类都可以通过<see cref="T:Autodesk.Revit.DB.ElementClassFilter"/>进行过滤
+            <para>Get the elements in the document which type is subclass of <see cref="T:Autodesk.Revit.DB.Element"/></para>
+            <list type="bullet">
+            <item><see cref="T:Autodesk.Revit.DB.Architecture.Room"/></item>
+            <item><see cref="T:Autodesk.Revit.DB.Architecture.RoomTag"/></item>
+            <item><see cref="T:Autodesk.Revit.DB.Area"/></item>
+            <item><see cref="T:Autodesk.Revit.DB.AreaTag"/></item>
+            <item><see cref="T:Autodesk.Revit.DB.Mechanical.Space"/></item>
+            <item><see cref="T:Autodesk.Revit.DB.Mechanical.SpaceTag"/></item>
+            </list>
+            </summary>
+            <remarks>如果是上面列表中的类型，将不会使用<see cref="T:Autodesk.Revit.DB.ElementClassFilter"/>，而是选择慢速过滤器</remarks>
+            <param name="document">要查询的文档</param>
+            <param name="type">type of element</param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+            <exception cref="T:System.ArgumentException">类型必须继承于<see cref="T:Autodesk.Revit.DB.Element"/></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,System.Type,System.Type[])">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据类型过滤出文档中的图元对象，该类型必须继承于<see cref="T:Autodesk.Revit.DB.Element"/>
+            <para>Get the elements in the document which type is subclass of <see cref="T:Autodesk.Revit.DB.Element"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="type">element type</param>
+            <param name="types">element types</param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.BuiltInCategory)">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据内置类别过滤出文档中的图元对象
+            <para>Get elements in the document by <see cref="T:Autodesk.Revit.DB.BuiltInCategory"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="category">内置类别<see cref="T:Autodesk.Revit.DB.BuiltInCategory"/></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.BuiltInCategory,Autodesk.Revit.DB.BuiltInCategory[])">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据多个内置类别过滤出文档中的图元对象
+            <para>Get elements in the document by categories <see cref="T:Autodesk.Revit.DB.BuiltInCategory"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="category"></param>
+            <param name="categories"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.Structure.StructuralWallUsage)">
+            <summary>
+            <c>[Slow Filter]</c>
+            根据结构墙体实例参数 <b>「结构用途」</b> 过滤出文档中的结构墙体图元对象
+            <para>Get structural walls in the document by <see cref="T:Autodesk.Revit.DB.Structure.StructuralWallUsage"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="structuralWallUsage"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.Structure.StructuralMaterialType)">
+             <summary>
+             <c>[Slow Filter]</c>
+             根据结构族内部的参数 <b>「用于模型行为的材质」</b> 过滤出文档中的结构图元对象
+            <para> Get structural elements in the document by <see cref="T:Autodesk.Revit.DB.Structure.StructuralMaterialType"/></para>
+             </summary>
+             <param name="document">要查询的文档</param>
+             <param name="structuralMaterialType"></param>
+             <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.Structure.StructuralInstanceUsage)">
+            <summary>
+            <c>[Slow Filter]</c>
+            根据结构图元的实例参数<b>「结构用途」</b> 过滤出文档中的结构图元对象
+            <para>Get elements by <see cref="T:Autodesk.Revit.DB.Structure.StructuralInstanceUsage"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="structuralInstanceUsage"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.FamilySymbol)">
+            <summary>
+            <c>[Slow Filter]</c>
+            根据族类型过滤出文档中的族实例对象
+            <para>Get elements by <see cref="T:Autodesk.Revit.DB.FamilySymbol"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="familySymbol"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.Level)">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据标高过滤出文档中约束为当前标高的对象
+            <para>Get elements by <see cref="T:Autodesk.Revit.DB.Level"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="level">host level</param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementId)">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据内置类别的<see cref="T:Autodesk.Revit.DB.ElementId"/>过滤出文档中的图元对象,
+            扩展包提供了常量类型<see cref="T:Tuna.Revit.Extension.BuiltInCategories"/>可进行<c>Id</c>的调用
+            <para>Get elements in the document by element category id , you can used <see cref="T:Tuna.Revit.Extension.BuiltInParameters"/> to get parameter id</para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="categoryId">要查询的类别<see cref="T:Autodesk.Revit.DB.ElementId"/></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementId,Autodesk.Revit.DB.ElementId[])">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据内置类别的<see cref="T:Autodesk.Revit.DB.ElementId"/>过滤出文档中的图元对象,
+            扩展包提供了常量类型<see cref="T:Tuna.Revit.Extension.BuiltInCategories"/>可进行<c>Id</c>的调用
+            <para>Get elements in the document by element category id , you can used <see cref="T:Tuna.Revit.Extension.BuiltInParameters"/> to get parameter id</para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="categoryId">要查询的类别<see cref="T:Autodesk.Revit.DB.ElementId"/></param>
+            <param name="categories">要查询的其他类别<see cref="T:Autodesk.Revit.DB.ElementId"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.Structure.StructuralType)">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据<see cref="T:Autodesk.Revit.DB.FamilyInstance"/> 的属性 <c>StructuralType</c> 过滤出文档中的结构图元对象
+            <para>Get structural elements in the document by <see cref="T:Autodesk.Revit.DB.Structure.StructuralType"/></para>
+            </summary>
+            <remarks>同一个族类型从不同的命令创建出来后的结构类型不同</remarks>
+            <param name="document">要查询的文档</param>
+            <param name="structuralType"><see cref="T:Autodesk.Revit.DB.Structure.StructuralType"/></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.CurveElementType)">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据线性类型获取文档中图元对象
+            <para>Get curve elements by <see cref="T:Autodesk.Revit.DB.CurveElementType"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="curveElementType"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements``1(Autodesk.Revit.DB.Document,System.Func{``0,System.Boolean})">
+            <summary>
+            根据类型过滤出文档中的图元对象
+            <para>Get the elements in the document which type is <typeparamref name="T"/></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="document">要查询的文档</param>
+            <param name="predicate"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements``2(Autodesk.Revit.DB.Document)">
+            <summary>
+            根据类型过滤出文档中的图元对象
+            <para>Get the elements in the document which type is <typeparamref name="T1"/> or <typeparamref name="T2"/></para>
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <param name="document"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements``3(Autodesk.Revit.DB.Document)">
+            <summary>
+            根据类型过滤出文档中的图元对象
+            <para>Get the elements in the document which type is <typeparamref name="T1"/> or <typeparamref name="T2"/> or <typeparamref name="T3"/></para>
+            </summary>
+            <typeparam name="T1"></typeparam>
+            <typeparam name="T2"></typeparam>
+            <typeparam name="T3"></typeparam>
+            <param name="document"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElementTypes(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementId)">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据内置类别的<see cref="T:Autodesk.Revit.DB.ElementId"/>过滤出文档中的图元类型对象,
+            扩展包提供了常量类型<see cref="T:Tuna.Revit.Extension.BuiltInCategories"/>可进行<c>Id</c>的调用
+            <para>Get elements by category <see cref="T:Autodesk.Revit.DB.ElementId"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="categoryId">要查询的类型<see cref="T:Autodesk.Revit.DB.ElementId"/></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElementTypes(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementId,Autodesk.Revit.DB.ElementId[])">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据多个内置类别的<see cref="T:Autodesk.Revit.DB.ElementId"/>过滤出文档中的图元类型对象,
+            扩展包提供了常量类型<see cref="T:Tuna.Revit.Extension.BuiltInCategories"/>可进行<c>Id</c>的调用
+            <para>Get elements by categories <see cref="T:Autodesk.Revit.DB.ElementId"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="categoryId">要查询的文档</param>
+            <param name="categories">要查询的类型<see cref="T:Autodesk.Revit.DB.ElementId"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElementTypes(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.BuiltInCategory)">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据内置类别过滤出文档中的图元类型对象
+            <para>Get element types in the document by <see cref="T:Autodesk.Revit.DB.BuiltInCategory"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="category">要查询的类别</param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElementTypes(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.BuiltInCategory,Autodesk.Revit.DB.BuiltInCategory[])">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据多个内置类别过滤出文档中的图元类型对象
+            <para>Get element types in the document by categories <see cref="T:Autodesk.Revit.DB.BuiltInCategory"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="category">要查询的类别</param>
+            <param name="categories">要查询的其他类别</param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElementTypes``1(Autodesk.Revit.DB.Document,System.Func{``0,System.Boolean})">
+            <summary>
+            根据类型过滤出文档中的图元类型对象
+            <para>Get element types by <typeparamref name="T"/></para>
+            </summary>
+            <typeparam name="T"><see cref="T:Autodesk.Revit.DB.ElementType"/></typeparam>
+            <param name="document">要查询的文档</param>
+            <param name="predicate">对查询到的图元类型进行条件过滤</param>
+            <returns>从文档中查询到的图元集合 <see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetStructualFamilies(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.Structure.StructuralMaterialType)">
+            <summary>
+            根据结构族参数 <b>「用于模型行为的材质」</b> 过滤出文档中的结构族对象
+            <para>Get structual families by <see cref="T:Autodesk.Revit.DB.Structure.StructuralMaterialType"/></para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="structuralMaterialType"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetFamilySymbols(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementId)">
+            <summary>
+            根据族的<see cref="T:Autodesk.Revit.DB.ElementId"/> 过滤出文档中的族类型
+            <para>Get family symbol elements by family <see cref="T:Autodesk.Revit.DB.ElementId"/> </para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="familyId"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetGraphicElements(Autodesk.Revit.DB.Document,System.Func{Autodesk.Revit.DB.Element,System.Boolean})">
+            <summary>
+            获取文档中的所有三维图形图元
+             <para>Get all of the 3d model elements from target document</para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="predicate">predicate</param>
+            <returns>从文档中查询到的图元集合 <see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorExtension.GetElements(Autodesk.Revit.DB.Document,System.String,System.String)">
+            <summary>
+            根据族名称和族类型名称获取文档中的图元
+            <para>Get the elements in the document by family name and family symbol name</para>
+            </summary>
+            <param name="document">要查询的文档</param>
+            <param name="familyName">族名称</param>
+            <param name="familySymbolName">族类型名称</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Tuna.Revit.Extension.CollectorInListExtension">
+            <summary>
+            Revit element filters extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInListExtension.GetElementsInCollector(Autodesk.Revit.DB.Document,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId})">
+            <summary>
+            在列表范围进行查询
+            </summary>
+            <param name="document">所在的文档</param>
+            <param name="elementIds">要查询的列表范围</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInListExtension.GetElementsInCollector(Autodesk.Revit.DB.Document,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId},Autodesk.Revit.DB.ElementFilter)">
+            <summary>
+            根据元素过滤器 <see cref="T:Autodesk.Revit.DB.ElementFilter"/> 过滤出列表中符合条件的图元
+            <para>Get elements in the collection base on element filter</para>
+            </summary>
+            <param name="document">所在的文档</param>
+            <param name="elementIds">要查询的列表范围</param>
+            <param name="elementFilter">元素过滤器</param>
+            <returns>从列表中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInListExtension.GetElementsInCollector(Autodesk.Revit.DB.Document,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId},System.Type)">
+            <summary>
+            根据类型过滤出列表中的图元对象
+            <para>Get the elements in the collection which type is subclass of <see cref="T:Autodesk.Revit.DB.Element"/></para>
+            </summary>
+            <param name="document">所在的文档</param>
+            <param name="elementIds">要查询的列表范围</param>
+            <param name="type"></param>
+            <returns>从列表中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInListExtension.GetElementsInCollector(Autodesk.Revit.DB.Document,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId},System.Type,System.Type[])">
+            <summary>
+            根据类型过滤出列表中的图元对象，该类型必须继承于<see cref="T:Autodesk.Revit.DB.Element"/>
+            <para>Get the elements in the collection which type is subclass of <see cref="T:Autodesk.Revit.DB.Element"/></para>
+            </summary>
+            <param name="document">所在的文档</param>
+            <param name="elementIds">要查询的列表范围</param>
+            <param name="type"></param>
+            <param name="types"></param>
+            <returns>从列表中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInListExtension.GetElementsInCollector(Autodesk.Revit.DB.Document,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId},Autodesk.Revit.DB.BuiltInCategory)">
+            <summary>
+            根据内置类别过滤出列表中的图元对象
+            <para>Get elements in the collection by <see cref="T:Autodesk.Revit.DB.BuiltInCategory"/></para>
+            </summary>
+            <param name="document">所在的文档</param>
+            <param name="elementIds">要查询的列表范围</param>
+            <param name="builtInCategory"></param>
+            <returns>从列表中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInListExtension.GetElementsInCollector(Autodesk.Revit.DB.Document,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId},Autodesk.Revit.DB.BuiltInCategory,Autodesk.Revit.DB.BuiltInCategory[])">
+            <summary>
+            根据多个内置类别过滤出列表中的图元对象
+            <para>Get elements in the collection by multicategoriy <see cref="T:Autodesk.Revit.DB.BuiltInCategory"/></para>
+            </summary>
+            <param name="document">所在的文档</param>
+            <param name="elementIds">要查询的列表范围</param>
+            <param name="builtInCategory"></param>
+            <param name="categories"></param>
+            <returns>从列表中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInListExtension.GetElementsInCollector(Autodesk.Revit.DB.Document,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId},Autodesk.Revit.DB.Structure.StructuralWallUsage)">
+            <summary>
+            根据结构墙体实例参数 <b>「结构用途」</b> 过滤出列表中的结构墙体图元对象
+            <para>Get structural walls in the collection by <see cref="T:Autodesk.Revit.DB.Structure.StructuralWallUsage"/></para>
+            </summary>
+            <param name="document">所在的文档</param>
+            <param name="elementIds">要查询的列表范围</param>
+            <param name="structuralWallUsage"></param>
+            <returns>从列表中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInListExtension.GetElementIntersectsInCollector(Autodesk.Revit.DB.Document,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId},Autodesk.Revit.DB.Element)">
+            <summary>
+            从列表中查找与目标图元发生碰撞的对象
+            <para>Get the elements which intersected with target elements</para>
+            </summary>
+            <param name="document">所在的文档</param>
+            <param name="elementIds">要查询的列表范围</param>
+            <param name="element">要进行碰撞的图元</param>
+            <returns>从列表中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.CollectorInViewExtension">
+            <summary>
+            Revit element filters extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View)">
+            <summary>
+            根据视图获取视图中的所有图元对象
+            <para>Get elements in view <see cref="T:Autodesk.Revit.DB.View"/></para>
+            </summary>
+            <param name="view">host view</param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View,Autodesk.Revit.DB.ElementFilter)">
+            <summary>
+            根据元素过滤器获取视图中的图元对象
+            <para>Get elements in view by <see cref="T:Autodesk.Revit.DB.ElementFilter"/></para>
+            </summary>
+            <param name="view">host view</param>
+            <param name="elementFilter"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View,System.Type)">
+            <summary>
+            根据类型获取视图中的图元对象
+            <para>Get elements in view by <see cref="T:System.Type"/></para>
+            </summary>
+            <param name="view">Revit view</param>
+            <param name="type"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View,Autodesk.Revit.DB.BuiltInCategory)">
+            <summary>
+            <c>[Quick Filter]</c>根据内置类别过滤出视图中的图元对象
+            <para>Get elements by <see cref="T:Autodesk.Revit.DB.BuiltInCategory"/></para> 
+            </summary>
+            <param name="view"></param>
+            <param name="category"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View,Autodesk.Revit.DB.Structure.StructuralWallUsage)">
+            <summary>
+            <c>[Slow Filter]</c>根据结构墙体实例参数 <b>「结构用途」</b> 过滤出视图中的结构墙体图元对象
+            <para>Get elements by <see cref="T:Autodesk.Revit.DB.Structure.StructuralWallUsage"/></para> 
+            </summary>
+            <param name="view"></param>
+            <param name="structuralWallUsage"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View,Autodesk.Revit.DB.Structure.StructuralMaterialType)">
+             <summary>
+             <c>[Slow Filter]</c>根据结构族参数 <b>「用于模型行为的材质」</b> 过滤出视图中的结构图元对象
+            <para> Get elements by <see cref="T:Autodesk.Revit.DB.Structure.StructuralMaterialType"/></para>
+             </summary>
+             <param name="view"></param>
+             <param name="structuralMaterialType"></param>
+             <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View,Autodesk.Revit.DB.Structure.StructuralInstanceUsage)">
+            <summary>
+            <c>[Slow Filter]</c>根据结构图元的实例参数<b>「结构用途」</b> 过滤出当前视图中的结构图元对象
+            </summary>
+            <param name="view"></param>
+            <param name="structuralInstanceUsage"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View,Autodesk.Revit.DB.FamilySymbol)">
+            <summary>
+            <c>[Slow Filter]</c>根据族类型过滤出视图中的族实例对象
+            <para>Get elements by <see cref="T:Autodesk.Revit.DB.FamilySymbol"/></para>
+            </summary>
+            <param name="view"></param>
+            <param name="familySymbol"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View,Autodesk.Revit.DB.ElementId)">
+            <summary>
+            <c>[Quick Filter]</c>根据内置类别的<see cref="T:Autodesk.Revit.DB.ElementId"/>过滤出视图中的图元对象,
+            扩展包提供了常量类型<see cref="T:Tuna.Revit.Extension.BuiltInCategories"/>可进行<c><see cref="T:Autodesk.Revit.DB.ElementId"/></c>的调用
+            <para>Get elements by element category id , you can used <see cref="T:Tuna.Revit.Extension.BuiltInParameters"/> to get parameter id</para>
+            </summary>
+            <param name="view"></param>
+            <param name="categoryId"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View,Autodesk.Revit.DB.Structure.StructuralType)">
+            <summary>
+            <c>[Quick Filter]</c>
+            根据<see cref="T:Autodesk.Revit.DB.FamilyInstance"/> 的属性 <c>StructuralType</c> 过滤出视图中的结构图元对象
+            <para>Get structural elements by <see cref="T:Autodesk.Revit.DB.Structure.StructuralType"/></para> 
+            </summary>
+            <remarks>同一个族类型从不同的按钮创建出来后的结构类型不同</remarks>
+            <param name="view"></param>
+            <param name="structuralType"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements(Autodesk.Revit.DB.View,Autodesk.Revit.DB.CurveElementType)">
+            <summary>
+            <c>[Quick Filter]</c>根据线性类型获取视图中图元对象
+            <para>Get elements by <see cref="T:Autodesk.Revit.DB.CurveElementType"/></para>
+            </summary>
+            <param name="view"></param>
+            <param name="curveElementType"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.CollectorInViewExtension.GetElements``1(Autodesk.Revit.DB.View,System.Func{``0,System.Boolean})">
+            <summary>
+            根据类型获取视图中的图元
+            <para>Get element in view by <typeparamref name="T"/></para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="view">host view</param>
+            <param name="predicate"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.ParameterFilterStringOperator">
+            <summary>
+            字符串计算符
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.ParameterFilterStringOperator.BeginWith">
+            <summary>
+            字符串开始字符是
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.ParameterFilterStringOperator.Contains">
+            <summary>
+            字符串包含
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.ParameterFilterStringOperator.EndsWith">
+            <summary>
+            字符串结束是
+            </summary>
+            
+        </member>
+        <member name="F:Tuna.Revit.Extension.ParameterFilterStringOperator.Equals">
+            <summary>
+            等于
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.ParameterFilterStringOperator.Greater">
+            <summary>
+            大于
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.ParameterFilterStringOperator.GreatorOrEqual">
+            <summary>
+            大于等于
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.ParameterFilterStringOperator.Less">
+            <summary>
+            小于
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.ParameterFilterStringOperator.LessOrEqual">
+            <summary>
+            小于等于
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.BuiltInAssets">
+            <summary>
+            Revit assets
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInAssets.Category">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInAssets.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInAssets.Thumbnail">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.BuiltInCategories">
+            <summary>
+            Revit 中部分常用的内置类别
+            <para>Revit builtin categories</para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Invaild">
+            <summary>
+            无效的类别
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.INVALID"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ViewportLabel">
+            <summary>
+            视图标题
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ViewportLabel"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Viewports">
+            <summary>
+            视口
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Viewports"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.LightingDevices">
+            <summary>
+            灯具
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_LightingDevices"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Furniture">
+            <summary>
+            家具
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Furniture"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AdaptivePoints">
+            <summary>
+            自适应点
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AdaptivePoints"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.TextNotes">
+            <summary>
+            文字注释
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_TextNotes"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MechanicalEquipmentTags">
+            <summary>
+            机电设备标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MechanicalEquipmentTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PipeInsulations">
+            <summary>
+            管道隔热层
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PipeInsulations"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SpecialityEquipmentTags">
+            <summary>
+            专用设备标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SpecialityEquipmentTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AreaReinSpanSymbol">
+            <summary>
+            结构区域钢筋符号
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AreaReinSpanSymbol"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CableTrayFitting">
+            <summary>
+            电缆桥架配件
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CableTrayFitting"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FurnitureSystemTags">
+            <summary>
+            家具系统标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FurnitureSystemTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.LightingFixtures">
+            <summary>
+            照明设备
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_LightingFixtures"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.IsolatedFoundationAnalyticalTags">
+            <summary>
+            分析独立基础标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_IsolatedFoundationAnalyticalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ElectricalFixtures">
+            <summary>
+            电气装置
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ElectricalFixtures"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DetailComponentTags">
+            <summary>
+            详图项目标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DetailComponentTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FoundationSlabAnalytical">
+            <summary>
+            分析基础底板
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FoundationSlabAnalytical"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PipeCurves">
+            <summary>
+            管道
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PipeCurves"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Ramps">
+            <summary>
+            坡道
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Ramps"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Topography">
+            <summary>
+            地形
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Topography"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Site">
+            <summary>
+            场地
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Site"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Sprinklers">
+            <summary>
+            喷头
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Sprinklers"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ColorFillLegends">
+            <summary>
+            颜色填充图例
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ColorFillLegends"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Roofs">
+            <summary>
+            屋顶
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Roofs"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ShaftOpening">
+            <summary>
+            竖井洞口
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ShaftOpening"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DoorTags">
+            <summary>
+            门标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DoorTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.WindowTags">
+            <summary>
+            窗标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_WindowTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricationContainmentTags">
+            <summary>
+            MEP 预制保护层标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricationContainmentTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricationHangerTags">
+            <summary>
+            MEP 预制支架标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricationHangerTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CouplerTags">
+            <summary>
+            结构钢筋接头标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CouplerTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Coupler">
+            <summary>
+            结构钢筋接头
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Coupler"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricationDuctwork">
+            <summary>
+            MEP 预制管网
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricationDuctwork"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricationDuctworkTags">
+            <summary>
+            MEP 预制管网标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricationDuctworkTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricationHangers">
+            <summary>
+            MEP 预制支架
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricationHangers"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricationContainment">
+            <summary>
+            MEP 预制保护层
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricationContainment"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricationPipework">
+            <summary>
+            MEP 预制管道
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricationPipework"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricationPipeworkTags">
+            <summary>
+            MEP 预制管道标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricationPipeworkTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AnalyticalPipeConnections">
+            <summary>
+            分析管道连接
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AnalyticalPipeConnections"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructConnectionPlateTags">
+            <summary>
+            板标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructConnectionPlateTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructConnectionHoleTags">
+            <summary>
+            孔标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructConnectionHoleTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructConnectionAnchorTags">
+            <summary>
+            锚固件标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructConnectionAnchorTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MechanicalEquipmentSetBoundaryLines">
+            <summary>
+            机械设备集边界线
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MechanicalEquipmentSetBoundaryLines"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructConnectionWeldTags">
+            <summary>
+            焊接标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructConnectionWeldTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructConnectionProfilesTags">
+            <summary>
+            轮廓标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructConnectionProfilesTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructConnectionShearStudTags">
+            <summary>
+            剪力钉标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructConnectionShearStudTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructConnectionBoltTags">
+            <summary>
+            螺栓标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructConnectionBoltTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MechanicalEquipmentSetTags">
+            <summary>
+            机械设备集标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MechanicalEquipmentSetTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PathOfTravelTags">
+            <summary>
+            行进路径标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PathOfTravelTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MEPSystemZoneTags">
+            <summary>
+            系统分区标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MEPSystemZoneTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MEPSystemZone">
+            <summary>
+            系统分区
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MEPSystemZone"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.WallTags">
+            <summary>
+            墙标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_WallTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CableTray">
+            <summary>
+            电缆桥架
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CableTray"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Dimensions">
+            <summary>
+            尺寸标注
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Dimensions"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructConnectionTags">
+            <summary>
+            结构连接标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructConnectionTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.BraceAnalyticalTags">
+            <summary>
+            分析支撑标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_BraceAnalyticalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricReinforcementTags">
+            <summary>
+            结构钢筋网标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricReinforcementTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ReferencePoints">
+            <summary>
+            参照点
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ReferencePoints"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ReferenceLines">
+            <summary>
+            参照线
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ReferenceLines"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.GenericModelTags">
+            <summary>
+            常规模型标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_GenericModelTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.NodeAnalyticalTags">
+            <summary>
+            分析节点标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_NodeAnalyticalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Areas">
+            <summary>
+            面积
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Areas"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MultiCategoryTags">
+            <summary>
+            多类别标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MultiCategoryTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralBracePlanReps">
+            <summary>
+            平面视图中的支撑符号
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralBracePlanReps"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FlexDuctTags">
+            <summary>
+            软风管标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FlexDuctTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.WallFoundationAnalytical">
+            <summary>
+            分析条形基础
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_WallFoundationAnalytical"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.TelephoneDevices">
+            <summary>
+            电话设备
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_TelephoneDevices"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MassTags">
+            <summary>
+            体量标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MassTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PipeAccessoryTags">
+            <summary>
+            管道附件标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PipeAccessoryTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FlexDuctCurves">
+            <summary>
+            软风管
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FlexDuctCurves"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.RoofTags">
+            <summary>
+            屋顶标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_RoofTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DisplacementPath">
+            <summary>
+            位移路径
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DisplacementPath"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DataDeviceTags">
+            <summary>
+            数据设备标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DataDeviceTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CurtaSystemTags">
+            <summary>
+            幕墙系统标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CurtaSystemTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PipeTags">
+            <summary>
+            管道标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PipeTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FloorTags">
+            <summary>
+            楼板标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FloorTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MassAreaFaceTags">
+            <summary>
+            体量楼层标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MassAreaFaceTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralFoundationTags">
+            <summary>
+            结构基础标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralFoundationTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StairsPaths">
+            <summary>
+            楼梯路径
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StairsPaths"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.TelephoneDeviceTags">
+            <summary>
+            电话设备标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_TelephoneDeviceTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.NurseCallDeviceTags">
+            <summary>
+            护理呼叫设备标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_NurseCallDeviceTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.IsolatedFoundationAnalytical">
+            <summary>
+            分析独立基础
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_IsolatedFoundationAnalytical"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralFramingTags">
+            <summary>
+            结构框架标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralFramingTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.TrussTags">
+            <summary>
+            结构桁架标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_TrussTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ParkingTags">
+            <summary>
+            停车场标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ParkingTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MaterialTags">
+            <summary>
+            材质标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MaterialTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralColumns">
+            <summary>
+            结构柱
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralColumns"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PathReinSpanSymbol">
+            <summary>
+            结构路径钢筋符号
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PathReinSpanSymbol"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctLinings">
+            <summary>
+            风管内衬
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctLinings"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PartTags">
+            <summary>
+            零件标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PartTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PipeFittingTags">
+            <summary>
+            管件标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PipeFittingTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Wire">
+            <summary>
+            导线
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Wire"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralStiffener">
+            <summary>
+            结构加强板
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralStiffener"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctTags">
+            <summary>
+            风管标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FlexPipeTags">
+            <summary>
+            软管标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FlexPipeTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ConduitTags">
+            <summary>
+            线管标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ConduitTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctColorFills">
+            <summary>
+            风管颜色填充
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctColorFills"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralFraming">
+            <summary>
+            结构框架
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralFraming"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralTruss">
+            <summary>
+            结构桁架
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralTruss"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralColumnTags">
+            <summary>
+            结构柱标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralColumnTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.BoundaryConditions">
+            <summary>
+            边界条件
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_BoundaryConditions"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctCurves">
+            <summary>
+            风管
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctCurves"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FlexPipeCurves">
+            <summary>
+            软管
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FlexPipeCurves"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Conduit">
+            <summary>
+            线管
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Conduit"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PathReinTags">
+            <summary>
+            结构路径钢筋标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PathReinTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PanelScheduleGraphics">
+            <summary>
+            配电盘明细表图形
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PanelScheduleGraphics"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FurnitureSystems">
+            <summary>
+            家具系统
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FurnitureSystems"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.RevisionClouds">
+            <summary>
+            云线批注
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_RevisionClouds"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AnalyticSurfaces">
+            <summary>
+            分析表面
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AnalyticSurfaces"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PlaceHolderPipes">
+            <summary>
+            管道占位符
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PlaceHolderPipes"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctAccessoryTags">
+            <summary>
+            风管附件标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctAccessoryTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctFittingTags">
+            <summary>
+            风管管件标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctFittingTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ConduitFittingTags">
+            <summary>
+            线管配件标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ConduitFittingTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructConnectionSymbols">
+            <summary>
+            连接符号
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructConnectionSymbols"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Casework">
+            <summary>
+            橱柜
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Casework"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ImportObjectStyles">
+            <summary>
+            在族中导入
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ImportObjectStyles"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Parts">
+            <summary>
+            组成部分
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Parts"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PointClouds">
+            <summary>
+            点云
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PointClouds"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SecurityDevices">
+            <summary>
+            安全设备
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SecurityDevices"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.GenericAnnotation">
+            <summary>
+            常规注释
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_GenericAnnotation"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FloorAnalyticalTags">
+            <summary>
+            分析楼层标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FloorAnalyticalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.WallFoundationAnalyticalTags">
+            <summary>
+            分析条形基础标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_WallFoundationAnalyticalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ContourLabels">
+            <summary>
+            等高线标签
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ContourLabels"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctInsulationsTags">
+            <summary>
+            风管隔热层标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctInsulationsTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ElectricalFixtureTags">
+            <summary>
+            电气装置标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ElectricalFixtureTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Entourage">
+            <summary>
+            环境
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Entourage"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Levels">
+            <summary>
+            标高
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Levels"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Grids">
+            <summary>
+            轴网
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Grids"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.LoadCases">
+            <summary>
+            结构荷载工况
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCases"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.RebarTags">
+            <summary>
+            结构钢筋标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_RebarTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ScheduleGraphics">
+            <summary>
+            明细表图形
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ScheduleGraphics"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StairsSupportTags">
+            <summary>
+            楼梯支撑标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StairsSupportTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SiteTags">
+            <summary>
+            场地标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SiteTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PathRein">
+            <summary>
+            结构路径钢筋
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PathRein"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ElectricalEquipment">
+            <summary>
+            电气设备
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ElectricalEquipment"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CommunicationDeviceTags">
+            <summary>
+            通讯设备标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CommunicationDeviceTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CableTrayFittingTags">
+            <summary>
+            电缆桥架配件标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CableTrayFittingTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Rebar">
+            <summary>
+            结构钢筋
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Rebar"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AnalyticalNodes">
+            <summary>
+            分析节点
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AnalyticalNodes"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.WallAnalyticalTags">
+            <summary>
+            分析墙标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_WallAnalyticalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.BeamAnalyticalTags">
+            <summary>
+            分析梁标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_BeamAnalyticalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ColumnAnalyticalTags">
+            <summary>
+            分析柱标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ColumnAnalyticalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AreaRein">
+            <summary>
+            结构区域钢筋
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AreaRein"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.RvtLinks">
+            <summary>
+            RVT 链接
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_RvtLinks"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralAnnotations">
+            <summary>
+            结构注释
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralAnnotations"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.LinksAnalytical">
+            <summary>
+            分析链接
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_LinksAnalytical"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AreaTags">
+            <summary>
+            面积标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AreaTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricReinforcement">
+            <summary>
+            结构钢筋网
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricReinforcement"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PlantingTags">
+            <summary>
+            植物标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PlantingTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FootingSpanDirectionSymbol">
+            <summary>
+            基础跨方向符号
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FootingSpanDirectionSymbol"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.WallAnalytical">
+            <summary>
+            分析墙
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_WallAnalytical"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.BeamAnalytical">
+            <summary>
+            分析梁
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_BeamAnalytical"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ColumnAnalytical">
+            <summary>
+            分析柱
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ColumnAnalytical"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SitePropertyTags">
+            <summary>
+            属性标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SitePropertyTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralFoundation">
+            <summary>
+            结构基础
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralFoundation"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Callouts">
+            <summary>
+            详图索引
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Callouts"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SpanDirectionSymbol">
+            <summary>
+            跨方向符号
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SpanDirectionSymbol"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctAccessory">
+            <summary>
+            风管附件
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctAccessory"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctFitting">
+            <summary>
+            风管管件
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctFitting"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ConduitFitting">
+            <summary>
+            线管配件
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ConduitFitting"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StairsRailingTags">
+            <summary>
+            栏杆扶手标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StairsRailingTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StairsTags">
+            <summary>
+            楼梯标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StairsTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Doors">
+            <summary>
+            门
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Doors"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Lines">
+            <summary>
+            线
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Lines"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Windows">
+            <summary>
+            窗
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Windows"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Columns">
+            <summary>
+            柱
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Columns"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Walls">
+            <summary>
+            墙
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Walls"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PlanRegion">
+            <summary>
+            平面区域
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PlanRegion"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DetailComponents">
+            <summary>
+            详图项目
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DetailComponents"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SpotSlopes">
+            <summary>
+            高程点坡度
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SpotSlopes"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Matchline">
+            <summary>
+            拼接线
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Matchline"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricReinSpanSymbol">
+            <summary>
+            结构钢筋网符号
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricReinSpanSymbol"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SpotElevations">
+            <summary>
+            高程点
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SpotElevations"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.VolumeOfInterest">
+            <summary>
+            范围框
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_VolumeOfInterest"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ZoneTags">
+            <summary>
+            分区标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ZoneTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SitePropertyLineSegmentTags">
+            <summary>
+            建筑红线线段标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SitePropertyLineSegmentTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PipeFitting">
+            <summary>
+            管件
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PipeFitting"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralFramingSystem">
+            <summary>
+            结构梁系统
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralFramingSystem"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Stairs">
+            <summary>
+            楼梯
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Stairs"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.RevisionCloudTags">
+            <summary>
+            云线批注标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_RevisionCloudTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PlaceHolderDucts">
+            <summary>
+            风管占位符
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PlaceHolderDucts"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MEPSpaceTags">
+            <summary>
+            空间标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MEPSpaceTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.RoomTags">
+            <summary>
+            房间标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_RoomTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.GuideGrid">
+            <summary>
+            导向轴网
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_GuideGrid"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StairsRailing">
+            <summary>
+            栏杆扶手
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StairsRailing"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Mass">
+            <summary>
+            体量
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Mass"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StairsTriserNumbers">
+            <summary>
+            楼梯踏板/踢面数
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StairsTriserNumbers"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StairsRunTags">
+            <summary>
+            楼梯梯段标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StairsRunTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.LightingDeviceTags">
+            <summary>
+            灯具标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_LightingDeviceTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FurnitureTags">
+            <summary>
+            家具标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FurnitureTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctTerminalTags">
+            <summary>
+            风道末端标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctTerminalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Floors">
+            <summary>
+            楼板
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Floors"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StairsLandingTags">
+            <summary>
+            楼梯平台标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StairsLandingTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctTerminal">
+            <summary>
+            风道末端
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctTerminal"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FloorAnalytical">
+            <summary>
+            分析楼层
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FloorAnalytical"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.LinkAnalyticalTags">
+            <summary>
+            分析链接标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_LinkAnalyticalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctLiningsTags">
+            <summary>
+            风管内衬标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctLiningsTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CableTrayTags">
+            <summary>
+            电缆桥架标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CableTrayTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.NurseCallDevices">
+            <summary>
+            护理呼叫设备
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_NurseCallDevices"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.MechanicalEquipment">
+            <summary>
+            机械设备
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_MechanicalEquipment"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SpotCoordinates">
+            <summary>
+            高程点坐标
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SpotCoordinates"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CommunicationDevices">
+            <summary>
+            通讯设备
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CommunicationDevices"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructConnections">
+            <summary>
+            结构连接
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructConnections"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PipeAccessory">
+            <summary>
+            管道附件
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PipeAccessory"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Parking">
+            <summary>
+            停车场
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Parking"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FabricAreas">
+            <summary>
+            结构钢筋网区域
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FabricAreas"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctInsulations">
+            <summary>
+            风管隔热层
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctInsulations"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DataDevices">
+            <summary>
+            数据设备
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DataDevices"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PipeColorFillLegends">
+            <summary>
+            管道颜色填充图例
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PipeColorFillLegends"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SecurityDeviceTags">
+            <summary>
+            安全设备标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SecurityDeviceTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.StructuralStiffenerTags">
+            <summary>
+            结构加强板标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_StructuralStiffenerTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AreaLoadTags">
+            <summary>
+            面荷载标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AreaLoadTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.ElectricalEquipmentTags">
+            <summary>
+            电气设备标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_ElectricalEquipmentTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PlumbingFixtureTags">
+            <summary>
+            卫浴装置标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PlumbingFixtureTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.TitleBlocks">
+            <summary>
+            图框
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_TitleBlocks"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Planting">
+            <summary>
+            植物
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Planting"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PointLoadTags">
+            <summary>
+            点荷载标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PointLoadTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.DuctColorFillLegends">
+            <summary>
+            风管颜色填充图例
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_DuctColorFillLegends"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.LineLoadTags">
+            <summary>
+            线荷载标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_LineLoadTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FoundationSlabAnalyticalTags">
+            <summary>
+            分析楼板基础标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FoundationSlabAnalyticalTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CurtaSystem">
+            <summary>
+            幕墙系统
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CurtaSystem"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.BraceAnalytical">
+            <summary>
+            分析支撑
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_BraceAnalytical"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PipeColorFills">
+            <summary>
+            管道颜色填充
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PipeColorFills"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.InternalLoads">
+            <summary>
+            结构内部荷载
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_InternalLoads"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SprinklerTags">
+            <summary>
+            喷头标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SprinklerTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.LightingFixtureTags">
+            <summary>
+            照明设备标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_LightingFixtureTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PlumbingFixtures">
+            <summary>
+            卫浴装置
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PlumbingFixtures"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CaseworkTags">
+            <summary>
+            橱柜标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CaseworkTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.GenericModel">
+            <summary>
+            常规模型
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_GenericModel"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FireAlarmDeviceTags">
+            <summary>
+            火警设备标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FireAlarmDeviceTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.InternalLineLoadTags">
+            <summary>
+            内部线荷载标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_InternalLineLoadTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.InternalPointLoadTags">
+            <summary>
+            内部点荷载标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_InternalPointLoadTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SpecialityEquipment">
+            <summary>
+            专用设备
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SpecialityEquipment"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.FireAlarmDevices">
+            <summary>
+            火警设备
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_FireAlarmDevices"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.PipeInsulationsTags">
+            <summary>
+            管道隔热层标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_PipeInsulationsTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Ceilings">
+            <summary>
+            天花板
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Ceilings"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CurtainWallMullions">
+            <summary>
+            幕墙竖梃
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CurtainWallMullions"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Elev">
+            <summary>
+            立面
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Elev"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Sections">
+            <summary>
+            剖面
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Sections"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.SectionBox">
+            <summary>
+            剖面框
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_SectionBox"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.InternalAreaLoadTags">
+            <summary>
+            内部面荷载标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_InternalAreaLoadTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.RasterImages">
+            <summary>
+            光栅图像
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_RasterImages"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.KeynoteTags">
+            <summary>
+            注释记号标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_KeynoteTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.BeamSystemTags">
+            <summary>
+            结构梁系统标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_BeamSystemTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CLines">
+            <summary>
+            参照平面
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CLines"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CurtainWallPanels">
+            <summary>
+            幕墙嵌板
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CurtainWallPanels"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CurtainWallPanelTags">
+            <summary>
+            幕墙嵌板标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CurtainWallPanelTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Loads">
+            <summary>
+            结构荷载
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Loads"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Roads">
+            <summary>
+            道路
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Roads"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AnalyticSpaces">
+            <summary>
+            分析空间
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AnalyticSpaces"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AreaReinTags">
+            <summary>
+            结构区域钢筋标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AreaReinTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.CeilingTags">
+            <summary>
+            天花板标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_CeilingTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.WireTags">
+            <summary>
+            导线标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_WireTags"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.Assemblies">
+            <summary>
+            部件
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_Assemblies"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AssemblyOrigin">
+            <summary>
+            部件原点
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyOrigin"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AssemblyOrigin_Lines">
+            <summary>
+            
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyOrigin_Lines"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AssemblyOrigin_Planes">
+            <summary>
+            
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyOrigin_Planes"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AssemblyOrigin_Points">
+            <summary>
+            
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyOrigin_Points"/></para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInCategories.AssemblyTags">
+            <summary>
+            部件标记
+            <para><see cref="F:Autodesk.Revit.DB.BuiltInCategory.OST_AssemblyTags"/></para>
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.BuiltInCategories.GetCategoryIdsByViewDiscipline(Autodesk.Revit.DB.ViewDiscipline)">
+            <summary>
+            根据视图的规程过滤出可见性相关的类别<see cref="T:Autodesk.Revit.DB.ElementId"/>
+            <para>Get category <see cref="T:Autodesk.Revit.DB.ElementId"/> by <see cref="T:Autodesk.Revit.DB.ViewDiscipline"/></para>
+            </summary>
+            <remarks>
+            集合中的类别不包括子类别
+            <para>categories in the collection do not include subcategory</para>
+            </remarks>
+            <param name="viewDiscipline">要过滤的视图规程</param>
+            <returns>与视图规程相关的类别集合</returns>
+        </member>
+        <member name="F:Tuna.Revit.Extension.BuiltInCategories.ArchitecturalCategories">
+            <summary>
+            建筑
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.BuiltInCategories.StructuralCategories">
+            <summary>
+            结构
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.BuiltInCategories.MechanicalCategories">
+            <summary>
+            机械
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.BuiltInCategories.ElectricalCategories">
+            <summary>
+            电气
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.BuiltInCategories.PlumbingCategories">
+            <summary>
+            管道
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.BuiltInParameters">
+            <summary>
+            Revit builtin parameters
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.Invaild">
+            <summary>
+            INVALID
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.BuiltInParameters.View">
+            <summary>
+            Type of view builtin parameters
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.View.Name">
+            <summary>
+            VIEW_NAME
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.View.Description">
+            <summary>
+            VIEW_DESCRIPTION
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.View.Type">
+            <summary>
+            VIEW_TYPE
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.View.Scale">
+            <summary>
+            VIEW_SCALE
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.BuiltInParameters.Sheet">
+            <summary>
+            Sheet of view builtin parameters
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.Sheet.Name">
+            <summary>
+            SHEET_NAME
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.Sheet.Number">
+            <summary>
+            SHEET_NUMBER
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.Sheet.Scale">
+            <summary>
+            SHEET_SCALE
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.Sheet.Date">
+            <summary>
+            SHEET_DATE
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.BuiltInParameters.Level">
+            <summary>
+            Level of view builtin parameters
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.Level.Name">
+            <summary>
+            LEVEL_NAME
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.BuiltInParameters.Symbol">
+            <summary>
+            Symbol of view builtin parameters
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.Symbol.Name">
+            <summary>
+            SYMBOL_NAME_PARAM
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.BuiltInParameters.Room">
+            <summary>
+            Room of view builtin parameters
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.Room.Name">
+            <summary>
+            ROOM_NAME
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.Room.Number">
+            <summary>
+            ROOM_NUMBER
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.BuiltInParameters.Room.Area">
+            <summary>
+            ROOM_AREA
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.Enumerator">
+            <summary>
+            考虑因素较多.暂不可使用
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.Enumerator.Range(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            按指定范围创建一系列数字
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <param name="step"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.Enumerator.Range(System.Int32,System.Int32)">
+            <summary>
+            按指定范围创建一系列数字
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.Enumerator.Range(System.Int32)">
+            <summary>
+            按指定范围创建一系列数字
+            </summary>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.Enumerator.Range(System.Double,System.Double,System.Double)">
+            <summary>
+            按指定范围创建一系列数字
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <param name="step"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.Enumerator.Range(System.Double,System.Double)">
+            <summary>
+            按指定范围创建一系列数字
+            </summary>
+            <param name="start"></param>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.Enumerator.Range(System.Double)">
+            <summary>
+            按指定范围创建一系列数字
+            </summary>
+            <param name="end"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.DocumentExtension">
+            <summary>
+            revit document extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.DocumentExtension.CreateAppearanceElement(Autodesk.Revit.DB.Document,System.String)">
+            <summary>
+            create a revit generic material appearance element
+            </summary>
+            <param name="document"></param>
+            <param name="name"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.DocumentExtension.ElementExist``1(Autodesk.Revit.DB.Document,System.Func{``0,System.Boolean})">
+            <summary>
+            Is check element exist
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="document"></param>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.DocumentExtension.GetUniqueName``1(Autodesk.Revit.DB.Document,System.String)">
+            <summary>
+            Get revit unique element name
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="document"></param>
+            <param name="basicName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.DocumentExtension.CreateParameterFilterElement(Autodesk.Revit.DB.Document,System.String,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId},Autodesk.Revit.DB.FilterRule)">
+            <summary>
+            Get parameter filter element
+            </summary>
+            <param name="document"></param>
+            <param name="name"></param>
+            <param name="ids"></param>
+            <param name="filterRule"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.ElementExtension">
+            <summary>
+            revit element extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ElementExtension.GetParameter(Autodesk.Revit.DB.Element,Autodesk.Revit.DB.ElementId)">
+            <summary>
+            获取图元的参数
+            <para>Get element <see cref="T:Autodesk.Revit.DB.Parameter"/> by <see cref="T:Autodesk.Revit.DB.ElementId"/></para>
+            </summary>
+            <param name="element">host element</param>
+            <param name="parameterId">target parameter id</param>
+            <returns>element <see cref="T:Autodesk.Revit.DB.Parameter"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ElementExtension.GetElementTypesAndInstancesCount``1(Autodesk.Revit.DB.Document)">
+            <summary>
+            获取类型为 <typeparamref name="T"/> 的图元类型和实例的数量
+            <para>Get element instances count in the document</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="document"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ElementExtension.Counts``1(System.Collections.Generic.IEnumerable{Autodesk.Revit.DB.ElementType})">
+            <summary>
+            统计类型在文档中存在的实例的数量
+            </summary>
+            <typeparam name="T">类型所对应的实力的类</typeparam>
+            <param name="elementTypes"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ElementExtension.GetElementTypesWhereHasInstances``1(Autodesk.Revit.DB.Document)">
+            <summary>
+            获取具有图元实例的图元类型
+            <para>Get the elements in the document whose has instances exist</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="document"></param>
+            <returns>从文档中查询到的图元集合 <see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ElementExtension.TryGetIntersectElements(Autodesk.Revit.DB.Element,Autodesk.Revit.DB.View)">
+            <summary>
+            尝试去获取文档中与图元相交的对象
+            <para>Try to get elements in the document which intersects with the primitive</para>
+            </summary>
+            <param name="element"></param>
+            <param name="view"></param>
+            <returns>图元所在的文档中与图元相交的对象</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Tuna.Revit.Extension.FamilyExtension">
+            <summary>
+            Revit family extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.FamilyExtension.ToList``2(``1,System.Predicate{``0})">
+            <summary>
+            Converter <see cref="T:System.Collections.IEnumerable"/> to <see cref="T:System.Collections.Generic.List`1"/>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <typeparam name="TParent"></typeparam>
+            <param name="set"></param>
+            <param name="predicate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.FamilyExtension.ToList(Autodesk.Revit.DB.FamilyParameterSet,System.Predicate{Autodesk.Revit.DB.FamilyParameter})">
+            <summary>
+            从 <see cref="T:Autodesk.Revit.DB.FamilyParameterSet"/> 创建一个 <see cref="T:System.Collections.Generic.List`1"/>
+            <para>Create a <see cref="T:System.Collections.Generic.List`1"/> from <see cref="T:Autodesk.Revit.DB.FamilyParameterSet"/> </para>
+            </summary>
+            <param name="familyParameterSet">族参数集</param>
+            <param name="predicate">对集合进行过滤</param>
+            <returns>参数集 <see cref="T:System.Collections.Generic.List`1"/> </returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.FamilyExtension.ToList(Autodesk.Revit.DB.ParameterSet,System.Predicate{Autodesk.Revit.DB.Parameter})">
+            <summary>
+            从 <see cref="T:Autodesk.Revit.DB.ParameterSet"/> 创建一个 <see cref="T:System.Collections.Generic.List`1"/>
+            <para>Create a <see cref="T:System.Collections.Generic.List`1"/> from <see cref="T:Autodesk.Revit.DB.ParameterSet"/> </para>
+            </summary>
+            <param name="parameterSet">参数集</param>
+            <param name="predicate">对集合进行过滤</param>
+            <returns>参数集 <see cref="T:System.Collections.Generic.List`1"/> </returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.FamilyExtension.GetFamilySymbols(Autodesk.Revit.DB.Family)">
+            <summary>
+            获取族的所有类型
+            <para>Get all family symbols of family</para>
+            </summary>
+            <param name="family">族</param>
+            <returns>从族所在的文档中查询的结果 <see cref="T:System.Collections.Generic.IEnumerable`1"/></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Tuna.Revit.Extension.ParameterExtension">
+            <summary>
+            revit parameter extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ParameterExtension.GetParameterValue``1(Autodesk.Revit.DB.Parameter)">
+            <summary>
+            Obtain parameter value based on StorageType
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="parameter"></param>
+            <returns></returns>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ParameterExtension.SetParameterValue``1(Autodesk.Revit.DB.Parameter,``0)">
+            <summary>
+            Set parameter value based on StorageType
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="parameter"></param>
+            <param name="value"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Tuna.Revit.Extension.ParameterFilterElementExtension">
+            <summary>
+            Revit parameter filter extensions
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ParameterFilterElementExtension.GetElementFilter(Autodesk.Revit.DB.ParameterFilterElement)">
+            <summary>
+            Get parameter filter element's filter
+            </summary>
+            <param name="element"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.ParameterFilterRuleFactoryExtension">
+            <summary>
+            Revit parameter filter rule extensions
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ParameterFilterRuleFactoryExtension.CreateEqualsRule(Autodesk.Revit.DB.ElementId,System.String,System.Boolean)">
+            <summary>
+            Creates a filter rule that determines whether strings from the document equal a certain value.
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <param name="caseSensitive"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.UnitExtension">
+            <summary>
+            Revit unit extensions
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UnitExtension.ConvertToMillimeters(System.Double)">
+            <summary>
+            将值的单位从 (英尺) 转为 (毫米)
+            <para>Convert value to millimeters</para>
+            </summary>
+            <param name="value">单位为英尺的值</param>
+            <returns>单位为毫米的值</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UnitExtension.ConvertToMillimeters(System.Int32)">
+            <summary>
+            将值的单位从 (英尺) 转为 (毫米)
+            <para>Convert value to millimeters</para>
+            </summary>
+            <param name="value">单位为英尺的值</param>
+            <returns>单位为毫米的值</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UnitExtension.ConvertToMillimeters(System.Single)">
+            <summary>
+            将值的单位从 (英尺) 转为 (毫米)
+            <para>Convert value to millimeters</para>
+            </summary>
+            <param name="value">单位为英尺的值</param>
+            <returns>单位为毫米的值</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UnitExtension.ConvertToFeet(System.Double)">
+            <summary>
+            将值的单位从 (毫米) 转为 (英尺)
+            <para>Convert millimeters to feet</para>
+            </summary>
+            <param name="value">单位为毫米的值</param>
+            <returns>单位为英尺的值</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UnitExtension.ConvertToFeet(System.Int32)">
+            <summary>
+            将值的单位从 (毫米) 转为 (英尺)
+            <para>Convert millimeters to feet</para>
+            </summary>
+            <param name="value">单位为毫米的值</param>
+            <returns>单位为英尺的值</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UnitExtension.ConvertToFeet(System.Single)">
+            <summary>
+            将值的单位从 (毫米) 转为 (英尺)
+            <para>Convert millimeters to feet</para>
+            </summary>
+            <param name="value">单位为毫米的值</param>
+            <returns>单位为英尺的值</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UnitExtension.AlmostEquals(System.Double,System.Double,System.Double)">
+            <summary>
+            判断两个数值在允许的公差（1e-9）范围内是否相等
+            </summary>
+            <param name="value">要比较的数值</param>
+            <param name="otherValue">要比较的另一个数值</param>
+            <param name="tolerance">公差</param>
+            <returns>返回 <see cref="T:System.Boolean"/> 值，当为 ture 时表示数值相等，false表示不相等</returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.ExternalEventService">
+            <summary>
+             通用的外部事件
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ExternalEventService.#ctor">
+            <summary>
+            初始化外部事件，只能在有效上下文进行
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ExternalEventService.Execute(Autodesk.Revit.UI.UIApplication)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="app"><inheritdoc/></param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ExternalEventService.GetName">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ExternalEventService.PostCommand(System.Action{Autodesk.Revit.UI.UIApplication})">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="handle"><inheritdoc/></param>
+        </member>
+        <member name="T:Tuna.Revit.Extension.ExternalEventServiceExtension">
+            <summary>
+            外部事件对异步的扩展
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ExternalEventServiceExtension.PostCommandAsync(Tuna.Revit.Extension.IExternalEventService,System.Action{Autodesk.Revit.UI.UIApplication})">
+            <summary>
+            用异步的方式发布外部事件
+            <para>Asynchronously post an external command to revit</para>
+            </summary>
+            <param name="service">外部事件的服务</param>
+            <param name="handle">执行的内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ExternalEventServiceExtension.PostCommandAsync``1(Tuna.Revit.Extension.IExternalEventService,System.Func{Autodesk.Revit.UI.UIApplication,``0})">
+            <summary>
+            用异步的方式发布外部事件
+            <para>Asynchronously post an external command to revit</para>
+            </summary>
+            <typeparam name="TResult">返回的结果</typeparam>
+            <param name="service">外部事件的服务</param>
+            <param name="handle">执行的内容</param>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.IExternalEventService">
+            <summary>
+            外部事件的常规服务
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IExternalEventService.PostCommand(System.Action{Autodesk.Revit.UI.UIApplication})">
+            <summary>
+            发布外部事件
+            <para>Post an external command to revit</para>
+            </summary>
+            <param name="handle">可执行的任务</param>
+        </member>
+        <member name="T:Tuna.Revit.Extension.GeometryExtensions">
+            <summary>
+            图形扩展
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.GeometryExtensions.ResolveGeometry(Autodesk.Revit.DB.Element,System.Action{Autodesk.Revit.DB.Options})">
+            <summary>
+            解析图形
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.TransientElementExtensions">
+            <summary>
+            Revit geometry extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransientElementExtensions.TransientDisplay(Autodesk.Revit.DB.Document,System.Collections.Generic.IList{Autodesk.Revit.DB.GeometryObject},Autodesk.Revit.DB.ElementId)">
+            <summary>
+            在项目中创建临时显示的图元，临时图元将不会被保存在项目中，在项目关闭后，临时图元将被删除
+            <para>Creates geometry of transient (temporary) element for application display which will not be saved with the model.</para>
+            </summary>
+            <param name="document">Revit document</param>
+            <param name="objects">Transient element geometry</param>
+            <param name="graphicsStyleId">Transient element  graphics element style element id</param>
+            <returns>
+            创建的临时图元的 <see cref="T:Autodesk.Revit.DB.ElementId"/>
+            <para>The element id of the created element</para>
+            </returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransientElementExtensions.TransientDisplay(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.GeometryObject,Autodesk.Revit.DB.ElementId)">
+            <summary>
+            在项目中创建临时显示的图元，临时图元将不会被保存在项目中，在项目关闭后，临时图元将被删除
+            <para>Creates geometry of transient (temporary) element for application display which will not be saved with the model.</para>
+            </summary>
+            <param name="document">Revit document</param>
+            <param name="geometryObject">Transient element geometry</param>
+            <param name="graphicsStyleId">Transient element  graphics element style element id</param>
+            <returns>
+            创建的临时图元的 <see cref="T:Autodesk.Revit.DB.ElementId"/>
+            <para>The element id of the created element</para>
+            </returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransientElementExtensions.CleanTransientElements(Autodesk.Revit.DB.Document)">
+            <summary>
+            清理金枪鱼扩展包创建的所有临时图元
+            <para>Clean up all transient (temporary) elements produced by tuna in the document</para>
+            </summary>
+            <param name="document">要执行操作的文档</param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransientElementExtensions.ResetTransientElementGeometry(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementId,System.Collections.Generic.IList{Autodesk.Revit.DB.GeometryObject},Autodesk.Revit.DB.ElementId)">
+            <summary>
+            重新设置临时图元的图形
+            <para>Reset transient (temporary) element geometry</para>
+            </summary>
+            <param name="document">Revit document</param>
+            <param name="transientElementId">transient element id</param>
+            <param name="objects">transient element geometries</param>
+            <param name="graphicsStyleId">transient element graphics style element id </param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransientElementExtensions.ResetTransientElementGeometry(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementId,Autodesk.Revit.DB.GeometryObject,Autodesk.Revit.DB.ElementId)">
+            <summary>
+            重新设置临时图元的图形
+            <para>Reset transient (temporary) element geometry</para>
+            </summary>
+            <param name="document">Revit document</param>
+            <param name="transientElementId">Transient element id</param>
+            <param name="geometryObject">Transient element geometries</param>
+            <param name="graphicsStyleId">Transient element graphics style element id </param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransientElementExtensions.GetTransientDisplayMethod">
+            <summary>
+            get revit internal method where is from geometry element
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.XYZExtension.Calculate(Autodesk.Revit.DB.XYZ,Autodesk.Revit.DB.XYZ,System.Double)">
+            <summary>
+            Deep coup origin,convert the distance into revit internal units,and move according to direction and distance.
+            </summary>
+            <param name="origin"></param>
+            <param name="orientation"></param>
+            <param name="distance"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.AssetExtension">
+            <summary>
+            revit material asset extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.AssetExtension.SetColor(Autodesk.Revit.DB.Visual.Asset,Autodesk.Revit.DB.Color)">
+            <summary>
+            set generic asset property color value 
+            </summary>
+            <param name="asset"></param>
+            <param name="color"></param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.AssetExtension.SetTransparency(Autodesk.Revit.DB.Visual.Asset,System.Int32)">
+            <summary>
+            set generic asset property transparency value 
+            </summary>
+            <param name="asset"></param>
+            <param name="transparency"></param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.AssetExtension.SetReflectivity(Autodesk.Revit.DB.Visual.Asset,System.Int32)">
+            <summary>
+            set generic asset property reflectivity value 
+            </summary>
+            <param name="asset"></param>
+            <param name="reflectivity"></param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.AssetExtension.SetGlossiness(Autodesk.Revit.DB.Visual.Asset,System.Int32)">
+            <summary>
+            set generic asset property glossiness value
+            </summary>
+            <param name="asset"></param>
+            <param name="gloss"></param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.AssetExtension.AddTexturePath(Autodesk.Revit.DB.Visual.AssetProperty,System.String)">
+            <summary>
+            add generic asset property texture path
+            </summary>
+            <param name="asset"></param>
+            <param name="texturePath"></param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.AssetExtension.GetColor(Autodesk.Revit.DB.Visual.Asset)">
+            <summary>
+            get generic asset property color value 
+            </summary>
+            <param name="asset"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.ColorExtension">
+            <summary>
+            Revit color extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ColorExtension.ConvertToHTML(Autodesk.Revit.DB.Color)">
+            <summary>
+            将指定的 <see cref="T:Autodesk.Revit.DB.Color"/> 转换为 HTML 颜色字符串颜色表示形式
+            <para>Convert <see cref="T:Autodesk.Revit.DB.Color"/> to color html string</para>
+            </summary>
+            <param name="color">要转换的颜色</param>
+            <returns>表示 HTML 颜色的字符串</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ColorExtension.ConvertToRevitColor(System.Drawing.Color)">
+            <summary>
+            将指定的 <see cref="T:System.Drawing.Color"/> 转换为 <see cref="T:Autodesk.Revit.DB.Color"/>
+            <para>Convert <see cref="T:System.Drawing.Color"/> to <see cref="T:Autodesk.Revit.DB.Color"/></para>
+            </summary>
+            <param name="color">要转换的颜色</param>
+            <returns><see cref="T:Autodesk.Revit.DB.Color"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ColorExtension.IsEqualTo(Autodesk.Revit.DB.Color,Autodesk.Revit.DB.Color)">
+            <summary>
+            判断两个 <see cref="T:Autodesk.Revit.DB.Color"/> 的值是否相等
+            <para>Check value is equal between two <see cref="T:Autodesk.Revit.DB.Color"/></para>
+            </summary>
+            <param name="color">要判断的 <see cref="T:Autodesk.Revit.DB.Color"/></param>
+            <param name="otherColor">另一个 <see cref="T:Autodesk.Revit.DB.Color"/></param>
+            <returns>表示两个颜色的值是否相等，true 为相等；反之，不相等</returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.MaterialExtension">
+            <summary>
+            revit material extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.MaterialExtension.GetAppearanceColor(Autodesk.Revit.DB.Material)">
+            <summary>
+            Get generic material appearance color
+            </summary>
+            <param name="material"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.MaterialExtension.SetAppearanceColor(Autodesk.Revit.DB.Material,Autodesk.Revit.DB.Color)">
+            <summary>
+            Set material appearance color
+            </summary>
+            <param name="material"></param>
+            <param name="color"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Tuna.Revit.Extension.IRibbonButton">
+            <summary>
+            界面按钮元素
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.IRibbonButtonData">
+            <summary>
+            按钮的属性
+            <para>Revit ribbon ui push button information</para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonButtonData.Title">
+            <summary>
+            按钮显示的标题
+            <para>Ribbon button display text</para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonButtonData.LongDescription">
+            <summary>
+            对按钮的介绍
+            <para>Ribbon button long description</para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonButtonData.ToolTip">
+            <summary>
+            按钮的使用提示
+            <para>Ribbon button tool tip</para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonButtonData.Image">
+            <summary>
+            按钮的小图标(16px * 16px)
+            <para>Ribbon button small image which size is 16px * 16px</para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonButtonData.LargeImage">
+            <summary>
+            按钮的大图标(32px * 32px)
+            <para>Ribbon button large image which size is 32px * 32px</para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonButtonData.ToolTipImage">
+            <summary>
+            按钮的提示演示图标
+            <para>Ribbon button tool tip image</para>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonButtonData.ContextualHelp">
+            <summary>
+            按钮的帮助路径
+            <para>Ribbon button contextual help</para>
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.IRibbonComboBoxItem">
+            <summary>
+            界面下拉框成员
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.IRibbonItem">
+            <summary>
+            界面元素
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonItem.Name">
+            <summary>
+            界面元素的名称
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonItem.Type">
+            <summary>
+            界面元素类型
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.IRibbonItemsCollector">
+            <summary>
+            具有元素的集合
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonItemsCollector.GetItems">
+            <summary>
+            获取对象下面的集合
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.IRibbonPanel">
+            <summary>
+            功能面板
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonPanel.Title">
+            <summary>
+            面板的标题
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonPanel.AddSlideOut">
+            <summary>
+            添加滑动式抽屉
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonPanel.AddSeparator">
+            <summary>
+            添加分割线
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonPanel.AddPushButton``1">
+            <summary>
+            添加按钮
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonPanel.AddPulldownButton(System.String,System.Action{Tuna.Revit.Extension.Ribbon.Abstraction.IRibbonPulldownButton})">
+            <summary>
+            添加下拉按钮
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonPanel.AddSplitButton(System.String,System.Action{Tuna.Revit.Extension.IRibbonSplitButton})">
+            <summary>
+            添加下拉按钮
+            </summary>
+            <param name="title"></param>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonPanel.AddRadioButtonGroup">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonPanel.AddTextBox">
+            <summary>
+            添加文本输入框
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonPanel.AddComboBox(System.String,System.Action{Tuna.Revit.Extension.IRibbonComboBox})">
+            <summary>
+            添加下拉框
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.Ribbon.Abstraction.IRibbonPulldownButton">
+            <summary>
+            下拉按钮
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.Ribbon.Abstraction.IRibbonPulldownButton.AddPushButton``1">
+            <summary>
+            按钮按钮
+            </summary>
+            <typeparam name="TCommand"></typeparam>
+        </member>
+        <member name="M:Tuna.Revit.Extension.Ribbon.Abstraction.IRibbonPulldownButton.AddSeparator">
+            <summary>
+            添加分割线
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.Ribbon.Abstraction.IRibbonPulldownButton.Configurate(System.Action{Tuna.Revit.Extension.RibbonButtonData})">
+            <summary>
+            配置按钮信息
+            </summary>
+            <param name="config"></param>
+        </member>
+        <member name="T:Tuna.Revit.Extension.IRibbonSplitButton">
+            <summary>
+            下拉按钮
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonSplitButton.AddPushButton``1">
+            <summary>
+            添加按钮
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonSplitButton.AddSeparator">
+            <summary>
+            添加分割线
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.IRibbonTab">
+            <summary>
+            选项卡
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.IRibbonTab.Title">
+            <summary>
+            选项卡名称
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.IRibbonTab.CreateRibbonPanel(System.String)">
+            <summary>
+            在选项卡上创建面板
+            <para>Create a <see cref="T:Tuna.Revit.Extension.IRibbonPanel"/> on the <see cref="T:Tuna.Revit.Extension.IRibbonTab"/></para>
+            </summary>
+            <param name="title">面板的标题</param>
+        </member>
+        <member name="T:Tuna.Revit.Extension.CommandButtonAttribute">
+            <summary>
+            按钮的属性
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.Title">
+            <summary>
+            按钮显示的标题
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.LongDescription">
+            <summary>
+            对按钮的介绍
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.ToolTip">
+            <summary>
+            按钮的使用提示
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.Image">
+            <summary>
+            按钮的小图标
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.LargeImage">
+            <summary>
+            按钮的大图标
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.ToolTipImage">
+            <summary>
+            按钮的提示演示图标
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.Help">
+            <summary>
+            按钮的帮助路径
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.HelpType">
+            <summary>
+            按钮的帮助类型
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.Tuna#Revit#Extension#IRibbonButtonData#ContextualHelp">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.Tuna#Revit#Extension#IRibbonButtonData#Image">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.Tuna#Revit#Extension#IRibbonButtonData#LargeImage">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.CommandButtonAttribute.Tuna#Revit#Extension#IRibbonButtonData#ToolTipImage">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.BitmapExtension">
+            <summary>
+            system bitmap extension
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.BitmapExtension.ConvertToBitmapSource(System.Drawing.Bitmap)">
+            <summary>
+            将 <see cref="T:System.Drawing.Bitmap"/> 转换为 <see cref="T:System.Windows.Media.Imaging.BitmapSource"/>
+            <para>Convert <see cref="T:System.Drawing.Bitmap"/> to <see cref="T:System.Windows.Media.Imaging.BitmapSource"/></para>
+            </summary>
+            <param name="bitmap"><see cref="T:System.Drawing.Bitmap"/></param>
+            <returns><see cref="T:System.Windows.Media.Imaging.BitmapSource"/></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.RibbonButtonData">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.RibbonButtonData.Title">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.RibbonButtonData.LongDescription">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.RibbonButtonData.ToolTip">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.RibbonButtonData.Image">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.RibbonButtonData.LargeImage">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.RibbonButtonData.ToolTipImage">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.RibbonButtonData.ContextualHelp">
+            <summary>
+            <inheritdoc/>
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.RibbonExtension">
+            <summary>
+            对UI的扩展
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.RibbonExtension.AddRibbonTab(Autodesk.Revit.UI.UIControlledApplication,System.String,System.Action{Tuna.Revit.Extension.IRibbonTab})">
+            <summary>
+            创建Tab
+            </summary>
+            <param name="application"></param>
+            <param name="title"></param>
+            <param name="action"></param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.RibbonExtension.AddRibbonTab(Autodesk.Revit.UI.UIApplication,System.String,System.Action{Tuna.Revit.Extension.IRibbonTab})">
+            <summary>
+            创建Tab
+            </summary>
+            <param name="application"></param>
+            <param name="title"></param>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.RibbonExtension.AddRibbonPanel(Tuna.Revit.Extension.IRibbonTab,System.String,System.Action{Tuna.Revit.Extension.IRibbonPanel})">
+            <summary>
+            创建面板
+            </summary>
+            <param name="tab"></param>
+            <param name="name"></param>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.RibbonItemType">
+            <summary>
+            元素类型
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.RibbonItemType.RibbonPanel">
+            <summary>
+            面板
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.RibbonItemType.PushButton">
+            <summary>
+            按钮
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.RibbonItemType.PulldownButton">
+            <summary>
+            下拉按钮
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.RibbonItemType.SplitButton">
+            <summary>
+            下拉按钮
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.RibbonItemType.ComboBox">
+            <summary>
+            下拉框
+            </summary>
+        </member>
+        <member name="F:Tuna.Revit.Extension.RibbonItemType.Separator">
+            <summary>
+            分割线
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.UIExtension">
+            <summary>
+            Revit ribbon ui extensions
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UIExtension.CreatePushButton``1(Autodesk.Revit.UI.RibbonPanel,System.Action{Autodesk.Revit.UI.PushButtonData})">
+            <summary>
+            在面板上创建一个按钮
+            <para>Create a ribbon push button on the panel</para>
+            </summary>
+            <typeparam name="T">外部命令，必须是一个自定义类型，且继承于<see cref="T:Autodesk.Revit.UI.IExternalCommand"/>,且必须存在一个无参的构造函数</typeparam>
+            <param name="panel">要添加按钮的面板</param>
+            <param name="handle">对按钮的参数进行赋值</param>
+            <returns>创建的按钮</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UIExtension.CreatePulldownButton(Autodesk.Revit.UI.RibbonPanel,System.String,System.String,System.Action{Autodesk.Revit.UI.PulldownButtonData})">
+            <summary>
+            在面板上创建一个下拉按钮
+            </summary>
+            <param name="panel"></param>
+            <param name="name"></param>
+            <param name="text"></param>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UIExtension.CreateSplitButton(Autodesk.Revit.UI.RibbonPanel,System.String,System.String,System.Action{Autodesk.Revit.UI.SplitButtonData})">
+            <summary>
+            在面板上创建一个下拉按钮
+            </summary>
+            <param name="panel"></param>
+            <param name="name"></param>
+            <param name="text"></param>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UIExtension.CreateComboBox(Autodesk.Revit.UI.RibbonPanel,System.String,System.Action{Autodesk.Revit.UI.ComboBoxData})">
+            <summary>
+            在面板上创建一个下拉框
+            </summary>
+            <param name="panel"></param>
+            <param name="name"></param>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.UIExtension.CreatePushButton``1(Autodesk.Revit.UI.PulldownButton,System.Action{Autodesk.Revit.UI.PushButtonData})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="pulldownButton"></param>
+            <param name="handle"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.DefaultSelectionFilter">
+            <summary>
+            默认的选择过滤器
+            <para>The default selection filter</para>
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.DefaultSelectionFilter.#ctor(System.Func{Autodesk.Revit.DB.Element,System.Boolean},System.Func{System.ValueTuple{Autodesk.Revit.DB.Reference,Autodesk.Revit.DB.XYZ},System.Boolean})">
+            <summary>
+            <para>Definition of selection filter</para>
+            </summary>
+            <param name="elementPredicate">Allow element</param>
+            <param name="referencePredicate">Allow reference</param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.DefaultSelectionFilter.AllowElement(Autodesk.Revit.DB.Element)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="elem"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.DefaultSelectionFilter.AllowReference(Autodesk.Revit.DB.Reference,Autodesk.Revit.DB.XYZ)">
+            <summary>
+            <inheritdoc/>
+            </summary>
+            <param name="reference"><inheritdoc/></param>
+            <param name="position"><inheritdoc/></param>
+            <returns><inheritdoc/></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.SelectionExtension">
+            <summary>
+            Revit selection extensions
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectObject(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ObjectType,Autodesk.Revit.UI.Selection.ISelectionFilter,System.String)">
+            <summary>
+            当前方法用于提示用户选择对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="objectType">选择的对象类型</param>
+            <param name="selectionFilter">选择过滤器</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectObject(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ObjectType,System.Func{Autodesk.Revit.DB.Element,System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="objectType">选择的对象类型</param>
+            <param name="elementPredicate">对要选择的图元进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectObject(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ObjectType,System.Func{System.ValueTuple{Autodesk.Revit.DB.Reference,Autodesk.Revit.DB.XYZ},System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="objectType">选择的对象类型</param>
+            <param name="referencePredicate">对要选择的引用进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectObject(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ObjectType,System.Func{Autodesk.Revit.DB.Element,System.Boolean},System.Func{System.ValueTuple{Autodesk.Revit.DB.Reference,Autodesk.Revit.DB.XYZ},System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="objectType">选择的对象类型</param>
+            <param name="elementPredicate">对要选择的图元进行筛选</param>
+            <param name="referencePredicate">对要选择的引用进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElement(Autodesk.Revit.UI.UIDocument,System.Func{Autodesk.Revit.DB.Element,System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="elementPredicate">对要选择的图元进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElement(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.DB.BuiltInCategory,System.String)">
+            <summary>
+            当前方法用于提示用户选择图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="builtInCategory">要选择的图元类别</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElement(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.DB.ElementId,System.String)">
+            <summary>
+            当前方法用于提示用户选择图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="builtInCategoryId">要选择的图元类别的 <see cref="T:Autodesk.Revit.DB.ElementId"/></param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElement(Autodesk.Revit.UI.UIDocument,System.String)">
+            <summary>
+            当前方法用于提示用户选择图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElement``1(Autodesk.Revit.UI.UIDocument,System.Func{``0,System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select one object , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="elementPredicate">给用户的提示</param>
+            <param name="prompt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectObjects(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ObjectType,Autodesk.Revit.UI.Selection.ISelectionFilter,System.String)">
+            <summary>
+            当前方法用于提示用户选择多个对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="objectType">选择的对象类型</param>
+            <param name="selectionFilter">选择过滤器</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectObjects(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ObjectType,System.Collections.Generic.List{Autodesk.Revit.DB.Reference},System.String,Autodesk.Revit.UI.Selection.ISelectionFilter)">
+            <summary>
+            当前方法用于提示用户选择多个对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="objectType">选择的对象类型</param>
+            <param name="pPreSelected">预选择的对象</param>
+            <param name="prompt">给用户的提示</param>
+            <param name="selectionFilter">选择过滤器</param>
+            <returns>用户选择的结果</returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectObjects(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ObjectType,System.Func{Autodesk.Revit.DB.Element,System.Boolean},System.Func{System.ValueTuple{Autodesk.Revit.DB.Reference,Autodesk.Revit.DB.XYZ},System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择多个对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="objectType">选择的对象类型</param>
+            <param name="elementPredicate">对要选择的图元进行筛选</param>
+            <param name="referencePredicate">对要选择的引用进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectObjects(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ObjectType,System.Func{Autodesk.Revit.DB.Element,System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择多个对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="objectType">选择的对象类型</param>
+            <param name="elementPredicate">对要选择的图元进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectObjects(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ObjectType,System.Func{System.ValueTuple{Autodesk.Revit.DB.Reference,Autodesk.Revit.DB.XYZ},System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择多个对象，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="objectType">选择的对象类型</param>
+            <param name="referencePredicate">对要选择的引用进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElements(Autodesk.Revit.UI.UIDocument,System.Func{Autodesk.Revit.DB.Element,System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择多个图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="elementPredicate">对要选择的引用进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElements(Autodesk.Revit.UI.UIDocument,System.Type,System.Func{Autodesk.Revit.DB.Element,System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择多个图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="type">要选择的图元类型</param>
+            <param name="elementPredicate">对要选择的引用进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElements``1(Autodesk.Revit.UI.UIDocument,System.Func{``0,System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择多个图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="elementPredicate">对要选择的引用进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElements(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.DB.BuiltInCategory,System.String)">
+            <summary>
+            当前方法用于提示用户选择多个图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="builtInCategory">要选择的图元类别</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElements(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.DB.ElementId,System.String)">
+            <summary>
+            当前方法用于提示用户选择多个图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="builtInCategoryId">要选择的图元类别的<see cref="T:Autodesk.Revit.DB.ElementId"/></param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElements(Autodesk.Revit.UI.UIDocument,System.String)">
+            <summary>
+            当前方法用于提示用户选择多个图元，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple objects , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectPoint(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ObjectSnapTypes,System.String)">
+            <summary>
+            当前方法用于提示用户选择一个项目中的点，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to pick a point on the active work plane , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="snapTypes">点的类型</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectPoint(Autodesk.Revit.UI.UIDocument,System.String)">
+            <summary>
+            当前方法用于提示用户选择一个项目中的点，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to pick a point on the active work plane , if the user cancels the operation (for example, through ESC), the method will return failed result. otherwise true</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElementsByRectangle(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.ISelectionFilter,System.String)">
+            <summary>
+            当前方法用于提示用户选择一个项目中的点，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple elements by drawing a rectangle, if the user cancels the operation (for example, through ESC), the method will return failed result, otherwise true.</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="selectionFilter">选择过滤器</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElementsByRectangle(Autodesk.Revit.UI.UIDocument,System.Func{Autodesk.Revit.DB.Element,System.Boolean},System.String)">
+            <summary>
+            当前方法用于提示用户选择一个项目中的点，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple elements by drawing a rectangle, if the user cancels the operation (for example, through ESC), the method will return failed result, otherwise true.</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="elementPredicate">对要选择的图元进行筛选</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElementsByRectangle(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.DB.BuiltInCategory,System.String)">
+            <summary>
+            当前方法用于提示用户选择一个项目中的点，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple elements by drawing a rectangle, if the user cancels the operation (for example, through ESC), the method will return failed result, otherwise true.</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="builtInCategory">要选择的图元对象</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElementsByRectangle(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.DB.ElementId,System.String)">
+            <summary>
+            当前方法用于提示用户选择一个项目中的点，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple elements by drawing a rectangle, if the user cancels the operation (for example, through ESC), the method will return failed result, otherwise true.</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="builtInCategoryId">要选择的图元对象的 <see cref="T:Autodesk.Revit.DB.ElementId"/></param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectElementsByRectangle(Autodesk.Revit.UI.UIDocument,System.String)">
+            <summary>
+            当前方法用于提示用户选择一个项目中的点，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            <para>Prompts the user to select multiple elements by drawing a rectangle, if the user cancels the operation (for example, through ESC), the method will return failed result, otherwise true.</para>
+            </summary>
+            <param name="uiDocument">要操作的文档</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SelectionExtension.SelectBox(Autodesk.Revit.UI.UIDocument,Autodesk.Revit.UI.Selection.PickBoxStyle,System.String)">
+            <summary>
+            当前方法用于提示用户进行框选确定选择框的范围，如果用户取消了操作（比如用户按下 ESC），那么将会返回一个失败的结果，即 <see cref="T:Tuna.Revit.Extension.SelectionResult`1"/> 的属性 Succeeded 将为false，反之，为true
+            </summary>
+            <param name="uIDocument">要操作的文档</param>
+            <param name="pickBoxStyle">盒子的类型</param>
+            <param name="prompt">给用户的提示</param>
+            <returns>用户选择的结果</returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.SelectionResult`1">
+            <summary>
+            和Revit进行交互后的结果
+            <para>Revit selection result</para>
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="P:Tuna.Revit.Extension.SelectionResult`1.Message">
+            <summary>
+            message
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.SelectionResult`1.Value">
+            <summary>
+            result
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.SelectionResult`1.SelectionStatus">
+            <summary>
+            selction state
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.SelectionResult`1.Exception">
+            <summary>
+            exception
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.SelectionResult`1.HasException">
+            <summary>
+            Has exception
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.SelectionStatus">
+            <summary>
+            用户选择的状态
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.SubTransactionExtensions">
+            <summary>
+            子事务的扩展
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.SubTransactionExtensions.NewSubtransaction(Autodesk.Revit.DB.Document,System.Action)">
+            <summary>
+            从当前文档启动一个子事务
+            <para>This is a function which used to start a document SubTransaction </para>
+            </summary>
+            <param name="document">revit document</param>
+            <param name="action"></param>
+            <returns><see cref="T:Tuna.Revit.Extension.TransactionResult"/></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="T:Tuna.Revit.Extension.TransactionExtensions">
+            <summary>
+            事务的扩展
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransactionExtensions.NewTransaction(Autodesk.Revit.DB.Document,System.Action{Autodesk.Revit.DB.FailureHandlingOptions},System.String)">
+            <summary>
+            从当前文档开启一个事务，以便于执行对文档修改的操作
+            <para>Start a revit database transaction from the target document in order to modify document</para>
+            </summary>
+            <param name="document"></param>
+            <param name="action"></param>
+            <param name="name"></param>
+            <returns><see cref="T:Tuna.Revit.Extension.TransactionResult"/></returns>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransactionExtensions.NewTransaction(Autodesk.Revit.DB.Document,System.Action,System.String)">
+            <summary>
+            从当前文档开启一个事务，以便于执行对文档修改的操作
+            <para>Start a revit database transaction from the target document in order to modify document</para>
+            </summary>
+            <param name="document"></param>
+            <param name="action"></param>
+            <param name="name"></param>
+            <returns>If document is read only,return <see cref="F:Autodesk.Revit.DB.TransactionStatus.Error"/></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.TransactionGroupExtensions">
+            <summary>
+            事务组的扩展
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransactionGroupExtensions.NewTransactionGroup(Autodesk.Revit.DB.Document,System.Action{Tuna.Revit.Extension.TransactionGroupOptions},System.String)">
+            <summary>
+            用于在当前文档中开始一个事务组
+            <para>This is a function which used to start a document Transaction Group</para>
+            </summary>
+            <param name="document"></param>
+            <param name="action"></param>
+            <param name="name"></param>
+            <returns><see cref="T:Tuna.Revit.Extension.TransactionResult"/></returns>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransactionGroupExtensions.NewTransactionGroup(Autodesk.Revit.DB.Document,System.Action,System.String)">
+            <summary>
+            用于在当前文档中开始一个事务组，并合并内部的所有事务
+            <para>This is a function which used to start a document Transaction Group</para>
+            </summary>
+            <param name="document"></param>
+            <param name="action"></param>
+            <param name="name"></param>
+            <returns><see cref="T:Tuna.Revit.Extension.TransactionResult"/></returns>
+        </member>
+        <member name="T:Tuna.Revit.Extension.TransactionGroupOptions">
+            <summary>
+            事务组的配置项
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransactionGroupOptions.Merge">
+            <summary>
+            是否合并事务
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.TransactionGroupOptions.IsFailureHandlingForcedModal">
+            <summary>
+            故障强制模态
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.TransactionResult">
+            <summary>
+            事务执行的结果
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.TransactionResult.Exception">
+            <summary>
+            异常信息
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.TransactionResult.Message">
+            <summary>
+            额外的消息
+            </summary>
+        </member>
+        <member name="P:Tuna.Revit.Extension.TransactionResult.TransactionStatus">
+            <summary>
+            事务的状态
+            </summary>
+        </member>
+        <member name="T:Tuna.Revit.Extension.TransactionRollbackException">
+            <summary>
+            友好的异常，标记对事务的回滚
+            <para>friendly exception</para>
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.TransactionRollbackException.#ctor(System.String)">
+            <summary>
+            初始化友好的回滚异常
+            <para>Initialize a friendly exception to roll back transaction</para>
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:Tuna.Revit.Extension.ArgumentNullExceptionUtils">
+            <summary>
+            Exception utils
+            </summary>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ArgumentNullExceptionUtils.ThrowIfNull(System.Object)">
+            <summary>
+            Throw null exception if parameter is null
+            </summary>
+            <param name="parameter"></param>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(Autodesk.Revit.DB.Element)">
+            <summary>
+            Throw null exception if element is null or invalid
+            </summary>
+            <param name="element"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(Autodesk.Revit.DB.Document)">
+            <summary>
+            Throw null exception if document is null or invalid
+            </summary>
+            <param name="document"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(Autodesk.Revit.UI.UIDocument)">
+            <summary>
+            Throw null exception if ui document is null or invalid
+            </summary>
+            <param name="document"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Tuna.Revit.Extension.ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(Autodesk.Revit.DB.Color)">
+            <summary>
+            Throw null exception if revit color is null or invalid
+            </summary>
+            <param name="color"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+    </members>
+</doc>

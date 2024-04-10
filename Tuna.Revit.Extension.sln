@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Revit.Extension", "src\Tuna.Revit.Extension.csproj", "{34174205-057F-4D7E-AF0A-27B3EE17552A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0CD53AF8-74E4-4F2A-BA04-DC7B0AA1CEC1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{34275DF4-26BE-4772-A596-EF731C0A66A2}"
@@ -12,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
+		Tuna.Revit.Build.props = Tuna.Revit.Build.props
 		TunaRibbon.xsd = TunaRibbon.xsd
 	EndProjectSection
 EndProject
@@ -26,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{561BD9FE
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Revit.Test", "tests\Tuna.Revit.Test\Tuna.Revit.Test.csproj", "{49F3D6ED-FF71-403C-8D2B-8775A3080407}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Revit.Extension", "src\Tuna.Revit.Extension.csproj", "{F675D510-6992-4C0C-9FE9-AAB99638C7B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,48 +50,10 @@ Global
 		Rvt_23_Release|Any CPU = Rvt_23_Release|Any CPU
 		Rvt_24_Debug|Any CPU = Rvt_24_Debug|Any CPU
 		Rvt_24_Release|Any CPU = Rvt_24_Release|Any CPU
+		Rvt_25_Debug|Any CPU = Rvt_25_Debug|Any CPU
+		Rvt_25_Release|Any CPU = Rvt_25_Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_16_Debug|Any CPU.ActiveCfg = Rvt_16_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_16_Debug|Any CPU.Build.0 = Rvt_16_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_16_Release|Any CPU.ActiveCfg = Rvt_16_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_16_Release|Any CPU.Build.0 = Rvt_16_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_17_Debug|Any CPU.ActiveCfg = Rvt_17_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_17_Debug|Any CPU.Build.0 = Rvt_17_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_17_Release|Any CPU.ActiveCfg = Rvt_17_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_17_Release|Any CPU.Build.0 = Rvt_17_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_18_Debug|Any CPU.ActiveCfg = Rvt_18_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_18_Debug|Any CPU.Build.0 = Rvt_18_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_18_Release|Any CPU.ActiveCfg = Rvt_18_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_18_Release|Any CPU.Build.0 = Rvt_18_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_19_Debug|Any CPU.ActiveCfg = Rvt_19_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_19_Debug|Any CPU.Build.0 = Rvt_19_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_19_Release|Any CPU.ActiveCfg = Rvt_19_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_19_Release|Any CPU.Build.0 = Rvt_19_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_20_Debug|Any CPU.ActiveCfg = Rvt_20_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_20_Debug|Any CPU.Build.0 = Rvt_20_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_20_Release|Any CPU.ActiveCfg = Rvt_20_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_20_Release|Any CPU.Build.0 = Rvt_20_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_21_Debug|Any CPU.ActiveCfg = Rvt_21_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_21_Debug|Any CPU.Build.0 = Rvt_21_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_21_Release|Any CPU.ActiveCfg = Rvt_21_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_21_Release|Any CPU.Build.0 = Rvt_21_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_22_Debug|Any CPU.ActiveCfg = Rvt_22_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_22_Debug|Any CPU.Build.0 = Rvt_22_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_22_Release|Any CPU.ActiveCfg = Rvt_22_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_22_Release|Any CPU.Build.0 = Rvt_22_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_23_Debug|Any CPU.ActiveCfg = Rvt_23_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_23_Debug|Any CPU.Build.0 = Rvt_23_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_23_Release|Any CPU.ActiveCfg = Rvt_23_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_23_Release|Any CPU.Build.0 = Rvt_23_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_24_Debug|Any CPU.ActiveCfg = Rvt_24_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_24_Debug|Any CPU.Build.0 = Rvt_24_Debug|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_24_Release|Any CPU.ActiveCfg = Rvt_24_Release|Any CPU
-		{34174205-057F-4D7E-AF0A-27B3EE17552A}.Rvt_24_Release|Any CPU.Build.0 = Rvt_24_Release|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -122,6 +85,8 @@ Global
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_24_Debug|Any CPU.ActiveCfg = Rvt_24_Debug|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_24_Debug|Any CPU.Build.0 = Rvt_24_Debug|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_24_Release|Any CPU.ActiveCfg = Rvt_24_Release|Any CPU
+		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_25_Debug|Any CPU.ActiveCfg = Rvt_24_Release|Any CPU
+		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_25_Release|Any CPU.ActiveCfg = Rvt_24_Release|Any CPU
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -138,8 +103,8 @@ Global
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_19_Debug|Any CPU.ActiveCfg = Release|Any CPU
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_19_Debug|Any CPU.Build.0 = Release|Any CPU
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_19_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_20_Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_20_Debug|Any CPU.Build.0 = Release|Any CPU
+		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_20_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_20_Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_20_Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_21_Debug|Any CPU.ActiveCfg = Release|Any CPU
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_21_Debug|Any CPU.Build.0 = Release|Any CPU
@@ -153,14 +118,62 @@ Global
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_24_Debug|Any CPU.ActiveCfg = Release|Any CPU
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_24_Debug|Any CPU.Build.0 = Release|Any CPU
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_24_Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_25_Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_25_Debug|Any CPU.Build.0 = Release|Any CPU
+		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_25_Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_25_Release|Any CPU.Build.0 = Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_16_Debug|Any CPU.ActiveCfg = Rvt_16_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_16_Debug|Any CPU.Build.0 = Rvt_16_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_16_Release|Any CPU.ActiveCfg = Rvt_16_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_16_Release|Any CPU.Build.0 = Rvt_16_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_17_Debug|Any CPU.ActiveCfg = Rvt_17_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_17_Debug|Any CPU.Build.0 = Rvt_17_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_17_Release|Any CPU.ActiveCfg = Rvt_17_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_17_Release|Any CPU.Build.0 = Rvt_17_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_18_Debug|Any CPU.ActiveCfg = Rvt_18_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_18_Debug|Any CPU.Build.0 = Rvt_18_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_18_Release|Any CPU.ActiveCfg = Rvt_18_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_18_Release|Any CPU.Build.0 = Rvt_18_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_19_Debug|Any CPU.ActiveCfg = Rvt_19_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_19_Debug|Any CPU.Build.0 = Rvt_19_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_19_Release|Any CPU.ActiveCfg = Rvt_19_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_19_Release|Any CPU.Build.0 = Rvt_19_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_20_Debug|Any CPU.ActiveCfg = Rvt_20_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_20_Debug|Any CPU.Build.0 = Rvt_20_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_20_Release|Any CPU.ActiveCfg = Rvt_20_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_20_Release|Any CPU.Build.0 = Rvt_20_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_21_Debug|Any CPU.ActiveCfg = Rvt_21_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_21_Debug|Any CPU.Build.0 = Rvt_21_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_21_Release|Any CPU.ActiveCfg = Rvt_21_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_21_Release|Any CPU.Build.0 = Rvt_21_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_22_Debug|Any CPU.ActiveCfg = Rvt_22_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_22_Debug|Any CPU.Build.0 = Rvt_22_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_22_Release|Any CPU.ActiveCfg = Rvt_22_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_22_Release|Any CPU.Build.0 = Rvt_22_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_23_Debug|Any CPU.ActiveCfg = Rvt_23_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_23_Debug|Any CPU.Build.0 = Rvt_23_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_23_Release|Any CPU.ActiveCfg = Rvt_23_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_23_Release|Any CPU.Build.0 = Rvt_23_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_24_Debug|Any CPU.ActiveCfg = Rvt_24_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_24_Debug|Any CPU.Build.0 = Rvt_24_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_24_Release|Any CPU.ActiveCfg = Rvt_24_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_24_Release|Any CPU.Build.0 = Rvt_24_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_25_Debug|Any CPU.ActiveCfg = Rvt_25_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_25_Debug|Any CPU.Build.0 = Rvt_25_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_25_Release|Any CPU.ActiveCfg = Rvt_25_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_25_Release|Any CPU.Build.0 = Rvt_25_Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{34174205-057F-4D7E-AF0A-27B3EE17552A} = {0CD53AF8-74E4-4F2A-BA04-DC7B0AA1CEC1}
 		{57D210DC-A989-4C3E-84E8-A40B7114052B} = {78294CC8-0B3B-48D5-AC91-2E3C02377287}
 		{49F3D6ED-FF71-403C-8D2B-8775A3080407} = {561BD9FE-C5B6-4817-930A-AC46291408EE}
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5} = {0CD53AF8-74E4-4F2A-BA04-DC7B0AA1CEC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F3E44F7-9014-4012-85FD-37E211988994}

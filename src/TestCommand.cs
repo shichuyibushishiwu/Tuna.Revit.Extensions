@@ -32,7 +32,7 @@ internal class TestCommand : IExternalCommand
         {
             foreach (var item in result.Value)
             {
-                System.Windows.MessageBox.Show(item.ElementId.ToString());
+           
             }
         }
 
