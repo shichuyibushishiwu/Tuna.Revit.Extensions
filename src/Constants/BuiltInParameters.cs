@@ -116,10 +116,19 @@ public class BuiltInParameters
         /// </summary>
         public static ElementId Area { get; } = new ElementId(BuiltInParameter.ROOM_AREA);
 
+        /// <summary>
+        /// ROOM_DEPARTMENT
+        /// </summary>
         public static ElementId Department { get; } = new ElementId(BuiltInParameter.ROOM_DEPARTMENT);
 
+        /// <summary>
+        /// ROOM_HEIGHT
+        /// </summary>
         public static ElementId Height { get; } = new ElementId(BuiltInParameter.ROOM_HEIGHT);
 
+        /// <summary>
+        /// ROOM_PHASE
+        /// </summary>
         public static ElementId Phase { get; } = new ElementId(BuiltInParameter.ROOM_PHASE);
     }
 }

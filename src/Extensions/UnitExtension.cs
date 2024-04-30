@@ -82,11 +82,11 @@ public static class UnitExtension
     public static double ConvertToFeet(this float value) => Convert.ToDouble(value.ToString()).ConvertToFeet();
 
     /// <summary>
-    /// 判断两个数值在允许的公差（1e-9）范围内是否相等
+    /// 判断两个数值在允许的公差范围内是否相等
     /// </summary>
     /// <param name="value">要比较的数值</param>
     /// <param name="otherValue">要比较的另一个数值</param>
-    /// <param name="tolerance">公差</param>
+    /// <param name="tolerance">公差 默认值（1e-9）</param>
     /// <returns>返回 <see cref="bool"/> 值，当为 ture 时表示数值相等，false表示不相等</returns>
     public static bool AlmostEquals(this double value, double otherValue, double tolerance = 1e-9)
     {

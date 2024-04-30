@@ -11,7 +11,18 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public enum SelectionStatus
 {
+    /// <summary>
+    /// 成功
+    /// </summary>
     Succeeded,
+
+    /// <summary>
+    /// 失败
+    /// </summary>
     Failed,
+
+    /// <summary>
+    /// 取消
+    /// </summary>
     Cancelled
 }
