@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ public static class SubTransactionExtensions
     /// <param name="action"></param>
     /// <returns><see cref="TransactionResult"/></returns>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     public static TransactionResult NewSubtransaction(this Document document, Action action)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
