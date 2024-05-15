@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -26,6 +27,7 @@ public class ExternalEventService : IExternalEventService, IExternalEventHandler
     /// <inheritdoc/>
     /// </summary>
     /// <param name="app"><inheritdoc/></param>
+    [DebuggerStepThrough]
     public void Execute(UIApplication app)
     {
         if (_handle == null)
@@ -39,12 +41,14 @@ public class ExternalEventService : IExternalEventService, IExternalEventHandler
     /// <inheritdoc/>
     /// </summary>
     /// <returns><inheritdoc/></returns>
+    [DebuggerStepThrough] 
     public string GetName() => "Tuna external event";
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
     /// <param name="handle"><inheritdoc/></param>
+    [DebuggerStepThrough]
     public void PostCommand(Action<UIApplication> handle)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(handle);

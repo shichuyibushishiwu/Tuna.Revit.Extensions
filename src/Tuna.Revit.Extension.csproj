@@ -140,6 +140,10 @@
 		<Optimize>True</Optimize>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rvt_25_Release|AnyCPU'">
+	  <Optimize>True</Optimize>
+	</PropertyGroup>
+
 	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
 		<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2016.0.2">
 			<IncludeAssets>compile</IncludeAssets>

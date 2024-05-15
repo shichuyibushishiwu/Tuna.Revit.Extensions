@@ -73,6 +73,7 @@ public static class TransactionExtensions
     /// <param name="action"></param>
     /// <param name="name"></param>
     /// <returns>If document is read only,return <see cref="Autodesk.Revit.DB.TransactionStatus.Error"/></returns>
+    [DebuggerStepThrough]
     public static TransactionResult NewTransaction(this Document document, Action action, string name = "Default Transaction Name")
     {
         return document.NewTransaction(options => action(), name);

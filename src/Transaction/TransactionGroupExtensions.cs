@@ -70,6 +70,7 @@ public static class TransactionGroupExtensions
     /// <param name="action"></param>
     /// <param name="name"></param>
     /// <returns><see cref="TransactionResult"/></returns>
+    [DebuggerStepThrough]
     public static TransactionResult NewTransactionGroup(this Document document, Action action, string name = "Default Transaction Group Name")
     {
         return document.NewTransactionGroup((option) =>

@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ public static class ExternalEventServiceExtension
     /// <param name="service">外部事件的服务</param>
     /// <param name="handle">执行的内容</param>
     /// <returns></returns>
+    [DebuggerStepThrough]
     public static Task PostCommandAsync(this IExternalEventService service, Action<UIApplication> handle)
     {
         return service.PostCommandAsync((uiApp) =>
@@ -36,6 +38,7 @@ public static class ExternalEventServiceExtension
     /// <param name="service">外部事件的服务</param>
     /// <param name="handle">执行的内容</param>
     /// <returns></returns>
+    [DebuggerStepThrough]
     public static Task<TResult> PostCommandAsync<TResult>(this IExternalEventService service, Func<UIApplication, TResult> handle)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(service);

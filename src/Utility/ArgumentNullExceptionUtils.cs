@@ -12,6 +12,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ internal static class ArgumentNullExceptionUtils
     /// Throw null exception if parameter is null
     /// </summary>
     /// <param name="parameter"></param>
+    [DebuggerStepThrough]
     public static void ThrowIfNull(object parameter)
     {
         if (parameter == null)
@@ -40,6 +42,7 @@ internal static class ArgumentNullExceptionUtils
     /// </summary>
     /// <param name="element"></param>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     public static void ThrowIfNullOrInvalid(Element element)
     {
         ThrowIfNull(element);
@@ -54,6 +57,7 @@ internal static class ArgumentNullExceptionUtils
     /// </summary>
     /// <param name="document"></param>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     public static void ThrowIfNullOrInvalid(Document document)
     {
         ThrowIfNull(document);
@@ -68,6 +72,7 @@ internal static class ArgumentNullExceptionUtils
     /// </summary>
     /// <param name="document"></param>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     public static void ThrowIfNullOrInvalid(UIDocument document)
     {
         ThrowIfNull(document);
@@ -82,6 +87,7 @@ internal static class ArgumentNullExceptionUtils
     /// </summary>
     /// <param name="color"></param>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     public static void ThrowIfNullOrInvalid(Color color)
     {
         ThrowIfNull(color);

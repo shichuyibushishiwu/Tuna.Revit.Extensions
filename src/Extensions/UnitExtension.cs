@@ -10,6 +10,7 @@
 
 using Autodesk.Revit.DB;
 using System;
+using System.Diagnostics;
 
 namespace Tuna.Revit.Extension;
 
@@ -24,6 +25,7 @@ public static class UnitExtension
     /// </summary>
     /// <param name="value">单位为英尺的值</param>
     /// <returns>单位为毫米的值</returns>
+    [DebuggerStepThrough]
     public static double ConvertToMillimeters(this double value)
     {
 #if Rvt_16 || Rvt_17 || Rvt_18 || Rvt_19 || Rvt_20
@@ -39,6 +41,7 @@ public static class UnitExtension
     /// </summary>
     /// <param name="value">单位为英尺的值</param>
     /// <returns>单位为毫米的值</returns>
+    [DebuggerStepThrough] 
     public static double ConvertToMillimeters(this int value) => ((double)value).ConvertToMillimeters();
 
     /// <summary>
@@ -47,6 +50,7 @@ public static class UnitExtension
     /// </summary>
     /// <param name="value">单位为英尺的值</param>
     /// <returns>单位为毫米的值</returns>
+    [DebuggerStepThrough] 
     public static double ConvertToMillimeters(this float value) => Convert.ToDouble(value.ToString()).ConvertToMillimeters();
 
     /// <summary>
@@ -55,6 +59,7 @@ public static class UnitExtension
     /// </summary>
     /// <param name="value">单位为毫米的值</param>
     /// <returns>单位为英尺的值</returns>
+    [DebuggerStepThrough]
     public static double ConvertToFeet(this double value)
     {
 #if Rvt_16 || Rvt_17 || Rvt_18 || Rvt_19 || Rvt_20
@@ -71,6 +76,7 @@ public static class UnitExtension
     /// </summary>
     /// <param name="value">单位为毫米的值</param>
     /// <returns>单位为英尺的值</returns>
+    [DebuggerStepThrough] 
     public static double ConvertToFeet(this int value) => ((double)value).ConvertToFeet();
 
     /// <summary>
@@ -79,6 +85,7 @@ public static class UnitExtension
     /// </summary>
     /// <param name="value">单位为毫米的值</param>
     /// <returns>单位为英尺的值</returns>
+    [DebuggerStepThrough] 
     public static double ConvertToFeet(this float value) => Convert.ToDouble(value.ToString()).ConvertToFeet();
 
     /// <summary>
@@ -88,6 +95,7 @@ public static class UnitExtension
     /// <param name="otherValue">要比较的另一个数值</param>
     /// <param name="tolerance">公差 默认值（1e-9）</param>
     /// <returns>返回 <see cref="bool"/> 值，当为 ture 时表示数值相等，false表示不相等</returns>
+    [DebuggerStepThrough]
     public static bool AlmostEquals(this double value, double otherValue, double tolerance = 1e-9)
     {
         return Math.Abs(value - otherValue) <= tolerance;

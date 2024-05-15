@@ -13,6 +13,7 @@
 using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ public static class ElementExtension
     /// <param name="element">host element</param>
     /// <param name="parameterId">target parameter id</param>
     /// <returns>element <see cref="Parameter"/></returns>
+    [DebuggerStepThrough]
     public static Parameter GetParameter(this Element element, ElementId parameterId)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
