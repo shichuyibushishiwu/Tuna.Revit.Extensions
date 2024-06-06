@@ -128,4 +128,23 @@ public static class ElementExtension
         }
         return elements;
     }
+
+    /// <summary>
+    /// 获取Category中的BuiltInCateogry，支持多版本
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
+    public static BuiltInCategory GetBuiltInCategory(this Category category)
+    {
+        if (category == null)
+        {
+            throw new ArgumentNullException(nameof(category));
+        }
+#if Rvt_23 || Rvt_24|| Rvt_25
+        return category.BuiltInCategory;
+#else
+        return (BuiltInCategory)category.Id.IntegerValue;
+#endif
+    }
 }

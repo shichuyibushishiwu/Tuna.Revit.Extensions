@@ -55,7 +55,8 @@ public static class TransactionExtensions
             {
                 result.Message = exception.Message;
                 result.TransactionStatus = transaction.RollBack(options);
-                if (exception.GetType() != typeof(TransactionRollbackException))
+                if (exception is not TransactionRollbackException &&
+                    exception is not Autodesk.Revit.Exceptions.OperationCanceledException)
                 {
                     result.Exception = exception;
                 }
