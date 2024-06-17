@@ -9,36 +9,47 @@ namespace Tuna.Revit.Extension.Ribbon.Proxy;
 
 internal class RibbonComboBoxProxy : RibbonElementProxy<ComboBox>, IRibbonComboBox
 {
+    Action<Autodesk.Revit.UI.Events.ComboBoxCurrentChangedEventArgs> _handle;
     public RibbonItemType Type => RibbonItemType.ComboBox;
 
     public string Name { get; set; }
 
+    public RibbonComboBoxProxy()
+    {
+        this.OriginalObject.CurrentChanged += OriginalObject_CurrentChanged;
+    }
+
     public IRibbonComboBox AddItem(string title)
     {
-        ComboBoxMemberData comboBoxMemberData = new(title, title);
+        ComboBoxMemberData comboBoxMemberData = new ComboBoxMemberData(title, title);
         this.OriginalObject.AddItem(comboBoxMemberData);
 
         return this;
     }
 
-    public IRibbonComboBox AddItems()
+    public IRibbonComboBox AddItems(params string[] titles)
     {
-
+        foreach (var item in titles)
+        {
+            AddItem(item);
+        }
         return this;
     }
 
     public IRibbonComboBox AddSeparator()
     {
-        throw new NotImplementedException();
+        this.OriginalObject.AddSeparator();
+        return this;
     }
 
-    public void OnItemChanged(Action handle)
+    public void OnSelectedChanged(Action<Autodesk.Revit.UI.Events.ComboBoxCurrentChangedEventArgs> handle)
     {
-        this.OriginalObject.CurrentChanged += OriginalObject_CurrentChanged;
+        _handle = handle;
     }
 
     private void OriginalObject_CurrentChanged(object sender, Autodesk.Revit.UI.Events.ComboBoxCurrentChangedEventArgs e)
     {
-
+        _handle?.Invoke(e);
     }
 }
+

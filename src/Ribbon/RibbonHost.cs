@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.Revit.UI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,14 +14,17 @@ internal class RibbonHost
     private Assembly _assembly;
     private bool _isValid;
 
-    public static RibbonHost Defualt { get; } = new RibbonHost();
+    /// <summary>
+    /// 默认值
+    /// </summary>
+    public static RibbonHost Default { get; } = new RibbonHost();
 
     RibbonHost() { }
 
     public Assembly Assembly
     {
         get => _assembly;
-        set
+        internal set
         {
             if (value != null && _assembly != this.GetType().Assembly && _assembly != value)
             {
@@ -30,6 +34,10 @@ internal class RibbonHost
             }
         }
     }
+
+    public UIControlledApplication UIControlledApplication { get; internal set; }
+
+    public UIApplication UIApplication { get; internal set; }
 
     public bool IsVaild => _isValid;
 

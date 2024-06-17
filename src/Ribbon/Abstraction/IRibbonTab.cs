@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension;
 
 /// <summary>
-/// 选项卡
+/// 定义选项卡的接口
 /// </summary>
 public interface IRibbonTab : IRibbonItemsCollector
 {
@@ -21,5 +21,6 @@ public interface IRibbonTab : IRibbonItemsCollector
     /// <para>Create a <see cref="IRibbonPanel"/> on the <see cref="IRibbonTab"/></para>
     /// </summary>
     /// <param name="title">面板的标题</param>
-    IRibbonPanel CreateRibbonPanel(string title);
+    /// <param name="handle">添加面板的元素</param>
+    IRibbonPanel AddRibbonPanel(string title, Action<IRibbonPanel> handle);
 }

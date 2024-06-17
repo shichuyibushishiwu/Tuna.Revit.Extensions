@@ -15,13 +15,13 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public class ExternalEventService : IExternalEventService, IExternalEventHandler
 {
-    private readonly ExternalEvent _externalEvent;
+    private readonly Autodesk.Revit.UI.ExternalEvent _externalEvent;
     private Action<UIApplication> _handle;
 
     /// <summary>
     /// 初始化外部事件，只能在有效上下文进行
     /// </summary>
-    public ExternalEventService() => _externalEvent = ExternalEvent.Create(this);
+    public ExternalEventService() => _externalEvent = Autodesk.Revit.UI.ExternalEvent.Create(this);
 
     /// <summary>
     /// <inheritdoc/>
@@ -41,7 +41,7 @@ public class ExternalEventService : IExternalEventService, IExternalEventHandler
     /// <inheritdoc/>
     /// </summary>
     /// <returns><inheritdoc/></returns>
-    [DebuggerStepThrough] 
+    [DebuggerStepThrough]
     public string GetName() => "Tuna external event";
 
     /// <summary>
@@ -49,13 +49,16 @@ public class ExternalEventService : IExternalEventService, IExternalEventHandler
     /// </summary>
     /// <param name="handle"><inheritdoc/></param>
     [DebuggerStepThrough]
-    public void PostCommand(Action<UIApplication> handle)
+    public ExternalEventRequest PostCommand(Action<UIApplication> handle)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(handle);
         _handle = handle;
-        if (_externalEvent.Raise() != ExternalEventRequest.Accepted)
+        ExternalEventRequest externalEventRequest = _externalEvent.Raise();
+        if (externalEventRequest != ExternalEventRequest.Accepted)
         {
             throw new Exception("handle can not accepted");
         }
+
+        return externalEventRequest;
     }
 }

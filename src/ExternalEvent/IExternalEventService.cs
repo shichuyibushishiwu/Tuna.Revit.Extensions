@@ -18,6 +18,7 @@ public interface IExternalEventService
     /// <para>Post an external command to revit</para>
     /// </summary>
     /// <param name="handle">可执行的任务</param>
-    [DebuggerStepThrough] 
-    void PostCommand(Action<UIApplication> handle);
+    /// <returns><see cref="ExternalEventRequest"/></returns>
+    [DebuggerStepThrough]
+    ExternalEventRequest PostCommand(Action<UIApplication> handle);
 }

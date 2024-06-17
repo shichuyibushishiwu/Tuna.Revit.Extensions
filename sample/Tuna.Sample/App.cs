@@ -26,23 +26,29 @@ namespace Tuna.Sample
 
         public Result OnStartup(UIControlledApplication application)
         {
-            var tab = application.AddRibbonTab("tuna", tab => tab
-            .AddRibbonPanel("archi", panel => panel
-                .AddPushButton<Commands.CommandA>()
+            var tab = application.AddRibbonTab("tuna")
+            .AddRibbonPanel("archi", panel =>
+            {
+                panel.AddPushButton<Commands.CommandA>()
                 .AddSeparator()
                 .AddPulldownButton("pdb", pbt => pbt
+                    .AddPushButton<Commands.CommandA>()
+                    .AddSeparator()
+                    .AddPushButton<Commands.CommandB>()
                     .Configurate(d =>
                     {
                         d.LargeImage = "compass.png";
-                    })
-                    .AddPushButton<Commands.CommandA>()
-                    .AddSeparator()
-                    .AddPushButton<Commands.CommandB>())
+                    }))
                 .AddSplitButton("stb", slt => slt
                     .AddPushButton<Commands.CommandA>()
                     .AddSeparator()
                     .AddPushButton<Commands.CommandB>())
-                .AddComboBox("s", cb => cb.AddItem("dd").AddItem("ssad"))));
+                .AddComboBox("s", cb => cb.AddItem("dd").AddItem("ssad").OnSelectedChanged(e =>
+                {
+
+                }))
+                .AddSlideOut();
+            });
 
             return Result.Succeeded;
         }

@@ -8,52 +8,64 @@ namespace Tuna.Revit.Extension.Ribbon.Proxy;
 internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, IRibbonPulldownButton
 {
     private readonly List<IRibbonItem> _items = new();
-    private readonly RibbonButtonData _data;
-    private readonly List<Tuple<RibbonItemType, Type>> _conponents = new();
+    private readonly List<Tuple<RibbonItemType, RibbonButtonDescriptor>> _components = new();
 
-    public RibbonPulldownButtonProxy() => _data = new RibbonButtonData();
+    private class RibbonButtonDescriptor
+    {
+        public Action<RibbonButtonData> Handle { get; set; }
+
+        public Type Type { get; set; }
+    }
+
+    public RibbonPulldownButtonProxy() => RibbonButtonData = new RibbonButtonData();
 
     public RibbonItemType Type => RibbonItemType.PulldownButton;
 
     public string Name => Title;
 
-    public IRibbonPulldownButton AddPushButton<TCommand>() where TCommand : class, IExternalCommand, new()
+    public IRibbonPulldownButton AddPushButton<TCommand>(Action<RibbonButtonData> handle = null) where TCommand : class, IExternalCommand, new()
     {
-        _conponents.Add(new(RibbonItemType.PushButton, typeof(TCommand)));
+        _components.Add(new(RibbonItemType.PushButton, new RibbonButtonDescriptor()
+        {
+            Handle = handle,
+            Type = typeof(TCommand)
+        }));
         return this;
     }
 
     public IRibbonPulldownButton AddSeparator()
     {
-        _conponents.Add(new(RibbonItemType.Separator, default));
+        _components.Add(new(RibbonItemType.Separator, default));
         return this;
     }
 
     public IEnumerable<IRibbonItem> GetItems() => _items;
 
-    public IRibbonPulldownButton Configurate(Action<RibbonButtonData> config)
+    public void Configurate(Action<RibbonButtonData> config)
     {
-        _data.Title = Title;
-        config.Invoke(_data);
-        return this;
+        RibbonButtonData.Title = Title;
+        config.Invoke(RibbonButtonData);
     }
 
-    public IRibbonButtonData GetRibbonData() => _data;
+    public RibbonButtonData RibbonButtonData { get; set; }
+
 
     public void InitializeComponent()
     {
-        foreach (var item in _conponents)
+        foreach (var item in _components)
         {
             switch (item.Item1)
             {
                 case RibbonItemType.PushButton:
-                    RibbonButton ribbonButton = this.OriginalObject.CreatePushButton(item.Item2);
+                    RibbonButtonDescriptor descriptor = item.Item2;
+                    RibbonButtonProxy ribbonButtonProxy = new();
+                    descriptor.Handle?.Invoke(ribbonButtonProxy.RibbonButtonData);
 
-                    RibbonButtonProxy ribbonButtonProxy = new()
-                    {
-                        OriginalObject = ribbonButton,
-                        Title = ribbonButton.Name,
-                    };
+                    RibbonButton ribbonButton = this.OriginalObject.CreatePushButton(descriptor.Type, btn => UIExtension.SetPushButtonData(btn, ribbonButtonProxy.RibbonButtonData));
+
+                    ribbonButtonProxy.OriginalObject = ribbonButton;
+                    ribbonButtonProxy.Title = ribbonButton.Name;
+                    ribbonButtonProxy.Name = ribbonButton.Name;
 
                     _items.Add(ribbonButtonProxy);
                     break;

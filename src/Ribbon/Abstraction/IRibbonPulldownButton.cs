@@ -10,22 +10,7 @@ namespace Tuna.Revit.Extension.Ribbon.Abstraction;
 /// <summary>
 /// 下拉按钮
 /// </summary>
-public interface IRibbonPulldownButton : IRibbonItem, IRibbonItemsCollector
+public interface IRibbonPulldownButton : IRibbonButtonConfigurable<IRibbonPulldownButton>, IRibbonPushButtonContainer<IRibbonPulldownButton>
 {
-    /// <summary>
-    /// 按钮按钮
-    /// </summary>
-    /// <typeparam name="TCommand"></typeparam>
-    IRibbonPulldownButton AddPushButton<TCommand>() where TCommand : class, IExternalCommand, new();
 
-    /// <summary>
-    /// 添加分割线
-    /// </summary>
-    IRibbonPulldownButton AddSeparator();
-
-    /// <summary>
-    /// 配置按钮信息
-    /// </summary>
-    /// <param name="config"></param>
-    IRibbonPulldownButton Configurate(Action<RibbonButtonData> config);
 }

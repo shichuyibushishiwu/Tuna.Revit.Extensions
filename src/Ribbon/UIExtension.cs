@@ -89,8 +89,8 @@ public static class UIExtension
     {
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
 
-        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
-     
+        RibbonHost.Default.Assembly = Assembly.GetCallingAssembly();
+
         return panel.AddItem(CreatePushButtonData<T>(handle)) as PushButton;
     }
 
@@ -110,7 +110,7 @@ public static class UIExtension
 
         handle?.Invoke(data);
 
-        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
+        RibbonHost.Default.Assembly = Assembly.GetCallingAssembly();
 
         return panel.AddItem(data) as PulldownButton;
     }
@@ -131,7 +131,7 @@ public static class UIExtension
 
         handle?.Invoke(data);
 
-        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
+        RibbonHost.Default.Assembly = Assembly.GetCallingAssembly();
 
         return panel.AddItem(data) as SplitButton;
     }
@@ -151,7 +151,7 @@ public static class UIExtension
 
         handle?.Invoke(combo);
 
-        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
+        RibbonHost.Default.Assembly = Assembly.GetCallingAssembly();
 
         return panel.AddItem(combo) as ComboBox;
     }
@@ -166,11 +166,18 @@ public static class UIExtension
     /// <returns></returns>
     public static PushButton CreatePushButton<T>(this PulldownButton pulldownButton, Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
     {
-        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
+        RibbonHost.Default.Assembly = Assembly.GetCallingAssembly();
 
         return CreatePushButton(pulldownButton, typeof(T), handle);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pulldownButton"></param>
+    /// <param name="type"></param>
+    /// <param name="handle"></param>
+    /// <returns></returns>
     internal static PushButton CreatePushButton(this PulldownButton pulldownButton, Type type, Action<PushButtonData> handle = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
