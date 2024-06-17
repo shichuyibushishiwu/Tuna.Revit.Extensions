@@ -29,7 +29,17 @@ internal class CommandA : IExternalCommand, IRibbonButtonData
 
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
-        TaskDialog.Show("msg", "A");
+        //TaskDialog.Show("msg", "A");
+        var uiDoc = commandData.Application.ActiveUIDocument;
+        var doc = uiDoc.Document;
+        var ele = doc.GetElements<FamilyInstance>(x => x.Symbol.FamilyName == "CAFÉ CHAIR-21313").FirstOrDefault();
+        var seatcount = ele.GetParameters("Seat Count").FirstOrDefault().GetParameterValueAuto<string>();
+        var seatcountInt = ele.GetParameters("Mark").FirstOrDefault().GetParameterValueAuto<string>();
+        doc.NewTransaction(() =>
+        {
+            ele.GetParameters("Seat Count").FirstOrDefault().SetParameterValueAuto("11");
+            ele.GetParameters("Mark").FirstOrDefault().SetParameterValueAuto("11");
+        });
         return Result.Succeeded;
     }
 }
