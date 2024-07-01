@@ -38,7 +38,7 @@ public class SelectionResult<T>
     /// <summary>
     /// exception
     /// </summary>
-    public Exception Exception { get; set; }
+    public Exception Exception { get; internal set; }
 
     /// <summary>
     /// Has exception

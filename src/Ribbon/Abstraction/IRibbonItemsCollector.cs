@@ -9,7 +9,7 @@ using Tuna.Revit.Extension.Ribbon.Proxy;
 namespace Tuna.Revit.Extension;
 
 /// <summary>
-/// 具有元素的集合
+/// 定义具有元素集合的接口
 /// </summary>
 public interface IRibbonItemsCollector
 {

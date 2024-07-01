@@ -14,6 +14,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Tuna.Revit.Extension;
@@ -33,6 +34,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, ISelectionFilter selectionFilter = null, string prompt = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
@@ -73,6 +75,7 @@ public static class SelectionExtension
     /// <param name="elementPredicate">对要选择的图元进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, string prompt = null)
     {
         return uiDocument.SelectObject(objectType, new DefaultSelectionFilter(elementPredicate), prompt);
@@ -87,6 +90,7 @@ public static class SelectionExtension
     /// <param name="referencePredicate">对要选择的引用进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate, string prompt = null)
     {
         return uiDocument.SelectObject(objectType, new DefaultSelectionFilter(referencePredicate: referencePredicate), prompt);
@@ -102,6 +106,7 @@ public static class SelectionExtension
     /// <param name="referencePredicate">对要选择的引用进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate, string prompt = null)
     {
         return uiDocument.SelectObject(objectType, new DefaultSelectionFilter(elementPredicate, referencePredicate), prompt);
@@ -115,6 +120,7 @@ public static class SelectionExtension
     /// <param name="elementPredicate">对要选择的图元进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, Func<Element, bool> elementPredicate, string prompt = null)
     {
         SelectionResult<Reference> result = uiDocument.SelectObject(ObjectType.Element, elementPredicate, prompt);
@@ -134,6 +140,7 @@ public static class SelectionExtension
     /// <param name="builtInCategory">要选择的图元类别</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
     {
         return uiDocument.SelectElement(new ElementId(builtInCategory), prompt);
@@ -147,6 +154,7 @@ public static class SelectionExtension
     /// <param name="builtInCategoryId">要选择的图元类别的 <see cref="Autodesk.Revit.DB.ElementId"/></param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, ElementId builtInCategoryId, string prompt = null)
     {
         return uiDocument.SelectElement(element => element.Category?.Id == builtInCategoryId, prompt);
@@ -159,6 +167,7 @@ public static class SelectionExtension
     /// <param name="uiDocument">要操作的文档</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, string prompt = null)
     {
         return uiDocument.SelectElement(_ => true, prompt);
@@ -173,6 +182,7 @@ public static class SelectionExtension
     /// <param name="elementPredicate">给用户的提示</param>
     /// <param name="prompt"></param>
     /// <returns></returns>
+    [DebuggerStepThrough]
     public static SelectionResult<T> SelectElement<T>(this UIDocument uiDocument, Func<T, bool> elementPredicate = null, string prompt = null) where T : Element
     {
         SelectionResult<Element> result = uiDocument.SelectElement(element =>
@@ -209,6 +219,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, ISelectionFilter selectionFilter = null, string prompt = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
@@ -252,6 +263,7 @@ public static class SelectionExtension
     /// <param name="selectionFilter">选择过滤器</param>
     /// <returns>用户选择的结果</returns>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, List<Reference> pPreSelected, string prompt, ISelectionFilter selectionFilter = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
@@ -292,6 +304,7 @@ public static class SelectionExtension
     /// <param name="referencePredicate">对要选择的引用进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate, string prompt = null)
     {
         return uiDocument.SelectObjects(objectType, new DefaultSelectionFilter(elementPredicate, referencePredicate), prompt);
@@ -306,6 +319,7 @@ public static class SelectionExtension
     /// <param name="elementPredicate">对要选择的图元进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, string prompt = null)
     {
         return uiDocument.SelectObjects(objectType, new DefaultSelectionFilter(elementPredicate), prompt);
@@ -320,6 +334,7 @@ public static class SelectionExtension
     /// <param name="referencePredicate">对要选择的引用进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate, string prompt = null)
     {
         return uiDocument.SelectObjects(objectType, new DefaultSelectionFilter(referencePredicate: referencePredicate), prompt);
@@ -333,6 +348,7 @@ public static class SelectionExtension
     /// <param name="elementPredicate">对要选择的引用进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, Func<Element, bool> elementPredicate, string prompt = null)
     {
         SelectionResult<IList<Reference>> result = uiDocument.SelectObjects(ObjectType.Element, new DefaultSelectionFilter(elementPredicate), prompt);
@@ -353,6 +369,7 @@ public static class SelectionExtension
     /// <param name="elementPredicate">对要选择的引用进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, Type type, Func<Element, bool> elementPredicate = null, string prompt = null)
     {
         return uiDocument.SelectElements(e =>
@@ -379,6 +396,7 @@ public static class SelectionExtension
     /// <param name="elementPredicate">对要选择的引用进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IEnumerable<T>> SelectElements<T>(this UIDocument uiDocument, Func<T, bool> elementPredicate = null, string prompt = null) where T : Element
     {
         SelectionResult<IEnumerable<Element>> result = uiDocument.SelectElements(element =>
@@ -413,6 +431,7 @@ public static class SelectionExtension
     /// <param name="builtInCategory">要选择的图元类别</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
     {
         return uiDocument.SelectElements(new ElementId(builtInCategory), prompt);
@@ -426,6 +445,7 @@ public static class SelectionExtension
     /// <param name="builtInCategoryId">要选择的图元类别的<see cref="Autodesk.Revit.DB.ElementId"/></param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, ElementId builtInCategoryId, string prompt = null)
     {
         return uiDocument.SelectElements(element => element.Category?.Id == builtInCategoryId, prompt);
@@ -438,6 +458,7 @@ public static class SelectionExtension
     /// <param name="uiDocument">要操作的文档</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, string prompt = null)
     {
         return uiDocument.SelectElements(_ => true, prompt);
@@ -451,6 +472,7 @@ public static class SelectionExtension
     /// <param name="snapTypes">点的类型</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<XYZ> SelectPoint(this UIDocument uiDocument, ObjectSnapTypes snapTypes, string prompt = null)
     {
         SelectionResult<XYZ> result = new SelectionResult<XYZ>();
@@ -484,6 +506,7 @@ public static class SelectionExtension
     /// <param name="uiDocument">要操作的文档</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<XYZ> SelectPoint(this UIDocument uiDocument, string prompt = null)
     {
         SelectionResult<XYZ> result = new SelectionResult<XYZ>();
@@ -518,6 +541,7 @@ public static class SelectionExtension
     /// <param name="selectionFilter">选择过滤器</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, ISelectionFilter selectionFilter = null, string prompt = null)
     {
         SelectionResult<IList<Element>> selectionResult = new SelectionResult<IList<Element>>();
@@ -555,6 +579,7 @@ public static class SelectionExtension
     /// <param name="elementPredicate">对要选择的图元进行筛选</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, Func<Element, bool> elementPredicate, string prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(new DefaultSelectionFilter(elementPredicate), prompt);
@@ -568,6 +593,7 @@ public static class SelectionExtension
     /// <param name="builtInCategory">要选择的图元对象</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(new ElementId(builtInCategory), prompt);
@@ -581,6 +607,7 @@ public static class SelectionExtension
     /// <param name="builtInCategoryId">要选择的图元对象的 <see cref="Autodesk.Revit.DB.ElementId"/></param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, ElementId builtInCategoryId, string prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(element => element.Category?.Id == builtInCategoryId, prompt);
@@ -593,6 +620,7 @@ public static class SelectionExtension
     /// <param name="uiDocument">要操作的文档</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, string prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(_ => true, prompt);
@@ -605,6 +633,7 @@ public static class SelectionExtension
     /// <param name="pickBoxStyle">盒子的类型</param>
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
+    [DebuggerStepThrough]
     public static SelectionResult<PickedBox> SelectBox(this UIDocument uIDocument, PickBoxStyle pickBoxStyle = PickBoxStyle.Crossing, string prompt = null)
     {
         SelectionResult<PickedBox> selectionResult = new SelectionResult<PickedBox>();

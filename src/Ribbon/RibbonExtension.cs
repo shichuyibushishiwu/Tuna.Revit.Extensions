@@ -2,7 +2,9 @@
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Tuna.Revit.Extension.Ribbon.Abstraction;
 using Tuna.Revit.Extension.Ribbon.Proxy;
+using static UIFramework.WorksharingNotificationWindow;
 
 namespace Tuna.Revit.Extension;
 
@@ -12,58 +14,69 @@ namespace Tuna.Revit.Extension;
 public static class RibbonExtension
 {
     /// <summary>
-    /// 创建Tab
+    /// internal method info of <see cref="UIControlledApplication"/>
+    /// </summary>
+    private static readonly MethodInfo _getUIApplicationMethod = (typeof(UIControlledApplication)
+              .GetMethod("getUIApplication", BindingFlags.Instance | BindingFlags.NonPublic));
+
+    /// <summary>
+    /// get the <see cref="Autodesk.Revit.UI.UIApplication" /> from <see cref="UIControlledApplication"/>
     /// </summary>
     /// <param name="application"></param>
-    /// <param name="title"></param>
-    /// <param name="action"></param>
     /// <returns></returns>
     /// <exception cref="System.ArgumentNullException"></exception>
-    public static IRibbonTab AddRibbonTab(this UIControlledApplication application, string title, Action<IRibbonTab> action)
+    private static UIApplication GetUIApplication(UIControlledApplication application)
     {
-        RibbonHost.Defualt.Assembly = Assembly.GetCallingAssembly();
-
-
-        var app = (typeof(UIControlledApplication)
-            .GetMethod("getUIApplication", BindingFlags.Instance | BindingFlags.NonPublic)
-            .Invoke(application, new object[0]) as UIApplication) ?? throw new ArgumentNullException("app reflection error");
-
-        return app.AddRibbonTab(title, action);
+        return _getUIApplicationMethod.Invoke(application, new object[0]) as UIApplication ?? throw new ArgumentNullException("app reflection error");
     }
-
 
     /// <summary>
     /// 创建Tab
     /// </summary>
     /// <param name="application"></param>
     /// <param name="title"></param>
-    /// <param name="action"></param>
-    /// <returns></returns>
-    public static IRibbonTab AddRibbonTab(this UIApplication application, string title, Action<IRibbonTab> action)
+    private static IRibbonTab AddRibbonTab(this UIApplication application, string title)
     {
         application.CreateRibbonTab(title);
-
-        RibbonTabProxy tab = new()
+        return new RibbonTabProxy()
         {
             Application = application,
             Title = title,
         };
-
-        action?.Invoke(tab);
-        return tab;
     }
 
     /// <summary>
-    /// 创建面板
+    /// 创建Tab
     /// </summary>
-    /// <param name="tab"></param>
-    /// <param name="name"></param>
-    /// <param name="handle"></param>
-    /// <returns></returns>
-    public static IRibbonTab AddRibbonPanel(this IRibbonTab tab, string name, Action<IRibbonPanel> handle)
+    /// <param name="application"></param>
+    /// <param name="title"></param>
+    /// <param name="action"></param>
+    /// <exception cref="System.ArgumentNullException"></exception>
+    public static void AddRibbonTab(this UIControlledApplication application, string title, Action<IRibbonTab> action)
     {
-        IRibbonPanel ribbonPanel = tab.CreateRibbonPanel(name);
-        handle?.Invoke(ribbonPanel);
-        return tab;
+        RibbonHost ribbonHost = RibbonHost.Default;
+        ribbonHost.Assembly = Assembly.GetCallingAssembly();
+        ribbonHost.UIApplication = GetUIApplication(application);
+        ribbonHost.UIControlledApplication = application;
+
+        IRibbonTab ribbonTab = ribbonHost.UIApplication.AddRibbonTab(title);
+        action?.Invoke(ribbonTab);
     }
+
+    /// <summary>
+    /// 创建Tab
+    /// </summary>
+    /// <param name="application"></param>
+    /// <param name="title"></param>
+    public static IRibbonTab AddRibbonTab(this UIControlledApplication application, string title)
+    {
+        RibbonHost ribbonHost = RibbonHost.Default;
+        ribbonHost.Assembly = Assembly.GetCallingAssembly();
+        ribbonHost.UIApplication = GetUIApplication(application);
+        ribbonHost.UIControlledApplication = application;
+
+        return ribbonHost.UIApplication.AddRibbonTab(title);
+    }
+
+ 
 }

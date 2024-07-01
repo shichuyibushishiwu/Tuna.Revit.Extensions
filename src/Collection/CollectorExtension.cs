@@ -15,6 +15,7 @@ using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Tuna.Revit.Extension;
 
@@ -44,6 +45,7 @@ public static class CollectorExtension
     /// <param name="document"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
     /// <exception cref="Autodesk.Revit.Exceptions.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     static FilteredElementCollector GetElements(this Document document)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
@@ -58,6 +60,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="filter">element filter</param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, ElementFilter filter)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(filter);
@@ -83,6 +86,7 @@ public static class CollectorExtension
     /// <param name="type">type of element</param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
     /// <exception cref="System.ArgumentException">类型必须继承于<see cref="Autodesk.Revit.DB.Element"/></exception>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, Type type)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(type);
@@ -109,6 +113,7 @@ public static class CollectorExtension
     /// <param name="type">element type</param>
     /// <param name="types">element types</param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, Type type, params Type[] types)
     {
         if (types.Length == 0)
@@ -128,6 +133,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="category">内置类别<see cref="Autodesk.Revit.DB.BuiltInCategory"/></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, BuiltInCategory category)
     {
         return document.GetElements(new ElementCategoryFilter(category)).WhereElementIsNotElementType();
@@ -142,6 +148,7 @@ public static class CollectorExtension
     /// <param name="category"></param>
     /// <param name="categories"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, BuiltInCategory category, params BuiltInCategory[] categories)
     {
         if (categories.Length == 0)
@@ -161,6 +168,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="structuralWallUsage"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, StructuralWallUsage structuralWallUsage)
     {
         return document.GetElements(new StructuralWallUsageFilter(structuralWallUsage));
@@ -174,6 +182,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="structuralMaterialType"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, StructuralMaterialType structuralMaterialType)
     {
         return document.GetElements(new StructuralMaterialTypeFilter(structuralMaterialType));
@@ -187,6 +196,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="structuralInstanceUsage"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, StructuralInstanceUsage structuralInstanceUsage)
     {
         return document.GetElements(new StructuralInstanceUsageFilter(structuralInstanceUsage));
@@ -200,6 +210,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="familySymbol"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, FamilySymbol familySymbol)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(familySymbol);
@@ -214,6 +225,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="level">host level</param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, Level level)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(level);
@@ -229,6 +241,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="categoryId">要查询的类别<see cref="Autodesk.Revit.DB.ElementId"/></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, ElementId categoryId)
     {
         return document.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsNotElementType();
@@ -244,6 +257,7 @@ public static class CollectorExtension
     /// <param name="categoryId">要查询的类别<see cref="Autodesk.Revit.DB.ElementId"/></param>
     /// <param name="categories">要查询的其他类别<see cref="Autodesk.Revit.DB.ElementId"/></param>
     /// <returns></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, ElementId categoryId, params ElementId[] categories)
     {
         if (categories.Length == 0)
@@ -266,6 +280,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="structuralType"><see cref="Autodesk.Revit.DB.Structure.StructuralType"/></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, StructuralType structuralType)
     {
         return document.GetElements(new ElementStructuralTypeFilter(structuralType));
@@ -279,6 +294,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="curveElementType"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, CurveElementType curveElementType)
     {
         return document.GetElements(new CurveElementFilter(curveElementType));
@@ -292,6 +308,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="predicate"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
+    [DebuggerStepThrough]
     public static IEnumerable<T> GetElements<T>(this Document document, Func<T, bool> predicate = null) where T : Element
     {
         IEnumerable<T> elements = document.GetElements(typeof(T)).Cast<T>();
@@ -310,6 +327,7 @@ public static class CollectorExtension
     /// <typeparam name="T2"></typeparam>
     /// <param name="document"></param>
     /// <returns></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements<T1, T2>(this Document document) where T1 : Element where T2 : Element
     {
         return document.GetElements(typeof(T1), typeof(T2));
@@ -324,6 +342,7 @@ public static class CollectorExtension
     /// <typeparam name="T3"></typeparam>
     /// <param name="document"></param>
     /// <returns></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements<T1, T2, T3>(this Document document) where T1 : Element where T2 : Element where T3 : Element
     {
         return document.GetElements(typeof(T1), typeof(T2), typeof(T3));
@@ -338,6 +357,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="categoryId">要查询的类型<see cref="Autodesk.Revit.DB.ElementId"/></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementTypes(this Document document, ElementId categoryId)
     {
         return document.GetElements(new ElementCategoryFilter(categoryId)).WhereElementIsElementType();
@@ -353,6 +373,7 @@ public static class CollectorExtension
     /// <param name="categoryId">要查询的文档</param>
     /// <param name="categories">要查询的类型<see cref="Autodesk.Revit.DB.ElementId"/></param>
     /// <returns></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementTypes(this Document document, ElementId categoryId, params ElementId[] categories)
     {
         if (categories.Length == 0)
@@ -372,6 +393,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="category">要查询的类别</param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementTypes(this Document document, BuiltInCategory category)
     {
         return document.GetElements(new ElementCategoryFilter(category)).WhereElementIsElementType();
@@ -386,6 +408,7 @@ public static class CollectorExtension
     /// <param name="category">要查询的类别</param>
     /// <param name="categories">要查询的其他类别</param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementTypes(this Document document, BuiltInCategory category, params BuiltInCategory[] categories)
     {
         if (categories.Length == 0)
@@ -405,6 +428,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="predicate">对查询到的图元类型进行条件过滤</param>
     /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
+    [DebuggerStepThrough]
     public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> predicate = null) where T : ElementType
     {
         return document.GetElements(predicate);
@@ -417,6 +441,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="structuralMaterialType"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static IEnumerable<Family> GetStructualFamilies(this Document document, StructuralMaterialType structuralMaterialType)
     {
         return document.GetElements(new FamilyStructuralMaterialTypeFilter(structuralMaterialType)).Cast<Family>();
@@ -429,6 +454,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="familyId"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static IEnumerable<FamilySymbol> GetFamilySymbols(this Document document, ElementId familyId)
     {
         return document.GetElements(new FamilySymbolFilter(familyId)).Cast<FamilySymbol>();
@@ -441,6 +467,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="predicate">predicate</param>
     /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
+    [DebuggerStepThrough]
     public static IEnumerable<Element> GetGraphicElements(this Document document, Func<Element, bool> predicate)
     {
         var elements = document.GetElements(new ElementIsElementTypeFilter(true))
@@ -462,6 +489,7 @@ public static class CollectorExtension
     /// <param name="familySymbolName">族类型名称</param>
     /// <returns></returns>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElements(this Document document, string familyName, string familySymbolName)
     {
         Family family = document.GetElements<Family>(f => f.Name == familyName).FirstOrDefault()

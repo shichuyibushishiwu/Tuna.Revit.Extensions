@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ public static class TransactionGroupExtensions
     /// <param name="name"></param>
     /// <returns><see cref="TransactionResult"/></returns>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     public static TransactionResult NewTransactionGroup(this Document document, Action<TransactionGroupOptions> action, string name = "Default Transaction Group Name")
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
@@ -68,6 +70,7 @@ public static class TransactionGroupExtensions
     /// <param name="action"></param>
     /// <param name="name"></param>
     /// <returns><see cref="TransactionResult"/></returns>
+    [DebuggerStepThrough]
     public static TransactionResult NewTransactionGroup(this Document document, Action action, string name = "Default Transaction Group Name")
     {
         return document.NewTransactionGroup((option) =>

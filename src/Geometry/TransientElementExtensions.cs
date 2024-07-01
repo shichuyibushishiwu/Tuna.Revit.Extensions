@@ -11,6 +11,7 @@
 using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -44,6 +45,7 @@ public static class TransientElementExtensions
     /// </returns>
     /// <exception cref="System.ArgumentNullException"></exception>
     /// <exception cref="System.Exception"></exception>
+    [DebuggerStepThrough]
     public static ElementId TransientDisplay(this Document document, IList<GeometryObject> objects, ElementId graphicsStyleId = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
@@ -69,6 +71,7 @@ public static class TransientElementExtensions
     /// 创建的临时图元的 <see cref="Autodesk.Revit.DB.ElementId"/>
     /// <para>The element id of the created element</para>
     /// </returns>
+    [DebuggerStepThrough]
     public static ElementId TransientDisplay(this Document document, GeometryObject geometryObject, ElementId graphicsStyleId = null)
     {
         return document.TransientDisplay(new List<GeometryObject>() { geometryObject }, graphicsStyleId);
@@ -79,6 +82,7 @@ public static class TransientElementExtensions
     /// <para>Clean up all transient (temporary) elements produced by tuna in the document</para>
     /// </summary>
     /// <param name="document">要执行操作的文档</param>
+    [DebuggerStepThrough]
     public static void CleanTransientElements(this Document document)
     {
         if (_transientElementIds.Count == 0)
@@ -98,6 +102,7 @@ public static class TransientElementExtensions
     /// <param name="transientElementId">transient element id</param>
     /// <param name="objects">transient element geometries</param>
     /// <param name="graphicsStyleId">transient element graphics style element id </param>
+    [DebuggerStepThrough]
     public static void ResetTransientElementGeometry(this Document document, ElementId transientElementId, IList<GeometryObject> objects, ElementId graphicsStyleId = null) => _method.Invoke(null, parameters: new object[4]
     {
         document,
@@ -114,6 +119,7 @@ public static class TransientElementExtensions
     /// <param name="transientElementId">Transient element id</param>
     /// <param name="geometryObject">Transient element geometries</param>
     /// <param name="graphicsStyleId">Transient element graphics style element id </param>
+    [DebuggerStepThrough]
     public static void ResetTransientElementGeometry(this Document document, ElementId transientElementId, GeometryObject geometryObject, ElementId graphicsStyleId = null)
     {
         document.ResetTransientElementGeometry(transientElementId, new List<GeometryObject>() { geometryObject }, graphicsStyleId);
@@ -123,6 +129,7 @@ public static class TransientElementExtensions
     /// get revit internal method where is from geometry element
     /// </summary>
     /// <returns></returns>
+    [DebuggerStepThrough]
     private static MethodInfo GetTransientDisplayMethod()
     {
         return typeof(GeometryElement)

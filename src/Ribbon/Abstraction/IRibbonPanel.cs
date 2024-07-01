@@ -12,7 +12,7 @@ namespace Tuna.Revit.Extension;
 /// <summary>
 /// 功能面板
 /// </summary>
-public interface IRibbonPanel : IRibbonItemsCollector, IRibbonItem
+public interface IRibbonPanel : IRibbonPushButtonContainer<IRibbonPanel>
 {
     /// <summary>
     /// 面板的标题
@@ -25,19 +25,11 @@ public interface IRibbonPanel : IRibbonItemsCollector, IRibbonItem
     void AddSlideOut();
 
     /// <summary>
-    /// 添加分割线
-    /// </summary>
-    IRibbonPanel AddSeparator();
-
-    /// <summary>
-    /// 添加按钮
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    IRibbonPanel AddPushButton<T>() where T : class, IExternalCommand, new();
-
-    /// <summary>
     /// 添加下拉按钮
     /// </summary>
+    /// <param name="title"></param>
+    /// <param name="handle"></param>
+    /// <returns></returns>
     IRibbonPanel AddPulldownButton(string title, Action<IRibbonPulldownButton> handle = null);
 
     /// <summary>
@@ -49,7 +41,7 @@ public interface IRibbonPanel : IRibbonItemsCollector, IRibbonItem
     IRibbonPanel AddSplitButton(string title, Action<IRibbonSplitButton> handle = null);
 
     /// <summary>
-    /// 
+    /// 添加单选框按钮组
     /// </summary>
     /// <returns></returns>
     IRibbonPanel AddRadioButtonGroup();

@@ -12,6 +12,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ public static class CollectorInListExtension
     /// <param name="elementIds">要查询的列表范围</param>
     /// <returns></returns>
     /// <exception cref="System.ArgumentNullException"></exception>
+    [DebuggerStepThrough]
     internal static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(document);
@@ -44,6 +46,7 @@ public static class CollectorInListExtension
     /// <param name="elementIds">要查询的列表范围</param>
     /// <param name="elementFilter">元素过滤器</param>
     /// <returns>从列表中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds, ElementFilter elementFilter)
     {
         return document.GetElementsInCollector(elementIds).WherePasses(elementFilter);
@@ -57,6 +60,7 @@ public static class CollectorInListExtension
     /// <param name="elementIds">要查询的列表范围</param>
     /// <param name="type"></param>
     /// <returns>从列表中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds, Type type)
     {
         return document.GetElementsInCollector(elementIds, new ElementClassFilter(type));
@@ -71,6 +75,7 @@ public static class CollectorInListExtension
     /// <param name="type"></param>
     /// <param name="types"></param>
     /// <returns>从列表中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds, Type type, params Type[] types)
     {
         if (types.Length == 0)
@@ -90,6 +95,7 @@ public static class CollectorInListExtension
     /// <param name="elementIds">要查询的列表范围</param>
     /// <param name="builtInCategory"></param>
     /// <returns>从列表中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds, BuiltInCategory builtInCategory)
     {
         return document.GetElementsInCollector(elementIds, new ElementCategoryFilter(builtInCategory));
@@ -104,6 +110,7 @@ public static class CollectorInListExtension
     /// <param name="builtInCategory"></param>
     /// <param name="categories"></param>
     /// <returns>从列表中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds, BuiltInCategory builtInCategory, params BuiltInCategory[] categories)
     {
         if (categories.Length == 0)
@@ -123,6 +130,7 @@ public static class CollectorInListExtension
     /// <param name="elementIds">要查询的列表范围</param>
     /// <param name="structuralWallUsage"></param>
     /// <returns>从列表中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds, StructuralWallUsage structuralWallUsage)
     {
         return document.GetElementsInCollector(elementIds, new StructuralWallUsageFilter(structuralWallUsage));
@@ -136,6 +144,7 @@ public static class CollectorInListExtension
     /// <param name="elementIds">要查询的列表范围</param>
     /// <param name="element">要进行碰撞的图元</param>
     /// <returns>从列表中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
     public static FilteredElementCollector GetElementIntersectsInCollector(this Document document, ICollection<ElementId> elementIds, Element element)
     {
         return document.GetElementsInCollector(elementIds, new ElementIntersectsElementFilter(element));

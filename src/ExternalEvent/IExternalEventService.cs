@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,5 +18,7 @@ public interface IExternalEventService
     /// <para>Post an external command to revit</para>
     /// </summary>
     /// <param name="handle">可执行的任务</param>
-    void PostCommand(Action<UIApplication> handle);
+    /// <returns><see cref="ExternalEventRequest"/></returns>
+    [DebuggerStepThrough]
+    ExternalEventRequest PostCommand(Action<UIApplication> handle);
 }

@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ public static class ExternalEventServiceExtension
     /// <param name="service">外部事件的服务</param>
     /// <param name="handle">执行的内容</param>
     /// <returns></returns>
+    [DebuggerStepThrough]
     public static Task PostCommandAsync(this IExternalEventService service, Action<UIApplication> handle)
     {
         return service.PostCommandAsync((uiApp) =>
@@ -36,21 +38,27 @@ public static class ExternalEventServiceExtension
     /// <param name="service">外部事件的服务</param>
     /// <param name="handle">执行的内容</param>
     /// <returns></returns>
-    public static Task<TResult> PostCommandAsync<TResult>(this IExternalEventService service, Func<UIApplication, TResult> handle)
+    [DebuggerStepThrough]
+    public static Task<ExternalEventResult<TResult>> PostCommandAsync<TResult>(this IExternalEventService service, Func<UIApplication, TResult> handle)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(service);
-        var tsc = new TaskCompletionSource<TResult>();
-        service.PostCommand(uiapp =>
+        var tsc = new TaskCompletionSource<ExternalEventResult<TResult>>();
+        ExternalEventResult<TResult> externalEventResult = new ExternalEventResult<TResult>();
+        ExternalEventRequest externalEventRequest = service.PostCommand(uiapp =>
         {
             try
             {
-                tsc.SetResult(handle.Invoke(uiapp));
+                TResult result = handle.Invoke(uiapp);
+                externalEventResult.Value = result;
+                tsc.SetResult(externalEventResult);
             }
             catch (Exception e)
             {
+                externalEventResult.Exception = e;
                 tsc.SetException(e);
             }
         });
+        externalEventResult.ExternalEventRequest = externalEventRequest;
         return tsc.Task;
     }
 }

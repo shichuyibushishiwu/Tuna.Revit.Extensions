@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.UI;
+using System;
 using System.Collections.Generic;
 
 namespace Tuna.Revit.Extension.Ribbon.Proxy;
@@ -13,7 +14,7 @@ internal class RibbonTabProxy : IRibbonTab
 
     public UIApplication Application { get; internal set; }
 
-    public IRibbonPanel CreateRibbonPanel(string name)
+    public IRibbonPanel AddRibbonPanel(string name, Action<IRibbonPanel> handle)
     {
         RibbonPanelProxy ribbonPanelProxy = new()
         {

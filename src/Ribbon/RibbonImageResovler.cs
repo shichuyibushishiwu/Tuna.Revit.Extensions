@@ -40,9 +40,9 @@ internal class RibbonImageResovler
                 }
                 else
                 {
-                    if (RibbonHost.Defualt.IsVaild)
+                    if (RibbonHost.Default.IsVaild)
                     {
-                        path = $"{RibbonHost.Defualt.InstallPath}//{path}";
+                        path = $"{RibbonHost.Default.InstallPath}//{path}";
                         if (File.Exists(path))
                         {
                             return new BitmapImage(new Uri(path));

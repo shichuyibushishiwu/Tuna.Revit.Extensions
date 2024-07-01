@@ -12,6 +12,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,7 @@ public class DefaultSelectionFilter : ISelectionFilter
     /// </summary>
     /// <param name="elementPredicate">Allow element</param>
     /// <param name="referencePredicate">Allow reference</param>
+    [DebuggerStepThrough]
     public DefaultSelectionFilter(Func<Element, bool> elementPredicate = null, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate = null)
     {
         _elementPredicate = elementPredicate;
@@ -43,6 +45,7 @@ public class DefaultSelectionFilter : ISelectionFilter
     /// </summary>
     /// <param name="elem"><inheritdoc/></param>
     /// <returns><inheritdoc/></returns>
+    [DebuggerStepThrough]
     public virtual bool AllowElement(Element elem)
     {
         if (elem == null)
@@ -64,6 +67,7 @@ public class DefaultSelectionFilter : ISelectionFilter
     /// <param name="reference"><inheritdoc/></param>
     /// <param name="position"><inheritdoc/></param>
     /// <returns><inheritdoc/></returns>
+    [DebuggerStepThrough]
     public virtual bool AllowReference(Reference reference, XYZ position)
     {
         if (reference == null || position == null)

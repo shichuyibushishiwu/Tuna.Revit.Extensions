@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ public static class TransactionExtensions
     /// <param name="action"></param>
     /// <param name="name"></param>
     /// <returns><see cref="TransactionResult"/></returns>
+    [DebuggerStepThrough]
     public static TransactionResult NewTransaction(this Document document, Action<FailureHandlingOptions> action, string name = "Default Transaction Name")
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
@@ -71,6 +73,7 @@ public static class TransactionExtensions
     /// <param name="action"></param>
     /// <param name="name"></param>
     /// <returns>If document is read only,return <see cref="Autodesk.Revit.DB.TransactionStatus.Error"/></returns>
+    [DebuggerStepThrough]
     public static TransactionResult NewTransaction(this Document document, Action action, string name = "Default Transaction Name")
     {
         return document.NewTransaction(options => action(), name);
