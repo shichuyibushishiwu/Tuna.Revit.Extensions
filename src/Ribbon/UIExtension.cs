@@ -116,7 +116,7 @@ public static class UIExtension
     }
 
     /// <summary>
-    /// 在面板上创建一个下拉按钮
+    /// 在面板上创建一个下拉式按钮
     /// </summary>
     /// <param name="panel"></param>
     /// <param name="name"></param>
@@ -156,9 +156,10 @@ public static class UIExtension
         return panel.AddItem(combo) as ComboBox;
     }
 
+   
 
     /// <summary>
-    /// 
+    /// 创建按压式按钮
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="pulldownButton"></param>
@@ -172,7 +173,7 @@ public static class UIExtension
     }
 
     /// <summary>
-    /// 
+    /// 创建按压式按钮
     /// </summary>
     /// <param name="pulldownButton"></param>
     /// <param name="type"></param>
@@ -184,4 +185,6 @@ public static class UIExtension
 
         return pulldownButton.AddPushButton(CreatePushButtonData(handle, type));
     }
+
+
 }

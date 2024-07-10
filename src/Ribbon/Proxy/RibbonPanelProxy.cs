@@ -35,6 +35,7 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
 
             RibbonButton ribbonButton = this.OriginalObject.CreatePushButton<TCommand>(btn => UIExtension.SetPushButtonData(btn, ribbonButtonProxy.RibbonButtonData));
 
+          
             ribbonButtonProxy.OriginalObject = ribbonButton;
             ribbonButtonProxy.Title = ribbonButton.ItemText;
             ribbonButtonProxy.Name = ribbonButton.Name;
@@ -80,9 +81,8 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
     {
         ComboBox comboBox = this.OriginalObject.CreateComboBox(name);
 
-        RibbonComboBoxProxy comboBoxProxy = new()
+        RibbonComboBoxProxy comboBoxProxy = new(comboBox)
         {
-            OriginalObject = comboBox,
             Title = comboBox.Name,
         };
 

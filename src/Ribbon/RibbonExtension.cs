@@ -74,9 +74,9 @@ public static class RibbonExtension
         ribbonHost.Assembly = Assembly.GetCallingAssembly();
         ribbonHost.UIApplication = GetUIApplication(application);
         ribbonHost.UIControlledApplication = application;
-
+      
         return ribbonHost.UIApplication.AddRibbonTab(title);
     }
 
- 
+
 }

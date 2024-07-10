@@ -25,7 +25,7 @@ internal class TestCommand : IExternalCommand
         long id = 2312;
         var result = uiDocument.SelectObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, prompt: "asd", pPreSelected: new List<Reference>()
         {
-            new Reference(document.GetElement(new ElementId(id)))
+            //new Reference(document.GetElement(new ElementId(id)))
         }); ;
 
         if (result.SelectionStatus == SelectionStatus.Succeeded)

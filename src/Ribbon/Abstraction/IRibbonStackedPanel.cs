@@ -6,9 +6,23 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension;
 
-internal interface IRibbonStackedPanel
+/// <summary>
+/// 堆叠式面板
+/// </summary>
+public interface IRibbonStackedPanel
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TComandA"></typeparam>
+    /// <typeparam name="TCommandB"></typeparam>
+    /// <typeparam name="TCommandC"></typeparam>
     public void AddPushButton<TComandA, TCommandB, TCommandC>();
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TComandA"></typeparam>
+    /// <typeparam name="TCommandB"></typeparam>
     public void AddPushButton<TComandA, TCommandB>();
 }

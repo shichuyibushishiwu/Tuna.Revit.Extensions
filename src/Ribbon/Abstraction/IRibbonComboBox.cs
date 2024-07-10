@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension;
 
 /// <summary>
-/// 
+/// 下拉选项
 /// </summary>
 public interface IRibbonComboBox : IRibbonItem
 {
