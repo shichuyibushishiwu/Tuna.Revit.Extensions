@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autodesk.Revit.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,4 +24,10 @@ public interface IRibbonTab : IRibbonItemsCollector
     /// <param name="title">面板的标题</param>
     /// <param name="handle">添加面板的元素</param>
     IRibbonPanel AddRibbonPanel(string title, Action<IRibbonPanel> handle);
+
+    /// <summary>
+    /// 获取面板
+    /// </summary>
+    /// <returns></returns>
+    List<RibbonPanel> GetRibbonPanels();
 }

@@ -31,4 +31,9 @@ internal class RibbonTabProxy : IRibbonTab
     }
 
     public IEnumerable<IRibbonItem> GetItems() => _items;
+
+    public List<RibbonPanel> GetRibbonPanels()
+    {
+        return Application.GetRibbonPanels(this.Title);
+    }
 }

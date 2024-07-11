@@ -12,7 +12,7 @@
 
         > 对于路径的解析：
             - 如果用户给的是绝对路径指向资源位置，则直接返回资源对象
-            - 如果用户给的是相对路径，则默认按照在启动文件的相对路径 [/Assets/Icon/] 文件下进行读取
+            - 如果用户给的是相对路径，则默认按照在启动文件的相对路径 [\Assets\Icon/\] 文件夹下进行读取
             - 如果用户通过 [.Addin] 进行配置(指定的属性为Resource) 则相对路径修改为用户指定的路径
         
 
@@ -40,9 +40,9 @@ internal class RibbonImageResovler
                 }
                 else
                 {
-                    if (RibbonHost.Default.IsVaild)
+                    if (RevitApplicationContext.Instance.IsVaild)
                     {
-                        path = $"{RibbonHost.Default.InstallPath}//{path}";
+                        path = @$"{RevitApplicationContext.Instance.InstallPath}\{path}";
                         if (File.Exists(path))
                         {
                             return new BitmapImage(new Uri(path));

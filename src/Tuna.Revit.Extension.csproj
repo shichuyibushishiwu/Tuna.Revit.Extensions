@@ -29,62 +29,62 @@
 			Rvt_24_Debug;Rvt_24_Release;
 			Rvt_25_Debug;Rvt_25_Release;
 		</Configurations>
-		<TunaVer>17</TunaVer>
+		<TunaVer>18</TunaVer>
 		<PlatformTarget>x64</PlatformTarget>
 		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
 		<RvtVersion>2016</RvtVersion>
-		<DefineConstants>Rvt_16</DefineConstants>
+		<DefineConstants>Rvt_16;Rvt_20_Before;Rvt_23_Before;Rvt_24_Before</DefineConstants>
 		<TargetFramework>net452</TargetFramework>
 		<Version>2016.2.$(TunaVer)</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_17))'">
 		<RvtVersion>2017</RvtVersion>
-		<DefineConstants>Rvt_17</DefineConstants>
+		<DefineConstants>Rvt_17;Rvt_20_Before;Rvt_23_Before;Rvt_24_Before</DefineConstants>
 		<TargetFramework>net46</TargetFramework>
 		<Version>2017.2.$(TunaVer)</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_18))'">
 		<RvtVersion>2018</RvtVersion>
-		<DefineConstants>Rvt_18</DefineConstants>
+		<DefineConstants>Rvt_18;Rvt_20_Before;Rvt_23_Before;Rvt_24_Before</DefineConstants>
 		<TargetFramework>net46</TargetFramework>
 		<Version>2018.2.$(TunaVer)</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_19))'">
 		<RvtVersion>2019</RvtVersion>
-		<DefineConstants>Rvt_19</DefineConstants>
+		<DefineConstants>Rvt_19;Rvt_20_Before;Rvt_23_Before;Rvt_24_Before</DefineConstants>
 		<TargetFramework>net47</TargetFramework>
 		<Version>2019.0.$(TunaVer)</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_20))'">
 		<RvtVersion>2020</RvtVersion>
-		<DefineConstants>Rvt_20</DefineConstants>
+		<DefineConstants>Rvt_20;Rvt_23_Before;Rvt_24_Before</DefineConstants>
 		<TargetFramework>net47</TargetFramework>
 		<Version>2020.0.$(TunaVer)</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_21))'">
 		<RvtVersion>2021</RvtVersion>
-		<DefineConstants>Rvt_21</DefineConstants>
+		<DefineConstants>Rvt_21;Rvt_23_Before;Rvt_24_Before</DefineConstants>
 		<TargetFramework>net48</TargetFramework>
 		<Version>2021.0.$(TunaVer)</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_22))'">
 		<RvtVersion>2022</RvtVersion>
-		<DefineConstants>Rvt_22</DefineConstants>
+		<DefineConstants>Rvt_22;Rvt_23_Before;Rvt_24_Before</DefineConstants>
 		<TargetFramework>net48</TargetFramework>
 		<Version>2022.0.$(TunaVer)</Version>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_23))'">
 		<RvtVersion>2023</RvtVersion>
-		<DefineConstants>Rvt_23</DefineConstants>
+		<DefineConstants>Rvt_23;Rvt_24_Before</DefineConstants>
 		<TargetFramework>net48</TargetFramework>
 		<Version>2023.0.$(TunaVer)</Version>
 	</PropertyGroup>
@@ -102,7 +102,7 @@
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<Version>2025.0.$(TunaVer)</Version>
 	</PropertyGroup>
-	
+
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rvt_16_Release|AnyCPU'">
 		<Optimize>True</Optimize>
@@ -141,7 +141,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rvt_25_Release|AnyCPU'">
-	  <Optimize>True</Optimize>
+		<Optimize>True</Optimize>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
@@ -203,7 +203,7 @@
 		</PackageReference>
 		<PackageReference Include="System.Drawing.Common" Version="8.0.3" />
 	</ItemGroup>
-	
+
 
 	<ItemGroup>
 		<Compile Remove="Properties\**" />
