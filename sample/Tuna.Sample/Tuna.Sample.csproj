@@ -19,7 +19,7 @@
 			Rvt_24_Debug;Rvt_24_Release;
 			Rvt_25_Debug;Rvt_25_Release;
 		</Configurations>
-		<TunaVer>15</TunaVer>
+		<TunaVer>16</TunaVer>
 		<PlatformTarget>x64</PlatformTarget>
 		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
