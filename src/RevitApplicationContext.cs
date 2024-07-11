@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 
 namespace Tuna.Revit.Extension;
 
-internal class RibbonHost
+/// <summary>
+/// 应用程序上下文
+/// </summary>
+public class RevitApplicationContext
 {
     private Assembly _assembly;
     private bool _isValid;
@@ -17,10 +20,13 @@ internal class RibbonHost
     /// <summary>
     /// 默认值
     /// </summary>
-    public static RibbonHost Default { get; } = new RibbonHost();
+    public static RevitApplicationContext Instance { get; } = new RevitApplicationContext();
 
-    RibbonHost() { }
+    RevitApplicationContext() { }
 
+    /// <summary>
+    /// 当前加载的插件的程序集
+    /// </summary>
     public Assembly Assembly
     {
         get => _assembly;
@@ -30,16 +36,28 @@ internal class RibbonHost
             {
                 _assembly = value;
                 _isValid = true;
-                InstallPath = $"{Directory.GetParent(_assembly?.Location).FullName}//Assets//Icon";
+                InstallPath = @$"{Directory.GetParent(_assembly?.Location).FullName}\Assets\Icon";
             }
         }
     }
 
+    /// <summary>
+    /// Revit <see cref="Autodesk.Revit.UI.UIControlledApplication"/> 实例
+    /// </summary>
     public UIControlledApplication UIControlledApplication { get; internal set; }
 
+    /// <summary>
+    /// Revit <see cref="Autodesk.Revit.UI.UIApplication"/> 实例
+    /// </summary>
     public UIApplication UIApplication { get; internal set; }
 
+    /// <summary>
+    /// 上下文是否有效
+    /// </summary>
     public bool IsVaild => _isValid;
 
+    /// <summary>
+    /// 当前加载的插件的安装位置
+    /// </summary>
     public string InstallPath { get; set; }
 }

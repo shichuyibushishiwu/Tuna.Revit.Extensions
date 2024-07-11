@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Tuna.Revit.Extension.Ribbon.Proxy;
 
 
 namespace Tuna.Revit.Extension;
@@ -33,49 +34,48 @@ public static class UIExtension
 {
     internal static void SetPushButtonData(ButtonData buttonData, IRibbonButtonData buttonDataProxy)
     {
-        buttonData.Text = string.IsNullOrWhiteSpace(buttonDataProxy.Title) ? buttonData.Text : buttonDataProxy.Title;
-        buttonData.Image = RibbonImageResovler.Resolve(buttonDataProxy.Image);
-        buttonData.LargeImage = RibbonImageResovler.Resolve(buttonDataProxy.LargeImage);
-        buttonData.ToolTipImage = RibbonImageResovler.Resolve(buttonDataProxy.ToolTipImage);
-        buttonData.ToolTip = buttonDataProxy.ToolTip;
-        buttonData.LongDescription = buttonDataProxy.LongDescription;
-        buttonData.SetContextualHelp(buttonDataProxy.ContextualHelp);
+        if (!string.IsNullOrWhiteSpace(buttonDataProxy.Title) && !EqualityComparer<string>.Default.Equals(buttonData.Text, buttonDataProxy.Title))
+        {
+            buttonData.Text = buttonDataProxy.Title;
+        }
+
+        var image = RibbonImageResovler.Resolve(buttonDataProxy.Image);
+        if (buttonDataProxy.Image != null && !EqualityComparer<ImageSource>.Default.Equals(buttonData.Image, image))
+        {
+            buttonData.Image = image;
+        }
+
+        var largeImage = RibbonImageResovler.Resolve(buttonDataProxy.LargeImage);
+        if (buttonDataProxy.LargeImage != null && !EqualityComparer<ImageSource>.Default.Equals(buttonData.LargeImage, largeImage))
+        {
+            buttonData.LargeImage = largeImage;
+        }
+
+        var toolTipImage = RibbonImageResovler.Resolve(buttonDataProxy.ToolTipImage);
+        if (toolTipImage != null && !EqualityComparer<ImageSource>.Default.Equals(buttonData.ToolTipImage, toolTipImage))
+        {
+            buttonData.ToolTipImage = toolTipImage;
+        }
+
+        if (buttonDataProxy.ToolTip != null && !EqualityComparer<string>.Default.Equals(buttonData.ToolTip, buttonDataProxy.ToolTip))
+        {
+            buttonData.ToolTip = buttonDataProxy.ToolTip;
+        }
+
+        if (buttonDataProxy.LongDescription != null && !EqualityComparer<string>.Default.Equals(buttonData.LongDescription, buttonDataProxy.LongDescription))
+        {
+            buttonData.LongDescription = buttonDataProxy.LongDescription;
+        }
+
+        ContextualHelp contextualHelp = buttonData.GetContextualHelp();
+        if (buttonDataProxy.ContextualHelp != null && !EqualityComparer<ContextualHelp>.Default.Equals(contextualHelp, buttonDataProxy.ContextualHelp))
+        {
+            buttonData.SetContextualHelp(buttonDataProxy.ContextualHelp);
+        }
     }
 
-    static PushButtonData CreatePushButtonData(Action<PushButtonData> handle, Type commandType)
-    {
-        //按钮的名称
-        string name = commandType.Name;
-
-        //实例化一个按钮的数据
-        PushButtonData pushButtonData = new($"btn_{name}", name ?? name, commandType.Assembly.Location, commandType.FullName);
-
-        //如果命令实现了 IExternalCommandAvailability 接口
-        if (typeof(IExternalCommandAvailability).IsAssignableFrom(commandType))
-        {
-            pushButtonData.AvailabilityClassName = commandType.FullName;
-        }
-
-        //方式三，通过属性进行配置，优先级第三
-        CommandButtonAttribute command = commandType.GetCustomAttribute<CommandButtonAttribute>();
-        if (command != null)
-        {
-            SetPushButtonData(pushButtonData, command);
-        }
-
-        //方式二，通过接口进行配置，优先级第二
-        if (typeof(IRibbonButtonData).IsAssignableFrom(commandType))
-        {
-            SetPushButtonData(pushButtonData, Activator.CreateInstance(commandType) as IRibbonButtonData);
-        }
-
-        //方式一，通过回调进行配置，优先级第一
-        handle?.Invoke(pushButtonData);
-
-        return pushButtonData;
-    }
-
-    static PushButtonData CreatePushButtonData<T>(Action<PushButtonData> handle = null) where T : class, IExternalCommand, new() => CreatePushButtonData(handle, typeof(T));
+    static PushButtonData CreatePushButtonData<T>(Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
+        => RibbonButtonDescriptor.CreateRibbonButtonDescriptor(handle, typeof(T)).PushButtonData;
 
     /// <summary>
     /// 在面板上创建一个按钮
@@ -89,8 +89,8 @@ public static class UIExtension
     {
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
 
-        RibbonHost.Default.Assembly = Assembly.GetCallingAssembly();
-
+        RevitApplicationContext.Instance.Assembly = Assembly.GetCallingAssembly();
+      
         return panel.AddItem(CreatePushButtonData<T>(handle)) as PushButton;
     }
 
@@ -110,13 +110,13 @@ public static class UIExtension
 
         handle?.Invoke(data);
 
-        RibbonHost.Default.Assembly = Assembly.GetCallingAssembly();
+        RevitApplicationContext.Instance.Assembly = Assembly.GetCallingAssembly();
 
         return panel.AddItem(data) as PulldownButton;
     }
 
     /// <summary>
-    /// 在面板上创建一个下拉按钮
+    /// 在面板上创建一个下拉式按钮
     /// </summary>
     /// <param name="panel"></param>
     /// <param name="name"></param>
@@ -131,7 +131,7 @@ public static class UIExtension
 
         handle?.Invoke(data);
 
-        RibbonHost.Default.Assembly = Assembly.GetCallingAssembly();
+        RevitApplicationContext.Instance.Assembly = Assembly.GetCallingAssembly();
 
         return panel.AddItem(data) as SplitButton;
     }
@@ -145,20 +145,24 @@ public static class UIExtension
     /// <returns></returns>
     public static ComboBox CreateComboBox(this RibbonPanel panel, string name, Action<ComboBoxData> handle = null)
     {
+        RevitApplicationContext.Instance.Assembly = Assembly.GetCallingAssembly();
+        return InternalCreateComboBox(panel, name, handle);
+    }
+
+    internal static ComboBox InternalCreateComboBox(this RibbonPanel panel, string name, Action<ComboBoxData> handle = null)
+    {
         ArgumentNullExceptionUtils.ThrowIfNull(panel);
 
         ComboBoxData combo = new(name);
 
         handle?.Invoke(combo);
 
-        RibbonHost.Default.Assembly = Assembly.GetCallingAssembly();
-
         return panel.AddItem(combo) as ComboBox;
     }
 
 
     /// <summary>
-    /// 
+    /// 创建按压式按钮
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="pulldownButton"></param>
@@ -166,13 +170,13 @@ public static class UIExtension
     /// <returns></returns>
     public static PushButton CreatePushButton<T>(this PulldownButton pulldownButton, Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
     {
-        RibbonHost.Default.Assembly = Assembly.GetCallingAssembly();
+        RevitApplicationContext.Instance.Assembly = Assembly.GetCallingAssembly();
 
         return CreatePushButton(pulldownButton, typeof(T), handle);
     }
 
     /// <summary>
-    /// 
+    /// 创建按压式按钮
     /// </summary>
     /// <param name="pulldownButton"></param>
     /// <param name="type"></param>
@@ -182,6 +186,8 @@ public static class UIExtension
     {
         ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
 
-        return pulldownButton.AddPushButton(CreatePushButtonData(handle, type));
+        RibbonButtonDescriptor descriptor = RibbonButtonDescriptor.CreateRibbonButtonDescriptor(handle, type);
+
+        return pulldownButton.AddPushButton(descriptor.PushButtonData);
     }
 }

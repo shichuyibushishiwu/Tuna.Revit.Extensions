@@ -115,12 +115,12 @@
 		<Version>2025.0.$(TunaVer)</Version>
 	</PropertyGroup>
 
-	<!--<Target Name="CopyAddin" BeforeTargets="PostBuildEvent" Condition="'$(Configuration.Contains(Debug))'">
+	<Target Name="CopyAddin" BeforeTargets="PostBuildEvent" Condition="'$(Configuration.Contains(Debug))'">
 		<ItemGroup>
 			<SourceFiles Include="$(ProjectDir)$(OutDir)\**\*.*"></SourceFiles>
 		</ItemGroup>
 		<Copy SourceFiles="$(ProjectDir)\Tuna.addin" DestinationFolder="C:\ProgramData\Autodesk\Revit\Addins\2020"></Copy>
 		<Copy SourceFiles="@(SourceFiles)" DestinationFiles="@(SourceFiles->'C:\ProgramData\Autodesk\Revit\Addins\2020\Tuna\%(RecursiveDir)%(Filename)%(Extension)')"></Copy>
 
-	</Target>-->
+	</Target>
 </Project>

@@ -1,7 +1,9 @@
 ﻿using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Tuna.Revit.Extension.Ribbon.Abstraction;
@@ -28,12 +30,22 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
 
     public IRibbonPanel AddPushButton<TCommand>(Action<RibbonButtonData> handle = null) where TCommand : class, IExternalCommand, new()
     {
-        if (!_items.Any(item => item.Name == $"btn_{typeof(TCommand)}"))
+        Type commandType = typeof(TCommand);
+        if (!_items.Any(item => item.Name == $"btn_{commandType}"))
         {
             RibbonButtonProxy ribbonButtonProxy = new RibbonButtonProxy();
-            handle?.Invoke(ribbonButtonProxy.RibbonButtonData);
+            ribbonButtonProxy.Configurate(handle);
 
-            RibbonButton ribbonButton = this.OriginalObject.CreatePushButton<TCommand>(btn => UIExtension.SetPushButtonData(btn, ribbonButtonProxy.RibbonButtonData));
+            RibbonButtonDescriptor descriptor = RibbonButtonDescriptor.CreateRibbonButtonDescriptor(btn =>
+            {
+                if (handle != null)
+                {
+                    UIExtension.SetPushButtonData(btn, ribbonButtonProxy.RibbonButtonData);
+                }
+            }, commandType);
+
+
+            var ribbonButton = this.OriginalObject.AddItem(descriptor.PushButtonData) as PushButton;
 
             ribbonButtonProxy.OriginalObject = ribbonButton;
             ribbonButtonProxy.Title = ribbonButton.ItemText;
@@ -47,7 +59,7 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
     public IRibbonPanel AddPulldownButton(string title, Action<IRibbonPulldownButton> handle = null)
     {
         RibbonPulldownButtonProxy pulldownButtonProxy = new();
-        handle.Invoke(pulldownButtonProxy);
+        handle?.Invoke(pulldownButtonProxy);
 
         PulldownButton pulldownButton = this.OriginalObject.CreatePulldownButton(title, title, btn => UIExtension.SetPushButtonData(btn, pulldownButtonProxy.RibbonButtonData));
 
@@ -78,11 +90,10 @@ internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
 
     public IRibbonPanel AddComboBox(string name, Action<IRibbonComboBox> handle = null)
     {
-        ComboBox comboBox = this.OriginalObject.CreateComboBox(name);
+        ComboBox comboBox = this.OriginalObject.InternalCreateComboBox(name);
 
-        RibbonComboBoxProxy comboBoxProxy = new()
+        RibbonComboBoxProxy comboBoxProxy = new(comboBox)
         {
-            OriginalObject = comboBox,
             Title = comboBox.Name,
         };
 

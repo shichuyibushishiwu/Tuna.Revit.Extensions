@@ -54,11 +54,11 @@ public static class RibbonExtension
     /// <exception cref="System.ArgumentNullException"></exception>
     public static void AddRibbonTab(this UIControlledApplication application, string title, Action<IRibbonTab> action)
     {
-        RibbonHost ribbonHost = RibbonHost.Default;
+        RevitApplicationContext ribbonHost = RevitApplicationContext.Instance;
         ribbonHost.Assembly = Assembly.GetCallingAssembly();
         ribbonHost.UIApplication = GetUIApplication(application);
         ribbonHost.UIControlledApplication = application;
-
+     
         IRibbonTab ribbonTab = ribbonHost.UIApplication.AddRibbonTab(title);
         action?.Invoke(ribbonTab);
     }
@@ -70,13 +70,11 @@ public static class RibbonExtension
     /// <param name="title"></param>
     public static IRibbonTab AddRibbonTab(this UIControlledApplication application, string title)
     {
-        RibbonHost ribbonHost = RibbonHost.Default;
+        RevitApplicationContext ribbonHost = RevitApplicationContext.Instance;
         ribbonHost.Assembly = Assembly.GetCallingAssembly();
         ribbonHost.UIApplication = GetUIApplication(application);
         ribbonHost.UIControlledApplication = application;
-
+      
         return ribbonHost.UIApplication.AddRibbonTab(title);
     }
-
- 
 }
