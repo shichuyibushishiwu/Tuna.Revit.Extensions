@@ -35,7 +35,10 @@ public class RevitApplicationEvent
 #endif
     }
 
-    private void ControlledApplication_ApplicationInitialized(object sender, Autodesk.Revit.DB.Events.ApplicationInitializedEventArgs e) { }
+    private void ControlledApplication_ApplicationInitialized(object sender, Autodesk.Revit.DB.Events.ApplicationInitializedEventArgs e)
+    {
+        OnApplicationInitialized(sender, e);
+    }
 
 #if !Rvt_24_Before
     private void UIControlledApplication_ThemeChanged(object sender, Autodesk.Revit.UI.Events.ThemeChangedEventArgs e)
