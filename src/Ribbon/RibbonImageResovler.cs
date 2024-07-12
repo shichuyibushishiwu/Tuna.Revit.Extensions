@@ -34,6 +34,7 @@ internal class RibbonImageResovler
         switch (source)
         {
             case string path:
+                Uri.CheckSchemeName("pack");
                 if (File.Exists(path))
                 {
                     return new BitmapImage(new Uri(path));
@@ -52,6 +53,8 @@ internal class RibbonImageResovler
                 return default;
             case Bitmap bitmap: return bitmap.ConvertToBitmapSource();
             case ImageSource imageSource: return imageSource;
+            case Uri uri:
+                return new BitmapImage(uri);
             default: return default;
         }
     }
