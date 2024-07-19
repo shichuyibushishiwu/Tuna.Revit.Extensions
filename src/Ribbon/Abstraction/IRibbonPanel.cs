@@ -29,7 +29,7 @@ public interface IRibbonPanel : IRibbonPushButtonContainer<IRibbonPanel>
     /// </summary>
     /// <param name="title"></param>
     /// <param name="handle"></param>
-    /// <returns></returns>
+    /// <returns>当前面板</returns>
     IRibbonPanel AddPulldownButton(string title, Action<IRibbonPulldownButton> handle = null);
 
     /// <summary>
@@ -37,24 +37,30 @@ public interface IRibbonPanel : IRibbonPushButtonContainer<IRibbonPanel>
     /// </summary>
     /// <param name="title"></param>
     /// <param name="handle"></param>
-    /// <returns></returns>
+    /// <returns>当前面板</returns>
     IRibbonPanel AddSplitButton(string title, Action<IRibbonSplitButton> handle = null);
+
+    /// <summary>
+    /// 添加堆叠式按钮
+    /// </summary>
+    /// <returns>当前面板</returns>
+    //IRibbonPanel AddStackPanel(Action<IRibbonStackedPanel> handle = null);
 
     /// <summary>
     /// 添加单选框按钮组
     /// </summary>
-    /// <returns></returns>
+    /// <returns>当前面板</returns>
     IRibbonPanel AddRadioButtonGroup();
 
     /// <summary>
     /// 添加文本输入框
     /// </summary>
-    /// <returns></returns>
+    /// <returns>当前面板</returns>
     IRibbonPanel AddTextBox();
 
     /// <summary>
     /// 添加下拉框
     /// </summary>
-    /// <returns></returns>
+    /// <returns>当前面板</returns>
     IRibbonPanel AddComboBox(string name, Action<IRibbonComboBox> handle = null);
 }

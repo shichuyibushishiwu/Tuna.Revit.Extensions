@@ -25,8 +25,15 @@ internal class RibbonTabProxy : IRibbonTab
 
         _items.Add(ribbonPanelProxy);
 
+        handle.Invoke(ribbonPanelProxy);
+
         return ribbonPanelProxy;
     }
 
     public IEnumerable<IRibbonItem> GetItems() => _items;
+
+    public List<RibbonPanel> GetRibbonPanels()
+    {
+        return Application.GetRibbonPanels(this.Title);
+    }
 }

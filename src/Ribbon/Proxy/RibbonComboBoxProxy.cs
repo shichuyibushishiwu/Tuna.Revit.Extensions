@@ -14,8 +14,9 @@ internal class RibbonComboBoxProxy : RibbonElementProxy<ComboBox>, IRibbonComboB
 
     public string Name { get; set; }
 
-    public RibbonComboBoxProxy()
+    public RibbonComboBoxProxy(ComboBox comboBox)
     {
+        this.OriginalObject = comboBox;
         this.OriginalObject.CurrentChanged += OriginalObject_CurrentChanged;
     }
 

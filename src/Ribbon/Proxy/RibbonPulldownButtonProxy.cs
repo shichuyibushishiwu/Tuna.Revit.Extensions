@@ -1,6 +1,7 @@
 ﻿using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using Tuna.Revit.Extension.Ribbon.Abstraction;
 
 namespace Tuna.Revit.Extension.Ribbon.Proxy;
@@ -10,13 +11,6 @@ internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, I
     private readonly List<IRibbonItem> _items = new();
     private readonly List<Tuple<RibbonItemType, RibbonButtonDescriptor>> _components = new();
 
-    private class RibbonButtonDescriptor
-    {
-        public Action<RibbonButtonData> Handle { get; set; }
-
-        public Type Type { get; set; }
-    }
-
     public RibbonPulldownButtonProxy() => RibbonButtonData = new RibbonButtonData();
 
     public RibbonItemType Type => RibbonItemType.PulldownButton;
@@ -25,11 +19,17 @@ internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, I
 
     public IRibbonPulldownButton AddPushButton<TCommand>(Action<RibbonButtonData> handle = null) where TCommand : class, IExternalCommand, new()
     {
-        _components.Add(new(RibbonItemType.PushButton, new RibbonButtonDescriptor()
+        RibbonButtonDescriptor descriptor = RibbonButtonDescriptor.CreateRibbonButtonDescriptor(btn =>
         {
-            Handle = handle,
-            Type = typeof(TCommand)
-        }));
+            if (handle != null)
+            {
+                RibbonButtonData pushButtonData=new RibbonButtonData();
+                handle.Invoke(pushButtonData);
+                UIExtension.SetPushButtonData(btn, pushButtonData);
+            }
+        }, typeof(TCommand));
+
+        _components.Add(new(RibbonItemType.PushButton, descriptor));
         return this;
     }
 
@@ -59,9 +59,8 @@ internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, I
                 case RibbonItemType.PushButton:
                     RibbonButtonDescriptor descriptor = item.Item2;
                     RibbonButtonProxy ribbonButtonProxy = new();
-                    descriptor.Handle?.Invoke(ribbonButtonProxy.RibbonButtonData);
 
-                    RibbonButton ribbonButton = this.OriginalObject.CreatePushButton(descriptor.Type, btn => UIExtension.SetPushButtonData(btn, ribbonButtonProxy.RibbonButtonData));
+                    RibbonButton ribbonButton = this.OriginalObject.AddPushButton(descriptor.PushButtonData);
 
                     ribbonButtonProxy.OriginalObject = ribbonButton;
                     ribbonButtonProxy.Title = ribbonButton.Name;

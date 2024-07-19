@@ -40,8 +40,6 @@ internal class CommandB : IExternalCommand
 {
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
-       
-
         TaskDialog.Show("msg", "B");
         return Result.Succeeded;
     }

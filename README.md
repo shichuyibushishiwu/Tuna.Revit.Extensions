@@ -24,11 +24,12 @@ Welcome to the Tuna.Revit.Extensions wiki! This is an extension package for revi
 * Revit 2022
 * Revit 2023
 * Revit 2024
+* Revit 2025
 
 # Install
 
 ```
- > dotnet add package Tuna.Revit.Extension --version 2021.0.0
+ > dotnet add package Tuna.Revit.Extension --version 2025.0.17
 ```
 
 
