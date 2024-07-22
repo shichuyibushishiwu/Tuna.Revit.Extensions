@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Geometry
+namespace Tuna.Revit.Extension
 {
     /// <summary>
     /// 解析图形的类型

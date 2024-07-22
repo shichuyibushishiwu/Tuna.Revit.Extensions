@@ -26,19 +26,16 @@ namespace Tuna.Sample.Commands
 
             var element = uiDocument.SelectElement().Value;
             //get solids before get faces
-            var solids = GeometryExtensions.ResolveSolid(element, (option) => { 
+            var solids = GeometryExtensions.ResolveSolids(element, (option) => { 
                option.DetailLevel=ViewDetailLevel.Fine;
             });
             //get faces from solids 
-            var faces = solids.SelectMany<Solid, Face>((solid) =>
-             {
-                 var faces = new List<Face>();
-                 foreach (Face face in solid.Faces)
-                 {
-                     faces.Add(face);
-                 }
-                 return faces;
-             });
+            var faces = GeometryExtensions.ResolveFaces(element, (option) => {
+                option.DetailLevel = ViewDetailLevel.Fine;
+                option.GeometryType=GeometryType.Symbol;
+            });
+            //show result solids count
+            MessageBox.Show(solids.Count().ToString());
             //show result faces count
             MessageBox.Show(faces.Count().ToString());
 
