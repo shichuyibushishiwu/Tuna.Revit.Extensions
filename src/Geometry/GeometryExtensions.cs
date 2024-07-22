@@ -27,6 +27,7 @@ public static class GeometryExtensions
     /// </summary>
     /// <param name="element">解析的几何对象</param>
     /// <param name="action">设定获取几何的选项</param>
+    /// <returns>几何对象集合</returns>
     public static List<GeometryObject> ResolveGeometry(this Element element, Action<Options> action)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
@@ -44,7 +45,7 @@ public static class GeometryExtensions
     /// </summary>
     /// <param name="element">解析的几何对象</param>
     /// <param name="action">设定获取几何的选项</param>
-    /// <returns>几何结果集合</returns>
+    /// <returns>几何块集合</returns>
     public static List<Solid> ResolveSolids(this Element element, Action<GeometryOptions> action) 
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
@@ -57,11 +58,11 @@ public static class GeometryExtensions
     }
 
     /// <summary>
-    /// 解析几何块
+    /// 解析几何面
     /// </summary>
     /// <param name="element">解析的几何对象</param>
     /// <param name="action">设定获取几何的选项</param>
-    /// <returns>几何结果集合</returns>
+    /// <returns>几何面集合</returns>
     public static List<Face> ResolveFaces(this Element element, Action<GeometryOptions> action)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
