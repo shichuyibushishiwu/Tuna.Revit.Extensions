@@ -28,25 +28,7 @@ public static class GeometryExtensions
     /// <param name="element">解析的几何对象</param>
     /// <param name="action">设定获取几何的选项</param>
     /// <returns>几何对象集合</returns>
-    public static List<GeometryObject> ResolveGeometry(this Element element, Action<Options> action)
-    {
-        ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
-
-        Options options = new Options();
-        action.Invoke(options);
-        GeometryElement geometries = element.get_Geometry(options);
-
-        return ResolveGeometry(geometries);
-    }
-
-    /// <summary>
-    /// 解析几何块
-    /// 注：该方法未过滤体积为零的几何块
-    /// </summary>
-    /// <param name="element">解析的几何对象</param>
-    /// <param name="action">设定获取几何的选项</param>
-    /// <returns>几何块集合</returns>
-    public static List<Solid> ResolveSolids(this Element element, Action<GeometryOptions> action) 
+    public static List<GeometryObject> ResolveGeometry(this Element element, Action<GeometryOptions> action)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
 
@@ -54,7 +36,19 @@ public static class GeometryExtensions
         action.Invoke(options);
         GeometryElement geometries = element.get_Geometry(options);
 
-        return ResolveGeometry(geometries, options).Where(x=>x is Solid ).Cast<Solid>().ToList();
+        return ResolveGeometry(geometries, options.GeometryType);
+    }
+
+    /// <summary>
+    /// 解析几何体
+    /// </summary>
+    /// <remarks>该方法未过滤体积为零的几何块</remarks>
+    /// <param name="element">解析的几何对象</param>
+    /// <param name="action">设定获取几何的选项</param>
+    /// <returns>几何块集合</returns>
+    public static List<Solid> ResolveSolids(this Element element, Action<GeometryOptions> action)
+    {
+        return element.ResolveGeometry(action).Where(x => x is Solid).Cast<Solid>().ToList();
     }
 
     /// <summary>
@@ -65,39 +59,29 @@ public static class GeometryExtensions
     /// <returns>几何面集合</returns>
     public static List<Face> ResolveFaces(this Element element, Action<GeometryOptions> action)
     {
-        ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
-
-        GeometryOptions options = new GeometryOptions();
-        action.Invoke(options);
-        GeometryElement geometries = element.get_Geometry(options);
-
-        var geometryObjects = ResolveGeometry(geometries, options);
-        var geometryFaces= geometryObjects.Where(x=>x is Face).Cast<Face>().ToList();
-        var geometrySolidFaces= geometryObjects.Where(x=>x is Solid).Cast<Solid>().ToList().SelectMany<Solid, Face>((solid) =>
-        {
-            var faces = new List<Face>();
-            foreach (Face face in solid.Faces)
-            {
-                faces.Add(face);
-            }
-            return faces;
-        });
-        var faces = new List<Face>();
-        if (geometryFaces.Any())
-        {
-            faces.AddRange(geometryFaces);
-        }
-        if (geometrySolidFaces.Any())
-        {
-            faces.AddRange(geometrySolidFaces);
-        }
-
-        return faces;
+        return element.ResolveSolids(action).SelectMany(soild => soild.Faces.ToList()).ToList();
     }
 
+    /// <summary>
+    /// Get faces from <see cref="Autodesk.Revit.DB.FaceArray"/>
+    /// </summary>
+    /// <param name="faceArray"></param>
+    /// <returns></returns>
+    private static IEnumerable<Face> ToList(this FaceArray faceArray)
+    {
+        foreach (Face item in faceArray)
+        {
+            yield return item;
+        }
+    }
 
-
-    private static List<GeometryObject> ResolveGeometry(this GeometryElement geometries)
+    /// <summary>
+    /// 解析图形
+    /// </summary>
+    /// <param name="geometries"></param>
+    /// <param name="geometryType"></param>
+    /// <returns></returns>
+    private static List<GeometryObject> ResolveGeometry(this GeometryElement geometries, GeometryType geometryType)
     {
         List<GeometryObject> objects = new List<GeometryObject>();
         foreach (GeometryObject item in geometries)
@@ -105,38 +89,14 @@ public static class GeometryExtensions
             switch (item)
             {
                 case GeometryInstance geomInstance:
-                    objects.AddRange(ResolveGeometry(geomInstance.GetInstanceGeometry()));
-                    break;
-                case GeometryElement geometryElement:
-                    objects.AddRange(ResolveGeometry(geometryElement));
-                    break;
-                default:
-                    objects.Add(item);
-                    break;
-            }
-        }
-        return objects;
-    }
+                    GeometryElement subGeometryElement = geometryType == GeometryType.Instance ?
+                        geomInstance.GetInstanceGeometry() :
+                        geomInstance.GetSymbolGeometry();
 
-    private static List<GeometryObject> ResolveGeometry(this GeometryElement geometries,GeometryOptions options)
-    {
-        List<GeometryObject> objects = new List<GeometryObject>();
-        foreach (GeometryObject item in geometries)
-        {
-            switch (item)
-            {
-                case GeometryInstance geomInstance:
-                    if (options.GeometryType==GeometryType.Instance)
-                    {
-                        objects.AddRange(ResolveGeometry(geomInstance.GetInstanceGeometry()));
-                    }
-                    else
-                    {
-                        objects.AddRange(ResolveGeometry(geomInstance.GetSymbolGeometry()));
-                    }
+                    objects.AddRange(ResolveGeometry(subGeometryElement, geometryType));
                     break;
                 case GeometryElement geometryElement:
-                    objects.AddRange(ResolveGeometry(geometryElement));
+                    objects.AddRange(ResolveGeometry(geometryElement, geometryType));
                     break;
                 default:
                     objects.Add(item);
