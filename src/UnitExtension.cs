@@ -41,7 +41,7 @@ public static class UnitExtension
     /// </summary>
     /// <param name="value">单位为英尺的值</param>
     /// <returns>单位为毫米的值</returns>
-    [DebuggerStepThrough] 
+    [DebuggerStepThrough]
     public static double ConvertToMillimeters(this int value) => ((double)value).ConvertToMillimeters();
 
     /// <summary>
@@ -50,7 +50,7 @@ public static class UnitExtension
     /// </summary>
     /// <param name="value">单位为英尺的值</param>
     /// <returns>单位为毫米的值</returns>
-    [DebuggerStepThrough] 
+    [DebuggerStepThrough]
     public static double ConvertToMillimeters(this float value) => Convert.ToDouble(value.ToString()).ConvertToMillimeters();
 
     /// <summary>
@@ -76,7 +76,7 @@ public static class UnitExtension
     /// </summary>
     /// <param name="value">单位为毫米的值</param>
     /// <returns>单位为英尺的值</returns>
-    [DebuggerStepThrough] 
+    [DebuggerStepThrough]
     public static double ConvertToFeet(this int value) => ((double)value).ConvertToFeet();
 
     /// <summary>
@@ -85,7 +85,7 @@ public static class UnitExtension
     /// </summary>
     /// <param name="value">单位为毫米的值</param>
     /// <returns>单位为英尺的值</returns>
-    [DebuggerStepThrough] 
+    [DebuggerStepThrough]
     public static double ConvertToFeet(this float value) => Convert.ToDouble(value.ToString()).ConvertToFeet();
 
     /// <summary>
@@ -96,7 +96,7 @@ public static class UnitExtension
     /// <param name="tolerance">公差 默认值（1e-9）</param>
     /// <returns>返回 <see cref="bool"/> 值，当为 ture 时表示数值相等，false表示不相等</returns>
     [DebuggerStepThrough]
-    public static bool AlmostEquals(this double value, double otherValue, double tolerance = 1e-9)
+    public static bool AlmostEquals(this double value, double otherValue, double tolerance = 1E-09)
     {
         return Math.Abs(value - otherValue) <= tolerance;
     }

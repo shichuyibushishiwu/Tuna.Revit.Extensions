@@ -473,6 +473,7 @@ public static class CollectorExtension
         var elements = document.GetElements(new ElementIsElementTypeFilter(true))
             .ToElements()
             .Where(element => element.Category != null && element.Category.HasMaterialQuantities);
+
         if (predicate != null)
         {
             elements = elements.Where(predicate);

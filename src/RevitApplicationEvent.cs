@@ -24,20 +24,44 @@ public class RevitApplicationEvent
         _application = uIControlledApplication;
         uIControlledApplication.ApplicationClosing += UIControlledApplication_ApplicationClosing;
         uIControlledApplication.ControlledApplication.ApplicationInitialized += ControlledApplication_ApplicationInitialized;
-
-
-#if !Rvt_23_Before
-        uIControlledApplication.SelectionChanged += UIControlledApplication_SelectionChanged;
-#endif
-
-#if !Rvt_24_Before
-        uIControlledApplication.ThemeChanged += UIControlledApplication_ThemeChanged;
-#endif
     }
 
+    /// <summary>
+    /// 当应用程序进行初始化的时候
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ControlledApplication_ApplicationInitialized(object sender, Autodesk.Revit.DB.Events.ApplicationInitializedEventArgs e)
     {
         OnApplicationInitialized(sender, e);
+
+#if !Rvt_23_Before
+        _application.SelectionChanged += UIControlledApplication_SelectionChanged;
+#endif
+
+#if !Rvt_24_Before
+        _application.ThemeChanged += UIControlledApplication_ThemeChanged;
+#endif
+    }
+
+    /// <summary>
+    /// 当应用程序即将关闭的时候
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void UIControlledApplication_ApplicationClosing(object sender, Autodesk.Revit.UI.Events.ApplicationClosingEventArgs e)
+    {
+        OnApplicationClosing(sender, e);
+        _application.ApplicationClosing -= UIControlledApplication_ApplicationClosing;
+        _application.ControlledApplication.ApplicationInitialized -= ControlledApplication_ApplicationInitialized;
+
+#if !Rvt_23_Before
+        _application.SelectionChanged -= UIControlledApplication_SelectionChanged;
+#endif
+
+#if !Rvt_24_Before
+        _application.ThemeChanged -= UIControlledApplication_ThemeChanged;
+#endif
     }
 
 #if !Rvt_24_Before
@@ -53,21 +77,6 @@ public class RevitApplicationEvent
         OnApplicationSelectionChanged(sender, new SelectionChangedEventArgs(e));
     }
 #endif
-
-    private void UIControlledApplication_ApplicationClosing(object sender, Autodesk.Revit.UI.Events.ApplicationClosingEventArgs e)
-    {
-        OnApplicationClosing(sender, e);
-        _application.ApplicationClosing -= UIControlledApplication_ApplicationClosing;
-        _application.ControlledApplication.ApplicationInitialized -= ControlledApplication_ApplicationInitialized;
-
-#if !Rvt_23_Before
-        _application.SelectionChanged -= UIControlledApplication_SelectionChanged;
-#endif
-
-#if !Rvt_24_Before
-        _application.ThemeChanged -= UIControlledApplication_ThemeChanged;
-#endif
-    }
 
     /// <summary>
     /// 当应用初始化后触发的事件
@@ -86,7 +95,10 @@ public class RevitApplicationEvent
     /// <summary>
     /// 当主题改变触发的事件
     /// </summary>
-    /// <remarks>仅适用于 Revti 2024 以上的版本</remarks>
+    /// <remarks>
+    /// 仅适用于 Revit 2024 以上的版本
+    /// <para>Only Revit 2024</para>
+    /// </remarks>
     /// <param name="sender"></param>
     protected virtual void OnThemeChanged(object sender) { }
 

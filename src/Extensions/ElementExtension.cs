@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension;
 
 /// <summary>
-/// revit element extension
+/// Revit element extension
 /// </summary>
 public static class ElementExtension
 {

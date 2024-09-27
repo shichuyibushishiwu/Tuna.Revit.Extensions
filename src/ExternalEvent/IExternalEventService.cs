@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension;
 
 /// <summary>
-/// 外部事件的常规服务
+/// 定义外部事件的常规服务
 /// </summary>
 public interface IExternalEventService
 {
