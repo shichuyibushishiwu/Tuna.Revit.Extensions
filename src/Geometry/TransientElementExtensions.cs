@@ -26,7 +26,7 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public static class TransientElementExtensions
 {
-    private static readonly List<ElementId> _transientElementIds = new List<ElementId>();
+    private static readonly Dictionary<ElementId, Guid> _transientElementIds = new Dictionary<ElementId, Guid>();
 
     private static readonly string _displayMethod = "SetForTransientDisplay";
 
@@ -56,7 +56,7 @@ public static class TransientElementExtensions
                objects,
                graphicsStyleId ?? ElementId.InvalidElementId
         });
-        _transientElementIds.Add(elementId);
+        _transientElementIds.Add(elementId, document.CreationGUID);
         return elementId;
     }
 
@@ -90,7 +90,7 @@ public static class TransientElementExtensions
             return;
         }
 
-        document.NewTransaction(() => document.Delete(_transientElementIds.ToArray()));
+        document.NewTransaction(() => document.Delete(_transientElementIds.Where(p => p.Value == document.CreationGUID).Select(p => p.Key).ToArray()));
         _transientElementIds.Clear();
     }
 
