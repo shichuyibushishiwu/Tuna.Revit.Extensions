@@ -72,6 +72,16 @@ public class BuiltInParameters
         /// SHEET_DATE
         /// </summary>
         public static ElementId Date { get; } = new ElementId(BuiltInParameter.SHEET_DATE);
+
+        /// <summary>
+        /// SHEET_WIDTH
+        /// </summary>
+        public static ElementId Width { get; } = new ElementId(BuiltInParameter.SHEET_WIDTH);
+
+        /// <summary>
+        /// SHEET_HEIGHT
+        /// </summary>
+        public static ElementId Height { get; } = new ElementId(BuiltInParameter.SHEET_HEIGHT);
     }
 
     /// <summary>
