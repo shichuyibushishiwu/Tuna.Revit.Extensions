@@ -478,6 +478,7 @@ public static class CollectorExtension
         {
             elements = elements.Where(predicate);
         }
+
         return elements;
     }
 
