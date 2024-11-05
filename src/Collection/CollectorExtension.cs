@@ -96,9 +96,9 @@ public static class CollectorExtension
             throw new ArgumentException("type is not a subclass of element");
         }
 
-        if (FilterTypes.TryGetValue(type, out Type filterType))
+        if (FilterTypes.TryGetValue(type, out Type? filterType))
         {
-            return document.GetElements(Activator.CreateInstance(filterType) as ElementFilter);
+            return document.GetElements((Activator.CreateInstance(filterType) as ElementFilter)!);
         }
 
         return document.GetElements(new ElementClassFilter(type));
@@ -120,6 +120,7 @@ public static class CollectorExtension
         {
             return document.GetElements(type);
         }
+
         List<Type> allTypes = types.ToList();
         allTypes.Add(type);
         return document.GetElements(new ElementMulticlassFilter(allTypes));
@@ -304,12 +305,12 @@ public static class CollectorExtension
     /// 根据类型过滤出文档中的图元对象
     /// <para>Get the elements in the document which type is <typeparamref name="T"/></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">指定的类型</typeparam>
     /// <param name="document">要查询的文档</param>
-    /// <param name="predicate"></param>
+    /// <param name="predicate">集合过滤的条件</param>
     /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
     [DebuggerStepThrough]
-    public static IEnumerable<T> GetElements<T>(this Document document, Func<T, bool> predicate = null) where T : Element
+    public static IEnumerable<T> GetElements<T>(this Document document, Func<T, bool>? predicate = null) where T : Element
     {
         IEnumerable<T> elements = document.GetElements(typeof(T)).Cast<T>();
         if (predicate != null)
@@ -317,6 +318,21 @@ public static class CollectorExtension
             elements = elements.Where(predicate);
         }
         return elements;
+    }
+
+    /// <summary>
+    /// 根据类型过滤出文档中的图元对象
+    /// <para>Get the elements in the document which type is <typeparamref name="T"/></para>
+    /// </summary>
+    /// <typeparam name="T">指定的类型</typeparam>
+    /// <param name="document">要查询的文档</param>
+    /// <param name="elementFilter">集合过滤的条件</param>
+    /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
+    public static FilteredElementCollector GetElements<T>(this Document document, ElementFilter elementFilter) where T : Element
+    {
+        ArgumentNullExceptionUtils.ThrowIfNull(elementFilter);
+        return document.GetElements(typeof(T)).WherePasses(elementFilter);
     }
 
     /// <summary>
@@ -429,7 +445,7 @@ public static class CollectorExtension
     /// <param name="predicate">对查询到的图元类型进行条件过滤</param>
     /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
     [DebuggerStepThrough]
-    public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool> predicate = null) where T : ElementType
+    public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool>? predicate = null) where T : ElementType
     {
         return document.GetElements(predicate);
     }

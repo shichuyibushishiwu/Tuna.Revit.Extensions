@@ -86,6 +86,19 @@ public static class DocumentExtension
     }
 
     /// <summary>
+    /// 通过 <see cref="Autodesk.Revit.DB.ElementId"/> 获取图元
+    /// <para>Get element by <see cref="Autodesk.Revit.DB.ElementId"/></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="document"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public static T? GetElement<T>(this Document document, ElementId id) where T : Element
+    {
+        return document.GetElement(id) as T;
+    }
+
+    /// <summary>
     /// Get revit unique element name
     /// </summary>
     /// <typeparam name="T"></typeparam>

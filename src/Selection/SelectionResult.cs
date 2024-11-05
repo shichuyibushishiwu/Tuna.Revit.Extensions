@@ -14,7 +14,7 @@ using Tuna.Revit.Extension;
 namespace Tuna.Revit.Extension;
 
 /// <summary>
-/// 和Revit进行交互后的结果
+/// 定义的类用于保存和Revit进行交互后的结果
 /// <para>Revit selection result</para>
 /// </summary>
 /// <typeparam name="T"></typeparam>
@@ -23,12 +23,12 @@ public class SelectionResult<T>
     /// <summary>
     /// message
     /// </summary>
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
     /// <summary>
     /// result
     /// </summary>
-    public T Value { get; internal set; } = default(T);
+    public T? Value { get; internal set; }
 
     /// <summary>
     /// selction state
@@ -38,7 +38,7 @@ public class SelectionResult<T>
     /// <summary>
     /// exception
     /// </summary>
-    public Exception Exception { get; internal set; }
+    public Exception? Exception { get; internal set; }
 
     /// <summary>
     /// Has exception

@@ -72,9 +72,9 @@ public static class CollectorInViewExtension
             throw new ArgumentException("type is not a subclass of element");
         }
 
-        if (CollectorExtension.FilterTypes.TryGetValue(type, out Type filterType))
+        if (CollectorExtension.FilterTypes.TryGetValue(type, out Type? filterType))
         {
-            return view.GetElements(Activator.CreateInstance(filterType) as ElementFilter);
+            return view.GetElements((Activator.CreateInstance(filterType) as ElementFilter)!);
         }
 
         return view.GetElements(new ElementClassFilter(type));
@@ -218,7 +218,7 @@ public static class CollectorInViewExtension
     /// <param name="predicate"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
     [DebuggerStepThrough]
-    public static IEnumerable<T> GetElements<T>(this View view, Func<T, bool> predicate = null) where T : Element
+    public static IEnumerable<T> GetElements<T>(this View view, Func<T, bool>? predicate = null) where T : Element
     {
         IEnumerable<T> elements = view.GetElements(typeof(T)).Cast<T>();
         if (predicate != null)

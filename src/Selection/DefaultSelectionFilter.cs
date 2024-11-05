@@ -25,26 +25,22 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public class DefaultSelectionFilter : ISelectionFilter
 {
-    private readonly Func<Element, bool> _elementPredicate;
-    private readonly Func<(Reference Reference, XYZ XYZ), bool> _referencePredicate;
+    private readonly Func<Element, bool>? _elementPredicate;
+    private readonly Func<(Reference Reference, XYZ XYZ), bool>? _referencePredicate;
 
     /// <summary>
-    /// <para>Definition of selection filter</para>
+    /// <para>Create a default selection filter</para>
     /// </summary>
     /// <param name="elementPredicate">Allow element</param>
     /// <param name="referencePredicate">Allow reference</param>
     [DebuggerStepThrough]
-    public DefaultSelectionFilter(Func<Element, bool> elementPredicate = null, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate = null)
+    public DefaultSelectionFilter(Func<Element, bool>? elementPredicate = null, Func<(Reference Reference, XYZ XYZ), bool>? referencePredicate = null)
     {
         _elementPredicate = elementPredicate;
         _referencePredicate = referencePredicate;
     }
 
-    /// <summary>
     /// <inheritdoc/>
-    /// </summary>
-    /// <param name="elem"><inheritdoc/></param>
-    /// <returns><inheritdoc/></returns>
     [DebuggerStepThrough]
     public virtual bool AllowElement(Element elem)
     {
@@ -61,12 +57,7 @@ public class DefaultSelectionFilter : ISelectionFilter
         return true;
     }
 
-    /// <summary>
     /// <inheritdoc/>
-    /// </summary>
-    /// <param name="reference"><inheritdoc/></param>
-    /// <param name="position"><inheritdoc/></param>
-    /// <returns><inheritdoc/></returns>
     [DebuggerStepThrough]
     public virtual bool AllowReference(Reference reference, XYZ position)
     {

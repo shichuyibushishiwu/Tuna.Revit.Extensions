@@ -27,14 +27,14 @@ namespace Tuna.Revit.Extension;
 public static class ElementExtension
 {
     /// <summary>
-    /// 获取图元的参数
+    /// 根据参数的<see cref="Autodesk.Revit.DB.ElementId"/>获取图元的参数
     /// <para>Get element <see cref="Parameter"/> by <see cref="Autodesk.Revit.DB.ElementId"/></para>
     /// </summary>
     /// <param name="element">host element</param>
     /// <param name="parameterId">target parameter id</param>
     /// <returns>element <see cref="Parameter"/></returns>
     [DebuggerStepThrough]
-    public static Parameter GetParameter(this Element element, ElementId parameterId)
+    public static Parameter? GetParameter(this Element element, ElementId parameterId)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
         return parameterId != ElementId.InvalidElementId ? element.Parameters.ToList(p => p.Id == parameterId).First() : default;
@@ -64,13 +64,13 @@ public static class ElementExtension
             amount.Add(id, 1);
         }
 
-        return amount.ToDictionary(p => document.GetElement(p.Key) as ElementType, p => p.Value);
+        return amount.ToDictionary(p => (document.GetElement(p.Key) as ElementType)!, p => p.Value);
     }
 
     /// <summary>
     /// 统计类型在文档中存在的实例的数量
     /// </summary>
-    /// <typeparam name="T">类型所对应的实力的类</typeparam>
+    /// <typeparam name="T">类型所对应的实例的类</typeparam>
     /// <param name="elementTypes"></param>
     /// <returns></returns>
     public static IDictionary<ElementType, int> Counts<T>(this IEnumerable<ElementType> elementTypes) where T : HostObject
@@ -78,10 +78,10 @@ public static class ElementExtension
         Dictionary<ElementId, int> amount = elementTypes.ToDictionary(t => t.Id, _ => 0);
         if (!elementTypes.Any())
         {
-            return new Dictionary<ElementType, int>();
+            return  new Dictionary<ElementType, int>();
         }
 
-        Document document = elementTypes.FirstOrDefault().Document;
+        Document document = elementTypes.First().Document;
         IEnumerable<T> elements = document.GetElements<T>();
         foreach (var element in elements)
         {
@@ -92,7 +92,7 @@ public static class ElementExtension
                 continue;
             }
         }
-        return amount.ToDictionary(p => document.GetElement(p.Key) as ElementType, p => p.Value);
+        return amount.ToDictionary(p => (document.GetElement(p.Key) as ElementType)!, p => p.Value);
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ public static class ElementExtension
     }
 
     /// <summary>
-    /// 尝试去获取文档中与图元相交的对象
+    /// 尝试去获取视图中与图元相交的对象
     /// <para>Try to get elements in the document which intersects with the primitive</para>
     /// </summary>
     /// <param name="element"></param>
@@ -124,7 +124,7 @@ public static class ElementExtension
         BoundingBoxXYZ boundingBox = element.get_BoundingBox(view);
         Outline outline = new Outline(boundingBox.Min, boundingBox.Max);
         FilteredElementCollector elements = document.GetElements(new BoundingBoxIntersectsFilter(outline));
-        if (elements.Any())
+        if (elements.GetElementCount() > 0)
         {
             elements = document.GetElementIntersectsInCollector(elements.ToElementIds(), element);
         }

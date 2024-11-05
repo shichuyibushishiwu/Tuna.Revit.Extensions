@@ -8,12 +8,13 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension.Geometry;
 
 /// <summary>
-/// 矩阵的扩展
+/// 关于矩阵<see cref="Autodesk.Revit.DB.Transform"/>的扩展
 /// </summary>
 public static class TransformExtensions
 {
     /// <summary>
     /// 复制一个新的矩阵
+    /// <para>Duplicate a new <see cref="Autodesk.Revit.DB.Transform"/></para>
     /// </summary>
     /// <param name="transform">要复制的矩阵</param>
     /// <returns>复制后返回的新的矩阵</returns>

@@ -46,7 +46,7 @@ public static class TransientElementExtensions
     /// <exception cref="System.ArgumentNullException"></exception>
     /// <exception cref="System.Exception"></exception>
     [DebuggerStepThrough]
-    public static ElementId TransientDisplay(this Document document, IList<GeometryObject> objects, ElementId graphicsStyleId = null)
+    public static ElementId TransientDisplay(this Document document, IList<GeometryObject> objects, ElementId? graphicsStyleId = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
         ElementId elementId = (ElementId)_method.Invoke(null, parameters: new object[4]
@@ -72,7 +72,7 @@ public static class TransientElementExtensions
     /// <para>The element id of the created element</para>
     /// </returns>
     [DebuggerStepThrough]
-    public static ElementId TransientDisplay(this Document document, GeometryObject geometryObject, ElementId graphicsStyleId = null)
+    public static ElementId TransientDisplay(this Document document, GeometryObject geometryObject, ElementId? graphicsStyleId = null)
     {
         return document.TransientDisplay(new List<GeometryObject>() { geometryObject }, graphicsStyleId);
     }
@@ -103,7 +103,7 @@ public static class TransientElementExtensions
     /// <param name="objects">transient element geometries</param>
     /// <param name="graphicsStyleId">transient element graphics style element id </param>
     [DebuggerStepThrough]
-    public static void ResetTransientElementGeometry(this Document document, ElementId transientElementId, IList<GeometryObject> objects, ElementId graphicsStyleId = null) => _method.Invoke(null, parameters: new object[4]
+    public static void ResetTransientElementGeometry(this Document document, ElementId transientElementId, IList<GeometryObject> objects, ElementId? graphicsStyleId = null) => _method.Invoke(null, parameters: new object[4]
     {
         document,
         transientElementId,
@@ -120,7 +120,7 @@ public static class TransientElementExtensions
     /// <param name="geometryObject">Transient element geometries</param>
     /// <param name="graphicsStyleId">Transient element graphics style element id </param>
     [DebuggerStepThrough]
-    public static void ResetTransientElementGeometry(this Document document, ElementId transientElementId, GeometryObject geometryObject, ElementId graphicsStyleId = null)
+    public static void ResetTransientElementGeometry(this Document document, ElementId transientElementId, GeometryObject geometryObject, ElementId? graphicsStyleId = null)
     {
         document.ResetTransientElementGeometry(transientElementId, new List<GeometryObject>() { geometryObject }, graphicsStyleId);
     }

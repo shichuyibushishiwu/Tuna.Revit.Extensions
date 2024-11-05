@@ -16,12 +16,12 @@ public class ExternalEventResult<T>
     /// <summary>
     /// Value
     /// </summary>
-    public T Value { get; set; }
+    public T? Value { get; set; }
 
     /// <summary>
     /// exception
     /// </summary>
-    public Exception Exception { get; internal set; }
+    public Exception? Exception { get; internal set; }
 
     /// <summary>
     /// Has exception

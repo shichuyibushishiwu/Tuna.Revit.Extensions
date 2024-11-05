@@ -11,7 +11,7 @@ namespace Tuna.Revit.Extension;
 /// <summary>
 /// Revit application events
 /// </summary>
-public class RevitApplicationEvent
+public abstract class RevitApplicationEvent
 {
     private readonly UIControlledApplication _application;
 
@@ -31,7 +31,7 @@ public class RevitApplicationEvent
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void ControlledApplication_ApplicationInitialized(object sender, Autodesk.Revit.DB.Events.ApplicationInitializedEventArgs e)
+    private void ControlledApplication_ApplicationInitialized(object? sender, Autodesk.Revit.DB.Events.ApplicationInitializedEventArgs e)
     {
         OnApplicationInitialized(sender, e);
 
@@ -49,7 +49,7 @@ public class RevitApplicationEvent
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void UIControlledApplication_ApplicationClosing(object sender, Autodesk.Revit.UI.Events.ApplicationClosingEventArgs e)
+    private void UIControlledApplication_ApplicationClosing(object? sender, Autodesk.Revit.UI.Events.ApplicationClosingEventArgs e)
     {
         OnApplicationClosing(sender, e);
         _application.ApplicationClosing -= UIControlledApplication_ApplicationClosing;
@@ -65,14 +65,14 @@ public class RevitApplicationEvent
     }
 
 #if !Rvt_24_Before
-    private void UIControlledApplication_ThemeChanged(object sender, Autodesk.Revit.UI.Events.ThemeChangedEventArgs e)
+    private void UIControlledApplication_ThemeChanged(object? sender, Autodesk.Revit.UI.Events.ThemeChangedEventArgs e)
     {
         OnThemeChanged(sender);
     }
 #endif
 
 #if !Rvt_23_Before
-    private void UIControlledApplication_SelectionChanged(object sender, Autodesk.Revit.UI.Events.SelectionChangedEventArgs e)
+    private void UIControlledApplication_SelectionChanged(object? sender, Autodesk.Revit.UI.Events.SelectionChangedEventArgs e)
     {
         OnApplicationSelectionChanged(sender, new SelectionChangedEventArgs(e));
     }
