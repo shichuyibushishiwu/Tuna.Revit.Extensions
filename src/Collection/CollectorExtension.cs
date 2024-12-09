@@ -95,7 +95,7 @@ public static class CollectorExtension
         {
             throw new ArgumentException("type is not a subclass of element");
         }
-
+   
         if (FilterTypes.TryGetValue(type, out Type? filterType))
         {
             return document.GetElements((Activator.CreateInstance(filterType) as ElementFilter)!);
@@ -444,7 +444,7 @@ public static class CollectorExtension
     /// <param name="document">要查询的文档</param>
     /// <param name="predicate">对查询到的图元类型进行条件过滤</param>
     /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
-    [DebuggerStepThrough]
+    [Obsolete, DebuggerStepThrough]
     public static IEnumerable<T> GetElementTypes<T>(this Document document, Func<T, bool>? predicate = null) where T : ElementType
     {
         return document.GetElements(predicate);

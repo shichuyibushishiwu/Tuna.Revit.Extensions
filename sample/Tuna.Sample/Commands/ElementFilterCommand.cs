@@ -63,7 +63,7 @@ public class ElementFilterCommand : IExternalCommand
 
         document.GetElementTypes(BuiltInCategory.OST_Walls);
 
-        document.GetElementTypes<WallType>();
+        document.GetElements<WallType>();
 
 
         //这个方法可以获取结构相关的族

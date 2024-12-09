@@ -37,7 +37,18 @@ public static class ElementExtension
     public static Parameter? GetParameter(this Element element, ElementId parameterId)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(element);
-        return parameterId != ElementId.InvalidElementId ? element.Parameters.ToList(p => p.Id == parameterId).First() : default;
+
+        if (parameterId == ElementId.InvalidElementId)
+        {
+            return default;
+        }
+
+        if (element.Parameters.Size == 0)
+        {
+            return default;
+        }
+
+        return element.Parameters.ToList(p => p.Id == parameterId).FirstOrDefault();
     }
 
     /// <summary>

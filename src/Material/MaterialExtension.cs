@@ -44,7 +44,7 @@ namespace Tuna.Revit.Extension
             ElementId appearanceAssetId = material.AppearanceAssetId;
             if (appearanceAssetId != ElementId.InvalidElementId)
             {
-                AppearanceAssetElement appearanceAssetElement = material.Document.GetElement(appearanceAssetId) as AppearanceAssetElement;
+                AppearanceAssetElement? appearanceAssetElement = material.Document.GetElement(appearanceAssetId) as AppearanceAssetElement;
                 Asset asset = appearanceAssetElement.GetRenderingAsset();
                 color = asset.GetColor();
             }

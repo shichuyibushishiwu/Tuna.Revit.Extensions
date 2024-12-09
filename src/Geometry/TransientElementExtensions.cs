@@ -26,7 +26,7 @@ namespace Tuna.Revit.Extension;
 /// </summary>
 public static class TransientElementExtensions
 {
-    private static readonly Dictionary<ElementId, Guid> _transientElementIds = new Dictionary<ElementId, Guid>();
+    private static readonly List<ElementId> _transientElementIds = new List<ElementId>();
 
     private static readonly string _displayMethod = "SetForTransientDisplay";
 
@@ -55,8 +55,9 @@ public static class TransientElementExtensions
                ElementId.InvalidElementId,
                objects,
                graphicsStyleId ?? ElementId.InvalidElementId
-        });
-        _transientElementIds.Add(elementId, document.CreationGUID);
+        })!;
+
+        _transientElementIds.Add(elementId);
         return elementId;
     }
 
@@ -90,8 +91,18 @@ public static class TransientElementExtensions
             return;
         }
 
-        document.NewTransaction(() => document.Delete(_transientElementIds.Where(p => p.Value == document.CreationGUID).Select(p => p.Key).ToArray()));
-        _transientElementIds.Clear();
+        document.NewTransaction(() =>
+        {
+            foreach (var elementId in _transientElementIds)
+            {
+                Element element = document.GetElement(elementId);
+                if (element != null)
+                {
+                    document.Delete(elementId);
+                    _transientElementIds.Remove(elementId);
+                }
+            }
+        });
     }
 
     /// <summary>
@@ -130,7 +141,7 @@ public static class TransientElementExtensions
     /// </summary>
     /// <returns></returns>
     [DebuggerStepThrough]
-    private static MethodInfo GetTransientDisplayMethod()
+    private static MethodInfo? GetTransientDisplayMethod()
     {
         return typeof(GeometryElement)
             .GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)

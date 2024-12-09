@@ -46,12 +46,12 @@ public static class DocumentExtension
             throw new System.ArgumentNullException(nameof(name), "name can not be null");
         }
 
-        AppearanceAssetElement newAppearance = null;
+        AppearanceAssetElement? newAppearance = null;
 
 #if Rvt_16 || Rvt_17
         Asset genericAsset = document.Application.get_Assets(AssetType.Appearance).Cast<Asset>().Where(x => x.Name == "Generic").FirstOrDefault();
 #else
-        Asset genericAsset = document.Application.GetAssets(AssetType.Appearance).Where(x => x.Name == "Generic").FirstOrDefault();
+        Asset? genericAsset = document.Application.GetAssets(AssetType.Appearance).Where(x => x.Name == "Generic").FirstOrDefault();
 #endif
 
         if (genericAsset != null)
@@ -60,7 +60,7 @@ public static class DocumentExtension
         }
         else
         {
-            AppearanceAssetElement appearance = document.GetElements<AppearanceAssetElement>().FirstOrDefault();
+            AppearanceAssetElement? appearance = document.GetElements<AppearanceAssetElement>().FirstOrDefault();
             if (appearance != null)
             {
 #if Rvt_16 || Rvt_17
@@ -93,9 +93,9 @@ public static class DocumentExtension
     /// <param name="document"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    public static T? GetElement<T>(this Document document, ElementId id) where T : Element
+    public static T GetElement<T>(this Document document, ElementId id) where T : Element
     {
-        return document.GetElement(id) as T;
+        return document.GetElement(id) as T ?? throw new Exception($"target can not be convert to {typeof(T)}");
     }
 
     /// <summary>

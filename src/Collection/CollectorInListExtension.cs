@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Tuna.Revit.Extension.ElementFilterFactory;
 
 namespace Tuna.Revit.Extension;
 
@@ -64,7 +65,7 @@ public static class CollectorInListExtension
     [DebuggerStepThrough]
     public static IEnumerable<T> GetElementsInCollector<T>(this Document document, ICollection<ElementId> elementIds, ElementFilter elementFilter) where T : Element
     {
-        return document.GetElementsInCollector(elementIds).WherePasses(LogicalFilter.And(new ElementClassFilter(typeof(T)), elementFilter)).Cast<T>();
+        return document.GetElementsInCollector(elementIds).WherePasses(LogicalAnd(Class(typeof(T)), elementFilter)).Cast<T>();
     }
 
     /// <summary>
@@ -78,7 +79,7 @@ public static class CollectorInListExtension
     [DebuggerStepThrough]
     public static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds, Type type)
     {
-        return document.GetElementsInCollector(elementIds, new ElementClassFilter(type));
+        return document.GetElementsInCollector(elementIds, Class(type));
     }
 
     /// <summary>
