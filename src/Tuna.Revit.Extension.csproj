@@ -29,9 +29,10 @@
 			Rvt_24_Debug;Rvt_24_Release;
 			Rvt_25_Debug;Rvt_25_Release;
 		</Configurations>
-		<TunaVer>18</TunaVer>
+		<TunaVer>19</TunaVer>
 		<PlatformTarget>x64</PlatformTarget>
 		<LangVersion>preview</LangVersion>
+		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
 		<RvtVersion>2016</RvtVersion>

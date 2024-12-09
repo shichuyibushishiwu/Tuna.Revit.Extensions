@@ -15,12 +15,12 @@ public class TransactionResult
     /// <summary>
     /// 异常信息
     /// </summary>
-    public Exception Exception { get; set; }
+    public Exception? Exception { get; set; }
 
     /// <summary>
     /// 额外的消息
     /// </summary>
-    public string Message { get; set; }
+    public string? Message { get; set; }
 
     /// <summary>
     /// 事务的状态

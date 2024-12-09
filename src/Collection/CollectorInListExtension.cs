@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Tuna.Revit.Extension.ElementFilterFactory;
 
 namespace Tuna.Revit.Extension;
 
@@ -53,6 +54,21 @@ public static class CollectorInListExtension
     }
 
     /// <summary>
+    /// 根据元素过滤器 <see cref="Autodesk.Revit.DB.ElementFilter"/> 过滤出列表中符合条件的图元
+    /// <para>Get elements in the collection base on element filter</para>
+    /// </summary>
+    /// <typeparam name="T">过滤的类型</typeparam>
+    /// <param name="document">所在的文档</param>
+    /// <param name="elementIds">要查询的列表范围</param>
+    /// <param name="elementFilter">元素过滤器</param>
+    /// <returns>从列表中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
+    [DebuggerStepThrough]
+    public static IEnumerable<T> GetElementsInCollector<T>(this Document document, ICollection<ElementId> elementIds, ElementFilter elementFilter) where T : Element
+    {
+        return document.GetElementsInCollector(elementIds).WherePasses(LogicalAnd(Class(typeof(T)), elementFilter)).Cast<T>();
+    }
+
+    /// <summary>
     /// 根据类型过滤出列表中的图元对象
     /// <para>Get the elements in the collection which type is subclass of <see cref="Autodesk.Revit.DB.Element"/></para>
     /// </summary>
@@ -63,7 +79,7 @@ public static class CollectorInListExtension
     [DebuggerStepThrough]
     public static FilteredElementCollector GetElementsInCollector(this Document document, ICollection<ElementId> elementIds, Type type)
     {
-        return document.GetElementsInCollector(elementIds, new ElementClassFilter(type));
+        return document.GetElementsInCollector(elementIds, Class(type));
     }
 
     /// <summary>

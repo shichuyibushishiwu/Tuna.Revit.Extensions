@@ -35,7 +35,7 @@ public static class SelectionExtension
     /// <returns>用户选择的结果</returns>
     /// <exception cref="System.ArgumentNullException"></exception>
     [DebuggerStepThrough]
-    public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, ISelectionFilter selectionFilter = null, string prompt = null)
+    public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, ISelectionFilter? selectionFilter = null, string? prompt = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
 
@@ -76,7 +76,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, string prompt = null)
+    public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, string? prompt = null)
     {
         return uiDocument.SelectObject(objectType, new DefaultSelectionFilter(elementPredicate), prompt);
     }
@@ -91,7 +91,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate, string prompt = null)
+    public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate, string? prompt = null)
     {
         return uiDocument.SelectObject(objectType, new DefaultSelectionFilter(referencePredicate: referencePredicate), prompt);
     }
@@ -107,7 +107,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate, string prompt = null)
+    public static SelectionResult<Reference> SelectObject(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, Func<(Reference Reference, XYZ XYZ), bool>? referencePredicate, string? prompt = null)
     {
         return uiDocument.SelectObject(objectType, new DefaultSelectionFilter(elementPredicate, referencePredicate), prompt);
     }
@@ -121,7 +121,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, Func<Element, bool> elementPredicate, string prompt = null)
+    public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, Func<Element, bool> elementPredicate, string? prompt = null)
     {
         SelectionResult<Reference> result = uiDocument.SelectObject(ObjectType.Element, elementPredicate, prompt);
         return new SelectionResult<Element>()
@@ -141,7 +141,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
+    public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, BuiltInCategory builtInCategory, string? prompt = null)
     {
         return uiDocument.SelectElement(new ElementId(builtInCategory), prompt);
     }
@@ -155,7 +155,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, ElementId builtInCategoryId, string prompt = null)
+    public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, ElementId? builtInCategoryId, string? prompt = null)
     {
         return uiDocument.SelectElement(element => element.Category?.Id == builtInCategoryId, prompt);
     }
@@ -168,7 +168,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, string prompt = null)
+    public static SelectionResult<Element> SelectElement(this UIDocument uiDocument, string? prompt = null)
     {
         return uiDocument.SelectElement(_ => true, prompt);
     }
@@ -183,7 +183,7 @@ public static class SelectionExtension
     /// <param name="prompt"></param>
     /// <returns></returns>
     [DebuggerStepThrough]
-    public static SelectionResult<T> SelectElement<T>(this UIDocument uiDocument, Func<T, bool> elementPredicate = null, string prompt = null) where T : Element
+    public static SelectionResult<T> SelectElement<T>(this UIDocument uiDocument, Func<T, bool>? elementPredicate = null, string? prompt = null) where T : Element
     {
         SelectionResult<Element> result = uiDocument.SelectElement(element =>
         {
@@ -220,7 +220,7 @@ public static class SelectionExtension
     /// <returns>用户选择的结果</returns>
     /// <exception cref="System.ArgumentNullException"></exception>
     [DebuggerStepThrough]
-    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, ISelectionFilter selectionFilter = null, string prompt = null)
+    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, ISelectionFilter? selectionFilter = null, string? prompt = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
 
@@ -264,7 +264,7 @@ public static class SelectionExtension
     /// <returns>用户选择的结果</returns>
     /// <exception cref="System.ArgumentNullException"></exception>
     [DebuggerStepThrough]
-    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, List<Reference> pPreSelected, string prompt, ISelectionFilter selectionFilter = null)
+    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, List<Reference> pPreSelected, string prompt, ISelectionFilter? selectionFilter = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(uiDocument);
         ArgumentNullExceptionUtils.ThrowIfNull(pPreSelected);
@@ -305,7 +305,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate, string prompt = null)
+    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, Func<(Reference Reference, XYZ XYZ), bool>? referencePredicate, string? prompt = null)
     {
         return uiDocument.SelectObjects(objectType, new DefaultSelectionFilter(elementPredicate, referencePredicate), prompt);
     }
@@ -320,7 +320,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, string prompt = null)
+    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, Func<Element, bool> elementPredicate, string? prompt = null)
     {
         return uiDocument.SelectObjects(objectType, new DefaultSelectionFilter(elementPredicate), prompt);
     }
@@ -335,7 +335,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate, string prompt = null)
+    public static SelectionResult<IList<Reference>> SelectObjects(this UIDocument uiDocument, ObjectType objectType, Func<(Reference Reference, XYZ XYZ), bool> referencePredicate, string? prompt = null)
     {
         return uiDocument.SelectObjects(objectType, new DefaultSelectionFilter(referencePredicate: referencePredicate), prompt);
     }
@@ -349,14 +349,14 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, Func<Element, bool> elementPredicate, string prompt = null)
+    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, Func<Element, bool> elementPredicate, string? prompt = null)
     {
         SelectionResult<IList<Reference>> result = uiDocument.SelectObjects(ObjectType.Element, new DefaultSelectionFilter(elementPredicate), prompt);
         return new SelectionResult<IEnumerable<Element>>()
         {
             Message = result.Message,
             SelectionStatus = result.SelectionStatus,
-            Value = result.SelectionStatus == SelectionStatus.Succeeded ? result.Value.Select(reference => uiDocument.Document.GetElement(reference)) : Enumerable.Empty<Element>()
+            Value = result.SelectionStatus == SelectionStatus.Succeeded ? result.Value!.Select(reference => uiDocument.Document.GetElement(reference)) : Enumerable.Empty<Element>()
         };
     }
 
@@ -370,7 +370,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, Type type, Func<Element, bool> elementPredicate = null, string prompt = null)
+    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, Type type, Func<Element, bool>? elementPredicate = null, string? prompt = null)
     {
         return uiDocument.SelectElements(e =>
         {
@@ -397,7 +397,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IEnumerable<T>> SelectElements<T>(this UIDocument uiDocument, Func<T, bool> elementPredicate = null, string prompt = null) where T : Element
+    public static SelectionResult<IEnumerable<T>> SelectElements<T>(this UIDocument uiDocument, Func<T, bool>? elementPredicate = null, string? prompt = null) where T : Element
     {
         SelectionResult<IEnumerable<Element>> result = uiDocument.SelectElements(element =>
         {
@@ -419,7 +419,7 @@ public static class SelectionExtension
             Exception = result.Exception,
             Message = result.Message,
             SelectionStatus = result.SelectionStatus,
-            Value = result.SelectionStatus == SelectionStatus.Succeeded ? result.Value.Cast<T>() : Enumerable.Empty<T>()
+            Value = result.SelectionStatus == SelectionStatus.Succeeded ? result.Value!.Cast<T>() : Enumerable.Empty<T>()
         };
     }
 
@@ -432,7 +432,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
+    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, BuiltInCategory builtInCategory, string? prompt = null)
     {
         return uiDocument.SelectElements(new ElementId(builtInCategory), prompt);
     }
@@ -446,7 +446,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, ElementId builtInCategoryId, string prompt = null)
+    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, ElementId builtInCategoryId, string? prompt = null)
     {
         return uiDocument.SelectElements(element => element.Category?.Id == builtInCategoryId, prompt);
     }
@@ -459,7 +459,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, string prompt = null)
+    public static SelectionResult<IEnumerable<Element>> SelectElements(this UIDocument uiDocument, string? prompt = null)
     {
         return uiDocument.SelectElements(_ => true, prompt);
     }
@@ -473,7 +473,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<XYZ> SelectPoint(this UIDocument uiDocument, ObjectSnapTypes snapTypes, string prompt = null)
+    public static SelectionResult<XYZ> SelectPoint(this UIDocument uiDocument, ObjectSnapTypes snapTypes, string? prompt = null)
     {
         SelectionResult<XYZ> result = new SelectionResult<XYZ>();
         try
@@ -507,7 +507,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<XYZ> SelectPoint(this UIDocument uiDocument, string prompt = null)
+    public static SelectionResult<XYZ> SelectPoint(this UIDocument uiDocument, string? prompt = null)
     {
         SelectionResult<XYZ> result = new SelectionResult<XYZ>();
         try
@@ -542,7 +542,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, ISelectionFilter selectionFilter = null, string prompt = null)
+    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, ISelectionFilter? selectionFilter = null, string? prompt = null)
     {
         SelectionResult<IList<Element>> selectionResult = new SelectionResult<IList<Element>>();
         try
@@ -580,7 +580,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, Func<Element, bool> elementPredicate, string prompt = null)
+    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, Func<Element, bool> elementPredicate, string? prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(new DefaultSelectionFilter(elementPredicate), prompt);
     }
@@ -594,7 +594,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, BuiltInCategory builtInCategory, string prompt = null)
+    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, BuiltInCategory builtInCategory, string? prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(new ElementId(builtInCategory), prompt);
     }
@@ -608,7 +608,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, ElementId builtInCategoryId, string prompt = null)
+    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, ElementId builtInCategoryId, string? prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(element => element.Category?.Id == builtInCategoryId, prompt);
     }
@@ -621,7 +621,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, string prompt = null)
+    public static SelectionResult<IList<Element>> SelectElementsByRectangle(this UIDocument uiDocument, string? prompt = null)
     {
         return uiDocument.SelectElementsByRectangle(_ => true, prompt);
     }
@@ -634,7 +634,7 @@ public static class SelectionExtension
     /// <param name="prompt">给用户的提示</param>
     /// <returns>用户选择的结果</returns>
     [DebuggerStepThrough]
-    public static SelectionResult<PickedBox> SelectBox(this UIDocument uIDocument, PickBoxStyle pickBoxStyle = PickBoxStyle.Crossing, string prompt = null)
+    public static SelectionResult<PickedBox> SelectBox(this UIDocument uIDocument, PickBoxStyle pickBoxStyle = PickBoxStyle.Crossing, string? prompt = null)
     {
         SelectionResult<PickedBox> selectionResult = new SelectionResult<PickedBox>();
         try

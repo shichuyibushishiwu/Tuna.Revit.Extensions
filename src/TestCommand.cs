@@ -22,20 +22,14 @@ internal class TestCommand : IExternalCommand
     {
         UIDocument uiDocument = commandData.Application.ActiveUIDocument;
         Document document = uiDocument.Document;
-        long id = 2312;
-        var result = uiDocument.SelectObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, prompt: "asd", pPreSelected: new List<Reference>()
-        {
-            //new Reference(document.GetElement(new ElementId(id)))
-        }); ;
+
+        var result = uiDocument.SelectElement<FamilyInstance>(prompt: "asd");
 
         if (result.SelectionStatus == SelectionStatus.Succeeded)
         {
-            foreach (var item in result.Value)
-            {
-
-            }
+            var solid = result.Value.ResolveSolids(options => options.DetailLevel = ViewDetailLevel.Fine);
+            System.Windows.MessageBox.Show(solid.Count.ToString());
         }
-
 
         return Result.Succeeded;
     }

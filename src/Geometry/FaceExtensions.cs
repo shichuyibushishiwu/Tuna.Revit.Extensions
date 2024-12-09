@@ -1,6 +1,6 @@
 ﻿/************************************************************************************
    Author:十五
-   CretaeTime:2023/3/3 21:46:09
+   CretaeTime:
    Mail:1012201478@qq.com
    Github:https://github.com/shichuyibushishiwu
 
@@ -18,26 +18,26 @@ using System.Threading.Tasks;
 namespace Tuna.Revit.Extension;
 
 /// <summary>
-/// Revit parameter filter extensions
+/// <see cref="Autodesk.Revit.DB.Face"/> extensions
 /// </summary>
-public static class ParameterFilterElementExtension
+public static class FaceExtensions
 {
     /// <summary>
-    /// Get parameter filter element's filter
+    /// 从  <see cref="Autodesk.Revit.DB.FaceArray"/> 获取  <see cref="Autodesk.Revit.DB.Face"/> 列表
+    /// <para>Get faces array from <see cref="Autodesk.Revit.DB.FaceArray"/></para>
     /// </summary>
-    /// <param name="element"></param>
+    /// <param name="faceArray"></param>
     /// <returns></returns>
-    public static ElementFilter GetElementFilter(this ParameterFilterElement element)
+    public static Face[] ToArray(this FaceArray faceArray)
     {
-#if Rvt_16 || Rvt_17 || Rvt_18
-        var rules = element.GetRules();
-        if (rules.Count > 0)
+        int length = faceArray.Size;
+        Face[] faces = new Face[length];
+
+        for (int i = 0; i < length; i++)
         {
-            return new ElementParameterFilter(rules);
+            faces[i] = faceArray.get_Item(i);
         }
-        return null;
-#else
-        return element.GetElementFilter();
-#endif
+
+        return faces;
     }
 }

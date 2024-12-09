@@ -72,16 +72,17 @@ public static class CollectorInViewExtension
             throw new ArgumentException("type is not a subclass of element");
         }
 
-        if (CollectorExtension.FilterTypes.TryGetValue(type, out Type filterType))
+        if (CollectorExtension.FilterTypes.TryGetValue(type, out Type? filterType))
         {
-            return view.GetElements(Activator.CreateInstance(filterType) as ElementFilter);
+            return view.GetElements((Activator.CreateInstance(filterType) as ElementFilter)!);
         }
 
         return view.GetElements(new ElementClassFilter(type));
     }
 
     /// <summary>
-    /// <c>[Quick Filter]</c>根据内置类别过滤出视图中的图元对象
+    /// <c>[Quick Filter]</c>
+    /// 根据内置类别过滤出视图中的图元对象
     /// <para>Get elements by <see cref="Autodesk.Revit.DB.BuiltInCategory"/></para> 
     /// </summary>
     /// <param name="view"></param>
@@ -91,6 +92,28 @@ public static class CollectorInViewExtension
     public static FilteredElementCollector GetElements(this View view, BuiltInCategory category)
     {
         return view.GetElements(new ElementCategoryFilter(category)).WhereElementIsNotElementType();
+    }
+
+    /// <summary>
+    /// <c>[Quick Filter]</c>
+    /// 根据内置类别过滤出视图中的图元对象
+    /// <para>Get elements by <see cref="Autodesk.Revit.DB.BuiltInCategory"/></para> 
+    /// </summary>
+    /// <param name="view">要查询的文档</param>
+    /// <param name="category"></param>
+    /// <param name="categories"></param>
+    /// <returns>从文档中查询到的图元集合 <see cref="Autodesk.Revit.DB.FilteredElementCollector"/></returns>
+    [DebuggerStepThrough]
+    public static FilteredElementCollector GetElements(this View view, BuiltInCategory category, params BuiltInCategory[] categories)
+    {
+        if (categories.Length == 0)
+        {
+            return view.GetElements(category);
+        }
+
+        List<BuiltInCategory> allCategories = categories.ToList();
+        allCategories.Add(category);
+        return view.GetElements(new ElementMulticategoryFilter(allCategories)).WhereElementIsNotElementType();
     }
 
     /// <summary>
@@ -195,7 +218,7 @@ public static class CollectorInViewExtension
     /// <param name="predicate"></param>
     /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
     [DebuggerStepThrough]
-    public static IEnumerable<T> GetElements<T>(this View view, Func<T, bool> predicate = null) where T : Element
+    public static IEnumerable<T> GetElements<T>(this View view, Func<T, bool>? predicate = null) where T : Element
     {
         IEnumerable<T> elements = view.GetElements(typeof(T)).Cast<T>();
         if (predicate != null)

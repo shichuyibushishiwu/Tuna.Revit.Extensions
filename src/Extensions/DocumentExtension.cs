@@ -46,12 +46,12 @@ public static class DocumentExtension
             throw new System.ArgumentNullException(nameof(name), "name can not be null");
         }
 
-        AppearanceAssetElement newAppearance = null;
+        AppearanceAssetElement? newAppearance = null;
 
 #if Rvt_16 || Rvt_17
         Asset genericAsset = document.Application.get_Assets(AssetType.Appearance).Cast<Asset>().Where(x => x.Name == "Generic").FirstOrDefault();
 #else
-        Asset genericAsset = document.Application.GetAssets(AssetType.Appearance).Where(x => x.Name == "Generic").FirstOrDefault();
+        Asset? genericAsset = document.Application.GetAssets(AssetType.Appearance).Where(x => x.Name == "Generic").FirstOrDefault();
 #endif
 
         if (genericAsset != null)
@@ -60,7 +60,7 @@ public static class DocumentExtension
         }
         else
         {
-            AppearanceAssetElement appearance = document.GetElements<AppearanceAssetElement>().FirstOrDefault();
+            AppearanceAssetElement? appearance = document.GetElements<AppearanceAssetElement>().FirstOrDefault();
             if (appearance != null)
             {
 #if Rvt_16 || Rvt_17
@@ -83,6 +83,19 @@ public static class DocumentExtension
     public static bool ElementExist<T>(this Document document, Func<T, bool> predicate) where T : Element
     {
         return document.GetElements<T>().Any(predicate);
+    }
+
+    /// <summary>
+    /// 通过 <see cref="Autodesk.Revit.DB.ElementId"/> 获取图元
+    /// <para>Get element by <see cref="Autodesk.Revit.DB.ElementId"/></para>
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="document"></param>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public static T GetElement<T>(this Document document, ElementId id) where T : Element
+    {
+        return document.GetElement(id) as T ?? throw new Exception($"target can not be convert to {typeof(T)}");
     }
 
     /// <summary>

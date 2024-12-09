@@ -29,7 +29,7 @@ public static class FamilyExtension
     /// <param name="set"></param>
     /// <param name="predicate"></param>
     /// <returns></returns>
-    private static List<T> ToList<T, TParent>(TParent set, Predicate<T> predicate = null) where TParent : IEnumerable
+    private static List<T> ToList<T, TParent>(TParent set, Predicate<T>? predicate = null) where TParent : IEnumerable
     {
         return (predicate == null ? ToList(set) : ToList(set).Where(p => predicate(p))).ToList();
 
@@ -49,7 +49,7 @@ public static class FamilyExtension
     /// <param name="familyParameterSet">族参数集</param>
     /// <param name="predicate">对集合进行过滤</param>
     /// <returns>参数集 <see cref="List{T}"/> </returns>
-    public static List<FamilyParameter> ToList(this FamilyParameterSet familyParameterSet, Predicate<FamilyParameter> predicate = null) => ToList<FamilyParameter, FamilyParameterSet>(familyParameterSet, predicate);
+    public static List<FamilyParameter> ToList(this FamilyParameterSet familyParameterSet, Predicate<FamilyParameter>? predicate = null) => ToList<FamilyParameter, FamilyParameterSet>(familyParameterSet, predicate);
 
     /// <summary>
     /// 从 <see cref="ParameterSet"/> 创建一个 <see cref="List{T}"/>
@@ -58,7 +58,7 @@ public static class FamilyExtension
     /// <param name="parameterSet">参数集</param>
     /// <param name="predicate">对集合进行过滤</param>
     /// <returns>参数集 <see cref="List{T}"/> </returns>
-    public static List<Parameter> ToList(this ParameterSet parameterSet, Predicate<Parameter> predicate = null) => ToList<Parameter, ParameterSet>(parameterSet, predicate);
+    public static List<Parameter> ToList(this ParameterSet parameterSet, Predicate<Parameter>? predicate = null) => ToList<Parameter, ParameterSet>(parameterSet, predicate);
 
     /// <summary>
     /// 获取族的所有类型

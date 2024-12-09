@@ -16,12 +16,16 @@ namespace Tuna.Revit.Extension;
 public class ExternalEventService : IExternalEventService, IExternalEventHandler
 {
     private readonly Autodesk.Revit.UI.ExternalEvent _externalEvent;
-    private Action<UIApplication> _handle;
+
+    private Action<UIApplication>? _handle;
 
     /// <summary>
     /// 初始化外部事件，只能在有效上下文进行
     /// </summary>
-    public ExternalEventService() => _externalEvent = Autodesk.Revit.UI.ExternalEvent.Create(this);
+    public ExternalEventService()
+    {
+        _externalEvent = Autodesk.Revit.UI.ExternalEvent.Create(this);
+    }
 
     /// <summary>
     /// <inheritdoc/>
