@@ -93,13 +93,14 @@ public static class TransientElementExtensions
 
         document.NewTransaction(() =>
         {
-            foreach (var elementId in _transientElementIds)
+            for (int i = _transientElementIds.Count - 1; i >= 0; i--)
             {
-                Element element = document.GetElement(elementId);
+                ElementId currentId = _transientElementIds[i];
+                Element element = document.GetElement(currentId);
                 if (element != null)
                 {
-                    document.Delete(elementId);
-                    _transientElementIds.Remove(elementId);
+                    document.Delete(currentId);
+                    _transientElementIds.Remove(currentId);
                 }
             }
         });
