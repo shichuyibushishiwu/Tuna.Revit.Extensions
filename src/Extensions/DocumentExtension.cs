@@ -89,13 +89,13 @@ public static class DocumentExtension
     /// 通过 <see cref="Autodesk.Revit.DB.ElementId"/> 获取图元
     /// <para>Get element by <see cref="Autodesk.Revit.DB.ElementId"/></para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TElement"></typeparam>
     /// <param name="document"></param>
     /// <param name="id"></param>
     /// <returns></returns>
-    public static T GetElement<T>(this Document document, ElementId id) where T : Element
+    public static TElement GetElement<TElement>(this Document document, ElementId id) where TElement : Element
     {
-        return document.GetElement(id) as T ?? throw new Exception($"target can not be convert to {typeof(T)}");
+        return document.GetElement(id) as TElement ?? throw new Exception($"target can not be convert to {typeof(TElement)}");
     }
 
     /// <summary>
