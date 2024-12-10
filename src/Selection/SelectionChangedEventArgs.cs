@@ -24,15 +24,15 @@ public class SelectionChangedEventArgs
     /// <summary>
     /// 发生选择变更的文档
     /// </summary>
-    public Document Document { get; }
+    public Document? Document { get; }
 
     /// <summary>
     /// 被选择的图元 <see cref="Autodesk.Revit.DB.ElementId"/>
     /// </summary>
-    public IEnumerable<ElementId> Elements { get; }
+    public IEnumerable<ElementId>? Elements { get; }
 
     /// <summary>
     /// 被选择的引用 <see cref="Autodesk.Revit.DB.Reference"/>
     /// </summary>
-    public IEnumerable<Reference> References { get; }
+    public IEnumerable<Reference>? References { get; }
 }
