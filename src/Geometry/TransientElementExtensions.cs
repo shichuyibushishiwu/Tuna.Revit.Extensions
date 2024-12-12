@@ -95,15 +95,38 @@ public static class TransientElementExtensions
         {
             for (int i = _transientElementIds.Count - 1; i >= 0; i--)
             {
-                ElementId currentId = _transientElementIds[i];
-                Element element = document.GetElement(currentId);
-                if (element != null)
+                var elementId = _transientElementIds[i];
+                if (IsValidTransientElement(document, elementId))
                 {
-                    document.Delete(currentId);
-                    _transientElementIds.Remove(currentId);
+                    document.Delete(elementId);
+                }
+                if (_transientElementIds.Contains(elementId))
+                {
+                    _transientElementIds.RemoveAt(i);
                 }
             }
         });
+    }
+
+    /// <summary>
+    /// 清理金枪鱼扩展包创建的所有临时图元
+    /// <para>Clean up a transient (temporary) elements produced by tuna in the document</para>
+    /// </summary>
+    /// <param name="document">要执行操作的文档</param>
+    /// <param name="elementId">要删除的临时元素id</param>
+    public static void CleanTransientElement(this Document document, ElementId elementId)
+    {
+        if (IsValidTransientElement(document, elementId))
+        {
+            document.NewTransaction(() =>
+            {
+                document.Delete(elementId);
+            });
+            if (_transientElementIds.Contains(elementId))
+            {
+                _transientElementIds.Remove(elementId);
+            }
+        }
     }
 
     /// <summary>
@@ -147,5 +170,12 @@ public static class TransientElementExtensions
         return typeof(GeometryElement)
             .GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
             .FirstOrDefault(x => x.Name == _displayMethod);
+    }
+
+    private static bool IsValidTransientElement(Document document, ElementId elementId)
+    {
+        var element = document.GetElement(elementId);
+        if (element == null) return false;
+        return element.IsTransient;
     }
 }
