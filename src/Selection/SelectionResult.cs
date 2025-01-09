@@ -18,7 +18,7 @@ namespace Tuna.Revit.Extension;
 /// <para>Revit selection result</para>
 /// </summary>
 /// <typeparam name="T"></typeparam>
-public class SelectionResult<T>
+public class SelectionResult<T> : TunaAPIResult
 {
     /// <summary>
     /// message
@@ -34,14 +34,4 @@ public class SelectionResult<T>
     /// selction state
     /// </summary>
     public SelectionStatus SelectionStatus { get; set; }
-
-    /// <summary>
-    /// exception
-    /// </summary>
-    public Exception? Exception { get; internal set; }
-
-    /// <summary>
-    /// Has exception
-    /// </summary>
-    public bool HasException => Exception != null;
 }

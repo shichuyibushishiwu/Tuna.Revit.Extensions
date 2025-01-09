@@ -10,13 +10,8 @@ namespace Tuna.Revit.Extension;
 /// <summary>
 /// 事务执行的结果
 /// </summary>
-public class TransactionResult
+public class TransactionResult: TunaAPIResult
 {
-    /// <summary>
-    /// 异常信息
-    /// </summary>
-    public Exception? Exception { get; set; }
-
     /// <summary>
     /// 额外的消息
     /// </summary>
@@ -26,10 +21,4 @@ public class TransactionResult
     /// 事务的状态
     /// </summary>
     public TransactionStatus TransactionStatus { get; set; }
-
-    /// <summary>
-    /// 是否存在未知的异常
-    /// <para>Has exception</para>
-    /// </summary>
-    public bool HasException => Exception != null;
 }

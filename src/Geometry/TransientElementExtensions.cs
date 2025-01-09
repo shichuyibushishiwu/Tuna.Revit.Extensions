@@ -99,7 +99,9 @@ public static class TransientElementExtensions
                 if (IsValidTransientElement(document, elementId))
                 {
                     document.Delete(elementId);
+
                 }
+
                 if (_transientElementIds.Contains(elementId))
                 {
                     _transientElementIds.RemoveAt(i);
@@ -121,7 +123,10 @@ public static class TransientElementExtensions
             document.NewTransaction(() =>
             {
                 document.Delete(elementId);
+
+
             });
+
             if (_transientElementIds.Contains(elementId))
             {
                 _transientElementIds.Remove(elementId);
@@ -175,7 +180,11 @@ public static class TransientElementExtensions
     private static bool IsValidTransientElement(Document document, ElementId elementId)
     {
         var element = document.GetElement(elementId);
-        if (element == null) return false;
+        if (element == null)
+        {
+            return false;
+        }
+
         return element.IsTransient;
     }
 }
