@@ -23,13 +23,21 @@ internal class TestCommand : IExternalCommand
         UIDocument uiDocument = commandData.Application.ActiveUIDocument;
         Document document = uiDocument.Document;
 
-        var result = uiDocument.SelectElement<FamilyInstance>(prompt: "asd");
+        //var result = uiDocument.SelectElement<FamilyInstance>(prompt: "asd");
 
-        if (result.SelectionStatus == SelectionStatus.Succeeded)
-        {
-            var solid = result.Value.ResolveSolids(options => options.DetailLevel = ViewDetailLevel.Fine);
-            System.Windows.MessageBox.Show(solid.Count.ToString());
-        }
+        //if (result.SelectionStatus == SelectionStatus.Succeeded)
+        //{
+        //    var solid = result.Value.ResolveSolids(options => options.DetailLevel = ViewDetailLevel.Fine);
+        //    System.Windows.MessageBox.Show(solid.Count.ToString());
+        //}
+
+        var elems = document.GetGraphicElements();
+        var asd = elems.Count();
+
+        System.Windows.MessageBox.Show(asd.ToString());
+
+
+
 
         return Result.Succeeded;
     }

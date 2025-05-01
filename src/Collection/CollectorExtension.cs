@@ -29,7 +29,7 @@ public static class CollectorExtension
     /// <summary>
     /// Spatial element types
     /// </summary>
-    internal static readonly Dictionary<Type, Type> FilterTypes = new Dictionary<Type, Type>()
+    internal static Dictionary<Type, Type> FilterTypes { get; } = new Dictionary<Type, Type>()
     {
         [typeof(Room)] = typeof(RoomFilter),
         [typeof(RoomTag)] = typeof(RoomTagFilter),
@@ -95,7 +95,7 @@ public static class CollectorExtension
         {
             throw new ArgumentException("type is not a subclass of element");
         }
-   
+
         if (FilterTypes.TryGetValue(type, out Type? filterType))
         {
             return document.GetElements((Activator.CreateInstance(filterType) as ElementFilter)!);
@@ -484,11 +484,11 @@ public static class CollectorExtension
     /// <param name="predicate">predicate</param>
     /// <returns>从文档中查询到的图元集合 <see cref="IEnumerable{T}"/></returns>
     [DebuggerStepThrough]
-    public static IEnumerable<Element> GetGraphicElements(this Document document, Func<Element, bool> predicate)
+    public static IEnumerable<Element> GetGraphicElements(this Document document, Func<Element, bool>? predicate = null)
     {
         var elements = document.GetElements(new ElementIsElementTypeFilter(true))
             .ToElements()
-            .Where(element => element.Category != null && element.Category.HasMaterialQuantities);
+            .Where(element => element.Category != null && (element.Category.HasMaterialQuantities || IsSystemCurveElement(element.Category)));
 
         if (predicate != null)
         {
@@ -496,7 +496,33 @@ public static class CollectorExtension
         }
 
         return elements;
+
+        static bool IsSystemCurveElement(Category category)
+        {
+            ElementId categoryId = category.Id;
+
+            return SystemCurveElementCategories.Any(id => id == categoryId);
+        }
     }
+
+    static List<ElementId> SystemCurveElementCategories { get; } =
+    [
+        BuiltInCategories.DuctCurves,
+        BuiltInCategories.DuctFitting,
+        BuiltInCategories.PlaceHolderDucts,
+        BuiltInCategories.FlexDuctCurves,
+
+        BuiltInCategories.CableTray,
+        BuiltInCategories.CableTrayFitting,
+        BuiltInCategories.Conduit,
+        BuiltInCategories.ConduitFitting,
+
+        BuiltInCategories.PipeCurves,
+        BuiltInCategories.PipeFitting,
+        BuiltInCategories.FlexPipeCurves,
+        BuiltInCategories.PlaceHolderPipes,
+    ];
+
 
     /// <summary>
     /// 根据族名称和族类型名称获取文档中的图元
