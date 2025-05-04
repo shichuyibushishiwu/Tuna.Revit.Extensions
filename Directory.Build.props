@@ -25,6 +25,7 @@
 			Rvt_26_Debug;Rvt_26_Release;
 		</Configurations>
 		<TunaVer>20.0</TunaVer>
+		<TargetFramework>net48</TargetFramework>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration.StartsWith(Rvt_16))'">
