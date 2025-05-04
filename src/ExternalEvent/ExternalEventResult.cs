@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// 外部事件的返回值

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Ribbon.Proxy;
+namespace Tuna.Revit.Extensions.Ribbon.Proxy;
 
 internal class RibbonComboBoxProxy : RibbonElementProxy<ComboBox>, IRibbonComboBox
 {

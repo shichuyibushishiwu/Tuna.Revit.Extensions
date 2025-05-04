@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Tuna.Revit.Extension;
+using Tuna.Revit.Extensions;
 
 namespace Tuna.Sample.Commands
 {

@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// system bitmap extension

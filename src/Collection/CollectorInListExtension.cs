@@ -16,9 +16,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Tuna.Revit.Extension.ElementFilterFactory;
+using static Tuna.Revit.Extensions.ElementFilterFactory;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// Revit element filters extension

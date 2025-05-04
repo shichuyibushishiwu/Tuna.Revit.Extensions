@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 [Transaction(TransactionMode.Manual)]
 [CommandButton(Title = "sd")]

@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using System.IO;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// revit material asset extension

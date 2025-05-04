@@ -16,7 +16,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// Revit element filters extension

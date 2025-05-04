@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tuna.Revit.Extension.Ribbon.Abstraction;
+using Tuna.Revit.Extensions.Ribbon.Abstraction;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// 界面按钮元素

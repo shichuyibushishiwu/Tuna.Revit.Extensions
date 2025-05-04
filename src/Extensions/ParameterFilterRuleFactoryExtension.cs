@@ -15,27 +15,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension
+namespace Tuna.Revit.Extensions;
+
+/// <summary>
+/// Revit parameter filter rule extensions
+/// </summary>
+public static class ParameterFilterRuleFactoryExtension
 {
     /// <summary>
-    /// Revit parameter filter rule extensions
+    /// Creates a filter rule that determines whether strings from the document equal a certain value.
     /// </summary>
-    public static class ParameterFilterRuleFactoryExtension
+    /// <param name="id"></param>
+    /// <param name="name"></param>
+    /// <param name="caseSensitive"></param>
+    /// <returns></returns>
+    public static FilterRule CreateEqualsRule(ElementId id, string name, bool caseSensitive = false)
     {
-        /// <summary>
-        /// Creates a filter rule that determines whether strings from the document equal a certain value.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="caseSensitive"></param>
-        /// <returns></returns>
-        public static FilterRule CreateEqualsRule(ElementId id, string name, bool caseSensitive = false)
-        {
-#if Rvt_23||Rvt_24||Rvt_25
-            return ParameterFilterRuleFactory.CreateEqualsRule(id, name);
+#if Rvt_23_Before
+        return ParameterFilterRuleFactory.CreateEqualsRule(id, name, caseSensitive);
+
 #else
-            return ParameterFilterRuleFactory.CreateEqualsRule(id, name, caseSensitive);
+        return ParameterFilterRuleFactory.CreateEqualsRule(id, name);
 #endif
-        }
     }
 }

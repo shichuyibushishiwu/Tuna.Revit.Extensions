@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// Revit geometry extension

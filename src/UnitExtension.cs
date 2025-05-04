@@ -12,7 +12,7 @@ using Autodesk.Revit.DB;
 using System;
 using System.Diagnostics;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// Revit unit extensions

@@ -14,7 +14,7 @@ using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
 using System.Collections.Generic;
 using System.Linq;
-using Tuna.Revit.Extension;
+using Tuna.Revit.Extensions;
 
 namespace Tuna.Sample.Commands;
 

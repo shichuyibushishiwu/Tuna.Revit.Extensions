@@ -9,9 +9,9 @@
 ************************************************************************************/
 
 using System;
-using Tuna.Revit.Extension;
+using Tuna.Revit.Extensions;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// 定义的类用于保存和Revit进行交互后的结果
