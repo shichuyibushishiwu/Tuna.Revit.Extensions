@@ -16,35 +16,35 @@ public class RibbonButtonData : IRibbonButtonData
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public string LongDescription { get; set; }
+    public string? LongDescription { get; set; }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public string ToolTip { get; set; }
+    public string? ToolTip { get; set; }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public object Image { get; set; }
+    public object? Image { get; set; }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public object LargeImage { get; set; }
+    public object? LargeImage { get; set; }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public object ToolTipImage { get; set; }
+    public object? ToolTipImage { get; set; }
 
     /// <summary>
     /// <inheritdoc/>
     /// </summary>
-    public ContextualHelp ContextualHelp { get; set; }
+    public ContextualHelp? ContextualHelp { get; set; }
 }
