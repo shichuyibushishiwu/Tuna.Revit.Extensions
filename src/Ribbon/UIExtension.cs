@@ -74,7 +74,7 @@ public static class UIExtension
         }
     }
 
-    static PushButtonData CreatePushButtonData<T>(Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
+    static PushButtonData CreatePushButtonData<T>(Action<PushButtonData>? handle = null) where T : class, IExternalCommand, new()
         => RibbonButtonDescriptor.CreateRibbonButtonDescriptor(handle, typeof(T)).PushButtonData;
 
     /// <summary>
