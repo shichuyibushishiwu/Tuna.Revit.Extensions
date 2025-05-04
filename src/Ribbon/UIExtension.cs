@@ -22,10 +22,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Tuna.Revit.Extension.Ribbon.Proxy;
+using Tuna.Revit.Extensions.Ribbon.Proxy;
 
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// Revit ribbon ui extensions
@@ -74,7 +74,7 @@ public static class UIExtension
         }
     }
 
-    static PushButtonData CreatePushButtonData<T>(Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
+    static PushButtonData CreatePushButtonData<T>(Action<PushButtonData>? handle = null) where T : class, IExternalCommand, new()
         => RibbonButtonDescriptor.CreateRibbonButtonDescriptor(handle, typeof(T)).PushButtonData;
 
     /// <summary>
@@ -133,7 +133,7 @@ public static class UIExtension
 
         RevitApplicationContext.Instance.Assembly = Assembly.GetCallingAssembly();
 
-        return panel.AddItem(data) as SplitButton;
+        return (SplitButton)panel.AddItem(data);
     }
 
     /// <summary>
@@ -157,7 +157,7 @@ public static class UIExtension
 
         handle?.Invoke(combo);
 
-        return panel.AddItem(combo) as ComboBox;
+        return (ComboBox)panel.AddItem(combo);
     }
 
 
@@ -168,7 +168,7 @@ public static class UIExtension
     /// <param name="pulldownButton"></param>
     /// <param name="handle"></param>
     /// <returns></returns>
-    public static PushButton CreatePushButton<T>(this PulldownButton pulldownButton, Action<PushButtonData> handle = null) where T : class, IExternalCommand, new()
+    public static PushButton CreatePushButton<T>(this PulldownButton pulldownButton, Action<PushButtonData>? handle = null) where T : class, IExternalCommand, new()
     {
         RevitApplicationContext.Instance.Assembly = Assembly.GetCallingAssembly();
 
@@ -182,7 +182,7 @@ public static class UIExtension
     /// <param name="type"></param>
     /// <param name="handle"></param>
     /// <returns></returns>
-    internal static PushButton CreatePushButton(this PulldownButton pulldownButton, Type type, Action<PushButtonData> handle = null)
+    internal static PushButton CreatePushButton(this PulldownButton pulldownButton, Type type, Action<PushButtonData>? handle = null)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(pulldownButton);
 

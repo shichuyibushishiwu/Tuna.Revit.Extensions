@@ -11,7 +11,7 @@
 using Autodesk.Revit.DB;
 using System;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// 提供创建Revit元素过滤器的工厂类

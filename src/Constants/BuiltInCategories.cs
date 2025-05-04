@@ -12,7 +12,7 @@ using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// Revit 中部分常用的内置类别
@@ -1614,7 +1614,7 @@ public class BuiltInCategories
     /// <summary>
     /// 建筑
     /// </summary>
-    public static readonly List<ElementId> ArchitecturalCategories = new List<ElementId>()
+    public static List<ElementId> ArchitecturalCategories { get; } = new List<ElementId>()
     {
         Furniture,
         LightingFixtures,
@@ -1667,7 +1667,7 @@ public class BuiltInCategories
     /// <summary>
     /// 结构
     /// </summary>
-    public static readonly List<ElementId> StructuralCategories = new List<ElementId>()
+    public static List<ElementId> StructuralCategories { get; } = new List<ElementId>()
     {
         Ramps,
         Roofs,
@@ -1676,9 +1676,11 @@ public class BuiltInCategories
         StructuralStiffener,
         StructuralFraming,
         StructuralTruss,
+
 #if !Rvt_16
         Coupler,
 #endif
+
         Parts,
         PathRein,
         Rebar,
@@ -1702,17 +1704,19 @@ public class BuiltInCategories
     /// <summary>
     /// 机械
     /// </summary>
-    public static readonly List<ElementId> MechanicalCategories = new List<ElementId>()
+    public static List<ElementId> MechanicalCategories { get; } = new List<ElementId>()
     {
         Areas,
         FlexDuctCurves,
         DuctLinings,
         DuctCurves,
         Parts,
+
 #if !Rvt_16
         FabricationDuctwork,
         FabricationHangers,
 #endif
+
         DuctAccessory,
         DuctFitting,
         Lines,
@@ -1729,12 +1733,14 @@ public class BuiltInCategories
     /// <summary>
     /// 电气
     /// </summary>
-    public static readonly List<ElementId> ElectricalCategories = new List<ElementId>()
+    public static List<ElementId> ElectricalCategories { get; } = new List<ElementId>()
     {
+
 #if !Rvt_16
         FabricationHangers,
         FabricationContainment,
 #endif
+
         LightingDevices,
         CableTrayFitting,
         LightingFixtures,
@@ -1762,13 +1768,15 @@ public class BuiltInCategories
     /// <summary>
     /// 管道
     /// </summary>
-    public static readonly List<ElementId> PlumbingCategories = new List<ElementId>()
+    public static List<ElementId> PlumbingCategories { get; } = new List<ElementId>()
     {
+
 #if !Rvt_16
         FabricationDuctwork,
         FabricationHangers,
         FabricationPipework,
 #endif
+
         PipeInsulations,
         PipeCurves,
         Sprinklers,

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Tuna.Revit.Extension.Ribbon.Abstraction;
+using Tuna.Revit.Extensions.Ribbon.Abstraction;
 
-namespace Tuna.Revit.Extension.Ribbon.Proxy;
+namespace Tuna.Revit.Extensions.Ribbon.Proxy;
 
 internal class RibbonPanelProxy : RibbonElementProxy<RibbonPanel>, IRibbonPanel
 {

@@ -11,7 +11,7 @@
 using Autodesk.Revit.UI;
 using System.Drawing;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// 按钮的属性

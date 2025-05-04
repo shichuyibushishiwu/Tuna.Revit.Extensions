@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tuna.Revit.Extension.Ribbon.Proxy;
+using Tuna.Revit.Extensions.Ribbon.Proxy;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// 定义具有元素集合的接口

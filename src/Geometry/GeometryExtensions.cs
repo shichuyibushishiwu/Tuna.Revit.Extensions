@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// 图形扩展
@@ -29,7 +29,7 @@ public static class GeometryExtensions
     /// <para>Resolve a list of <see cref="Autodesk.Revit.DB.GeometryObject"/>s of the specified type from a <see cref="Autodesk.Revit.DB.Element"/>.</para>
     /// </summary>
     /// <param name="element">要解析的 <see cref="Autodesk.Revit.DB.Element"/>.</param>
-    /// <param name="action">用于配置 <see cref="Tuna.Revit.Extension.GeometryOptions"/> 的委托。</param>
+    /// <param name="action">用于配置 <see cref="Tuna.Revit.Extensions.GeometryOptions"/> 的委托。</param>
     /// <returns><see cref="System.Collections.Generic.List{T}"/> 包含解析出的几何对象。</returns>
     [DebuggerStepThrough]
     public static List<GeometryObject> ResolveGeometry(this Element element, Action<GeometryOptions> action)
@@ -49,7 +49,7 @@ public static class GeometryExtensions
     /// </summary>
     /// <remarks>方法未过滤体积为零的几何块</remarks>
     /// <param name="element">要解析的 <see cref="Autodesk.Revit.DB.Element"/>.</param>
-    /// <param name="action">用于配置 <see cref="Tuna.Revit.Extension.GeometryOptions"/> 的委托。</param>
+    /// <param name="action">用于配置 <see cref="Tuna.Revit.Extensions.GeometryOptions"/> 的委托。</param>
     /// <returns><see cref="System.Collections.Generic.List{T}"/> 包含解析出的几何对象。</returns>
     [DebuggerStepThrough]
     public static List<Solid> ResolveSolids(this Element element, Action<GeometryOptions> action)
@@ -62,7 +62,7 @@ public static class GeometryExtensions
     /// <para>Resolve a list of <see cref="Autodesk.Revit.DB.Face"/>s of the specified type from a <see cref="Autodesk.Revit.DB.Element"/>.</para>
     /// </summary>
     /// <param name="element">要解析的 <see cref="Autodesk.Revit.DB.Element"/>.</param>
-    /// <param name="action">用于配置 <see cref="Tuna.Revit.Extension.GeometryOptions"/> 的委托。</param>
+    /// <param name="action">用于配置 <see cref="Tuna.Revit.Extensions.GeometryOptions"/> 的委托。</param>
     /// <returns><see cref="System.Collections.Generic.List{T}"/> 包含解析出的几何对象。</returns>
     [DebuggerStepThrough]
     public static List<Face> ResolveFaces(this Element element, Action<GeometryOptions> action)

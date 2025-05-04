@@ -25,7 +25,7 @@ using System.Reflection;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 internal class RibbonImageResovler
 {

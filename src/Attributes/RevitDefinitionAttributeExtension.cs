@@ -13,7 +13,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using System.Reflection;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// <see cref="ExternalDefinitionAttribute"/>与<see cref="InternalDefinitionAttribute"/>的解析方法

@@ -23,12 +23,12 @@ using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using System.IO;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// revit material asset extension
 /// </summary>
-public static class AssetExtension
+public static class AssetExtensions
 {
 #if !Rvt_16 && !Rvt_17
     /// <summary>

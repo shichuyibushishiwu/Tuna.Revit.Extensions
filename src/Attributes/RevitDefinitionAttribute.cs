@@ -11,7 +11,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// Revit外部参数特性以获取元素的参数

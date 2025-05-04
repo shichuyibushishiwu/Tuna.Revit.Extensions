@@ -7,19 +7,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		LICENSE = LICENSE
+		Directory.Build.props = Directory.Build.props
 		README.md = README.md
-		Tuna.Revit.Build.props = Tuna.Revit.Build.props
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Sample", "sample\Tuna.Sample\Tuna.Sample.csproj", "{57D210DC-A989-4C3E-84E8-A40B7114052B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{78294CC8-0B3B-48D5-AC91-2E3C02377287}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{561BD9FE-C5B6-4817-930A-AC46291408EE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Revit.Test", "tests\Tuna.Revit.Test\Tuna.Revit.Test.csproj", "{49F3D6ED-FF71-403C-8D2B-8775A3080407}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Revit.Extension", "src\Tuna.Revit.Extension.csproj", "{F675D510-6992-4C0C-9FE9-AAB99638C7B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuna.Revit.Extensions", "src\Tuna.Revit.Extensions.csproj", "{F675D510-6992-4C0C-9FE9-AAB99638C7B5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2001D214-F87F-492C-A57C-F635633238CB}"
 EndProject
@@ -47,6 +43,8 @@ Global
 		Rvt_24_Release|Any CPU = Rvt_24_Release|Any CPU
 		Rvt_25_Debug|Any CPU = Rvt_25_Debug|Any CPU
 		Rvt_25_Release|Any CPU = Rvt_25_Release|Any CPU
+		Rvt_26_Debug|Any CPU = Rvt_26_Debug|Any CPU
+		Rvt_26_Release|Any CPU = Rvt_26_Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -83,40 +81,9 @@ Global
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_25_Debug|Any CPU.ActiveCfg = Rvt_25_Debug|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_25_Debug|Any CPU.Build.0 = Rvt_25_Debug|Any CPU
 		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_25_Release|Any CPU.ActiveCfg = Rvt_25_Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_16_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_16_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_16_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_17_Debug|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_17_Debug|Any CPU.Build.0 = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_17_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_18_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_18_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_18_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_19_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_19_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_19_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_20_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_20_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_20_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_21_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_21_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_21_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_22_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_22_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_22_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_23_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_23_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_23_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_24_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_24_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_24_Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_25_Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_25_Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407}.Rvt_25_Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_26_Debug|Any CPU.ActiveCfg = Rvt_26_Debug|Any CPU
+		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_26_Debug|Any CPU.Build.0 = Rvt_26_Debug|Any CPU
+		{57D210DC-A989-4C3E-84E8-A40B7114052B}.Rvt_26_Release|Any CPU.ActiveCfg = Rvt_26_Release|Any CPU
 		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -161,13 +128,16 @@ Global
 		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_25_Debug|Any CPU.Build.0 = Rvt_25_Debug|Any CPU
 		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_25_Release|Any CPU.ActiveCfg = Rvt_25_Release|Any CPU
 		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_25_Release|Any CPU.Build.0 = Rvt_25_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_26_Debug|Any CPU.ActiveCfg = Rvt_26_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_26_Debug|Any CPU.Build.0 = Rvt_26_Debug|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_26_Release|Any CPU.ActiveCfg = Rvt_26_Release|Any CPU
+		{F675D510-6992-4C0C-9FE9-AAB99638C7B5}.Rvt_26_Release|Any CPU.Build.0 = Rvt_26_Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{57D210DC-A989-4C3E-84E8-A40B7114052B} = {78294CC8-0B3B-48D5-AC91-2E3C02377287}
-		{49F3D6ED-FF71-403C-8D2B-8775A3080407} = {561BD9FE-C5B6-4817-930A-AC46291408EE}
 		{F675D510-6992-4C0C-9FE9-AAB99638C7B5} = {2001D214-F87F-492C-A57C-F635633238CB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

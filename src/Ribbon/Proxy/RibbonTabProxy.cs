@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Tuna.Revit.Extension.Ribbon.Proxy;
+namespace Tuna.Revit.Extensions.Ribbon.Proxy;
 
 internal class RibbonTabProxy : IRibbonTab
 {

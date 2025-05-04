@@ -15,12 +15,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// Revit color extension
 /// </summary>
-public static class ColorExtension
+public static class ColorExtensions
 {
     /// <summary>
     /// 将指定的 <see cref="Autodesk.Revit.DB.Color"/> 转换为 HTML 颜色字符串颜色表示形式
@@ -31,6 +31,7 @@ public static class ColorExtension
     public static string ConvertToHTML(this Autodesk.Revit.DB.Color color)
     {
         ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(color);
+
         return ColorTranslator.ToHtml(Color.FromArgb(color.Red, color.Green, color.Blue));
     }
 
@@ -43,6 +44,7 @@ public static class ColorExtension
     public static Autodesk.Revit.DB.Color ConvertToRevitColor(this System.Drawing.Color color)
     {
         ArgumentNullExceptionUtils.ThrowIfNull(color);
+
         return new Autodesk.Revit.DB.Color(color.R, color.G, color.B);
     }
 

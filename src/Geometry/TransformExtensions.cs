@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Geometry;
+namespace Tuna.Revit.Extensions.Geometry;
 
 /// <summary>
 /// 关于矩阵<see cref="Autodesk.Revit.DB.Transform"/>的扩展

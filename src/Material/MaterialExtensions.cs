@@ -23,12 +23,12 @@ using System.Linq;
 using System.Text;
 
 
-namespace Tuna.Revit.Extension
+namespace Tuna.Revit.Extensions
 {
     /// <summary>
     /// revit material extension
     /// </summary>
-    public static class MaterialExtension
+    public static class MaterialExtensions
     {
         /// <summary>
         /// Get generic material appearance color
@@ -41,13 +41,14 @@ namespace Tuna.Revit.Extension
             ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(material);
 
             Color color = Color.InvalidColorValue;
-            ElementId appearanceAssetId = material.AppearanceAssetId;
-            if (appearanceAssetId != ElementId.InvalidElementId)
+
+            AppearanceAssetElement? appearanceAssetElement = material.GetAppearanceAssetElement();
+            if (appearanceAssetElement != null)
             {
-                AppearanceAssetElement? appearanceAssetElement = material.Document.GetElement(appearanceAssetId) as AppearanceAssetElement;
                 Asset asset = appearanceAssetElement.GetRenderingAsset();
                 color = asset.GetColor();
             }
+          
             return color;
         }
 

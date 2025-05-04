@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Tuna.Revit.Extension.Ribbon.Abstraction;
+using Tuna.Revit.Extensions.Ribbon.Abstraction;
 
-namespace Tuna.Revit.Extension.Ribbon.Proxy;
+namespace Tuna.Revit.Extensions.Ribbon.Proxy;
 
 internal class RibbonPulldownButtonProxy : RibbonElementProxy<PulldownButton>, IRibbonPulldownButton
 {

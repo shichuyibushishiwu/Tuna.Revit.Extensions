@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tuna.Revit.Extension.Ribbon.Proxy;
+namespace Tuna.Revit.Extensions.Ribbon.Proxy;
 
 internal class RibbonButtonDescriptor
 {
@@ -19,7 +19,7 @@ internal class RibbonButtonDescriptor
 
     public PushButtonData PushButtonData { get; set; }
 
-    public static RibbonButtonDescriptor CreateRibbonButtonDescriptor(Action<PushButtonData> handle, Type commandType)
+    public static RibbonButtonDescriptor CreateRibbonButtonDescriptor(Action<PushButtonData>? handle, Type commandType)
     {
         //按钮的名称
         string name = commandType.Name;
@@ -34,7 +34,7 @@ internal class RibbonButtonDescriptor
         }
 
         //方式三，通过属性进行配置，优先级第三
-        IRibbonButtonData ribbonButtonData = commandType.GetCustomAttribute<CommandButtonAttribute>();
+        IRibbonButtonData? ribbonButtonData = commandType.GetCustomAttribute<CommandButtonAttribute>();
         if (ribbonButtonData != null)
         {
             UIExtension.SetPushButtonData(pushButtonData, ribbonButtonData);

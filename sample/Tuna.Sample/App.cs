@@ -13,7 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
-using Tuna.Revit.Extension;
+using Tuna.Revit.Extensions;
 
 namespace Tuna.Sample
 {

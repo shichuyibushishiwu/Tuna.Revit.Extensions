@@ -2,11 +2,11 @@
 using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using Tuna.Revit.Extension.Ribbon.Abstraction;
-using Tuna.Revit.Extension.Ribbon.Proxy;
+using Tuna.Revit.Extensions.Ribbon.Abstraction;
+using Tuna.Revit.Extensions.Ribbon.Proxy;
 using static UIFramework.WorksharingNotificationWindow;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// 对UI的扩展

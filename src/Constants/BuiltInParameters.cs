@@ -10,7 +10,7 @@
 
 using Autodesk.Revit.DB;
 
-namespace Tuna.Revit.Extension;
+namespace Tuna.Revit.Extensions;
 
 /// <summary>
 /// Revit builtin parameters
