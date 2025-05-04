@@ -9,7 +9,7 @@ jobs:
  nuget:
    strategy: 
     matrix: 
-     version: [Rvt_16_Release, Rvt_17_Release, Rvt_18_Release, Rvt_19_Release, Rvt_20_Release, Rvt_21_Release, Rvt_22_Release, Rvt_23_Release, Rvt_24_Release, Rvt_25_Release]
+     version: [Rvt_16_Release, Rvt_17_Release, Rvt_18_Release, Rvt_19_Release, Rvt_20_Release, Rvt_21_Release, Rvt_22_Release, Rvt_23_Release, Rvt_24_Release, Rvt_25_Release, Rvt_26_Release]
    name: release nuget
    runs-on: windows-latest
    steps:
@@ -30,42 +30,4 @@ jobs:
     - name: Publish NuGet
       run: dotnet nuget push src\bin\${{ matrix.version }}\*.nupkg -k ${{secrets.NUGETKEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
       
-    - name: Delete old packages
-      shell: pwsh
-      run: |
-        # 获取包名称
-        $packageId = "Tuna.Revit.Extension"
-        # 保留最新的N个版本
-        $versionsToKeep = 10
-        
-        # 获取包的详细信息
-        $baseUrl = "https://api.nuget.org/v3/registration5-semver1/$packageId/index.json"
-        $response = Invoke-RestMethod -Uri $baseUrl
-        
-        # 获取所有版本及其发布时间
-        $versionDetails = @()
-        foreach ($item in $response.items) {
-            foreach ($entry in $item.items) {
-                $versionDetails += @{
-                    Version = $entry.catalogEntry.version
-                    Published = [DateTime]::Parse($entry.catalogEntry.published)
-                }
-            }
-        }
-        
-        # 按发布时间排序并选择要删除的版本
-        $versionsToDelete = $versionDetails | 
-            Sort-Object Published -Descending | 
-            Select-Object -Skip $versionsToKeep | 
-            Select-Object -ExpandProperty Version
-        
-        foreach ($version in $versionsToDelete) {
-            Write-Host "Deleting version $version of $packageId (Published: $($versionDetails | Where-Object Version -eq $version | Select-Object -ExpandProperty Published))"
-            # 删除包版本
-            Invoke-RestMethod -Uri "https://api.nuget.org/v3/packages/$packageId/$version" `
-                -Method Delete `
-                -Headers @{
-                    'X-NuGet-ApiKey' = '${{secrets.NUGETKEY}}'
-                }
-        }
-
+  
