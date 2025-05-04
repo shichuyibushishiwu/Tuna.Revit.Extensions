@@ -31,49 +31,6 @@ namespace Tuna.Revit.Extensions;
 public static class DocumentExtension
 {
     /// <summary>
-    /// create a revit generic material appearance element
-    /// </summary>
-    /// <param name="document"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    /// <exception cref="System.ArgumentNullException"></exception>
-    public static AppearanceAssetElement CreateAppearanceElement(this Document document, string name)
-    {
-        ArgumentNullExceptionUtils.ThrowIfNullOrInvalid(document);
-
-        if (string.IsNullOrEmpty(name))
-        {
-            throw new System.ArgumentNullException(nameof(name), "name can not be null");
-        }
-
-        AppearanceAssetElement? newAppearance = null;
-
-#if Rvt_16 || Rvt_17
-        Asset genericAsset = document.Application.get_Assets(AssetType.Appearance).Cast<Asset>().Where(x => x.Name == "Generic").FirstOrDefault();
-#else
-        Asset? genericAsset = document.Application.GetAssets(AssetType.Appearance).Where(x => x.Name == "Generic").FirstOrDefault();
-#endif
-
-        if (genericAsset != null)
-        {
-            newAppearance = AppearanceAssetElement.Create(document, name, genericAsset);
-        }
-        else
-        {
-            AppearanceAssetElement? appearance = document.GetElements<AppearanceAssetElement>().FirstOrDefault();
-            if (appearance != null)
-            {
-#if Rvt_16 || Rvt_17
-                newAppearance = AppearanceAssetElement.Create(document, document.GetUniqueName<AppearanceAssetElement>(name), appearance.GetRenderingAsset());
-#else
-                newAppearance = appearance.Duplicate(name);
-#endif
-            }
-        }
-        return newAppearance;
-    }
-
-    /// <summary>
     /// Is check element exist
     /// </summary>
     /// <typeparam name="T"></typeparam>

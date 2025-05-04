@@ -20,7 +20,7 @@ namespace Tuna.Revit.Extensions;
 /// <summary>
 /// Revit color extension
 /// </summary>
-public static class ColorExtension
+public static class ColorExtensions
 {
     /// <summary>
     /// 将指定的 <see cref="Autodesk.Revit.DB.Color"/> 转换为 HTML 颜色字符串颜色表示形式
