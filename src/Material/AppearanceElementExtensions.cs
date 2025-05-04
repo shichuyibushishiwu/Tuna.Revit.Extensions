@@ -9,7 +9,12 @@
 ************************************************************************************/
 
 
+#if Rvt_16|| Rvt_17
+using Autodesk.Revit.Utility;
+#else
 using Autodesk.Revit.DB.Visual;
+#endif
+
 using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;

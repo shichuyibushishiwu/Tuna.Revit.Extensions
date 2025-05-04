@@ -185,6 +185,11 @@ public static class TransientElementExtensions
             return false;
         }
 
+#if Rvt_16
+        return true;
+#else
         return element.IsTransient;
+#endif
+
     }
 }
