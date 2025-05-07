@@ -7,9 +7,9 @@
 		<PackageIcon>Tuna.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Description>This is an extensions package for revit api.</Description>
-		<PackageProjectUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensionss/wiki</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions/wiki</PackageProjectUrl>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<RepositoryUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensionss</RepositoryUrl>
+		<RepositoryUrl>https://github.com/shichuyibushishiwu/Tuna.Revit.Extensions</RepositoryUrl>
 		<Copyright>shichuyibushishiwu</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
