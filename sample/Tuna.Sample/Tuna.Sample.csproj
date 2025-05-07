@@ -6,7 +6,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Tuna.Revit.Extensions.csproj" />
+	  <ProjectReference Include="..\..\src\Tuna.Revit.Extensions\Tuna.Revit.Extensions.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

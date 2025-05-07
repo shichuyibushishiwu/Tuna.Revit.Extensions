@@ -1,6 +1,6 @@
 
 
-# Tuna.Revit.Extensionss
+# Tuna.Revit.Extensions
 
 ![GitHub](https://img.shields.io/github/license/shichuyibushishiwu/Tuna.Revit.Extensions?label=License)
 ![GitHub](https://img.shields.io/badge/Shiwu-Tuna-green)
@@ -8,7 +8,7 @@
 
 ## 简介
 
-Tuna.Revit.Extensionss 是一个为 Autodesk Revit API 开发的强大扩展包，旨在简化 Revit 二次开发过程，提高开发效率。通过提供一系列实用工具和扩展方法，使 Revit API 的使用变得更加简单和直观。
+Tuna.Revit.Extensions 是一个为 Autodesk Revit API 开发的强大扩展包，旨在简化 Revit 二次开发过程，提高开发效率。通过提供一系列实用工具和扩展方法，使 Revit API 的使用变得更加简单和直观。
 
 ## 功能特点
 
@@ -55,7 +55,7 @@ dotnet add package Tuna.Revit.Extensions --version 2025.0.17
 
 ## 快速开始
 
-以下是一个简单的示例，展示如何使用 Tuna.Revit.Extensionss：
+以下是一个简单的示例，展示如何使用 Tuna.Revit.Extensions：
 
 ```csharp
 using Autodesk.Revit.DB;
@@ -152,7 +152,7 @@ namespace MyRevitApp
 
 ---
 
-*Tuna.Revit.Extensionss - 让 Revit 开发更简单、更高效*
+*Tuna.Revit.Extensions - 让 Revit 开发更简单、更高效*
 
 
 
